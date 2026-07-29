@@ -31,6 +31,13 @@ WOOD = (0.294, 0.478, 0.271)    # green (LR/GB)
 
 MUTED = (0.82, 0.82, 0.82)   # not-yet-covered organs
 MUTED_TXT = (0.45, 0.45, 0.45)
+NEARBLACK = (0.10, 0.10, 0.10)  # for text on pastel-tinted (not-yet-covered) wedges/boxes
+
+def tint(col, white_ratio=0.55):
+    """Blend a color toward white to make a lighter/muted pastel version
+    that still reads as its own hue (distinguishing Water/Fire-Min/Wood)
+    rather than collapsing every not-yet-covered element into flat gray."""
+    return tuple(v*(1-white_ratio) + white_ratio for v in col)
 
 def clock_point(cx, cy, r, clock_deg):
     """clock_deg measured clockwise from top (12 o'clock = 0)"""
@@ -58,7 +65,7 @@ def draw_organ_clock(cx, cy, R_out, R_in, top_y):
         clock_start = i*30
         clock_end = clock_start+30
         startAng = 90 - clock_end
-        setfill(col if covered else MUTED)
+        setfill(col if covered else tint(col))
         setstroke((1,1,1)); c.setLineWidth(1.5)
         c.wedge(cx-R_out, cy-R_out, cx+R_out, cy+R_out, startAng, 30, fill=1, stroke=1)
     # punch hole for donut look
@@ -72,7 +79,7 @@ def draw_organ_clock(cx, cy, R_out, R_in, top_y):
     for i,(ab,tm,col,covered) in enumerate(segments):
         mid = i*30+15
         lx,ly = clock_point(cx,cy,R_lab,mid)
-        setfill((1,1,1) if covered else MUTED_TXT)
+        setfill((1,1,1) if covered else NEARBLACK)
         c.setFont("Lora-Bold", 10)
         c.drawCentredString(lx, ly+3, ab)
         tx,ty = clock_point(cx,cy,R_out+13,mid)
