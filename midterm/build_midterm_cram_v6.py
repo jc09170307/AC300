@@ -24,7 +24,10 @@ LIGHTGRAY = (0.90,0.90,0.90)
 # element accent colors (darkened for contrast on white)
 METAL = (0.365, 0.408, 0.451)   # slate gray-blue
 EARTH = (0.663, 0.478, 0.169)   # amber/ochre
-FIRE  = (0.690, 0.204, 0.169)   # deep red
+FIRE  = (0.690, 0.204, 0.169)   # deep red (HT/SI, primary fire)
+WATER = (0.220, 0.400, 0.580)   # blue (BL/KI)
+MINFIRE = (0.831, 0.475, 0.412) # lighter red/coral (PC/SJ, ministerial fire - distinct tint of FIRE, not purple)
+WOOD = (0.294, 0.478, 0.271)    # green (LR/GB)
 
 MUTED = (0.82, 0.82, 0.82)   # not-yet-covered organs
 MUTED_TXT = (0.45, 0.45, 0.45)
@@ -44,12 +47,12 @@ def draw_organ_clock(cx, cy, R_out, R_in, top_y):
         ("SP","9-11 AM", EARTH, True),
         ("HT","11AM-1PM",FIRE,  True),
         ("SI","1-3 PM",  FIRE,  True),
-        ("BL","3-5 PM",  (0.267,0.416,0.580), False),
-        ("KI","5-7 PM",  (0.267,0.416,0.580), False),
-        ("PC","7-9 PM",  (0.478,0.267,0.580), False),
-        ("SJ","9-11 PM", (0.478,0.267,0.580), False),
-        ("GB","11PM-1AM",(0.294,0.478,0.271), False),
-        ("LR","1-3 AM",  (0.294,0.478,0.271), False),
+        ("BL","3-5 PM",  WATER, False),
+        ("KI","5-7 PM",  WATER, False),
+        ("PC","7-9 PM",  MINFIRE, False),
+        ("SJ","9-11 PM", MINFIRE, False),
+        ("GB","11PM-1AM",WOOD, False),
+        ("LR","1-3 AM",  WOOD, False),
     ]
     for i,(ab,tm,col,covered) in enumerate(segments):
         clock_start = i*30
@@ -286,14 +289,15 @@ y = cy - R_out - 22
 
 # legend row
 leg_items = [("Metal (LU/LI)", METAL, True), ("Earth (ST/SP)", EARTH, True),
-             ("Fire (HT/SI)", FIRE, True), ("Water / Fire-Min. / Wood", MUTED, False)]
+             ("Fire (HT/SI)", FIRE, True), ("Water (BL/KI)", WATER, False),
+             ("Fire-Min. (PC/SJ)", MINFIRE, False), ("Wood (LR/GB)", WOOD, False)]
 lx = 36
 c.setFont("Lora", 8)
 for label, col, covered in leg_items:
     c.setFillColorRGB(*col); c.circle(lx+5, y+3, 5, fill=1, stroke=0)
     setfill(DARK if covered else MUTED_TXT)
     c.drawString(lx+15, y, label)
-    lx += 15 + pdfmetrics.stringWidth(label, "Lora", 8) + 22
+    lx += 15 + pdfmetrics.stringWidth(label, "Lora", 8) + 14
 y -= 20
 y = callout(36, y+8, W-72, ["Paired organs sit in adjacent clock slots (LU/LI, ST/SP, HT/SI) \u2014 the Qi circulation chain flows straight from one into the next. Muted wedges (BL/KI/PC/SJ/GB/LR) are covered in later weeks."], accent=GOLD, font_size=8.2)
 y -= 4
@@ -334,9 +338,6 @@ footer("Page 2 of 8")
 c.showPage()
 
 # ============= PAGE 3: Six-Channel Nomenclature / Three Circuits (NEW) =============
-WATER = (0.220, 0.400, 0.580)
-MINFIRE = (0.478, 0.267, 0.580)
-WOOD = (0.294, 0.478, 0.271)
 
 def circuit_box(x, y, w, h, title, top_pair, bot_pair, covered_top, covered_bot):
     """pair = (hand_organ, hand_lbl, element, color, yang_organ, yang_lbl, direction)"""
