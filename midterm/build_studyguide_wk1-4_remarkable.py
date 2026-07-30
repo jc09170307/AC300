@@ -434,21 +434,33 @@ paint_bg()
 channels_meta = {
  "LU": dict(full="Lung", el="Metal", nom="Hand Taiyin \u00b7 Yin \u00b7 Metal \u00b7 Peak 3-5AM \u00b7 Paired: LI \u00b7 11 pts", accent=METAL,
     waypoints=[("underarm","LU1"),("elbow","LU5"),("wrist","LU9"),("thumb tip","LU11")],
+    exterior="The exterior course carries all 11 acupuncture points. It begins at LU1, on the chest just below the clavicle, then runs down the anterior-lateral aspect of the arm, crossing the elbow at LU5, the wrist at LU9, and ending at the thumb tip at LU11.",
+    interior="The interior branch has no points on it. It connects the Lung (the pertaining organ) to the Large Intestine (the connecting organ) \u2014 this is why LU and LI can treat each other's organ-level symptoms.",
     organs=("Lung","Large Intestine"), note=None, moa_page=76),
  "LI": dict(full="Large Intestine", el="Metal", nom="Hand Yangming \u00b7 Yang \u00b7 Metal \u00b7 Peak 5-7AM \u00b7 Paired: LU \u00b7 20 pts", accent=METAL,
     waypoints=[("index finger","LI1"),("elbow","LI11"),("shoulder","LI15"),("nose","LI20")],
+    exterior="The exterior course carries all 20 acupuncture points. It begins at LI1 on the index finger, runs up the posterior-lateral forearm through the elbow at LI11, over the shoulder at LI15, up the neck, and ends beside the nose at LI20.",
+    interior="The interior branch has no points on it. It connects the Large Intestine (the pertaining organ) to the Lung (the connecting organ) \u2014 the reverse of the LU branch, completing the LU-LI pair.",
     organs=("Large Intestine","Lung"), note=None, moa_page=100),
  "ST": dict(full="Stomach", el="Earth", nom="Foot Yangming \u00b7 Yang \u00b7 Earth \u00b7 Peak 7-9AM \u00b7 Paired: SP \u00b7 45 pts", accent=EARTH,
     waypoints=[("face","ST1"),("clavicle","ST12"),("umbilicus","ST25"),("toe","ST45")],
+    exterior="The exterior course carries all 45 acupuncture points \u2014 the most of any channel. It begins at ST1 beside the nose, descends across the face and neck, passes the clavicle at ST12, runs down the trunk beside the umbilicus at ST25, continues down the front of the leg, and ends at the 2nd toe at ST45.",
+    interior="The interior branch has no points on it. It connects the Stomach (the pertaining organ) to the Spleen (the connecting organ). A separate lower-orifice branch also runs from the abdomen, through the diaphragm, to the Spleen.",
     organs=("Stomach","Spleen"), note="Also: lower orifice -> diaphragm -> Spleen", moa_page=130),
  "SP": dict(full="Spleen", el="Earth", nom="Foot Taiyin \u00b7 Yin \u00b7 Earth \u00b7 Peak 9-11AM \u00b7 Paired: ST \u00b7 21 pts", accent=EARTH,
     waypoints=[("big toe","SP1"),("ankle","SP6"),("thigh","SP10"),("chest","SP21")],
+    exterior="The exterior course carries all 21 acupuncture points. It begins at SP1 on the big toe, runs up the medial ankle at SP6, up the medial thigh through SP10, and continues up the side of the trunk, ending at SP21 on the chest.",
+    interior="The interior branch has no points on it. It connects the Spleen (the pertaining organ) to the Stomach (the connecting organ). A separate branch runs from the stomach, through the diaphragm, up to the Heart \u2014 linking SP to the next channel, HT.",
     organs=("Spleen","Stomach"), note="Branch: stomach -> diaphragm -> Heart", moa_page=182),
  "HT": dict(full="Heart", el="Fire", nom="Hand Shaoyin \u00b7 Yin \u00b7 Fire \u00b7 Peak 11AM-1PM \u00b7 Paired: SI \u00b7 9 pts", accent=FIRE,
     waypoints=[("axilla","HT1"),("elbow","HT3"),("wrist","HT7"),("pinky tip","HT9")],
+    exterior="The exterior course carries all 9 acupuncture points. It begins at HT1 in the axilla, runs down the medial-posterior arm through the elbow at HT3, the wrist at HT7, and ends at the pinky tip at HT9.",
+    interior="The interior branch has no points on it. It connects the Heart (the pertaining organ) to the Small Intestine (the connecting organ). A separate branch runs from the heart system up to the eye system.",
     organs=("Heart","Small Intestine"), note="Branch: heart system -> eye system", moa_page=212),
  "SI": dict(full="Small Intestine", el="Fire", nom="Hand Taiyang \u00b7 Yang \u00b7 Fire \u00b7 Peak 1-3PM \u00b7 Paired: HT \u00b7 19 pts", accent=FIRE,
     waypoints=[("pinky finger","SI1"),("elbow","SI8"),("scapula","SI11"),("ear","SI19")],
+    exterior="The exterior course carries all 19 acupuncture points. It begins at SI1 on the pinky finger, runs up the posterior-medial forearm through the elbow at SI8, across the scapula at SI11, up the neck and across the face, ending in front of the ear at SI19.",
+    interior="The interior branch has no points on it. It connects the Small Intestine (the pertaining organ) to the Heart (the connecting organ) \u2014 the reverse of the HT branch, completing the HT-SI pair.",
     organs=("Small Intestine","Heart"), note=None, moa_page=231),
 }
 
@@ -521,10 +533,39 @@ def deepdive_page_A(ch):
     setfill(GRAY); c.setFont("Lora-Italic", 8)
     c.drawCentredString(W/2, img_bottom-14, f"MOA (Deadman 3rd Ed.), p.{m['moa_page']}")
 
-    y2 = img_bottom - 30
-    diag_bottom = pathway_diagram_big(36, y2, W-72, f"{ch} \u2014 {m['full']} ({m['el']})",
-                         m['accent'], m['waypoints'], m['organs'], note=m['note'])
-    assert diag_bottom > 50, f"{ch}: pathway diagram runs too close to footer (bottom={diag_bottom:.1f})"
+    y2 = img_bottom - 32
+    accent = m['accent']
+
+    # --- EXTERIOR COURSE ---
+    setfill(accent); c.rect(36, y2-3, W-72, 3, fill=1, stroke=0)
+    setfill(NAVY); c.setFont("Lora-Bold", 12.5)
+    c.drawString(36, y2-20, "EXTERIOR COURSE  (has acupuncture points)")
+    y2 -= 38
+    setfill(DARK); c.setFont("Lora", 10.5)
+    for line in wrap_words(m['exterior'], "Lora", 10.5, W-72):
+        c.drawString(36, y2, line)
+        y2 -= 15.5
+    y2 -= 14
+
+    # --- INTERIOR BRANCH ---
+    setfill(accent); c.rect(36, y2-3, W-72, 3, fill=1, stroke=0)
+    setfill(NAVY); c.setFont("Lora-Bold", 12.5)
+    c.drawString(36, y2-20, "INTERIOR BRANCH  (no acupuncture points)")
+    y2 -= 38
+    setfill(DARK); c.setFont("Lora", 10.5)
+    for line in wrap_words(m['interior'], "Lora", 10.5, W-72):
+        c.drawString(36, y2, line)
+        y2 -= 15.5
+    y2 -= 8
+
+    # --- Pertains / Connects, in a clean highlighted line ---
+    box_h = 26
+    setfill((0.933,0.937,0.949)); c.roundRect(36, y2-box_h, W-72, box_h, 6, fill=1, stroke=0)
+    setfill(NAVY); c.setFont("Lora-Bold", 10.5)
+    c.drawCentredString(W/2, y2-17, f"Pertains: {m['organs'][0]}   \u00b7   Connects: {m['organs'][1]}")
+    y2 -= box_h
+
+    assert y2 > 45, f"{ch}: pathway text runs too close to footer (bottom={y2:.1f})"
 
     footer(f"Page {page_num} of 16")
     page_num += 1
