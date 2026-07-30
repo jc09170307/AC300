@@ -12,7 +12,7 @@ WEEKS = {
         channel_names="Lung & Large Intestine Channels",
         pts_line="LU (11 pts) + LI (20 pts) = 31 Points",
         cover_special=["LU7, LI4", "and all categories"],
-        crossing_summary=["Minimal (LU) /", "GV14 + face (LI)"],
+        crossing_summary=["Minimal (LU) /", "4 pts, incl. GV14 (LI)"],
         this_week_abbrevs=["LU", "LI"],
         channels=[
             dict(
@@ -93,10 +93,12 @@ WEEKS = {
                 five_shu=[("Jing-Well", "Metal", "LI1"), ("Ying-Spring", "Water", "LI2"),
                           ("Shu-Stream", "Wood", "LI3"), ("Jing-River", "Fire", "LI5"),
                           ("He-Sea", "Earth", "LI11")],
-                n_crossing=2,
+                n_crossing=4,
                 crossing_points=[
                     ("GV14 Dazhui", "meeting point of all 6 Yang channels; fever, neck stiffness"),
-                    ("LI20 / ST1 area", "LI's endpoint hands directly into the ST channel's origin"),
+                    ("GV26 Shuigou", "philtrum; LI's facial branch curves around the lip and crosses the Du Mai here before reaching LI20"),
+                    ("ST4 Dicang", "near the corner of the mouth; treats both Stomach and LI symptoms together"),
+                    ("SI19 (near SI11 region)", "small intestine crossing point on the face/shoulder area; used clinically alongside LI points"),
                 ],
                 highest_yield=[
                     ("LI4", "Yuan-Source + Command (face/mouth)", "FORBIDDEN in pregnancy; face/mouth disorders, headache, general analgesic point"),
@@ -110,6 +112,8 @@ WEEKS = {
                     "LI's Front-Mu is ST25 (on the STOMACH channel, not its own) - unlike LU, which has its own Front-Mu.",
                     "LOWER teeth/gums = LI. UPPER teeth/gums = ST. A classic exam-trap pair.",
                     "LI connects to STOMACH, not Spleen - a common circuit-continuity trap.",
+                    "LI has 4 crossing points (GV14, GV26, ST4, SI19 area) - not just GV14. Dr. Zhang covered all 4 explicitly in lecture.",
+                    "Dr. Zhang: PubMed-indexed studies show LI4 can relieve toothache pain almost immediately - a direct lecture citation, parallel to ST36's Nature studies.",
                 ],
             ),
         ],
