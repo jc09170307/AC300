@@ -204,7 +204,7 @@ row_i = [0]
 
 def ensure_space(needed):
     global y
-    if y - needed < 50:
+    if y - needed < 40:
         footer(f"Page {page_num[0]}")
         c.showPage()
         page_num[0] += 1
@@ -219,13 +219,14 @@ for cat, elem, desc, ex in CATS:
     head_lines = wrap_words(desc, "Lora", 8.5, CW - 190)
     ex_lines = wrap_words(ex, "Lora-Bold", 8.3, 175)
     n_lines = max(len(head_lines) + (1 if elem else 0), len(ex_lines))
-    needed = n_lines * 11.5 + 14
+    LH = 10.8
+    needed = n_lines * LH + 6
     ensure_space(needed)
 
-    band_h = needed - 2
+    band_h = needed - 1
     if row_i[0] % 2 == 0:
         setfill(ROW_TINT)
-        c.rect(ML - 4, y - band_h + 10, CW + 8, band_h, fill=1, stroke=0)
+        c.rect(ML - 4, y - band_h + 6, CW + 8, band_h, fill=1, stroke=0)
     row_i[0] += 1
 
     top_y = y
@@ -233,22 +234,22 @@ for cat, elem, desc, ex in CATS:
     c.drawString(ML, top_y, cat)
     yy = top_y
     if elem:
-        yy -= 11.5
+        yy -= LH
         setfill(FIRE); c.setFont("Lora-Italic", 8)
         c.drawString(ML, yy, elem)
-    yy -= 11.5
+    yy -= LH
     setfill(DARK); c.setFont("Lora", 8.5)
     for hl in head_lines:
         c.drawString(ML, yy, hl)
-        yy -= 11.5
+        yy -= LH
 
     ex_y = top_y
     setfill(RED); c.setFont("Lora-Bold", 8.3)
     for el in ex_lines:
         c.drawRightString(ML + CW, ex_y, el)
-        ex_y -= 11.5
+        ex_y -= LH
 
-    y = min(yy, ex_y) - 8
+    y = min(yy, ex_y) - 3
 
 footer(f"Page {page_num[0]}")
 c.showPage()
