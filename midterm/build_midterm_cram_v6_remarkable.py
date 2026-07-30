@@ -106,7 +106,7 @@ def draw_organ_clock(cx, cy, R_out, R_in, top_y):
     c.drawCentredString(cx, cy+7, "24-HR")
     c.drawCentredString(cx, cy-5, "QI CYCLE")
 
-OUT = "/mnt/user-data/outputs/AC300_MidtermCramSheet_Wk1-4_reMarkable.pdf"
+OUT = '/mnt/user-data/outputs/AC300_MidtermCramSheet_Wk1-4_reMarkable.pdf'
 c = canvas.Canvas(OUT, pagesize=letter)
 
 def setfill(rgb): c.setFillColorRGB(*rgb)
@@ -642,7 +642,7 @@ pathway_diagram(36+diag_w+16, row1_y, diag_w, diag_h, "LI \u2014 Large Intestine
 row2_y = row1_y - diag_h - 14
 pathway_diagram(36, row2_y, diag_w, diag_h, "ST \u2014 Stomach (Earth)", EARTH,
     [("face","ST1"),("clavicle","ST12"),("umbilicus","ST25"),("toe","ST45")],
-    ("Stomach","Spleen"), note="Also: lower orifice -> diaphragm -> Spleen")
+    ("Stomach","Spleen"), note="Also: lower orifice -> diaphragm -> Spleen (NOT Lung - confirmed trap)")
 pathway_diagram(36+diag_w+16, row2_y, diag_w, diag_h, "SP \u2014 Spleen (Earth)", EARTH,
     [("big toe","SP1"),("ankle","SP6"),("thigh","SP10"),("chest","SP21")],
     ("Spleen","Stomach"), note="Branch: stomach -> diaphragm -> Heart")
@@ -751,6 +751,7 @@ pairs = [
     "LU7 vs LI4 \u2014 both treat face/head; LU7 = command head/neck + opens Ren Mai; LI4 = command face/mouth, FORBIDDEN in pregnancy",
     "ST36 vs SP6 \u2014 both abdominal; ST36 = command abdomen, tonifies Qi/Blood; SP6 = 3-Yin crossing, FORBIDDEN in pregnancy",
     "SI3 vs LI4 \u2014 both treat head/neck; SI3 = confluent opens Du Mai (spine); LI4 = command face/mouth",
+    "CONFIRMED (Dr. Zhang, Wk4 review): the midterm reuses many Quiz 1-3 questions \u2014 prioritize Theory, LU/LI, ST/SP over HT/SI",
 ]
 y = callout(36, y+10, W-72, pairs, accent=RED, font_size=8.2, line_h=10.5)
 
