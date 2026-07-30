@@ -660,7 +660,9 @@ pearls_data = {
  "HT": ["HT7: Yuan-source; calms shen; insomnia, anxiety, palpitations",
         "HT3: He-Sea; clears heart fire; fear, arm pain",
         "HT6: Xi-Cleft; night sweats, acute heart pain",
-        "HT8: Ying-Spring; clears heart fire; oral ulcers, urinary urgency"],
+        "HT8: Ying-Spring; clears heart fire; oral ulcers, urinary urgency",
+        "HT1: first point of the channel; used for stroke",
+        "HT9: Jing-Well; emergency point for severe heart pain, difficulty breathing, palpitations"],
  "SI": ["SI3: confluent (Du Mai); neck/spine disorders; opens governing vessel",
         "SI11: most important local point for frozen shoulder",
         "SI19: local point for tinnitus and deafness",
@@ -689,7 +691,7 @@ sp = [("Jing-Well","SP1",""),("Ying-Spring","SP2",""),("Shu-Stream","SP3","also 
       ("Jing-River","SP5",""),("He-Sea","SP9","resolves dampness"),("Luo","SP4","also Confluent (Chong Mai)"),
       ("Xi-Cleft","SP8",""),("Front-Mu","LR13",""),("Back-Shu","BL20",""),
       ("Confluent","SP4","opens Chong Mai"),("Sea of Blood","SP10","cools blood, skin/menstrual")]
-ht = [("Jing-Well","HT9",""),("Ying-Spring","HT8","clears heart fire"),("Shu-Stream","HT7","also Yuan-Source"),
+ht = [("Jing-Well","HT9","emergency: severe heart pain, palpitations"),("Ying-Spring","HT8","clears heart fire"),("Shu-Stream","HT7","also Yuan-Source"),
       ("Jing-River","HT4",""),("He-Sea","HT3","clears heart fire, fear/arm pain"),("Luo","HT5",""),
       ("Xi-Cleft","HT6","night sweats, acute heart pain"),("Front-Mu","CV14",""),("Back-Shu","BL15","")]
 si = [("Jing-Well","SI1",""),("Ying-Spring","SI2",""),("Shu-Stream","SI3","also Confluent"),
