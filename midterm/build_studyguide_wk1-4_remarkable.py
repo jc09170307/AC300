@@ -45,10 +45,10 @@ MUTED_TXT = (0.45, 0.45, 0.45)
 NEARBLACK = (0.10, 0.10, 0.10)
 
 # --- reMarkable-specific edition deltas ---
-IVORY = (0.973, 0.953, 0.902)          # warm ivory page background (RGB 248,243,230)
-ROW_TINT = (0.925, 0.902, 0.855)       # distinctly tinted parchment row background
-CALLOUT_TINT = (0.918, 0.886, 0.816)   # deeper parchment for callout boxes (CREAM ~ IVORY, would blend in)
-LW_MULT = 1.35                          # bolder hairline weights on Kaleido 3 e-ink
+IVORY = (0.973, 0.953, 0.902)
+ROW_TINT = (0.925, 0.902, 0.855)
+CALLOUT_TINT = (0.918, 0.886, 0.816)
+LW_MULT = 1.35
 
 def tint(col, white_ratio=0.55):
     return tuple(v*(1-white_ratio) + white_ratio for v in col)
@@ -62,7 +62,6 @@ def setfill(rgb): c.setFillColorRGB(*rgb)
 def setstroke(rgb): c.setStrokeColorRGB(*rgb)
 
 def paint_bg():
-    """Fill the current page with the warm ivory reMarkable background."""
     setfill(IVORY); c.rect(0, 0, W, H, fill=1, stroke=0)
 
 def wrap_words(text, font, size, max_width):
@@ -202,6 +201,91 @@ def moa_image(ch, x, y_top, max_w, max_h):
     dy = y_top - dh
     c.drawImage(img, dx, dy, width=dw, height=dh)
     return dy
+
+def pathway_diagram_big(x, y, w, title, color, waypoints, organs, note=None):
+    """Full-width exterior/interior pathway diagram (enlarged vs the Cram
+    Sheet's half-width 2-up version) so the course + branch reads clearly
+    at a glance instead of a wall of prose. Computes its own required
+    height (note text adds extra) rather than trusting a guessed value,
+    and returns the actual bottom y so the caller can verify footer
+    clearance instead of hand-tuning magic numbers."""
+    bar_h = 28
+    y_bar_bottom   = y - bar_h
+    y_ext_label    = y_bar_bottom - 20
+    y_ptcode       = y_ext_label - 24
+    y_line         = y_ptcode - 22
+    y_desc         = y_line - 22
+    y_divider      = y_desc - 28
+    y_int_label    = y_divider - 20
+    org_w, org_h   = w - 100, 32
+    y_box_top      = y_int_label - 22
+    y_box_bottom   = y_box_top - org_h
+    center_x = x + w/2
+
+    note_lines = wrap_words(note, "Lora-Italic", 9, w-40) if note else []
+    bottom_pad = 14
+    h = (y - y_box_bottom) + bottom_pad + (len(note_lines)*13 if note_lines else 0)
+
+    setfill((0.973,0.974,0.978)); c.roundRect(x, y-h, w, h, 8, fill=1, stroke=0)
+    setstroke(color); c.setLineWidth(1.8*LW_MULT); c.roundRect(x, y-h, w, h, 8, fill=0, stroke=1)
+
+    n = len(waypoints)
+    margin_in = 50
+    usable = w - 2*margin_in
+    xs_pts = [x + margin_in + i*(usable/(n-1)) for i in range(n)]
+
+    c.setDash(4, 3); setstroke(GRAY); c.setLineWidth(1.6*LW_MULT)
+    c.line(center_x, y_line - 10, center_x, y_box_top + 3)
+    c.setDash()
+
+    setfill(color); c.rect(x, y_bar_bottom, w, bar_h, fill=1, stroke=0)
+    setfill((1,1,1)); c.setFont("Lora-Bold", 13)
+    c.drawString(x+14, y-18, title)
+
+    setfill(GRAY); c.setFont("Lora-Bold", 9.5)
+    c.drawCentredString(center_x, y_ext_label, "EXTERIOR COURSE  (has acupuncture points)")
+
+    setfill(NAVY); c.setFont("Lora-Bold", 11.5)
+    for i,(lbl, pt) in enumerate(waypoints):
+        c.drawCentredString(xs_pts[i], y_ptcode, pt)
+
+    setstroke(color); c.setLineWidth(3*LW_MULT)
+    c.line(xs_pts[0], y_line, xs_pts[-1], y_line)
+    c.line(xs_pts[-1], y_line, xs_pts[-1]-10, y_line+6)
+    c.line(xs_pts[-1], y_line, xs_pts[-1]-10, y_line-6)
+    for px in xs_pts:
+        c.setFillColorRGB(*color); c.circle(px, y_line, 6.5, fill=1, stroke=0)
+
+    setfill(DARK); c.setFont("Lora-Italic", 9.5)
+    for i,(lbl, pt) in enumerate(waypoints):
+        c.drawCentredString(xs_pts[i], y_desc, lbl)
+
+    setfill((0.973,0.974,0.978))
+    c.rect(center_x-14, y_divider-4, 28, 8, fill=1, stroke=0)
+    setstroke((0.8,0.8,0.8)); c.setLineWidth(1*LW_MULT)
+    c.line(x+20, y_divider, center_x-14, y_divider)
+    c.line(center_x+14, y_divider, x+w-20, y_divider)
+
+    setfill((0.973,0.974,0.978))
+    label = "INTERIOR branch  (no points)  connects to:"
+    label_w = pdfmetrics.stringWidth(label, "Lora-Italic", 9.5)
+    c.rect(center_x-label_w/2-6, y_int_label-3, label_w+12, 14, fill=1, stroke=0)
+    setfill(GRAY); c.setFont("Lora-Italic", 9.5)
+    c.drawCentredString(center_x, y_int_label, label)
+
+    ox = x + (w - org_w)/2
+    setfill((0.933,0.937,0.949)); c.roundRect(ox, y_box_bottom, org_w, org_h, 6, fill=1, stroke=0)
+    setfill(NAVY); c.setFont("Lora-Bold", 11)
+    c.drawCentredString(center_x, y_box_bottom+11, f"Pertains: {organs[0]}   \u00b7   Connects: {organs[1]}")
+
+    if note_lines:
+        setfill(RED); c.setFont("Lora-Italic", 9)
+        yn = y_box_bottom - 20
+        for line in note_lines:
+            c.drawCentredString(center_x, yn, line)
+            yn -= 13
+
+    return y - h
 
 # ============= COVER =============
 setfill(IVORY); c.rect(0,0,W,H,fill=1,stroke=0)
@@ -348,25 +432,26 @@ paint_bg()
 
 # ============= PER-CHANNEL DATA (reused/verified from Midterm Cram Sheet v6) =============
 channels_meta = {
- "LU": dict(full="Lung", nom="Hand Taiyin \u00b7 Yin \u00b7 Metal \u00b7 Peak 3-5AM \u00b7 Paired: LI \u00b7 11 pts", accent=METAL,
-    pathway="Exterior course: begins at the underarm (LU1), runs down the arm through the elbow (LU5) and wrist (LU9), ending at the thumb tip (LU11). Interior branch (no points): connects Lung to Large Intestine.",
-    organs=("Lung","Large Intestine"), moa_page=76),
- "LI": dict(full="Large Intestine", nom="Hand Yangming \u00b7 Yang \u00b7 Metal \u00b7 Peak 5-7AM \u00b7 Paired: LU \u00b7 20 pts", accent=METAL,
-    pathway="Exterior course: begins at the index finger (LI1), runs up through the elbow (LI11) and shoulder (LI15), ending at the nose (LI20). Interior branch (no points): connects Large Intestine to Lung.",
-    organs=("Large Intestine","Lung"), moa_page=100),
- "ST": dict(full="Stomach", nom="Foot Yangming \u00b7 Yang \u00b7 Earth \u00b7 Peak 7-9AM \u00b7 Paired: SP \u00b7 45 pts", accent=EARTH,
-    pathway="Exterior course: begins at the face (ST1), passes the clavicle (ST12) and umbilicus (ST25), ending at the toe (ST45). Interior branch (no points): connects Stomach to Spleen. A separate lower-orifice branch runs from the abdomen, through the diaphragm, to the Spleen.",
-    organs=("Stomach","Spleen"), moa_page=130),
- "SP": dict(full="Spleen", nom="Foot Taiyin \u00b7 Yin \u00b7 Earth \u00b7 Peak 9-11AM \u00b7 Paired: ST \u00b7 21 pts", accent=EARTH,
-    pathway="Exterior course: begins at the big toe (SP1), passes the ankle (SP6) and thigh (SP10), ending at the chest (SP21). Interior branch (no points): connects Spleen to Stomach. A separate branch runs from the stomach, through the diaphragm, to the Heart.",
-    organs=("Spleen","Stomach"), moa_page=182),
- "HT": dict(full="Heart", nom="Hand Shaoyin \u00b7 Yin \u00b7 Fire \u00b7 Peak 11AM-1PM \u00b7 Paired: SI \u00b7 9 pts", accent=FIRE,
-    pathway="Exterior course: begins at the axilla (HT1), passes the elbow (HT3) and wrist (HT7), ending at the pinky tip (HT9). Interior branch (no points): connects Heart to Small Intestine. A separate branch runs from the heart system to the eye system.",
-    organs=("Heart","Small Intestine"), moa_page=212),
- "SI": dict(full="Small Intestine", nom="Hand Taiyang \u00b7 Yang \u00b7 Fire \u00b7 Peak 1-3PM \u00b7 Paired: HT \u00b7 19 pts", accent=FIRE,
-    pathway="Exterior course: begins at the pinky finger (SI1), passes the elbow (SI8) and scapula (SI11), ending at the ear (SI19). Interior branch (no points): connects Small Intestine to Heart.",
-    organs=("Small Intestine","Heart"), moa_page=231),
+ "LU": dict(full="Lung", el="Metal", nom="Hand Taiyin \u00b7 Yin \u00b7 Metal \u00b7 Peak 3-5AM \u00b7 Paired: LI \u00b7 11 pts", accent=METAL,
+    waypoints=[("underarm","LU1"),("elbow","LU5"),("wrist","LU9"),("thumb tip","LU11")],
+    organs=("Lung","Large Intestine"), note=None, moa_page=76),
+ "LI": dict(full="Large Intestine", el="Metal", nom="Hand Yangming \u00b7 Yang \u00b7 Metal \u00b7 Peak 5-7AM \u00b7 Paired: LU \u00b7 20 pts", accent=METAL,
+    waypoints=[("index finger","LI1"),("elbow","LI11"),("shoulder","LI15"),("nose","LI20")],
+    organs=("Large Intestine","Lung"), note=None, moa_page=100),
+ "ST": dict(full="Stomach", el="Earth", nom="Foot Yangming \u00b7 Yang \u00b7 Earth \u00b7 Peak 7-9AM \u00b7 Paired: SP \u00b7 45 pts", accent=EARTH,
+    waypoints=[("face","ST1"),("clavicle","ST12"),("umbilicus","ST25"),("toe","ST45")],
+    organs=("Stomach","Spleen"), note="Also: lower orifice -> diaphragm -> Spleen", moa_page=130),
+ "SP": dict(full="Spleen", el="Earth", nom="Foot Taiyin \u00b7 Yin \u00b7 Earth \u00b7 Peak 9-11AM \u00b7 Paired: ST \u00b7 21 pts", accent=EARTH,
+    waypoints=[("big toe","SP1"),("ankle","SP6"),("thigh","SP10"),("chest","SP21")],
+    organs=("Spleen","Stomach"), note="Branch: stomach -> diaphragm -> Heart", moa_page=182),
+ "HT": dict(full="Heart", el="Fire", nom="Hand Shaoyin \u00b7 Yin \u00b7 Fire \u00b7 Peak 11AM-1PM \u00b7 Paired: SI \u00b7 9 pts", accent=FIRE,
+    waypoints=[("axilla","HT1"),("elbow","HT3"),("wrist","HT7"),("pinky tip","HT9")],
+    organs=("Heart","Small Intestine"), note="Branch: heart system -> eye system", moa_page=212),
+ "SI": dict(full="Small Intestine", el="Fire", nom="Hand Taiyang \u00b7 Yang \u00b7 Fire \u00b7 Peak 1-3PM \u00b7 Paired: HT \u00b7 19 pts", accent=FIRE,
+    waypoints=[("pinky finger","SI1"),("elbow","SI8"),("scapula","SI11"),("ear","SI19")],
+    organs=("Small Intestine","Heart"), note=None, moa_page=231),
 }
+
 
 pearls_data = {
  "LU": ["LU7: command for head/neck; opens Ren Mai; #1 point for exterior wind",
@@ -428,29 +513,24 @@ def deepdive_page_A(ch):
     header(f"{ch} \u2014 {m['full']}  \u2014  Pathway & MOA Diagram")
     y = H - 62
     y = channel_bar(36, y, W-72, m['accent'], f"{ch} \u2014 {m['full']}", m['nom'])
-    y -= 8
+    y -= 10
 
-    img_w = 200
     img_top = y
-    img_bottom = moa_image(ch, 36, img_top, img_w, 400)
-    setfill(GRAY); c.setFont("Lora-Italic", 7)
-    c.drawCentredString(36+img_w/2, img_bottom-11, f"MOA (Deadman 3rd Ed.), p.{m['moa_page']}")
+    img_bottom = moa_image(ch, 36, img_top, W-72, 340)
+    # image is horizontally centered within the full content width by moa_image itself
+    setfill(GRAY); c.setFont("Lora-Italic", 8)
+    c.drawCentredString(W/2, img_bottom-14, f"MOA (Deadman 3rd Ed.), p.{m['moa_page']}")
 
-    rx = 36 + img_w + 20
-    rw = (W-36) - rx
-    ry = y
-    ry = callout(rx, ry, rw, [
-        f"Pertains: {m['organs'][0]}",
-        f"Connects: {m['organs'][1]}",
-        m['nom'],
-    ], heading="Quick Facts", accent=m['accent'], font_size=8.6, line_h=12)
-    ry -= 6
-    ry = callout(rx, ry, rw, [m['pathway']], heading="Pathway (Exterior + Interior)", accent=m['accent'], font_size=8.6, line_h=11.5)
+    y2 = img_bottom - 30
+    diag_bottom = pathway_diagram_big(36, y2, W-72, f"{ch} \u2014 {m['full']} ({m['el']})",
+                         m['accent'], m['waypoints'], m['organs'], note=m['note'])
+    assert diag_bottom > 50, f"{ch}: pathway diagram runs too close to footer (bottom={diag_bottom:.1f})"
 
     footer(f"Page {page_num} of 16")
     page_num += 1
     c.showPage()
     paint_bg()
+
 
 def deepdive_page_B(ch):
     global page_num
