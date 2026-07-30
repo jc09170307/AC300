@@ -528,12 +528,12 @@ def deepdive_page_A(ch):
     y -= 10
 
     img_top = y
-    img_bottom = moa_image(ch, 36, img_top, W-72, 340)
+    img_bottom = moa_image(ch, 36, img_top, W-72, 380)
     # image is horizontally centered within the full content width by moa_image itself
     setfill(GRAY); c.setFont("Lora-Italic", 8)
-    c.drawCentredString(W/2, img_bottom-14, f"MOA (Deadman 3rd Ed.), p.{m['moa_page']}")
+    c.drawCentredString(W/2, img_bottom-12, f"MOA (Deadman 3rd Ed.), p.{m['moa_page']}")
 
-    y2 = img_bottom - 32
+    y2 = img_bottom - 26
     accent = m['accent']
 
     # --- EXTERIOR COURSE ---
@@ -545,7 +545,7 @@ def deepdive_page_A(ch):
     for line in wrap_words(m['exterior'], "Lora", 10.5, W-72):
         c.drawString(36, y2, line)
         y2 -= 15.5
-    y2 -= 14
+    y2 -= 10
 
     # --- INTERIOR BRANCH ---
     setfill(accent); c.rect(36, y2-3, W-72, 3, fill=1, stroke=0)
@@ -556,7 +556,7 @@ def deepdive_page_A(ch):
     for line in wrap_words(m['interior'], "Lora", 10.5, W-72):
         c.drawString(36, y2, line)
         y2 -= 15.5
-    y2 -= 8
+    y2 -= 6
 
     # --- Pertains / Connects, in a clean highlighted line ---
     box_h = 26
