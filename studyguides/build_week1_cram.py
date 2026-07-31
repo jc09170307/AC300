@@ -7,7 +7,7 @@ from reportlab.pdfbase import pdfmetrics
 from reportlab.pdfbase.ttfonts import TTFont
 
 from week1_content import (TWELVE_MERIDIANS, ZANG_ORGANS, FU_ORGANS, CIRCUITS, DIRECTION_RULES,
-                            MEETING_POINTS, MERIDIAN_CLOCK, FUNCTIONS_OF_MERIDIANS, NOMENCLATURE,
+                            MEETING_POINTS, MERIDIAN_CLOCK, CLOCK_ELEMENT, FUNCTIONS_OF_MERIDIANS, NOMENCLATURE,
                             CHANNELS_VS_MERIDIANS, QUIZ1_FUNDAMENTALS)
 
 pdfmetrics.registerFont(TTFont('Lora', '/home/claude/fonts/Lora-Regular.ttf'))
@@ -22,6 +22,8 @@ RED = (0.627, 0.220, 0.180)
 DARK = (0.15, 0.15, 0.15)
 GRAY = (0.40, 0.40, 0.40)
 METAL = (0.365, 0.408, 0.451); EARTH = (0.663, 0.478, 0.169); FIRE = (0.690, 0.204, 0.169)
+WATER = (0.180, 0.396, 0.612); WOOD = (0.239, 0.518, 0.278); MIN_FIRE = (0.831, 0.514, 0.478)
+ELEMENT_COLORS = {"Metal": METAL, "Earth": EARTH, "Fire": FIRE, "Water": WATER, "Wood": WOOD, "Ministerial Fire": MIN_FIRE}
 CIRCUIT_COLORS = {"Outer Circuit": METAL, "Inner Circuit": FIRE, "Middle Circuit": (0.380, 0.180, 0.522)}
 
 EDITION = sys.argv[1] if len(sys.argv) > 1 else "print"
@@ -287,10 +289,19 @@ c.drawString(ML, y, "Meridian Clock (24 hr)")
 y -= 4
 setstroke(GOLD); c.line(ML, y, ML + 150, y)
 y -= 13
-setfill(DARK); c.setFont("Lora", 8.3)
+c.setFont("Lora-Bold", 8.3)
 for ab, tm in MERIDIAN_CLOCK:
-    c.drawString(ML, y, f"{ab}: {tm}"); y -= 10.5
-left_bottom = y
+    elem = CLOCK_ELEMENT[ab]
+    setfill(ELEMENT_COLORS[elem])
+    c.rect(ML, y - 1, 7, 7, fill=1, stroke=0)
+    setfill(ELEMENT_COLORS[elem]); c.setFont("Lora-Bold", 8.3)
+    c.drawString(ML + 11, y, ab)
+    setfill(DARK); c.setFont("Lora", 8.3)
+    c.drawString(ML + 32, y, f": {tm}")
+    y -= 11.5
+setfill(GRAY); c.setFont("Lora-Italic", 6.8)
+c.drawString(ML, y - 2, "Metal / Earth / Fire / Water / Wood + Ministerial Fire (PC/SJ)")
+left_bottom = y - 12
 
 y2 = top_y; x2 = ML + col_w + 20
 setfill(NAVY); c.setFont("Lora-Bold", 10)
@@ -314,7 +325,7 @@ c.line(ML, y, ML + CW, y)
 y -= 20
 
 # ============= RAPID RECALL (continues on same page if room, else new page) =============
-if y < 320:
+if y < 260:
     end_page()
     row_num[0] = 0
     new_page(f"Rapid Recall  \u00b7  {EDLABEL}")
