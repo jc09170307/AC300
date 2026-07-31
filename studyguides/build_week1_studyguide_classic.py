@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """AC300 Week 1 Study Guide - Channel Theory. Builds BOTH Print and reMarkable editions."""
 import sys
+import math
 from reportlab.pdfgen import canvas
 from reportlab.lib.pagesizes import letter
 from reportlab.pdfbase import pdfmetrics
@@ -363,32 +364,34 @@ y = para(y, "Each meridian has a two-hour period of peak activity, following the
              "connect to each other. Dr. Zhang's own clinical example: to treat a Large Intestine dysfunction, "
              "consider its 5-7 AM active window; symptoms that flare at a specific time of day can point "
              "directly to which channel is involved.")
-y -= 8
-col_w = (CW - 24) / 2
-top_y = y
-half = len(MERIDIAN_CLOCK) // 2
-for ab, tm in MERIDIAN_CLOCK[:half]:
+y -= 6
+clock_r = 92
+cx, cy = W / 2, y - clock_r - 6
+CLOCK_SEGMENTS = [
+    ("GB", -1), ("LR", 1), ("LU", 3), ("LI", 5), ("ST", 7), ("SP", 9),
+    ("HT", 11), ("SI", 13), ("BL", 15), ("KI", 17), ("PC", 19), ("SJ", 21),
+]
+for ab, h1 in CLOCK_SEGMENTS:
+    h2 = h1 + 2
+    start_ang = 90 - 15 * h2
     elem = CLOCK_ELEMENT[ab]
-    setfill(ELEMENT_COLORS[elem]); c.rect(ML, y - 1, 8, 8, fill=1, stroke=0)
-    setfill(ELEMENT_COLORS[elem]); c.setFont("Lora-Bold", F_TABLE)
-    c.drawString(ML + 13, y, ab)
-    setfill(DARK); c.setFont("Lora", F_TABLE)
-    c.drawString(ML + 38, y, f": {tm}")
-    y -= 13.5
-left_bottom = y
-y2 = top_y; x2 = ML + col_w + 24
-for ab, tm in MERIDIAN_CLOCK[half:]:
-    elem = CLOCK_ELEMENT[ab]
-    setfill(ELEMENT_COLORS[elem]); c.rect(x2, y2 - 1, 8, 8, fill=1, stroke=0)
-    setfill(ELEMENT_COLORS[elem]); c.setFont("Lora-Bold", F_TABLE)
-    c.drawString(x2 + 13, y2, ab)
-    setfill(DARK); c.setFont("Lora", F_TABLE)
-    c.drawString(x2 + 38, y2, f": {tm}")
-    y2 -= 13.5
-right_bottom = y2
-y = min(left_bottom, right_bottom) - 6
-setfill(GRAY); c.setFont("Lora-Italic", 7.8)
-c.drawString(ML, y, "Metal (LU/LI)  \u00b7  Earth (ST/SP)  \u00b7  Fire (HT/SI)  \u00b7  Water (BL/KI)  \u00b7  Ministerial Fire (PC/SJ)  \u00b7  Wood (GB/LR)")
+    setfill(ELEMENT_COLORS[elem])
+    setstroke((1, 1, 1)); c.setLineWidth(1.4)
+    c.wedge(cx - clock_r, cy - clock_r, cx + clock_r, cy + clock_r, start_ang, 30, stroke=1, fill=1)
+    mid_ang = math.radians(90 - 15 * (h1 + 1))
+    label_r = clock_r * 0.67
+    lx = cx + label_r * math.cos(mid_ang)
+    ly = cy + label_r * math.sin(mid_ang)
+    setfill((1, 1, 1)); c.setFont("Lora-Bold", 10.5)
+    c.drawCentredString(lx, ly - 3.5, ab)
+setfill((1, 1, 1)); c.circle(cx, cy, clock_r * 0.3, fill=1, stroke=0)
+setfill(NAVY); c.setFont("Lora-Bold", 8.5)
+c.drawCentredString(cx, cy + 3, "MERIDIAN")
+c.drawCentredString(cx, cy - 8, "CLOCK")
+
+y = cy - clock_r - 16
+setfill(GRAY); c.setFont("Lora-Italic", 8)
+c.drawCentredString(W / 2, y, "Metal (LU/LI)  \u00b7  Earth (ST/SP)  \u00b7  Fire (HT/SI)  \u00b7  Water (BL/KI)  \u00b7  Ministerial Fire (PC/SJ)  \u00b7  Wood (GB/LR)")
 y -= 20
 
 y = section_rule(y, "The 3 Functions of Meridians", width=240)
