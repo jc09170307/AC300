@@ -7,7 +7,7 @@ from reportlab.pdfbase import pdfmetrics
 from reportlab.pdfbase.ttfonts import TTFont
 
 from week1_content import (TWELVE_MERIDIANS, ZANG_ORGANS, FU_ORGANS, CIRCUITS, DIRECTION_RULES,
-                            MEETING_POINTS, MERIDIAN_CLOCK, FUNCTIONS_OF_MERIDIANS, NOMENCLATURE,
+                            MEETING_POINTS, MERIDIAN_CLOCK, CLOCK_ELEMENT, FUNCTIONS_OF_MERIDIANS, NOMENCLATURE,
                             CHANNELS_VS_MERIDIANS, CLINICAL_PEARLS_WK1, QUIZ1_FUNDAMENTALS)
 
 pdfmetrics.registerFont(TTFont('Lora', '/home/claude/fonts/Lora-Regular.ttf'))
@@ -21,6 +21,9 @@ GOLD = (0.616, 0.478, 0.216)
 RED = (0.627, 0.220, 0.180)
 DARK = (0.15, 0.15, 0.15)
 GRAY = (0.40, 0.40, 0.40)
+METAL = (0.365, 0.408, 0.451); EARTH = (0.663, 0.478, 0.169); FIRE = (0.690, 0.204, 0.169)
+WATER = (0.180, 0.396, 0.612); WOOD = (0.239, 0.518, 0.278); MIN_FIRE = (0.831, 0.514, 0.478)
+ELEMENT_COLORS = {"Metal": METAL, "Earth": EARTH, "Fire": FIRE, "Water": WATER, "Wood": WOOD, "Ministerial Fire": MIN_FIRE}
 
 EDITION = sys.argv[1] if len(sys.argv) > 1 else "print"
 IS_RM = EDITION == "remarkable"
@@ -363,16 +366,30 @@ y = para(y, "Each meridian has a two-hour period of peak activity, following the
 y -= 8
 col_w = (CW - 24) / 2
 top_y = y
-setfill(DARK); c.setFont("Lora", F_TABLE)
 half = len(MERIDIAN_CLOCK) // 2
 for ab, tm in MERIDIAN_CLOCK[:half]:
-    c.drawString(ML, y, f"{ab}: {tm}"); y -= 13.5
+    elem = CLOCK_ELEMENT[ab]
+    setfill(ELEMENT_COLORS[elem]); c.rect(ML, y - 1, 8, 8, fill=1, stroke=0)
+    setfill(ELEMENT_COLORS[elem]); c.setFont("Lora-Bold", F_TABLE)
+    c.drawString(ML + 13, y, ab)
+    setfill(DARK); c.setFont("Lora", F_TABLE)
+    c.drawString(ML + 38, y, f": {tm}")
+    y -= 13.5
 left_bottom = y
 y2 = top_y; x2 = ML + col_w + 24
 for ab, tm in MERIDIAN_CLOCK[half:]:
-    c.drawString(x2, y2, f"{ab}: {tm}"); y2 -= 13.5
+    elem = CLOCK_ELEMENT[ab]
+    setfill(ELEMENT_COLORS[elem]); c.rect(x2, y2 - 1, 8, 8, fill=1, stroke=0)
+    setfill(ELEMENT_COLORS[elem]); c.setFont("Lora-Bold", F_TABLE)
+    c.drawString(x2 + 13, y2, ab)
+    setfill(DARK); c.setFont("Lora", F_TABLE)
+    c.drawString(x2 + 38, y2, f": {tm}")
+    y2 -= 13.5
 right_bottom = y2
-y = min(left_bottom, right_bottom) - 16
+y = min(left_bottom, right_bottom) - 6
+setfill(GRAY); c.setFont("Lora-Italic", 7.8)
+c.drawString(ML, y, "Metal (LU/LI)  \u00b7  Earth (ST/SP)  \u00b7  Fire (HT/SI)  \u00b7  Water (BL/KI)  \u00b7  Ministerial Fire (PC/SJ)  \u00b7  Wood (GB/LR)")
+y -= 20
 
 y = section_rule(y, "The 3 Functions of Meridians", width=240)
 for name, desc in FUNCTIONS_OF_MERIDIANS:
