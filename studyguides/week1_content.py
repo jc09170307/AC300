@@ -48,6 +48,16 @@ MERIDIAN_CLOCK = [
     ("PC", "7-9 PM"), ("SJ", "9-11 PM"), ("GB", "11 PM-1 AM"), ("LR", "1-3 AM"),
 ]
 
+# Five-Element color mapping for each channel, matching the established project palette
+CLOCK_ELEMENT = {
+    "LU": "Metal", "LI": "Metal",
+    "ST": "Earth", "SP": "Earth",
+    "HT": "Fire", "SI": "Fire",
+    "BL": "Water", "KI": "Water",
+    "PC": "Ministerial Fire", "SJ": "Ministerial Fire",
+    "GB": "Wood", "LR": "Wood",
+}
+
 FUNCTIONS_OF_MERIDIANS = [
     ("Transporting", "Transport Qi and Blood to nourish the organs, skin, muscles, tendons, and bones; keep Yin-Yang in harmony throughout the body."),
     ("Resisting (Defending)", "Defend the body against disease - meridians help resist pathogens and reflect symptoms/signs when something is wrong."),
