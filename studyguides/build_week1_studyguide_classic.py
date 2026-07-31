@@ -357,16 +357,19 @@ y -= 10
 setstroke(GOLD); c.setLineWidth(HAIRLINE)
 c.line(ML, y, ML + CW, y)
 y -= 18
+end_page()
 
-# ============= MERIDIAN CLOCK + FUNCTIONS (same page) =============
+# ============= MERIDIAN CLOCK (own page, generous margins) =============
+new_page(f"The Meridian Clock  \u00b7  {EDLABEL}")
+y = H - HEADER_H - 26
 y = section_rule(y, "The Meridian Clock (24-Hour Cycle)", width=280)
 y = para(y, "Each meridian has a two-hour period of peak activity, following the same order the meridians "
              "connect to each other. Dr. Zhang's own clinical example: to treat a Large Intestine dysfunction, "
              "consider its 5-7 AM active window; symptoms that flare at a specific time of day can point "
              "directly to which channel is involved.")
-y -= 6
-clock_r = 92
-cx, cy = W / 2, y - clock_r - 6
+y -= 14
+clock_r = 145
+cx, cy = W / 2, y - clock_r - 20
 CLOCK_SEGMENTS = [
     ("GB", -1), ("LR", 1), ("LU", 3), ("LI", 5), ("ST", 7), ("SP", 9),
     ("HT", 11), ("SI", 13), ("BL", 15), ("KI", 17), ("PC", 19), ("SJ", 21),
@@ -376,24 +379,30 @@ for ab, h1 in CLOCK_SEGMENTS:
     start_ang = 90 - 15 * h2
     elem = CLOCK_ELEMENT[ab]
     setfill(ELEMENT_COLORS[elem])
-    setstroke((1, 1, 1)); c.setLineWidth(1.4)
+    setstroke((1, 1, 1)); c.setLineWidth(1.6)
     c.wedge(cx - clock_r, cy - clock_r, cx + clock_r, cy + clock_r, start_ang, 30, stroke=1, fill=1)
     mid_ang = math.radians(90 - 15 * (h1 + 1))
-    label_r = clock_r * 0.67
+    label_r = clock_r * 0.68
     lx = cx + label_r * math.cos(mid_ang)
     ly = cy + label_r * math.sin(mid_ang)
-    setfill((1, 1, 1)); c.setFont("Lora-Bold", 10.5)
-    c.drawCentredString(lx, ly - 3.5, ab)
-setfill((1, 1, 1)); c.circle(cx, cy, clock_r * 0.3, fill=1, stroke=0)
-setfill(NAVY); c.setFont("Lora-Bold", 8.5)
+    hr_label = dict(MERIDIAN_CLOCK)[ab]
+    setfill((1, 1, 1)); c.setFont("Lora-Bold", 12)
+    c.drawCentredString(lx, ly + 1, ab)
+    c.setFont("Lora", 6.6)
+    c.drawCentredString(lx, ly - 9, hr_label)
+setfill((1, 1, 1)); c.circle(cx, cy, clock_r * 0.26, fill=1, stroke=0)
+setfill(NAVY); c.setFont("Lora-Bold", 9)
 c.drawCentredString(cx, cy + 3, "MERIDIAN")
-c.drawCentredString(cx, cy - 8, "CLOCK")
+c.drawCentredString(cx, cy - 9, "CLOCK")
 
-y = cy - clock_r - 16
-setfill(GRAY); c.setFont("Lora-Italic", 8)
+y = cy - clock_r - 20
+setfill(GRAY); c.setFont("Lora-Italic", 8.3)
 c.drawCentredString(W / 2, y, "Metal (LU/LI)  \u00b7  Earth (ST/SP)  \u00b7  Fire (HT/SI)  \u00b7  Water (BL/KI)  \u00b7  Ministerial Fire (PC/SJ)  \u00b7  Wood (GB/LR)")
-y -= 20
+end_page()
 
+# ============= 3 FUNCTIONS OF MERIDIANS (own page) =============
+new_page(f"Functions of Meridians  \u00b7  {EDLABEL}")
+y = H - HEADER_H - 26
 y = section_rule(y, "The 3 Functions of Meridians", width=240)
 for name, desc in FUNCTIONS_OF_MERIDIANS:
     setfill(RED); c.setFont("Lora-Bold", F_BODY)
