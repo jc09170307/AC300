@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """AC300 Week 1 Cram Sheet - Channel Theory. Builds BOTH Print and reMarkable editions."""
 import sys
+import math
 from reportlab.pdfgen import canvas
 from reportlab.lib.pagesizes import letter
 from reportlab.pdfbase import pdfmetrics
@@ -280,49 +281,59 @@ for pair, location, note in MEETING_POINTS:
     for l in wrap_words(note, "Lora-Italic", 8, CW - 10):
         c.drawString(ML + 10, y, l); y -= 10.5
     y -= 3
-y -= 8
+y -= 6
+setfill(NAVY); c.setFont("Lora-Bold", 11)
+c.drawCentredString(W / 2, y, "Meridian Clock (24 hr)")
+y -= 14
 
-col_w = (CW - 20) / 2
-top_y = y
-setfill(NAVY); c.setFont("Lora-Bold", 10)
-c.drawString(ML, y, "Meridian Clock (24 hr)")
-y -= 4
-setstroke(GOLD); c.line(ML, y, ML + 150, y)
-y -= 13
-c.setFont("Lora-Bold", 8.3)
-for ab, tm in MERIDIAN_CLOCK:
+clock_r = 74
+cx, cy = W / 2, y - clock_r - 4
+CLOCK_SEGMENTS = [
+    ("GB", -1), ("LR", 1), ("LU", 3), ("LI", 5), ("ST", 7), ("SP", 9),
+    ("HT", 11), ("SI", 13), ("BL", 15), ("KI", 17), ("PC", 19), ("SJ", 21),
+]
+for ab, h1 in CLOCK_SEGMENTS:
+    h2 = h1 + 2
+    start_ang = 90 - 15 * h2
     elem = CLOCK_ELEMENT[ab]
     setfill(ELEMENT_COLORS[elem])
-    c.rect(ML, y - 1, 7, 7, fill=1, stroke=0)
-    setfill(ELEMENT_COLORS[elem]); c.setFont("Lora-Bold", 8.3)
-    c.drawString(ML + 11, y, ab)
-    setfill(DARK); c.setFont("Lora", 8.3)
-    c.drawString(ML + 32, y, f": {tm}")
-    y -= 11.5
-setfill(GRAY); c.setFont("Lora-Italic", 6.8)
-c.drawString(ML, y - 2, "Metal / Earth / Fire / Water / Wood + Ministerial Fire (PC/SJ)")
-left_bottom = y - 12
+    setstroke((1, 1, 1)); c.setLineWidth(1.3)
+    c.wedge(cx - clock_r, cy - clock_r, cx + clock_r, cy + clock_r, start_ang, 30, stroke=1, fill=1)
+    mid_ang = math.radians(90 - 15 * (h1 + 1))
+    label_r = clock_r * 0.66
+    lx = cx + label_r * math.cos(mid_ang)
+    ly = cy + label_r * math.sin(mid_ang)
+    setfill((1, 1, 1)); c.setFont("Lora-Bold", 9.5)
+    c.drawCentredString(lx, ly - 3, ab)
+setfill((1, 1, 1)); c.circle(cx, cy, clock_r * 0.3, fill=1, stroke=0)
+setfill(NAVY); c.setFont("Lora-Bold", 7.5)
+c.drawCentredString(cx, cy + 3, "MERIDIAN")
+c.drawCentredString(cx, cy - 7, "CLOCK")
 
-y2 = top_y; x2 = ML + col_w + 20
+y = cy - clock_r - 14
+setfill(GRAY); c.setFont("Lora-Italic", 7.3)
+c.drawCentredString(W / 2, y, "Metal (LU/LI)  \u00b7  Earth (ST/SP)  \u00b7  Fire (HT/SI)  \u00b7  Water (BL/KI)  \u00b7  Min. Fire (PC/SJ)  \u00b7  Wood (GB/LR)")
+y -= 18
+
 setfill(NAVY); c.setFont("Lora-Bold", 10)
-c.drawString(x2, y2, "3 Functions of Meridians")
-y2 -= 4
-setstroke(GOLD); c.line(x2, y2, x2 + 150, y2)
-y2 -= 13
+c.drawString(ML, y, "3 Functions of Meridians")
+y -= 4
+setstroke(GOLD); c.line(ML, y, ML + 180, y)
+y -= 13
 setfill(DARK); c.setFont("Lora", 8.3)
+yy = y
 for name, desc in FUNCTIONS_OF_MERIDIANS:
-    setfill(RED); c.setFont("Lora-Bold", 8.3); c.drawString(x2, y2, name); y2 -= 10.5
+    setfill(RED); c.setFont("Lora-Bold", 8.3); c.drawString(ML, yy, name); yy -= 10.5
     setfill(DARK); c.setFont("Lora", 8)
-    for l in wrap_words(desc, "Lora", 8, col_w - 4):
-        c.drawString(x2, y2, l); y2 -= 10
-    y2 -= 4
-right_bottom = y2
-y = min(left_bottom, right_bottom)
+    for l in wrap_words(desc, "Lora", 8, CW - 4):
+        c.drawString(ML, yy, l); yy -= 10
+    yy -= 4
+y = yy
 
-y -= 14
+y -= 10
 setstroke(GOLD); c.setLineWidth(HAIRLINE)
 c.line(ML, y, ML + CW, y)
-y -= 20
+y -= 16
 
 # ============= RAPID RECALL (continues on same page if room, else new page) =============
 if y < 260:
