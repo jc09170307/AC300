@@ -286,45 +286,51 @@ setfill(GRAY); c.setFont("Lora-Italic", 7.5)
 c.drawCentredString(W / 2, y, "Source: Dr. Zhang's Week 1 lecture slides")
 end_page()
 
-# ============= THE THREE CIRCUITS, WITH DIAGRAMS =============
+# ============= THE THREE CIRCUITS + SUMMARY, 2 DIAGRAMS PER PAGE =============
 circuit_images = {"Outer Circuit": "jpg_p31.jpg", "Inner Circuit": "jpg_p33.jpg", "Middle Circuit": "jpg_p35.jpg"}
 circuit_titles = {"Outer Circuit": "The Anterior Circuit", "Inner Circuit": "The Posterior Circuit", "Middle Circuit": "The Middle Circuit"}
 
-for circuit_name, position, members, elements in CIRCUITS:
-    new_page(f"{circuit_titles[circuit_name]}  \u00b7  {EDLABEL}")
-    y = H - HEADER_H - 26
-    y = section_rule(y, f"{circuit_titles[circuit_name]} ({position})", width=280)
-    setfill(GRAY); c.setFont("Lora-Italic", 9)
+
+def circuit_block(y, circuit_name, position, members, elements):
+    y = section_rule(y, f"{circuit_titles[circuit_name]} ({position})", width=280, size=11.5)
+    setfill(GRAY); c.setFont("Lora-Italic", 8.3)
     c.drawString(ML, y, elements)
-    y -= 16
-    setfill(DARK); c.setFont("Lora", F_BODY)
+    y -= 13
+    setfill(DARK); c.setFont("Lora", 9)
     seq = "  ->  ".join(members)
-    for l in wrap_words(seq, "Lora", F_BODY, CW - 4):
-        c.drawString(ML, y, l); y -= F_BODY_LH
-    y -= 12
-    img_w = CW
+    for l in wrap_words(seq, "Lora", 9, CW - 4):
+        c.drawString(ML, y, l); y -= 11.5
+    y -= 8
+    img_w = CW * 0.72
     img_h = img_w * 0.577
-    c.drawImage(f"/home/claude/wk1slides/{circuit_images[circuit_name]}", ML, y - img_h, width=img_w, height=img_h)
-    y -= img_h + 10
-    setfill(GRAY); c.setFont("Lora-Italic", 8)
+    img_x = ML + (CW - img_w) / 2
+    c.drawImage(f"/home/claude/wk1slides/{circuit_images.get(circuit_name, 'jpg_p36.jpg')}", img_x, y - img_h, width=img_w, height=img_h)
+    y -= img_h + 8
+    setfill(GRAY); c.setFont("Lora-Italic", 7.5)
     c.drawCentredString(W / 2, y, "Source: Dr. Zhang's Week 1 lecture slides")
-    end_page()
+    return y - 16
 
-# ============= THREE CIRCUITS SUMMARY DIAGRAM =============
-new_page(f"Three Circuits Summary  \u00b7  {EDLABEL}")
-y = H - HEADER_H - 26
-y = section_rule(y, "Three Main Circuits in the Flow of Qi \u2014 Summary", width=340)
-y = para(y, "A useful way to remember: the Outer Circuit's Yang partner is Yangming (LI, ST); the Inner "
-             "Circuit's Yang partner is Taiyang (SI, BL); the Middle Circuit's Yang partner is Shaoyang "
-             "(SJ, GB). Match the location name to the circuit and the rest follows.", size=9.5, lh=12.5)
-y -= 10
-img_w = CW
+
+new_page(f"The Anterior & Posterior Circuits  \u00b7  {EDLABEL}")
+y = H - HEADER_H - 24
+y = circuit_block(y, "Outer Circuit", "Anterior", CIRCUITS[0][2], CIRCUITS[0][3])
+y = circuit_block(y, "Inner Circuit", "Posterior", CIRCUITS[1][2], CIRCUITS[1][3])
+end_page()
+
+new_page(f"The Middle Circuit & Summary  \u00b7  {EDLABEL}")
+y = H - HEADER_H - 24
+y = circuit_block(y, "Middle Circuit", "Middle", CIRCUITS[2][2], CIRCUITS[2][3])
+y = section_rule(y, "Three Main Circuits \u2014 Summary", width=260, size=11.5)
+y = para(y, "The Outer Circuit's Yang partner is Yangming; the Inner Circuit's is Taiyang; the Middle "
+             "Circuit's is Shaoyang. Match the location name to the circuit and the rest follows.", size=9, lh=11.5)
+y -= 6
+img_w = CW * 0.72
 img_h = img_w * 0.577
-c.drawImage("/home/claude/wk1slides/jpg_p36.jpg", ML, y - img_h, width=img_w, height=img_h)
-y -= img_h + 10
-setfill(GRAY); c.setFont("Lora-Italic", 8)
+img_x = ML + (CW - img_w) / 2
+c.drawImage("/home/claude/wk1slides/jpg_p36.jpg", img_x, y - img_h, width=img_w, height=img_h)
+y -= img_h + 8
+setfill(GRAY); c.setFont("Lora-Italic", 7.5)
 c.drawCentredString(W / 2, y, "Source: Dr. Zhang's Week 1 lecture slides")
-
 end_page()
 
 # ============= PAGE 6: DIRECTION + MEETING POINTS =============
@@ -356,7 +362,14 @@ for pair, location, note in MEETING_POINTS:
 y -= 10
 setstroke(GOLD); c.setLineWidth(HAIRLINE)
 c.line(ML, y, ML + CW, y)
-y -= 18
+y -= 16
+
+y = section_rule(y, "The 3 Functions of Meridians", width=240)
+for name, desc in FUNCTIONS_OF_MERIDIANS:
+    setfill(RED); c.setFont("Lora-Bold", F_BODY)
+    c.drawString(ML, y, name); y -= 13
+    y = para(y, desc, size=9.3, lh=12)
+    y -= 6
 end_page()
 
 # ============= MERIDIAN CLOCK (own page, generous margins) =============
@@ -398,18 +411,6 @@ c.drawCentredString(cx, cy - 9, "CLOCK")
 y = cy - clock_r - 20
 setfill(GRAY); c.setFont("Lora-Italic", 8.3)
 c.drawCentredString(W / 2, y, "Metal (LU/LI)  \u00b7  Earth (ST/SP)  \u00b7  Fire (HT/SI)  \u00b7  Water (BL/KI)  \u00b7  Ministerial Fire (PC/SJ)  \u00b7  Wood (GB/LR)")
-end_page()
-
-# ============= 3 FUNCTIONS OF MERIDIANS (own page) =============
-new_page(f"Functions of Meridians  \u00b7  {EDLABEL}")
-y = H - HEADER_H - 26
-y = section_rule(y, "The 3 Functions of Meridians", width=240)
-for name, desc in FUNCTIONS_OF_MERIDIANS:
-    setfill(RED); c.setFont("Lora-Bold", F_BODY)
-    c.drawString(ML, y, name); y -= 13
-    y = para(y, desc, size=9.3, lh=12)
-    y -= 6
-
 end_page()
 
 # ============= PAGE 8: CLINICAL PEARLS + QUIZ 1 FUNDAMENTALS =============
