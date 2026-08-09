@@ -154,13 +154,13 @@ def pathway_8beats(x, y, w, title, beats, color):
 def five_shu_table(x, y, w, five_shu, color, tint):
     y = box_header(x, y, w, "Five-Shu (Antique) Points", color)
     col2, col3 = 100, 175
-    setfill(tint); c.rect(x, y - 12, w, 12, fill=1, stroke=0)
-    setfill(color); c.setFont("Lora-Bold", F_SMALL)
+    setfill(color); c.rect(x, y - 12, w, 9, fill=1, stroke=0)
+    setfill((1, 1, 1)); c.setFont("Lora-Bold", F_SMALL)
     c.drawString(x + 2, y - 9.5, "Shu Point"); c.drawString(x + col2, y - 9.5, "Element"); c.drawString(x + col3, y - 9.5, "Pt")
     y -= 15
     for i, (shu, elem, pt, use) in enumerate(five_shu):
         if i % 2 == 0:
-            setfill(tint); c.rect(x, y - 9, w, 12, fill=1, stroke=0)
+            setfill(tint); c.rect(x, y - 9, w, 9, fill=1, stroke=0)
         setfill(DARK); c.setFont("Lora", F_SMALL)
         pt_short = pt.split(" (")[0]
         c.drawString(x + 2, y - 6.5, shu); c.drawString(x + col2, y - 6.5, elem); c.drawString(x + col3, y - 6.5, pt_short)
@@ -170,8 +170,8 @@ def five_shu_table(x, y, w, five_shu, color, tint):
 
 def two_col_table(x, y, w, title, headers, col_widths, rows, color, tint):
     y = box_header(x, y, w, title, color)
-    setfill(tint); c.rect(x, y - 12, w, 12, fill=1, stroke=0)
-    setfill(color); c.setFont("Lora-Bold", F_SMALL)
+    setfill(color); c.rect(x, y - 12, w, 9, fill=1, stroke=0)
+    setfill((1, 1, 1)); c.setFont("Lora-Bold", F_SMALL)
     cx = x + 2
     for h_, cw_ in zip(headers, col_widths):
         c.drawString(cx, y - 9.5, h_)
@@ -183,7 +183,7 @@ def two_col_table(x, y, w, title, headers, col_widths, rows, color, tint):
         n = max(len(cl) for cl in cell_lines)
         row_h = n * F_SMALL_LH
         if row_i % 2 == 0:
-            setfill(tint); c.rect(x, y - row_h + 2, w, row_h, fill=1, stroke=0)
+            setfill(tint); c.rect(x, y - row_h, w, row_h - 1.5, fill=1, stroke=0)
         row_i += 1
         cx = x
         for i, cl in enumerate(cell_lines):
