@@ -399,6 +399,16 @@ def external_cam_page(name, abbrev, color, tint, points, meta_rows, subtitle_att
             c.line(ML, y + 3, ML + table_w, y + 3)
             y -= 3
             row_i = 0
+            # Repeat the CAM figure on the continuation page too, so the
+            # reader always has the point map alongside whichever points
+            # happen to be on that page.
+            cont_img_top = H - 46
+            cont_img_bottom = draw_image_contain(cam_key, ix, cont_img_top, img_w,
+                                                  cont_img_top - IMG_FOOTER_CLEAR - 28, color)
+            setfill(NAVY); c.setFont("Lora-BoldItalic", 8.6)
+            c.drawCentredString(ix + img_w / 2, cont_img_bottom - 14, cam_caption)
+            setfill(GRAY); c.setFont("Lora-Italic", 7.6)
+            c.drawCentredString(ix + img_w / 2, cont_img_bottom - 26, cam_source)
         if row_i % 2 == 0:
             setfill(tint); c.rect(ML - 4, y - row_h + 8, table_w + 4, row_h, fill=1, stroke=0)
         row_i += 1
