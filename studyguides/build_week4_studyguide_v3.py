@@ -818,9 +818,9 @@ y -= 16 + 13.5
 row_i = 0
 for attr, ht_val, si_val in COMPARISON_HT_SI:
     if row_i % 2 == 0:
-        setfill(NEUTRAL_TINT); c.rect(ML - 4, y - 8, col2_x - 4 - (ML - 4), 13.5, fill=1, stroke=0)
-        setfill(HT_TINT); c.rect(col2_x - 4, y - 8, col3_x - col2_x, 13.5, fill=1, stroke=0)
-        setfill(SI_TINT); c.rect(col3_x - 4, y - 8, (ML - 4 + CW + 8) - (col3_x - 4), 13.5, fill=1, stroke=0)
+        setfill(NEUTRAL_TINT); c.rect(ML - 4, y - 5.5, col2_x - 4 - (ML - 4), 13.5, fill=1, stroke=0)
+        setfill(HT_TINT); c.rect(col2_x - 4, y - 5.5, col3_x - col2_x, 13.5, fill=1, stroke=0)
+        setfill(SI_TINT); c.rect(col3_x - 4, y - 5.5, (ML - 4 + CW + 8) - (col3_x - 4), 13.5, fill=1, stroke=0)
     row_i += 1
     setfill(NAVY); c.setFont("Lora-Bold", F_TABLE); c.drawString(ML, y, attr)
     setfill(DARK); c.setFont("Lora", F_TABLE)
