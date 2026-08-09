@@ -477,8 +477,8 @@ def crossing_syndromes_page(name, abbrev, color, tint, crossing_title, crossing_
     y = min(left_bottom, right_bottom) - 8
 
     y = section_bar(y, f"High-Yield {abbrev} Points", color, size=11)
-    setfill(tint); c.rect(ML - 4, y - 15, CW + 8, 15, fill=1, stroke=0)
-    setfill(color); c.setFont("Lora-Bold", F_TABLE)
+    setfill(color); c.rect(ML - 4, y - 15, CW + 8, 15, fill=1, stroke=0)
+    setfill((1, 1, 1)); c.setFont("Lora-Bold", F_TABLE)
     c.drawString(ML, y - 11, "Pt"); c.drawString(ML + 38, y - 11, "Category"); c.drawString(ML + 175, y - 11, "Key Indications")
     y -= 15 + F_TABLE_LH
     row_i = 0
@@ -497,8 +497,8 @@ def crossing_syndromes_page(name, abbrev, color, tint, crossing_title, crossing_
     y -= 10
 
     y = section_bar(y, f"Five-Shu (Antique) Points \u2014 {abbrev}", color, size=11)
-    setfill(tint); c.rect(ML - 4, y - 15, CW + 8, 15, fill=1, stroke=0)
-    setfill(color); c.setFont("Lora-Bold", F_TABLE)
+    setfill(color); c.rect(ML - 4, y - 15, CW + 8, 15, fill=1, stroke=0)
+    setfill((1, 1, 1)); c.setFont("Lora-Bold", F_TABLE)
     c.drawString(ML, y - 11, "Shu Point"); c.drawString(ML + 95, y - 11, "Element")
     c.drawString(ML + 160, y - 11, "Pt"); c.drawString(ML + 300, y - 11, "Clinical Use")
     y -= 15 + F_TABLE_LH
