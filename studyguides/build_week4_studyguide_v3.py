@@ -244,6 +244,7 @@ bullets = [
     "Syndromes, High-Yield Points, and Five-Shu tables for both channels",
     "Dr. Zhang's Clinical Pearls - direct from lecture",
     "Quiz 4 Fundamentals + HT vs SI Quick Reference comparison",
+    "30-Question Practice Quiz with Full Answer Key (varying difficulty)",
 ]
 for b in bullets:
     setfill(GOLD); c.circle(ML + 3, y + 3, 1.6, fill=1, stroke=0)
@@ -532,6 +533,103 @@ SI_CROSSING_DETAIL = [
      "GB14 / GB channel"),
 ]
 
+QUIZ4_PRACTICE = [
+    # (question, [A,B,C,D], correct_letter, explanation, difficulty)
+    ("How many points does the HT channel have?",
+     ["9", "11", "19", "20"], "A",
+     "HT has 9 points (HT1-HT9) - the fewest of any primary channel.", "easy"),
+    ("How many points does the SI channel have?",
+     ["9", "11", "19", "20"], "C",
+     "SI has 19 points (SI1-SI19) - more than double HT's count.", "easy"),
+    ("What element do HT and SI both belong to?",
+     ["Earth", "Fire", "Water", "Wood"], "B",
+     "HT and SI are the Primary Fire pair (not to be confused with PC/SJ, the Ministerial Fire pair).", "easy"),
+    ("HT is classified as which Yin/Yang type?",
+     ["Yin (Hand-Shaoyin)", "Yang (Hand-Taiyang)", "Yin (Foot-Shaoyin)", "Yang (Foot-Taiyang)"], "A",
+     "HT = Heart Meridian of Hand-Shaoyin - a Yin, Zang (organ) channel.", "easy"),
+    ("SI is classified as which Yin/Yang type?",
+     ["Yin (Hand-Shaoyin)", "Yang (Hand-Taiyang)", "Yin (Foot-Taiyin)", "Yang (Foot-Yangming)"], "B",
+     "SI = Small Intestine Meridian of Hand-Taiyang - a Yang, Fu (bowel) channel.", "easy"),
+    ("Peak Qi activity of the Heart meridian is:",
+     ["9-11 AM", "11 AM-1 PM", "1-3 PM", "3-5 PM"], "B",
+     "HT peaks 11 AM-1 PM, immediately after SP (9-11 AM) and before SI (1-3 PM).", "easy"),
+    ("Peak Qi activity of the Small Intestine meridian is:",
+     ["11 AM-1 PM", "1-3 PM", "3-5 PM", "5-7 PM"], "B",
+     "SI peaks 1-3 PM, immediately after HT.", "easy"),
+    ("The CONNECTING organ of the Heart meridian is:",
+     ["Lung", "Stomach", "Small Intestine", "Bladder"], "C",
+     "Pertaining = Heart, Connecting = Small Intestine (interior-exterior pair).", "easy"),
+    ("HT's Back-Shu point is:",
+     ["BL14", "BL15", "BL20", "BL27"], "B",
+     "BL15 Xinshu is HT's Back-Shu point. (SI's is BL27 Xiaochangshu.)", "easy"),
+    ("SI's Front-Mu point is:",
+     ["CV12", "CV14", "CV4", "CV3"], "C",
+     "CV4 Guanyuan is SI's Front-Mu point. (HT's is CV14 Juque.)", "easy"),
+    ("HT7 Shenmen holds which special point categories?",
+     ["He-Sea + Luo-Connecting", "Shu-Stream + Yuan-Source", "Jing-Well + Xi-Cleft", "Front-Mu + Back-Shu"], "B",
+     "HT7 is both the Shu-Stream and Yuan-Source point - the single most important point for calming Shen.", "medium"),
+    ("Which HT point is the He-Sea?",
+     ["HT3 Shaohai", "HT7 Shenmen", "HT9 Shaochong", "HT1 Jiquan"], "A",
+     "HT3 Shaohai is the He-Sea point, at the elbow crease.", "medium"),
+    ("SI3 Houxi holds which special categories?",
+     ["Yuan-Source only", "He-Sea + Xi-Cleft", "Shu-Stream + Confluent (opens Du Mai)", "Jing-Well + Luo"], "C",
+     "SI3 is Shu-Stream and also a Confluent point opening the Du Mai.", "medium"),
+    ("SI3's Confluent action opens the Du Mai in combination with which point?",
+     ["LU7", "BL62 Shenmai", "KI6", "SP4"], "B",
+     "SI3 (Houxi) pairs with BL62 (Shenmai) to open the Du Mai - one of the 8 Confluent point pairs.", "medium"),
+    ("HT9 Shaochong is which Five-Shu category?",
+     ["Jing-Well", "Ying-Spring", "Shu-Stream", "He-Sea"], "A",
+     "HT9 is the Jing-Well point - the last point of HT, on the radial side of the little finger.", "medium"),
+    ("SI's Lower He-Sea point is located on which channel?",
+     ["SI itself", "BL", "ST", "GB"], "C",
+     "SI's Lower He-Sea is ST39 Xiajuxu - on the STOMACH channel, not SI. True for all six Fu organs.", "medium"),
+    ("Which point is SI's Xi-Cleft?",
+     ["SI4 Wangu", "SI6 Yanglao", "SI7 Zhizheng", "SI8 Xiaohai"], "B",
+     "SI6 Yanglao is the Xi-Cleft point, dorsal to the head of the ulna.", "medium"),
+    ("HT5 Tongli's special category is:",
+     ["Luo-Connecting", "Xi-Cleft", "Yuan-Source", "He-Sea"], "A",
+     "HT5 Tongli is the Luo-Connecting point, linking HT to SI.", "medium"),
+    ("SI16 Tianchuang is classified as:",
+     ["Window of Heaven", "Confluent", "Front-Mu", "Back-Shu"], "A",
+     "SI16 is a Window of Heaven point, near the laryngeal prominence - needle with care (carotid region).", "medium"),
+    ("Per Dr. Zhang's lecture, which point is specifically noted for breast milk / lactation problems?",
+     ["HT8 Shaofu", "SI1 Shaoze", "SI19 Tinggong", "HT3 Shaohai"], "B",
+     "Dr. Zhang highlighted SI1 (Shaoze) specifically for lactation problems.", "medium"),
+    ("How many crossing points does the HT channel have?",
+     ["0", "2", "4", "6"], "A",
+     "HT is the only one of the 12 primary channels with ZERO crossing points anywhere on its pathway.", "hard"),
+    ("How many crossing points does SI have, and with which channels?",
+     ["0", "2 (BL1, GB14)", "6 (mostly abdomen/chest)", "11 (mostly face/head)"], "B",
+     "SI crosses only twice: BL1 (Jingming) and GB14 (Yangbai), both on its facial branch.", "hard"),
+    ("SI's facial branch crosses BL1 Jingming en route to:",
+     ["The ear", "The inner canthus of the eye", "The nose", "The mouth"], "B",
+     "BL1 sits at the inner canthus; SI's ascending branch crosses it heading toward the eye.", "hard"),
+    ("Which statement about HT is exam-critical and TRUE?",
+     ["HT has the most points of any channel", "HT is the only channel with zero crossing points",
+      "HT connects internally to the Lung", "HT's Back-Shu is CV14"], "B",
+     "HT's zero crossing points is one of the highest-yield unique-feature facts in the Weeks 1-4 scope.", "hard"),
+    ("Per Dr. Zhang's circuit-continuity trap, SI connects internally to which organ NEXT?",
+     ["Pericardium", "San Jiao", "Bladder", "Kidney"], "C",
+     "SI connects to BLADDER next (not PC/SJ) via its facial branch to BL1 - a classic exam trap.", "hard"),
+    ("HT and SI together open which circuit?",
+     ["Anterior Circuit", "Posterior Circuit (also called Inner Circuit)",
+      "Ministerial Fire Circuit", "Middle Circuit"], "B",
+     "HT -> SI opens the Posterior Circuit (also called Inner Circuit on the revised Lecture 4 slide).", "hard"),
+    ("The Primary Fire pair (HT/SI) should not be confused with which other Fire pair?",
+     ["LU/LI", "ST/SP", "PC/SJ (Ministerial Fire)", "BL/KI"], "C",
+     "PC and SJ are Ministerial Fire, a separate pair with their own circuit taught in Week 6.", "hard"),
+    ("EXCEPT: all of the following are TRUE about SI EXCEPT:",
+     ["SI has more than double HT's points", "SI3 opens the Du Mai",
+      "SI's Lower He-Sea is on the SI channel itself", "SI crosses BL1 and GB14"], "C",
+     "SI's Lower He-Sea is ST39, on the STOMACH channel - not on SI itself. The trap answer.", "hard"),
+    ("Which HT point is the emergency point for severe heart pain and revives consciousness?",
+     ["HT7 Shenmen", "HT9 Shaochong", "HT3 Shaohai", "HT5 Tongli"], "B",
+     "HT9 (Jing-Well) is HT's emergency point - severe heart pain, palpitations, revives consciousness.", "hard"),
+    ("HT6 Yinxi (Xi-Cleft) is clinically noted for:",
+     ["Anxiety and insomnia only", "Night sweats and acute heart pain", "Voice disorders", "Arm pain only"], "B",
+     "As HT's Xi-Cleft (acute) point, HT6 treats night sweats and acute heart pain.", "hard"),
+]
+
 
 # ============================================================
 # ORCHESTRATION - each organ's full page set built consecutively
@@ -676,18 +774,101 @@ c.drawString(ML, y, "Attribute"); c.drawString(ML + 135, y, "HT  |  Heart (Hand 
 c.drawString(ML + 350, y, "SI  |  Small Intestine (Hand Taiyang)")
 y -= 15
 row_i = 0
+col2_x = ML + 135
+col3_x = ML + 350
+NEUTRAL_TINT = (0.94, 0.94, 0.95)
 for attr, ht_val, si_val in COMPARISON_HT_SI:
     if row_i % 2 == 0:
-        setfill(HT_TINT); c.rect(ML - 4, y - 8, (CW + 8) / 2, 13.5, fill=1, stroke=0)
-        setfill(SI_TINT); c.rect(ML - 4 + (CW + 8) / 2, y - 8, (CW + 8) / 2, 13.5, fill=1, stroke=0)
+        setfill(NEUTRAL_TINT); c.rect(ML - 4, y - 8, col2_x - 4 - (ML - 4), 13.5, fill=1, stroke=0)
+        setfill(HT_TINT); c.rect(col2_x - 4, y - 8, col3_x - col2_x, 13.5, fill=1, stroke=0)
+        setfill(SI_TINT); c.rect(col3_x - 4, y - 8, (ML - 4 + CW + 8) - (col3_x - 4), 13.5, fill=1, stroke=0)
     row_i += 1
     setfill(NAVY); c.setFont("Lora-Bold", F_TABLE); c.drawString(ML, y, attr)
     setfill(DARK); c.setFont("Lora", F_TABLE)
-    c.drawString(ML + 135, y, ht_val)
-    c.drawString(ML + 350, y, si_val)
+    c.drawString(col2_x, y, ht_val)
+    c.drawString(col3_x, y, si_val)
     y -= 13.5
 
 end_page()
+
+# ============================================================
+# PRACTICE QUIZ - 30 questions, varying difficulty (easy/medium/hard)
+# ============================================================
+DIFF_COLOR = {"easy": (0.318, 0.573, 0.345), "medium": (0.729, 0.573, 0.184), "hard": HT_COLOR}
+
+def quiz_question_pages():
+    global page_num
+    new_page()
+    y = H - 46
+    y = section_bar(y, "Week 4 Practice Quiz \u2014 30 Questions (Varying Difficulty)", NAVY, size=13)
+    setfill(GRAY); c.setFont("Lora-Italic", F_SMALL)
+    c.drawString(ML, y, "Covers HT & SI \u00b7 green = easier recall, gold = applied, red = trap/nuance")
+    y -= 18
+
+    for qi, (q, opts, correct, expl, diff) in enumerate(QUIZ4_PRACTICE, 1):
+        q_lines = wrap_words(f"{qi}  {q}", "Lora-Bold", 10, CW - 10)
+        opt_lines = []
+        for j in range(0, 4, 2):
+            left = f"{chr(65+j)}. {opts[j]}"
+            right = f"{chr(65+j+1)}. {opts[j+1]}"
+            opt_lines.append((left, right))
+        needed = len(q_lines) * 12.5 + len(opt_lines) * 12 + 12
+        if y - needed < 45:
+            end_page()
+            new_page()
+            y = H - 46
+            y = section_bar(y, "Week 4 Practice Quiz (continued)", NAVY, size=13)
+            y -= 8
+        setfill(DIFF_COLOR[diff]); c.circle(ML + 2, y - 2, 3, fill=1, stroke=0)
+        setfill(DARK); c.setFont("Lora-Bold", 10)
+        for i, l in enumerate(q_lines):
+            c.drawString(ML + 10 if i == 0 else ML, y - i * 12.5, l)
+        y -= len(q_lines) * 12.5 + 2
+        setfill(DARK); c.setFont("Lora", 9.3)
+        col2 = ML + CW / 2
+        for left, right in opt_lines:
+            c.drawString(ML + 10, y, left)
+            c.drawString(col2, y, right)
+            y -= 12
+        y -= 8
+
+    end_page()
+
+
+def quiz_answer_key_pages():
+    new_page()
+    y = H - 46
+    y = section_bar(y, "Week 4 Practice Quiz \u2014 Answer Key (All 30 Questions)", NAVY, size=13)
+    y -= 4
+
+    for qi, (q, opts, correct, expl, diff) in enumerate(QUIZ4_PRACTICE, 1):
+        q_short = wrap_words(q, "Lora-Italic", 8.6, CW - 30)
+        expl_lines = wrap_words(expl, "Lora", 9.3, CW - 30)
+        needed = 13 + len(q_short) * 10.5 + len(expl_lines) * 11.5 + 8
+        if y - needed < 45:
+            end_page()
+            new_page()
+            y = H - 46
+            y = section_bar(y, "Week 4 Practice Quiz \u2014 Answer Key (continued)", NAVY, size=13)
+            y -= 4
+        setfill(DIFF_COLOR[diff]); c.circle(ML + 2, y - 3, 3, fill=1, stroke=0)
+        setfill(NAVY); c.setFont("Lora-Bold", 10)
+        c.drawString(ML + 10, y, f"{qi}.  {correct}")
+        setfill(GRAY); c.setFont("Lora-Italic", 8.6)
+        for i, l in enumerate(q_short):
+            c.drawString(ML + 40, y - i * 10.5, l)
+        y -= len(q_short) * 10.5 + 2
+        setfill(DARK); c.setFont("Lora", 9.3)
+        for l in expl_lines:
+            c.drawString(ML + 10, y, l)
+            y -= 11.5
+        y -= 8
+
+    end_page()
+
+
+quiz_question_pages()
+quiz_answer_key_pages()
 
 c.save()
 print("SAVED:", OUT)
