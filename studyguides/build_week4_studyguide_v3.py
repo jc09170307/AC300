@@ -802,14 +802,20 @@ end_page()
 new_page()
 y = H - 46
 y = section_bar(y, "HT vs SI \u2014 Quick Reference Comparison", NAVY, size=13)
-setfill(NAVY); c.setFont("Lora-Bold", F_TABLE)
-c.drawString(ML, y, "Attribute"); c.drawString(ML + 135, y, "HT  |  Heart (Hand Shaoyin)")
-c.drawString(ML + 350, y, "SI  |  Small Intestine (Hand Taiyang)")
-y -= 15
-row_i = 0
 col2_x = ML + 135
 col3_x = ML + 350
 NEUTRAL_TINT = (0.94, 0.94, 0.95)
+
+# Solid header bar (matches High-Yield / Five-Shu table headers elsewhere in
+# this doc) so the column labels are clearly separated from row 1, not
+# blended into it.
+setfill(NAVY); c.rect(ML - 4, y - 16, CW + 8, 16, fill=1, stroke=0)
+setfill((1, 1, 1)); c.setFont("Lora-Bold", F_TABLE)
+c.drawString(ML, y - 12, "Attribute")
+c.drawString(col2_x, y - 12, "HT  |  Heart (Hand Shaoyin)")
+c.drawString(col3_x, y - 12, "SI  |  Small Intestine (Hand Taiyang)")
+y -= 16 + 13.5
+row_i = 0
 for attr, ht_val, si_val in COMPARISON_HT_SI:
     if row_i % 2 == 0:
         setfill(NEUTRAL_TINT); c.rect(ML - 4, y - 8, col2_x - 4 - (ML - 4), 13.5, fill=1, stroke=0)
