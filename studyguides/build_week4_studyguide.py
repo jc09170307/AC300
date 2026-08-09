@@ -5,6 +5,10 @@ from reportlab.pdfgen import canvas
 from reportlab.lib.pagesizes import letter
 from reportlab.pdfbase import pdfmetrics
 from reportlab.pdfbase.ttfonts import TTFont
+from reportlab.lib.utils import ImageReader
+from PIL import Image
+
+FIGS_DIR = "/home/claude/figs_final"
 
 from week4_sg_content import (HT_POINTS, SI_POINTS, HT_COURSE, SI_COURSE, HT_META, SI_META,
                                HT_FUNCTIONS, SI_FUNCTIONS, SYNDROMES_HT, SYNDROMES_SI,
@@ -122,6 +126,50 @@ def section_rule(y, title, width=240, size=12.5):
 row_num = [0]
 
 
+_img_size_cache = {}
+
+
+FOOTER_CLEAR = 56  # reserve above the gold footer rule (y=34) for caption+source+margin
+
+def figure_space_needed(fig_key, max_w, max_h):
+    path = f"{FIGS_DIR}/{fig_key}.jpeg"
+    if fig_key not in _img_size_cache:
+        with Image.open(path) as im:
+            _img_size_cache[fig_key] = im.size
+    iw, ih = _img_size_cache[fig_key]
+    scale = min(max_w / iw, max_h / ih)
+    dw, dh = iw * scale, ih * scale
+    return dw, dh
+
+
+def figure_block(y_top, fig_key, caption, source_label, max_w=380, max_h=340):
+    """Draws a centered figure with caption+source line, top-anchored at y_top.
+    Shrinks to fit whatever vertical space remains above the footer.
+    Returns the y position after the block."""
+    path = f"{FIGS_DIR}/{fig_key}.jpeg"
+    if fig_key not in _img_size_cache:
+        with Image.open(path) as im:
+            _img_size_cache[fig_key] = im.size
+    iw, ih = _img_size_cache[fig_key]
+    # cap image height so caption+source+margin still clears the footer
+    available_h = max(60, (y_top - FOOTER_CLEAR) - 26)
+    eff_max_h = min(max_h, available_h)
+    scale = min(max_w / iw, eff_max_h / ih)
+    dw, dh = iw * scale, ih * scale
+    dx = ML + (CW - dw) / 2
+    dy = y_top - dh
+    setstroke(GOLD); c.setLineWidth(HAIRLINE)
+    c.rect(dx - 4, dy - 4, dw + 8, dh + 8, fill=0, stroke=1)
+    c.drawImage(ImageReader(path), dx, dy, width=dw, height=dh)
+    y = dy - 14
+    setfill(NAVY); c.setFont("Lora-BoldItalic", 9.5)
+    c.drawCentredString(W / 2, y, caption)
+    y -= 12
+    setfill(GRAY); c.setFont("Lora-Italic", 7.8)
+    c.drawCentredString(W / 2, y, source_label)
+    return y - 10
+
+
 def def_list(y, rows, col1_w=165):
     for label, val in rows:
         lbl_lines = wrap_words(label, "Lora-Bold", F_BODY, col1_w - 6)
@@ -172,8 +220,8 @@ c.drawCentredString(W / 2, y, "This Document Contains:")
 y -= 20
 setfill(DARK); c.setFont("Lora", 10.5)
 for b in [
-    "Full internal & external running course for HT and SI",
-    "Complete point-location table for all 28 points (CAM-verified)",
+    "Full internal & external running course for HT and SI, with MOA pathway figures",
+    "Complete point-location table for all 28 points, with CAM color figures",
     "SI's crossing points detailed (HT has none - unique feature)",
     "Syndromes, high-yield points, and Five-Shu tables",
     "Dr. Zhang's Clinical Pearls direct from lecture",
@@ -202,7 +250,8 @@ c.drawCentredString(W / 2, y, "Jonathan Centeno \u00b7 D.AcHM Candidate \u00b7 S
 end_page()
 
 
-def channel_meta_page(name, subtitle_full, meta_rows, course_beats, functions):
+def channel_meta_page(name, subtitle_full, meta_rows, course_beats, functions,
+                       moa_key=None, moa_caption=None, moa_source=None):
     row_num[0] = 0
     new_page(f"{name} \u2014 {subtitle_full}  \u00b7  {EDLABEL}")
     y = H - HEADER_H - 26
@@ -231,14 +280,31 @@ def channel_meta_page(name, subtitle_full, meta_rows, course_beats, functions):
             c.drawString(ML, y, l)
             y -= F_BODY_LH
         y -= 3
+
+    if moa_key:
+        y -= 8
+        # if under ~230pt remains, the image would be squashed - start a fresh page for it
+        if y - FOOTER_CLEAR < 230:
+            end_page()
+            row_num[0] = 0
+            new_page(f"{name} \u2014 {subtitle_full}  \u00b7  {EDLABEL}")
+            y = H - HEADER_H - 30
+        y = section_rule(y, "Channel Pathway (MOA)", width=220, size=12.5)
+        figure_block(y, moa_key, moa_caption, moa_source, max_w=400, max_h=560)
+
     end_page()
 
 
-channel_meta_page("Heart", "Hand-Shaoyin (HT)", HT_META, HT_COURSE, HT_FUNCTIONS)
-channel_meta_page("Small Intestine", "Hand-Taiyang (SI)", SI_META, SI_COURSE, SI_FUNCTIONS)
+channel_meta_page("Heart", "Hand-Shaoyin (HT)", HT_META, HT_COURSE, HT_FUNCTIONS,
+                   moa_key="MOA_HT", moa_caption="MOA \u2014 Heart Channel (primary pathway)",
+                   moa_source="Manual of Acupuncture (Deadman), 3rd Ed. \u00b7 Heart Channel, p.209")
+channel_meta_page("Small Intestine", "Hand-Taiyang (SI)", SI_META, SI_COURSE, SI_FUNCTIONS,
+                   moa_key="MOA_SI", moa_caption="MOA \u2014 Small Intestine Channel (primary pathway)",
+                   moa_source="Manual of Acupuncture (Deadman), 3rd Ed. \u00b7 Small Intestine Channel, p.227")
 
 
-def location_table_page(name, abbrev, points, five_shu, extra_note=None):
+def location_table_page(name, abbrev, points, five_shu, extra_note=None,
+                         cam_key=None, cam_caption=None, cam_source=None):
     row_num[0] = 0
     new_page(f"{name} ({abbrev})  \u2014  Point Locations  \u00b7  {EDLABEL}")
     y = H - HEADER_H - 26
@@ -283,13 +349,28 @@ def location_table_page(name, abbrev, points, five_shu, extra_note=None):
         for i, l in enumerate(lines):
             c.drawString(ML + 310, y - i * F_TABLE_LH, l)
         y -= row_h
+
+    if cam_key:
+        y -= 14
+        if y - FOOTER_CLEAR < 230:
+            end_page()
+            row_num[0] = 0
+            new_page(f"{name} ({abbrev})  \u2014  Point Locations  \u00b7  {EDLABEL}")
+            y = H - HEADER_H - 30
+        y = section_rule(y, "Channel Figure (CAM)", width=220, size=12.5)
+        figure_block(y, cam_key, cam_caption, cam_source, max_w=380, max_h=560)
+
     end_page()
 
 
 location_table_page("Heart", "HT", HT_POINTS, HT_FIVE_SHU,
-                     extra_note="CAM (Deadman): Heart Channel, pp.209-221. Locations cross-verified against source text (HE1, HE2, HE9 confirmed via direct OCR extraction).")
+                     extra_note="CAM (Deadman): Heart Channel, pp.209-221. Locations cross-verified against source text (HE1, HE2, HE9 confirmed via direct OCR extraction).",
+                     cam_key="CAM_HT", cam_caption="CAM \u2014 Heart Meridian of Hand-Shaoyin (color figure)",
+                     cam_source="CAM (Deadman) \u00b7 Col. Fig. 6, p.209")
 location_table_page("Small Intestine", "SI", SI_POINTS, SI_FIVE_SHU,
-                     extra_note="CAM (Deadman): Small Intestine Channel, pp.222-249. Locations cross-verified against source text (SI1, SI4, SI8, SI15, SI16 confirmed via direct OCR extraction).")
+                     extra_note="CAM (Deadman): Small Intestine Channel, pp.222-249. Locations cross-verified against source text (SI1, SI4, SI8, SI15, SI16 confirmed via direct OCR extraction).",
+                     cam_key="CAM_SI", cam_caption="CAM \u2014 Small Intestine Meridian of Hand-Taiyang (color figure)",
+                     cam_source="CAM (Deadman) \u00b7 Col. Fig. 7, p.227")
 
 
 def syndromes_page(name, abbrev, syn, high_yield, extra_boxes=None):
