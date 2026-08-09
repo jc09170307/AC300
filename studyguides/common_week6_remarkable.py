@@ -131,7 +131,7 @@ def anticipatory_q(c, y, qnum, star, topic, question):
     y -= 14
     y = _draw_paragraph(c, question, MARGIN + 16, y, CONTENT_W - 16, size=9, leading=12)
     y -= 4
-    y = write_box(c, y, CONTENT_W - 16, 20, x=MARGIN + 16, gold_bar=True, fill=CARD_BG)
+    y = write_box(c, y, CONTENT_W - 16, 46, x=MARGIN + 16, gold_bar=True, fill=CARD_BG, n_lines=2)
     return y - 12
 
 def checkpoint_header(c, y, n, item_range):

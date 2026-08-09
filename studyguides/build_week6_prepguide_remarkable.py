@@ -129,7 +129,7 @@ y -= 4
 set_fill(c, GRAY); c.setFont("Lora-Italic", 8.5)
 c.drawString(MARGIN, y, "What do you already know about PC, SJ, GB, and LR? Write whatever comes to mind:")
 y -= 10
-y = write_box(c, y, CONTENT_W, 46, gold_bar=True, fill=CARD_BG, n_lines=2)
+y = write_box(c, y, CONTENT_W, 80, gold_bar=True, fill=CARD_BG, n_lines=4)
 y -= 20
 
 set_fill(c, NAVY); c.setFont("Lora-Bold", 10.5)
@@ -147,6 +147,12 @@ blanks = [
 for before, bw, after in blanks:
     y = fill_blank_line(c, before, bw, after, MARGIN, y)
     y -= 22
+
+y -= 4
+set_fill(c, NAVY); c.setFont("Lora-Bold", 9.5)
+c.drawString(MARGIN, y, "Notes -- other connections you're noticing")
+y -= 12
+y = write_box(c, y, CONTENT_W, 200, gold_bar=True, fill=CARD_BG, n_lines=9)
 
 footer(c, "AC300/AC375 | Week 6 | PC/SJ/GB/LR Channels | VUIM Summer 2026", 3, TOTAL_PAGES)
 c.showPage()
@@ -182,6 +188,19 @@ vocab = [
 for i, (py, en) in enumerate(vocab):
     y = vocab_row(c, y, py, en, shaded=(i % 2 == 0))
 
+y -= 10
+set_fill(c, GRAY); c.setFont("Lora-Italic", 8)
+c.drawString(MARGIN, y, "Blank rows below: add any extra terms Dr. Zhang emphasizes in lecture.")
+y -= 12
+for i in range(8):
+    shaded = (i % 2 == 0)
+    if shaded:
+        box(c, MARGIN, y + 10, CONTENT_W, 20, CARD_BG)
+    hairline(c, MARGIN, y - 3, MARGIN + 170, rgb=(0.8, 0.8, 0.76), w=0.5)
+    hairline(c, MARGIN + 190, y - 3, MARGIN + 320, rgb=(0.8, 0.8, 0.76), w=0.5)
+    hairline(c, MARGIN + 340, y - 3, PAGE_W - MARGIN, rgb=(0.8, 0.8, 0.76), w=0.5)
+    y -= 20
+
 footer(c, "AC300/AC375 | Week 6 | PC/SJ/GB/LR Channels | VUIM Summer 2026", 4, TOTAL_PAGES)
 c.showPage()
 ivory_page(c)
@@ -209,6 +228,12 @@ c.drawString(MARGIN, y, "San Jiao Meridian -- TE1 to TE23 (23 points | Hand Shao
 y -= 18
 y = anticipatory_q(c, y, 4, True, "The Three Branches",
                    "Sketch all 3 branches of SJ. Which branch links SJ to the Gallbladder channel, and at which point?")
+
+y -= 6
+set_fill(c, NAVY); c.setFont("Lora-Bold", 9.5)
+c.drawString(MARGIN, y, "Notes / Sketch Space")
+y -= 12
+y = write_box(c, y, CONTENT_W, 155, gold_bar=True, fill=CARD_BG, n_lines=7)
 
 footer(c, "AC300/AC375 | Week 6 | PC/SJ/GB/LR Channels | VUIM Summer 2026", 5, TOTAL_PAGES)
 c.showPage()
@@ -238,6 +263,12 @@ c.drawString(MARGIN, y, "Liver Meridian -- LR1 to LR14 (14 points | Foot Jueyin 
 y -= 18
 y = anticipatory_q(c, y, 10, True, "LR3 -- The Most Important LR Point",
                    "What does LR3 treat, and what classic 2-point combination pairs it with LI4?")
+
+y -= 6
+set_fill(c, NAVY); c.setFont("Lora-Bold", 9.5)
+c.drawString(MARGIN, y, "Notes / Sketch Space")
+y -= 12
+y = write_box(c, y, CONTENT_W, 70, gold_bar=True, fill=CARD_BG, n_lines=3)
 
 footer(c, "AC300/AC375 | Week 6 | PC/SJ/GB/LR Channels | VUIM Summer 2026", 6, TOTAL_PAGES)
 c.showPage()
@@ -298,6 +329,12 @@ qs = [
 for n, tag, t in qs:
     y = checkpoint_item(c, y, n, tag, t)
 y = selfcheck_line(c, y, 4)
+
+y -= 4
+set_fill(c, NAVY); c.setFont("Lora-Bold", 9.5)
+c.drawString(MARGIN, y, "Prediction Notes -- jot your answers before checking the key")
+y -= 12
+y = write_box(c, y, CONTENT_W, 120, gold_bar=True, fill=CARD_BG, n_lines=5)
 
 footer(c, "AC300/AC375 | Week 6 | PC/SJ/GB/LR Channels | VUIM Summer 2026", 7, TOTAL_PAGES)
 c.showPage()
@@ -363,19 +400,19 @@ y -= 16
 set_fill(c, BLACK); c.setFont("Lora", 9)
 c.drawString(MARGIN + 8, y, "PRE Q1: Which channel(s) are most likely involved? List the specific signs that led you there.")
 y -= 8
-y = write_box(c, y, CONTENT_W - 8, 20, x=MARGIN + 8)
+y = write_box(c, y, CONTENT_W - 8, 40, x=MARGIN + 8, n_lines=2)
 y -= 16
 set_fill(c, BLACK); c.setFont("Lora", 9)
 c.drawString(MARGIN + 8, y, "PRE Q2: The bitter taste and rib-side distention point to internal-organ dysfunction of which Fu organ?")
 y -= 8
-y = write_box(c, y, CONTENT_W - 8, 20, x=MARGIN + 8)
+y = write_box(c, y, CONTENT_W - 8, 40, x=MARGIN + 8, n_lines=2)
 y -= 16
 set_fill(c, BLACK); c.setFont("Lora", 9)
 c.drawString(MARGIN + 8, y, "PRE Q3: The pre-deadline chest tightness and palpitations suggest involvement of which additional")
 y -= 12
 c.drawString(MARGIN + 8, y, "channel from this week?")
 y -= 8
-y = write_box(c, y, CONTENT_W - 8, 20, x=MARGIN + 8)
+y = write_box(c, y, CONTENT_W - 8, 40, x=MARGIN + 8, n_lines=2)
 y -= 22
 
 set_fill(c, GOLD_DARK); c.setFont("Lora-Bold", 9.5)
@@ -386,14 +423,14 @@ c.drawString(MARGIN + 8, y, "POST Q1: Name 3 GB/LR points for Mr. Alvarez's prot
 y -= 12
 c.drawString(MARGIN + 8, y, "justification each.")
 y -= 8
-y = write_box(c, y, CONTENT_W - 8, 36, x=MARGIN + 8, n_lines=2)
+y = write_box(c, y, CONTENT_W - 8, 56, x=MARGIN + 8, n_lines=3)
 y -= 16
 set_fill(c, BLACK); c.setFont("Lora", 9)
 c.drawString(MARGIN + 8, y, "POST Q2: Include a PC point for the stress-related chest tightness. Apply the paired PC-SJ logic")
 y -= 12
 c.drawString(MARGIN + 8, y, "with a specific point.")
 y -= 8
-y = write_box(c, y, CONTENT_W - 8, 36, x=MARGIN + 8, n_lines=2)
+y = write_box(c, y, CONTENT_W - 8, 56, x=MARGIN + 8, n_lines=3)
 
 footer(c, "AC300/AC375 | Week 6 | PC/SJ/GB/LR Channels | VUIM Summer 2026", 9, TOTAL_PAGES)
 c.showPage()
@@ -415,8 +452,8 @@ y -= 16
 top3 = y
 for i in range(3):
     x = MARGIN + i * (col_w3 + 12)
-    write_box(c, top3, col_w3, 100, x=x, gold_bar=True, fill=CARD_BG, n_lines=5)
-y = top3 - 100 - 22
+    write_box(c, top3, col_w3, 130, x=x, gold_bar=True, fill=CARD_BG, n_lines=7)
+y = top3 - 130 - 22
 
 set_fill(c, NAVY); c.setFont("Lora-Bold", 10.5)
 c.drawString(MARGIN, y, "Concept Map -- PC/SJ/GB/LR Quick Review")
@@ -439,8 +476,8 @@ y -= 6
 set_fill(c, NAVY); c.setFont("Lora-Bold", 10.5)
 c.drawString(MARGIN, y, "Review Notes -- Insights, Connections & Questions for Dr. Zhang")
 y -= 12
-y = write_box(c, y, CONTENT_W, 78, gold_bar=True, fill=CARD_BG, n_lines=4)
-y -= 16
+y = write_box(c, y, CONTENT_W, 105, gold_bar=True, fill=CARD_BG, n_lines=6)
+y -= 20
 
 set_fill(c, GRAY); c.setFont("Lora-Italic", 8)
 c.drawString(MARGIN, y, "AC300 Week 6 Pre-Lecture Analysis Sheet v1 | Sources: Dr. Vivian Zhang | CAM 4th ed. | Manual of Acupuncture | VUIM Summer 2026")
