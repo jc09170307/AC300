@@ -91,6 +91,41 @@ def footer(c, meta, page_num, total):
 
 TOP_OFFSET = 34  # distance from page top to the header bar (independent of side MARGIN)
 
+def draw_element_key(c, y):
+    """Cover decoration: element-color legend tying the two channel pairs to
+    their color coding, used consistently across all AC300 materials."""
+    set_fill(c, GRAY); c.setFont("Lora-Bold", 8.5)
+    c.drawCentredString(PAGE_W / 2, y, "ELEMENT KEY")
+    y -= 20
+    entries = [
+        (MINISTER, "Fire (Minister)", "PC + SJ"),
+        (WOOD, "Wood", "GB + LR"),
+    ]
+    total_w = 300
+    x0 = (PAGE_W - total_w) / 2
+    gap = total_w / 2
+    for i, (color, label, chans) in enumerate(entries):
+        cx = x0 + i * gap
+        set_fill(c, color)
+        c.circle(cx + 7, y - 4, 6, stroke=0, fill=1)
+        set_fill(c, BLACK); c.setFont("Lora-Bold", 9.5)
+        c.drawString(cx + 20, y - 1, label)
+        set_fill(c, GRAY); c.setFont("Lora-Italic", 8.5)
+        c.drawString(cx + 20, y - 13, chans)
+    return y - 34
+
+def header_swatch(c, color, label):
+    """Small colored chip in the top-right of a section header, for pages
+    tied to a specific element/channel pairing."""
+    bar_top = PAGE_H - TOP_OFFSET
+    w = pdfmetrics.stringWidth(label, "Lora-Bold", 7.5) + 20
+    x = PAGE_W - MARGIN - w
+    y = bar_top - 27
+    set_fill(c, color)
+    c.roundRect(x, y - 2, w, 13, 3, stroke=0, fill=1)
+    set_fill(c, WHITE); c.setFont("Lora-Bold", 7.5)
+    c.drawCentredString(x + w / 2, y + 1.5, label)
+
 def section_header(c, letter, title, subtitle=None):
     """Dark navy header bar with a gold left-edge tab, ALL CAPS title."""
     bar_h = 40
@@ -153,9 +188,9 @@ def confidence_row(c, y, text):
     hairline(c, MARGIN, y, PAGE_W - MARGIN, rgb=(0.85, 0.85, 0.82), w=0.6)
     return y - 14
 
-def write_box(c, y, w, h, x=MARGIN, gold_bar=True, fill=CARD_BG, n_lines=0):
+def write_box(c, y, w, h, x=MARGIN, gold_bar=True, fill=CARD_BG, n_lines=0, bar_color=None):
     if gold_bar:
-        set_fill(c, GOLD)
+        set_fill(c, bar_color if bar_color is not None else GOLD)
         c.rect(x, y - h, 3, h, stroke=0, fill=1)
     box(c, x + 3, y, w - 3, h, fill)
     if n_lines:
@@ -184,25 +219,25 @@ def vocab_table_header(c, y):
     hairline(c, MARGIN, y, PAGE_W - MARGIN, rgb=NAVY, w=1)
     return y - 14
 
-def vocab_row(c, y, pinyin, english, shaded):
-    if shaded:
-        box(c, MARGIN, y + 10, CONTENT_W, 20, CARD_BG)
+def vocab_row(c, y, pinyin, english, accent=None):
+    if accent is not None:
+        box(c, MARGIN, y + 10, CONTENT_W, 20, tint(accent, 0.82))
     set_fill(c, BLACK); c.setFont("Lora", 9)
     c.drawString(MARGIN, y, pinyin)
     c.drawString(MARGIN + 190, y, english)
     hairline(c, MARGIN + 340, y - 3, PAGE_W - MARGIN, rgb=(0.8, 0.8, 0.76), w=0.5)
     return y - 20
 
-def anticipatory_q(c, y, qnum, star, topic, question):
+def anticipatory_q(c, y, qnum, star, topic, question, accent=GOLD):
     label = f"Q{qnum}{'*' if star else ''}"
-    set_fill(c, GOLD_DARK); c.setFont("Lora-Bold", 9.5)
+    set_fill(c, accent); c.setFont("Lora-Bold", 9.5)
     c.drawString(MARGIN, y, label)
     set_fill(c, BLACK); c.setFont("Lora-Bold", 9)
     c.drawString(MARGIN + 34, y, topic.upper())
     y -= 14
     y = draw_paragraph(c, question, MARGIN + 16, y, CONTENT_W - 16, size=9, leading=12)
     y -= 4
-    y = write_box(c, y, CONTENT_W - 16, 46, x=MARGIN + 16, gold_bar=True, fill=CARD_BG, n_lines=2)
+    y = write_box(c, y, CONTENT_W - 16, 46, x=MARGIN + 16, gold_bar=True, fill=CARD_BG, n_lines=2, bar_color=accent)
     return y - 12
 
 def checkpoint_header(c, y, n, item_range):

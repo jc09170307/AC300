@@ -64,6 +64,8 @@ for (col, row), (letter, title, desc) in zip(positions, cards):
     c.drawString(x + 36, ty - 29, desc)
 y -= 4 * (row_h + gap) + 14
 
+y = draw_element_key(c, y)
+
 hairline(c, MARGIN, y, PAGE_W - MARGIN, rgb=GOLD, w=1.2)
 y -= 18
 set_fill(c, GRAY); c.setFont("Lora", 9)
@@ -167,28 +169,36 @@ y = purpose_box(c, y, [
 y = vocab_table_header(c, y)
 
 vocab = [
-    ("Shou Jueyin", "Hand Jueyin (PC)"),
-    ("Shou Shaoyang", "Hand Shaoyang (SJ)"),
-    ("Zu Shaoyang", "Foot Shaoyang (GB)"),
-    ("Zu Jueyin", "Foot Jueyin (LR)"),
-    ("Tian Chi \u00b7 PC1", "Celestial Pool"),
-    ("Nei Guan \u00b7 PC6", "Inner Pass"),
-    ("Zhong Chong \u00b7 PC9", "Middle Rushing"),
-    ("Guan Chong \u00b7 TE1", "Gate Rushing"),
-    ("Wai Guan \u00b7 TE5", "Outer Pass"),
-    ("Si Zhu Kong \u00b7 TE23", "Silk Bamboo Hollow"),
-    ("Tong Zi Liao \u00b7 GB1", "Pupil Bone-Hole"),
-    ("Feng Shi \u00b7 GB31", "Wind Market"),
-    ("Yang Ling Quan \u00b7 GB34", "Yang Mound Spring"),
-    ("Zu Qiao Yin \u00b7 GB44", "Foot Portal Yin"),
-    ("Da Dun \u00b7 LR1", "Great Mound"),
-    ("Tai Chong \u00b7 LR3", "Supreme Rushing"),
-    ("Qi Men \u00b7 LR14", "Cycle Gate"),
+    ("Shou Jueyin", "Hand Jueyin (PC)", None),
+    ("Shou Shaoyang", "Hand Shaoyang (SJ)", None),
+    ("Zu Shaoyang", "Foot Shaoyang (GB)", None),
+    ("Zu Jueyin", "Foot Jueyin (LR)", None),
+    ("Tian Chi \u00b7 PC1", "Celestial Pool", MINISTER),
+    ("Nei Guan \u00b7 PC6", "Inner Pass", MINISTER),
+    ("Zhong Chong \u00b7 PC9", "Middle Rushing", MINISTER),
+    ("Guan Chong \u00b7 TE1", "Gate Rushing", MINISTER),
+    ("Wai Guan \u00b7 TE5", "Outer Pass", MINISTER),
+    ("Si Zhu Kong \u00b7 TE23", "Silk Bamboo Hollow", MINISTER),
+    ("Tong Zi Liao \u00b7 GB1", "Pupil Bone-Hole", WOOD),
+    ("Feng Shi \u00b7 GB31", "Wind Market", WOOD),
+    ("Yang Ling Quan \u00b7 GB34", "Yang Mound Spring", WOOD),
+    ("Zu Qiao Yin \u00b7 GB44", "Foot Portal Yin", WOOD),
+    ("Da Dun \u00b7 LR1", "Great Mound", WOOD),
+    ("Tai Chong \u00b7 LR3", "Supreme Rushing", WOOD),
+    ("Qi Men \u00b7 LR14", "Cycle Gate", WOOD),
 ]
-for i, (py, en) in enumerate(vocab):
-    y = vocab_row(c, y, py, en, shaded=(i % 2 == 0))
+for py, en, accent in vocab:
+    y = vocab_row(c, y, py, en, accent=accent)
 
-y -= 10
+y -= 6
+set_fill(c, MINISTER)
+c.circle(MARGIN + 4, y + 2.5, 3.5, stroke=0, fill=1)
+c.setFont("Lora", 7.5)
+c.drawString(MARGIN + 12, y, "PC / SJ (Fire, Minister)")
+set_fill(c, WOOD)
+c.circle(MARGIN + 154, y + 2.5, 3.5, stroke=0, fill=1)
+c.drawString(MARGIN + 162, y, "GB / LR (Wood)")
+y -= 14
 set_fill(c, GRAY); c.setFont("Lora-Italic", 8)
 c.drawString(MARGIN, y, "Blank rows below: add any extra terms Dr. Zhang emphasizes in lecture.")
 y -= 12
@@ -207,27 +217,28 @@ ivory_page(c)
 
 # ============================================================= SECTION D (page 1: PC + SJ)
 y = section_header(c, "D", "Anticipatory Questions", subtitle="* = high-challenge / high-yield")
+header_swatch(c, MINISTER, "FIRE (MINISTER)")
 y = purpose_box(c, y, [
     "Purpose: Generating answers before instruction improves retention. Starred items are matched to your growing "
     "skill level \u2014 they're harder because they're the ones most worth the stretch, not just exam bait.",
 ])
 
-set_fill(c, NAVY); c.setFont("Lora-Bold", 10.5)
+set_fill(c, MINISTER); c.setFont("Lora-Bold", 10.5)
 c.drawString(MARGIN, y, "Pericardium Meridian -- PC1 to PC9 (9 points | Hand Jueyin | 7-9 PM)")
 y -= 18
 y = anticipatory_q(c, y, 1, True, "Origin & Branches",
                    "PC starts at the chest, connecting successively with the upper, middle, and lower jiao. "
-                   "Describe all 3 branches in order.")
+                   "Describe all 3 branches in order.", accent=MINISTER)
 y = anticipatory_q(c, y, 2, False, "First & Last Point",
-                   "Name PC1 and PC9 with their locations.")
+                   "Name PC1 and PC9 with their locations.", accent=MINISTER)
 y = anticipatory_q(c, y, 3, True, "PC6 -- The Key Point",
-                   "What extraordinary vessel does PC6 open, and what 3 clinical presentations is it used for?")
+                   "What extraordinary vessel does PC6 open, and what 3 clinical presentations is it used for?", accent=MINISTER)
 
-set_fill(c, NAVY); c.setFont("Lora-Bold", 10.5)
+set_fill(c, MINISTER); c.setFont("Lora-Bold", 10.5)
 c.drawString(MARGIN, y, "San Jiao Meridian -- TE1 to TE23 (23 points | Hand Shaoyang | 9-11 PM)")
 y -= 18
 y = anticipatory_q(c, y, 4, True, "The Three Branches",
-                   "Sketch all 3 branches of SJ. Which branch links SJ to the Gallbladder channel, and at which point?")
+                   "Sketch all 3 branches of SJ. Which branch links SJ to the Gallbladder channel, and at which point?", accent=MINISTER)
 
 y -= 6
 set_fill(c, NAVY); c.setFont("Lora-Bold", 9.5)
@@ -241,28 +252,29 @@ ivory_page(c)
 
 # ============================================================= SECTION D (page 2: SJ cont + GB + LR)
 y = section_header(c, "D", "Anticipatory Questions (continued)")
+header_swatch(c, WOOD, "WOOD")
 
 y = anticipatory_q(c, y, 5, True, "Crossing Points",
-                   "SJ has 10 crossing points across 3 meridians. Name at least 4 of the actual points.")
+                   "SJ has 10 crossing points across 3 meridians. Name at least 4 of the actual points.", accent=MINISTER)
 y = anticipatory_q(c, y, 6, False, "SJ5 -- The Confluent Point",
-                   "What extraordinary vessel does SJ5 open?")
+                   "What extraordinary vessel does SJ5 open?", accent=MINISTER)
 
-set_fill(c, NAVY); c.setFont("Lora-Bold", 10.5)
+set_fill(c, WOOD); c.setFont("Lora-Bold", 10.5)
 c.drawString(MARGIN, y, "Gallbladder Meridian -- GB1 to GB44 (44 points | Foot Shaoyang | 11 PM-1 AM)")
 y -= 18
 y = anticipatory_q(c, y, 7, True, "The Five Branches",
                    "Sketch all 5 segments of GB's pathway. Which is the 'straight portion' that carries most of "
-                   "the numbered points?")
+                   "the numbered points?", accent=WOOD)
 y = anticipatory_q(c, y, 8, False, "GB21 Caution",
-                   "What explicit clinical caution applies to GB21, and what is the point otherwise used for?")
+                   "What explicit clinical caution applies to GB21, and what is the point otherwise used for?", accent=WOOD)
 y = anticipatory_q(c, y, 9, True, "GB34 -- The Influential Point",
-                   "What tissue is GB34 Influential for, and what 2 conditions does it treat?")
+                   "What tissue is GB34 Influential for, and what 2 conditions does it treat?", accent=WOOD)
 
-set_fill(c, NAVY); c.setFont("Lora-Bold", 10.5)
+set_fill(c, WOOD); c.setFont("Lora-Bold", 10.5)
 c.drawString(MARGIN, y, "Liver Meridian -- LR1 to LR14 (14 points | Foot Jueyin | 1-3 AM)")
 y -= 18
 y = anticipatory_q(c, y, 10, True, "LR3 -- The Most Important LR Point",
-                   "What does LR3 treat, and what classic 2-point combination pairs it with LI4?")
+                   "What does LR3 treat, and what classic 2-point combination pairs it with LI4?", accent=WOOD)
 
 y -= 6
 set_fill(c, NAVY); c.setFont("Lora-Bold", 9.5)
