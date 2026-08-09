@@ -678,7 +678,7 @@ external_cam_page("Small Intestine", "SI", SI_COLOR, SI_TINT, SI_POINTS, SI_META
                    "Yang  |  Fire  |  1-3 PM  |  19 Points",
                    "CAM_SI", "CAM \u2014 Small Intestine Meridian of Hand-Taiyang (color figure)",
                    "CAM (Deadman) \u00b7 Col. Fig. 7, p.227 \u00b7 Locations OCR-verified (SI1,4,8,15,16)",
-                   table_frac=0.46)
+                   table_frac=0.39)
 crossing_syndromes_page("Small Intestine", "SI", SI_COLOR, SI_TINT,
                          "SI \u2014 The 2 Crossing Points (Detailed)",
                          ["Dr. Zhang: \"HT has zero crossing points. SI crosses only twice, both on its facial branch",
