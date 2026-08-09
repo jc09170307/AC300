@@ -206,15 +206,19 @@ c.drawString(MARGIN + 162, y, "GB / LR (Wood)")
 y -= 14
 set_fill(c, GRAY); c.setFont("Lora-Italic", 8)
 c.drawString(MARGIN, y, "Blank rows below: add any extra terms Dr. Zhang emphasizes in lecture.")
-y -= 12
+y -= 16
+row_h = 20
 for i in range(8):
     shaded = (i % 2 == 0)
+    row_top = y
+    row_bottom = y - row_h
     if shaded:
-        box(c, MARGIN, y + 10, CONTENT_W, 20, CARD_BG)
-    hairline(c, MARGIN, y - 3, MARGIN + 170, rgb=(0.8, 0.8, 0.76), w=0.5)
-    hairline(c, MARGIN + 190, y - 3, MARGIN + 320, rgb=(0.8, 0.8, 0.76), w=0.5)
-    hairline(c, MARGIN + 340, y - 3, PAGE_W - MARGIN, rgb=(0.8, 0.8, 0.76), w=0.5)
-    y -= 20
+        box(c, MARGIN, row_top, CONTENT_W, row_h, CARD_BG)
+    line_y = row_bottom + 6
+    hairline(c, MARGIN, line_y, MARGIN + 170, rgb=(0.7, 0.7, 0.64), w=0.6)
+    hairline(c, MARGIN + 190, line_y, MARGIN + 320, rgb=(0.7, 0.7, 0.64), w=0.6)
+    hairline(c, MARGIN + 340, line_y, PAGE_W - MARGIN, rgb=(0.7, 0.7, 0.64), w=0.6)
+    y = row_bottom
 
 footer(c, "AC300/AC375 | Week 6 | PC/SJ/GB/LR Channels | VUIM Summer 2026", 4, TOTAL_PAGES)
 c.showPage()
