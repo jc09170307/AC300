@@ -295,7 +295,7 @@ def channel_meta_page(name, subtitle_full, color, tint, meta_rows, subtitle_attr
     c.drawCentredString(ML + left_w / 2, img_bottom - 14, moa_caption)
 
     setfill(color); c.setFont("Lora-Bold", 11.5)
-    c.drawString(rx, y, "Internal & External Running Course")
+    c.drawString(rx, y, "Internal Running Course")
     ry = y - 4
     setstroke(color); c.setLineWidth(1.2)
     c.line(rx, ry - 4, rx + right_w, ry - 4)
@@ -328,13 +328,6 @@ def channel_meta_page(name, subtitle_full, color, tint, meta_rows, subtitle_attr
 
     end_page()
 
-
-channel_meta_page("Heart", "Hand-Shaoyin (HT)", HT_COLOR, HT_TINT, HT_META,
-                   "Yin  |  Fire  |  11 AM-1 PM  |  9 Points",
-                   HT_COURSE, HT_FUNCTIONS, "MOA_HT", "MOA \u2014 Heart Channel (internal pathway)")
-channel_meta_page("Small Intestine", "Hand-Taiyang (SI)", SI_COLOR, SI_TINT, SI_META,
-                   "Yang  |  Fire  |  1-3 PM  |  19 Points",
-                   SI_COURSE, SI_FUNCTIONS, "MOA_SI", "MOA \u2014 Small Intestine Channel (internal pathway)")
 
 
 # ============================================================
@@ -396,15 +389,6 @@ def external_cam_page(name, abbrev, color, tint, points, meta_rows, subtitle_att
 
     end_page()
 
-
-external_cam_page("Heart", "HT", HT_COLOR, HT_TINT, HT_POINTS, HT_META,
-                   "Yin  |  Fire  |  11 AM-1 PM  |  9 Points",
-                   "CAM_HT", "CAM \u2014 Heart Meridian of Hand-Shaoyin (color figure)",
-                   "CAM (Deadman) \u00b7 Col. Fig. 6, p.209 \u00b7 Locations OCR-verified (HE1, HE2, HE9)")
-external_cam_page("Small Intestine", "SI", SI_COLOR, SI_TINT, SI_POINTS, SI_META,
-                   "Yang  |  Fire  |  1-3 PM  |  19 Points",
-                   "CAM_SI", "CAM \u2014 Small Intestine Meridian of Hand-Taiyang (color figure)",
-                   "CAM (Deadman) \u00b7 Col. Fig. 7, p.227 \u00b7 Locations OCR-verified (SI1,4,8,15,16)")
 
 
 # ============================================================
@@ -534,11 +518,6 @@ HT_CROSSING_DETAIL = [
      "in the Weeks 1-4 scope.",
      "\u2014 confirmed from lecture"),
 ]
-crossing_syndromes_page("Heart", "HT", HT_COLOR, HT_TINT,
-                         "HT \u2014 Crossing Points (Detailed)",
-                         ["Dr. Zhang: \"HT has zero crossing points - the only primary channel of the 12 with none.\"",
-                          "Because of this, every HT symptom traces directly back to the Heart itself or its own pathway."],
-                         HT_CROSSING_DETAIL, SYNDROMES_HT, HT_HIGHEST_YIELD, HT_FIVE_SHU)
 
 SI_CROSSING_DETAIL = [
     ("BL1 Jingming", "Bridge of the Nose / Inner Canthus",
@@ -552,6 +531,33 @@ SI_CROSSING_DETAIL = [
      "eyelid twitching, and eye disorders.",
      "GB14 / GB channel"),
 ]
+
+
+# ============================================================
+# ORCHESTRATION - each organ's full page set built consecutively
+# (Zang before Fu: HT meta -> HT external -> HT crossing, THEN
+#  SI meta -> SI external -> SI crossing - never interleaved)
+# ============================================================
+channel_meta_page("Heart", "Hand-Shaoyin (HT)", HT_COLOR, HT_TINT, HT_META,
+                   "Yin  |  Fire  |  11 AM-1 PM  |  9 Points",
+                   HT_COURSE, HT_FUNCTIONS, "MOA_HT", "MOA \u2014 Heart Channel (internal pathway)")
+external_cam_page("Heart", "HT", HT_COLOR, HT_TINT, HT_POINTS, HT_META,
+                   "Yin  |  Fire  |  11 AM-1 PM  |  9 Points",
+                   "CAM_HT", "CAM \u2014 Heart Meridian of Hand-Shaoyin (color figure)",
+                   "CAM (Deadman) \u00b7 Col. Fig. 6, p.209 \u00b7 Locations OCR-verified (HE1, HE2, HE9)")
+crossing_syndromes_page("Heart", "HT", HT_COLOR, HT_TINT,
+                         "HT \u2014 Crossing Points (Detailed)",
+                         ["Dr. Zhang: \"HT has zero crossing points - the only primary channel of the 12 with none.\"",
+                          "Because of this, every HT symptom traces directly back to the Heart itself or its own pathway."],
+                         HT_CROSSING_DETAIL, SYNDROMES_HT, HT_HIGHEST_YIELD, HT_FIVE_SHU)
+
+channel_meta_page("Small Intestine", "Hand-Taiyang (SI)", SI_COLOR, SI_TINT, SI_META,
+                   "Yang  |  Fire  |  1-3 PM  |  19 Points",
+                   SI_COURSE, SI_FUNCTIONS, "MOA_SI", "MOA \u2014 Small Intestine Channel (internal pathway)")
+external_cam_page("Small Intestine", "SI", SI_COLOR, SI_TINT, SI_POINTS, SI_META,
+                   "Yang  |  Fire  |  1-3 PM  |  19 Points",
+                   "CAM_SI", "CAM \u2014 Small Intestine Meridian of Hand-Taiyang (color figure)",
+                   "CAM (Deadman) \u00b7 Col. Fig. 7, p.227 \u00b7 Locations OCR-verified (SI1,4,8,15,16)")
 crossing_syndromes_page("Small Intestine", "SI", SI_COLOR, SI_TINT,
                          "SI \u2014 The 2 Crossing Points (Detailed)",
                          ["Dr. Zhang: \"HT has zero crossing points. SI crosses only twice, both on its facial branch",
