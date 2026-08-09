@@ -128,9 +128,15 @@ def get_img_size(fig_key):
     return _img_size_cache[fig_key]
 
 
+IMG_FOOTER_CLEAR = 45  # keep this much clearance above the footer bar for images
+
+
 def draw_image_contain(fig_key, x, y_top, box_w, box_h, border_color):
-    """Draws image centered/contained within box, top-anchored. Returns bottom y."""
+    """Draws image centered/contained within box, top-anchored. Height is capped
+    to whatever vertical space remains above the footer, so it can never overflow
+    onto the footer or next page. Returns bottom y."""
     iw, ih = get_img_size(fig_key)
+    box_h = min(box_h, y_top - IMG_FOOTER_CLEAR)
     scale = min(box_w / iw, box_h / ih)
     dw, dh = iw * scale, ih * scale
     dx = x + (box_w - dw) / 2
@@ -244,7 +250,6 @@ bullets = [
     "Syndromes, High-Yield Points, and Five-Shu tables for both channels",
     "Dr. Zhang's Clinical Pearls - direct from lecture",
     "Quiz 4 Fundamentals + HT vs SI Quick Reference comparison",
-    "30-Question Practice Quiz with Full Answer Key (varying difficulty)",
 ]
 for b in bullets:
     setfill(GOLD); c.circle(ML + 3, y + 3, 1.6, fill=1, stroke=0)
@@ -281,9 +286,16 @@ def channel_meta_page(name, subtitle_full, color, tint, meta_rows, subtitle_attr
     y = channel_card(f"{name} Meridian of {subtitle_full}", subtitle_attrs, color, meta_rows)
 
     col_gap = 20
-    left_w = CW * 0.42
+    left_w = CW * 0.60
     right_w = CW - left_w - col_gap
     rx = ML + left_w + col_gap
+
+    # Precompute Functions box height so we know how much space to reserve
+    # below the image and course list before drawing either.
+    lines_all = []
+    for f in functions:
+        lines_all.extend(wrap_words("\u2022 " + f, "Lora", F_BODY - 0.5, CW - 16))
+    functions_box_h = len(lines_all) * (F_BODY_LH - 1) + 14
 
     setfill(color); c.setFont("Lora-Bold", 11.5)
     c.drawString(ML, y, "Channel Pathway (MOA)")
@@ -291,7 +303,10 @@ def channel_meta_page(name, subtitle_full, color, tint, meta_rows, subtitle_attr
     setstroke(color); c.setLineWidth(1.2)
     c.line(ML, y - 4, ML + left_w, y - 4)
     img_top = y - 14
-    img_bottom = draw_image_contain(moa_key, ML, img_top, left_w, 430, color)
+    # Reserve exact space for: 30pt gap + 10pt gap + section_bar's own 38pt
+    # (24 bar height + 14 internal gap) + the Functions box + safety margin above footer.
+    img_max_h = img_top - functions_box_h - 125
+    img_bottom = draw_image_contain(moa_key, ML, img_top, left_w, img_max_h, color)
     setfill(NAVY); c.setFont("Lora-BoldItalic", 8.8)
     c.drawCentredString(ML + left_w / 2, img_bottom - 14, moa_caption)
 
@@ -313,14 +328,20 @@ def channel_meta_page(name, subtitle_full, color, tint, meta_rows, subtitle_attr
 
     y = min(img_bottom - 30, ry) - 10
 
-    # Functions bar (full width)
+    # Defensive backstop: if either column ran long and the Functions box
+    # would still collide with the footer, push Functions onto a fresh page.
+    if y - 38 - functions_box_h < 41:
+        end_page()
+        new_page()
+        y = H - 46
+        setfill(color); c.setFont("Lora-Bold", 12)
+        c.drawString(ML, y, f"{name} \u2014 Functions (continued)")
+        y -= 24
+
+    # Functions bar (full width) - reuse the precomputed lines/height
     y = section_bar(y, f"Functions (MOA) \u2014 {name}", color, size=11.5)
     box_top = y
-    lines_all = []
-    for f in functions:
-        lines_all.extend(wrap_words("\u2022 " + f, "Lora", F_BODY - 0.5, CW - 16))
-    box_h = len(lines_all) * (F_BODY_LH - 1) + 14
-    setfill(tint); c.rect(ML - 4, box_top - box_h, CW + 8, box_h, fill=1, stroke=0)
+    setfill(tint); c.rect(ML - 4, box_top - functions_box_h, CW + 8, functions_box_h, fill=1, stroke=0)
     setfill(DARK); c.setFont("Lora", F_BODY - 0.5)
     yy = box_top - 12
     for l in lines_all:
@@ -334,14 +355,14 @@ def channel_meta_page(name, subtitle_full, color, tint, meta_rows, subtitle_attr
 # ============================================================
 # EXTERNAL RUNNING COURSE & CAM FIGURE PAGE
 # ============================================================
-def external_cam_page(name, abbrev, color, tint, points, meta_rows, subtitle_attrs, cam_key, cam_caption, cam_source):
+def external_cam_page(name, abbrev, color, tint, points, meta_rows, subtitle_attrs, cam_key, cam_caption, cam_source, table_frac=0.55):
     new_page()
     y = channel_card(f"{abbrev} \u2014 External Running Course & CAM Figure",
                       subtitle_attrs, color, meta_rows)
     img_top = y
 
     col_gap = 18
-    table_w = CW * 0.55
+    table_w = CW * table_frac
     img_w = CW - table_w - col_gap
     ix = ML + table_w + col_gap
 
@@ -352,7 +373,7 @@ def external_cam_page(name, abbrev, color, tint, points, meta_rows, subtitle_att
     c.line(ML, y + 3, ML + table_w, y + 3)
     y -= 3
 
-    img_bottom = draw_image_contain(cam_key, ix, img_top, img_w, 520, color)
+    img_bottom = draw_image_contain(cam_key, ix, img_top, img_w, img_top - IMG_FOOTER_CLEAR - 28, color)
     setfill(NAVY); c.setFont("Lora-BoldItalic", 8.6)
     c.drawCentredString(ix + img_w / 2, img_bottom - 14, cam_caption)
     setfill(GRAY); c.setFont("Lora-Italic", 7.6)
@@ -642,7 +663,8 @@ channel_meta_page("Heart", "Hand-Shaoyin (HT)", HT_COLOR, HT_TINT, HT_META,
 external_cam_page("Heart", "HT", HT_COLOR, HT_TINT, HT_POINTS, HT_META,
                    "Yin  |  Fire  |  11 AM-1 PM  |  9 Points",
                    "CAM_HT", "CAM \u2014 Heart Meridian of Hand-Shaoyin (color figure)",
-                   "CAM (Deadman) \u00b7 Col. Fig. 6, p.209 \u00b7 Locations OCR-verified (HE1, HE2, HE9)")
+                   "CAM (Deadman) \u00b7 Col. Fig. 6, p.209 \u00b7 Locations OCR-verified (HE1, HE2, HE9)",
+                   table_frac=0.38)
 crossing_syndromes_page("Heart", "HT", HT_COLOR, HT_TINT,
                          "HT \u2014 Crossing Points (Detailed)",
                          ["Dr. Zhang: \"HT has zero crossing points - the only primary channel of the 12 with none.\"",
@@ -655,7 +677,8 @@ channel_meta_page("Small Intestine", "Hand-Taiyang (SI)", SI_COLOR, SI_TINT, SI_
 external_cam_page("Small Intestine", "SI", SI_COLOR, SI_TINT, SI_POINTS, SI_META,
                    "Yang  |  Fire  |  1-3 PM  |  19 Points",
                    "CAM_SI", "CAM \u2014 Small Intestine Meridian of Hand-Taiyang (color figure)",
-                   "CAM (Deadman) \u00b7 Col. Fig. 7, p.227 \u00b7 Locations OCR-verified (SI1,4,8,15,16)")
+                   "CAM (Deadman) \u00b7 Col. Fig. 7, p.227 \u00b7 Locations OCR-verified (SI1,4,8,15,16)",
+                   table_frac=0.46)
 crossing_syndromes_page("Small Intestine", "SI", SI_COLOR, SI_TINT,
                          "SI \u2014 The 2 Crossing Points (Detailed)",
                          ["Dr. Zhang: \"HT has zero crossing points. SI crosses only twice, both on its facial branch",
@@ -866,9 +889,6 @@ def quiz_answer_key_pages():
 
     end_page()
 
-
-quiz_question_pages()
-quiz_answer_key_pages()
 
 c.save()
 print("SAVED:", OUT)
