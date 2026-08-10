@@ -1,0 +1,210 @@
+BL point: 0.1 cun superior to inner canthus	BL1 — Jingming	AC300::Week5::BL::PointID
+BL point: Depression at medial end of eyebrow	BL2 — Zanzhu	AC300::Week5::BL::PointID
+BL point: 0.5 cun within hairline, above BL2	BL3 — Meichong	AC300::Week5::BL::PointID
+BL point: 0.5 cun within hairline, 1.5 cun lateral to midline	BL4 — Quchai	AC300::Week5::BL::PointID
+BL point: 1 cun within hairline, 1.5 cun lateral to midline	BL5 — Wuchu	AC300::Week5::BL::PointID
+BL point: 2.5 cun within hairline, 1.5 cun lateral to midline	BL6 — Chengguang	AC300::Week5::BL::PointID
+BL point: 4 cun within hairline, 1.5 cun lateral to midline	BL7 — Tongtian	AC300::Week5::BL::PointID
+BL point: 5.5 cun within hairline, 1.5 cun lateral to midline	BL8 — Luoque	AC300::Week5::BL::PointID
+BL point: 2.5 cun within hairline, 1.3 cun lateral to midline	BL9 — Yuzhen	AC300::Week5::BL::PointID
+BL point: 1.3 cun lateral to midline, within hairline	BL10 — Tianzhu	AC300::Week5::BL::PointID
+BL point: 1.5 cun lat. to lower border T1 spinous process (Influential pt – Bone)	BL11 — Dazhu	AC300::Week5::BL::PointID
+BL point: 1.5 cun lat. to lower border T2 spinous process	BL12 — Fengmen	AC300::Week5::BL::PointID
+BL point: 1.5 cun lat. to lower border T3 spinous process (Back-Shu – Lung)	BL13 — Feishu	AC300::Week5::BL::PointID
+BL point: 1.5 cun lat. to lower border T4 spinous process (Back-Shu – Pericardium)	BL14 — Jueyinshu	AC300::Week5::BL::PointID
+BL point: 1.5 cun lat. to lower border T5 spinous process (Back-Shu – Heart)	BL15 — Xinshu	AC300::Week5::BL::PointID
+BL point: 1.5 cun lat. to lower border T6 spinous process	BL16 — Dushu	AC300::Week5::BL::PointID
+BL point: 1.5 cun lat. to lower border T7 spinous process (Influential pt – Blood)	BL17 — Geshu	AC300::Week5::BL::PointID
+BL point: 1.5 cun lat. to lower border T9 spinous process (Back-Shu – Liver)	BL18 — Ganshu	AC300::Week5::BL::PointID
+BL point: 1.5 cun lat. to lower border T10 spinous process (Back-Shu – Gallbladder)	BL19 — Danshu	AC300::Week5::BL::PointID
+BL point: 1.5 cun lat. to lower border T11 spinous process (Back-Shu – Spleen)	BL20 — Pishu	AC300::Week5::BL::PointID
+BL point: 1.5 cun lat. to lower border T12 spinous process (Back-Shu – Stomach)	BL21 — Weishu	AC300::Week5::BL::PointID
+BL point: 1.5 cun lat. to lower border L1 spinous process (Back-Shu – San Jiao)	BL22 — Sanjiaoshu	AC300::Week5::BL::PointID
+BL point: 1.5 cun lat. to lower border L2 spinous process (Back-Shu – Kidney)	BL23 — Shenshu	AC300::Week5::BL::PointID
+BL point: 1.5 cun lat. to lower border L3 spinous process	BL24 — Qihaishu	AC300::Week5::BL::PointID
+BL point: 1.5 cun lat. to lower border L4 spinous process (Back-Shu – Large Int.)	BL25 — Dachangshu	AC300::Week5::BL::PointID
+BL point: 1.5 cun lat. to lower border L5 spinous process	BL26 — Guanyuanshu	AC300::Week5::BL::PointID
+BL point: 1.5 cun lat. to lower border S1 foramen (Back-Shu – Small Int.)	BL27 — Xiaochangshu	AC300::Week5::BL::PointID
+BL point: 1.5 cun lat. to lower border S2 foramen (Back-Shu – Bladder)	BL28 — Pangguangshu	AC300::Week5::BL::PointID
+BL point: 1.5 cun lat. to lower border S3 foramen	BL29 — Zhonglvshu	AC300::Week5::BL::PointID
+BL point: 1.5 cun lat. to lower border S4 foramen	BL30 — Baihuanshu	AC300::Week5::BL::PointID
+BL point: 1st posterior sacral foramen (Ba Liao group)	BL31 — Shangliao	AC300::Week5::BL::PointID
+BL point: 2nd posterior sacral foramen (Ba Liao group)	BL32 — Ciliao	AC300::Week5::BL::PointID
+BL point: 3rd posterior sacral foramen (Ba Liao group)	BL33 — Zhongliao	AC300::Week5::BL::PointID
+BL point: 4th posterior sacral foramen (Ba Liao group)	BL34 — Xialiao	AC300::Week5::BL::PointID
+BL point: 0.5 cun lateral to tip of coccyx	BL35 — Huiyang	AC300::Week5::BL::PointID
+BL point: Midpoint of transverse gluteal fold	BL36 — Chengfu	AC300::Week5::BL::PointID
+BL point: 6 cun below BL36, on line to BL40	BL37 — Yinmen	AC300::Week5::BL::PointID
+BL point: 1 cun above BL39, medial to biceps femoris tendon	BL38 — Fuxi	AC300::Week5::BL::PointID
+BL point: Lateral end of popliteal crease (Lower He-Sea of San Jiao)	BL39 — Weiyang	AC300::Week5::BL::PointID
+BL point: Midpoint of popliteal crease (He-Sea; Command – back)	BL40 — Weizhong	AC300::Week5::BL::PointID
+BL point: 3 cun lat. to lower border T2 spinous process	BL41 — Fufen	AC300::Week5::BL::PointID
+BL point: 3 cun lat. to lower border T3 spinous process	BL42 — Pohu	AC300::Week5::BL::PointID
+BL point: 3 cun lat. to lower border T4 spinous process (All deficiency-taxation)	BL43 — Gaohuang	AC300::Week5::BL::PointID
+BL point: 3 cun lat. to lower border T5 spinous process	BL44 — Shentang	AC300::Week5::BL::PointID
+BL point: 3 cun lat. to lower border T6 spinous process	BL45 — Yixi	AC300::Week5::BL::PointID
+BL point: 3 cun lat. to lower border T7 spinous process	BL46 — Geguan	AC300::Week5::BL::PointID
+BL point: 3 cun lat. to lower border T9 spinous process	BL47 — Hunmen	AC300::Week5::BL::PointID
+BL point: 3 cun lat. to lower border T10 spinous process	BL48 — Yanggang	AC300::Week5::BL::PointID
+BL point: 3 cun lat. to lower border T11 spinous process	BL49 — Yishe	AC300::Week5::BL::PointID
+BL point: 3 cun lat. to lower border T12 spinous process	BL50 — Weicang	AC300::Week5::BL::PointID
+BL point: 3 cun lat. to lower border L1 spinous process	BL51 — Huangmen	AC300::Week5::BL::PointID
+BL point: 3 cun lat. to lower border L2 spinous process	BL52 — Zhishi	AC300::Week5::BL::PointID
+BL point: 3 cun lat. to lower border S2 foramen	BL53 — Baohuang	AC300::Week5::BL::PointID
+BL point: 3 cun lat. to lower border S3 foramen	BL54 — Zhibian	AC300::Week5::BL::PointID
+BL point: 2 cun below BL40, on line to BL57	BL55 — Heyang	AC300::Week5::BL::PointID
+BL point: 5 cun below BL40, top of gastrocnemius	BL56 — Chengjin	AC300::Week5::BL::PointID
+BL point: 8 cun below BL40, apex of gastrocnemius (Classic for hemorrhoids)	BL57 — Chengshan	AC300::Week5::BL::PointID
+BL point: 7 cun above BL60, postero-inferior to gastrocnemius (Luo-connecting)	BL58 — Feiyang	AC300::Week5::BL::PointID
+BL point: 3 cun directly above BL60 (Xi-Cleft of Yang Qiao Mai)	BL59 — Fuyang	AC300::Week5::BL::PointID
+BL point: Depression between lat. malleolus & Achilles tendon (Jing-River)	BL60 — Kunlun	AC300::Week5::BL::PointID
+BL point: Below BL60, 4 cun inferior to lateral malleolus	BL61 — Pucan	AC300::Week5::BL::PointID
+BL point: Depression directly below lateral malleolus (Confluent – Yang Qiao Mai)	BL62 — Shenmai	AC300::Week5::BL::PointID
+BL point: Anterior-inferior to BL62, lateral foot (Xi-Cleft)	BL63 — Jinmen	AC300::Week5::BL::PointID
+BL point: Lateral foot, antero-inferior to 5th MT tuberosity (Yuan-Source)	BL64 — Jinggu	AC300::Week5::BL::PointID
+BL point: Posterior to 5th MT-phalangeal joint (Shu-Stream)	BL65 — Shugu	AC300::Week5::BL::PointID
+BL point: Anterior to 5th MT-phalangeal joint (Ying-Spring)	BL66 — Zutonggu	AC300::Week5::BL::PointID
+BL point: Lateral side of tip of small toe (Jing-Well; last point)	BL67 — Zhiyin	AC300::Week5::BL::PointID
+KI point: Sole of foot, depression when plantar-flexed (Jing-Well; first point)	KI1 — Yongquan	AC300::Week5::KI::PointID
+KI point: Below tuberosity of navicular bone (Ying-Spring)	KI2 — Rangu	AC300::Week5::KI::PointID
+KI point: Depression between medial malleolus tip & Achilles tendon (Shu-Stream; Yuan-Source)	KI3 — Taixi	AC300::Week5::KI::PointID
+KI point: 0.5 cun posterior to KI3, medial calcaneus (Luo-connecting)	KI4 — Dazhong	AC300::Week5::KI::PointID
+KI point: 1 cun below KI3, antero-superior to calcaneal tuberosity (Xi-Cleft)	KI5 — Shuiquan	AC300::Week5::KI::PointID
+KI point: 1 cun below tip of medial malleolus (Confluent – Yinqiao Mai)	KI6 — Zhaohai	AC300::Week5::KI::PointID
+KI point: 2 cun above KI3, anterior to Achilles tendon (Jing-River)	KI7 — Fuliu	AC300::Week5::KI::PointID
+KI point: 2 cun above KI3, posterior to KI7 (Xi-Cleft of Yinqiao Mai)	KI8 — Jiaoxin	AC300::Week5::KI::PointID
+KI point: 5 cun above KI3, medial gastrocnemius head (Xi-Cleft of Yinwei Mai)	KI9 — Zhubin	AC300::Week5::KI::PointID
+KI point: Medial end of popliteal crease (He-Sea)	KI10 — Yingu	AC300::Week5::KI::PointID
+KI point: 5 cun below navel, 0.5 cun lateral to midline	KI11 — Henggu	AC300::Week5::KI::PointID
+KI point: 4 cun below navel, 0.5 cun lateral to midline	KI12 — Dahe	AC300::Week5::KI::PointID
+KI point: 3 cun below navel, 0.5 cun lateral to midline	KI13 — Qixue	AC300::Week5::KI::PointID
+KI point: 2 cun below navel, 0.5 cun lateral to midline	KI14 — Siman	AC300::Week5::KI::PointID
+KI point: 1 cun below navel, 0.5 cun lateral to midline	KI15 — Zhongzhu	AC300::Week5::KI::PointID
+KI point: Level with navel, 0.5 cun lateral to midline	KI16 — Huangshu	AC300::Week5::KI::PointID
+KI point: 2 cun above navel, 0.5 cun lateral to midline	KI17 — Shangqu	AC300::Week5::KI::PointID
+KI point: 3 cun above navel, 0.5 cun lateral to midline	KI18 — Shiguan	AC300::Week5::KI::PointID
+KI point: 4 cun above navel, 0.5 cun lateral to midline	KI19 — Yindu	AC300::Week5::KI::PointID
+KI point: 5 cun above navel, 0.5 cun lateral to midline	KI20 — Futonggu	AC300::Week5::KI::PointID
+KI point: 6 cun above navel, 0.5 cun lateral to midline	KI21 — Youmen	AC300::Week5::KI::PointID
+KI point: 5th ICS, 2 cun lateral to midline	KI22 — Bulang	AC300::Week5::KI::PointID
+KI point: 4th ICS, 2 cun lateral to midline	KI23 — Shenfeng	AC300::Week5::KI::PointID
+KI point: 3rd ICS, 2 cun lateral to midline	KI24 — Lingxu	AC300::Week5::KI::PointID
+KI point: 2nd ICS, 2 cun lateral to midline	KI25 — Shencang	AC300::Week5::KI::PointID
+KI point: 1st ICS, 2 cun lateral to midline	KI26 — Yuzhong	AC300::Week5::KI::PointID
+KI point: Inferior border of clavicle, 2 cun lateral to midline (Last point)	KI27 — Shufu	AC300::Week5::KI::PointID
+BL — Jing-Well point?	BL67 Zhiyin	AC300::Week5::BL::SpecialPoints
+BL — Ying-Spring point?	BL66 Zutonggu	AC300::Week5::BL::SpecialPoints
+BL — Shu-Stream point?	BL65 Shugu	AC300::Week5::BL::SpecialPoints
+BL — Jing-River point?	BL60 Kunlun	AC300::Week5::BL::SpecialPoints
+BL — He-Sea point?	BL40 Weizhong	AC300::Week5::BL::SpecialPoints
+BL — Yuan-Source point?	BL64 Jinggu	AC300::Week5::BL::SpecialPoints
+BL — Luo-Connecting point?	BL58 Feiyang	AC300::Week5::BL::SpecialPoints
+BL — Xi-Cleft point?	BL63 Jinmen	AC300::Week5::BL::SpecialPoints
+BL — Front-Mu (of Bladder) point?	CV3 Zhongji	AC300::Week5::BL::SpecialPoints
+BL — Back-Shu (of Bladder) point?	BL28 Pangguangshu	AC300::Week5::BL::SpecialPoints
+BL — Command Point (back) point?	BL40 Weizhong	AC300::Week5::BL::SpecialPoints
+KI — Jing-Well point?	KI1 Yongquan	AC300::Week5::KI::SpecialPoints
+KI — Ying-Spring point?	KI2 Rangu	AC300::Week5::KI::SpecialPoints
+KI — Shu-Stream point?	KI3 Taixi	AC300::Week5::KI::SpecialPoints
+KI — Jing-River point?	KI7 Fuliu	AC300::Week5::KI::SpecialPoints
+KI — He-Sea point?	KI10 Yingu	AC300::Week5::KI::SpecialPoints
+KI — Yuan-Source point?	KI3 Taixi	AC300::Week5::KI::SpecialPoints
+KI — Luo-Connecting point?	KI4 Dazhong	AC300::Week5::KI::SpecialPoints
+KI — Xi-Cleft point?	KI5 Shuiquan	AC300::Week5::KI::SpecialPoints
+KI — Front-Mu (of Kidney) point?	GB25 Jingmen	AC300::Week5::KI::SpecialPoints
+KI — Back-Shu (of Kidney) point?	BL23 Shenshu	AC300::Week5::KI::SpecialPoints
+KI — Confluent (opens Yinqiao Mai) point?	KI6 Zhaohai	AC300::Week5::KI::SpecialPoints
+BL1 = ?	Jingming	AC300::Week5::BL::NameRecall
+BL2 = ?	Zanzhu	AC300::Week5::BL::NameRecall
+BL3 = ?	Meichong	AC300::Week5::BL::NameRecall
+BL4 = ?	Quchai	AC300::Week5::BL::NameRecall
+BL5 = ?	Wuchu	AC300::Week5::BL::NameRecall
+BL6 = ?	Chengguang	AC300::Week5::BL::NameRecall
+BL7 = ?	Tongtian	AC300::Week5::BL::NameRecall
+BL8 = ?	Luoque	AC300::Week5::BL::NameRecall
+BL9 = ?	Yuzhen	AC300::Week5::BL::NameRecall
+BL10 = ?	Tianzhu	AC300::Week5::BL::NameRecall
+BL11 = ?	Dazhu	AC300::Week5::BL::NameRecall
+BL12 = ?	Fengmen	AC300::Week5::BL::NameRecall
+BL13 = ?	Feishu	AC300::Week5::BL::NameRecall
+BL14 = ?	Jueyinshu	AC300::Week5::BL::NameRecall
+BL15 = ?	Xinshu	AC300::Week5::BL::NameRecall
+BL16 = ?	Dushu	AC300::Week5::BL::NameRecall
+BL17 = ?	Geshu	AC300::Week5::BL::NameRecall
+BL18 = ?	Ganshu	AC300::Week5::BL::NameRecall
+BL19 = ?	Danshu	AC300::Week5::BL::NameRecall
+BL20 = ?	Pishu	AC300::Week5::BL::NameRecall
+BL21 = ?	Weishu	AC300::Week5::BL::NameRecall
+BL22 = ?	Sanjiaoshu	AC300::Week5::BL::NameRecall
+BL23 = ?	Shenshu	AC300::Week5::BL::NameRecall
+BL24 = ?	Qihaishu	AC300::Week5::BL::NameRecall
+BL25 = ?	Dachangshu	AC300::Week5::BL::NameRecall
+BL26 = ?	Guanyuanshu	AC300::Week5::BL::NameRecall
+BL27 = ?	Xiaochangshu	AC300::Week5::BL::NameRecall
+BL28 = ?	Pangguangshu	AC300::Week5::BL::NameRecall
+BL29 = ?	Zhonglvshu	AC300::Week5::BL::NameRecall
+BL30 = ?	Baihuanshu	AC300::Week5::BL::NameRecall
+BL31 = ?	Shangliao	AC300::Week5::BL::NameRecall
+BL32 = ?	Ciliao	AC300::Week5::BL::NameRecall
+BL33 = ?	Zhongliao	AC300::Week5::BL::NameRecall
+BL34 = ?	Xialiao	AC300::Week5::BL::NameRecall
+BL35 = ?	Huiyang	AC300::Week5::BL::NameRecall
+BL36 = ?	Chengfu	AC300::Week5::BL::NameRecall
+BL37 = ?	Yinmen	AC300::Week5::BL::NameRecall
+BL38 = ?	Fuxi	AC300::Week5::BL::NameRecall
+BL39 = ?	Weiyang	AC300::Week5::BL::NameRecall
+BL40 = ?	Weizhong	AC300::Week5::BL::NameRecall
+BL41 = ?	Fufen	AC300::Week5::BL::NameRecall
+BL42 = ?	Pohu	AC300::Week5::BL::NameRecall
+BL43 = ?	Gaohuang	AC300::Week5::BL::NameRecall
+BL44 = ?	Shentang	AC300::Week5::BL::NameRecall
+BL45 = ?	Yixi	AC300::Week5::BL::NameRecall
+BL46 = ?	Geguan	AC300::Week5::BL::NameRecall
+BL47 = ?	Hunmen	AC300::Week5::BL::NameRecall
+BL48 = ?	Yanggang	AC300::Week5::BL::NameRecall
+BL49 = ?	Yishe	AC300::Week5::BL::NameRecall
+BL50 = ?	Weicang	AC300::Week5::BL::NameRecall
+BL51 = ?	Huangmen	AC300::Week5::BL::NameRecall
+BL52 = ?	Zhishi	AC300::Week5::BL::NameRecall
+BL53 = ?	Baohuang	AC300::Week5::BL::NameRecall
+BL54 = ?	Zhibian	AC300::Week5::BL::NameRecall
+BL55 = ?	Heyang	AC300::Week5::BL::NameRecall
+BL56 = ?	Chengjin	AC300::Week5::BL::NameRecall
+BL57 = ?	Chengshan	AC300::Week5::BL::NameRecall
+BL58 = ?	Feiyang	AC300::Week5::BL::NameRecall
+BL59 = ?	Fuyang	AC300::Week5::BL::NameRecall
+BL60 = ?	Kunlun	AC300::Week5::BL::NameRecall
+BL61 = ?	Pucan	AC300::Week5::BL::NameRecall
+BL62 = ?	Shenmai	AC300::Week5::BL::NameRecall
+BL63 = ?	Jinmen	AC300::Week5::BL::NameRecall
+BL64 = ?	Jinggu	AC300::Week5::BL::NameRecall
+BL65 = ?	Shugu	AC300::Week5::BL::NameRecall
+BL66 = ?	Zutonggu	AC300::Week5::BL::NameRecall
+BL67 = ?	Zhiyin	AC300::Week5::BL::NameRecall
+KI1 = ?	Yongquan	AC300::Week5::KI::NameRecall
+KI2 = ?	Rangu	AC300::Week5::KI::NameRecall
+KI3 = ?	Taixi	AC300::Week5::KI::NameRecall
+KI4 = ?	Dazhong	AC300::Week5::KI::NameRecall
+KI5 = ?	Shuiquan	AC300::Week5::KI::NameRecall
+KI6 = ?	Zhaohai	AC300::Week5::KI::NameRecall
+KI7 = ?	Fuliu	AC300::Week5::KI::NameRecall
+KI8 = ?	Jiaoxin	AC300::Week5::KI::NameRecall
+KI9 = ?	Zhubin	AC300::Week5::KI::NameRecall
+KI10 = ?	Yingu	AC300::Week5::KI::NameRecall
+KI11 = ?	Henggu	AC300::Week5::KI::NameRecall
+KI12 = ?	Dahe	AC300::Week5::KI::NameRecall
+KI13 = ?	Qixue	AC300::Week5::KI::NameRecall
+KI14 = ?	Siman	AC300::Week5::KI::NameRecall
+KI15 = ?	Zhongzhu	AC300::Week5::KI::NameRecall
+KI16 = ?	Huangshu	AC300::Week5::KI::NameRecall
+KI17 = ?	Shangqu	AC300::Week5::KI::NameRecall
+KI18 = ?	Shiguan	AC300::Week5::KI::NameRecall
+KI19 = ?	Yindu	AC300::Week5::KI::NameRecall
+KI20 = ?	Futonggu	AC300::Week5::KI::NameRecall
+KI21 = ?	Youmen	AC300::Week5::KI::NameRecall
+KI22 = ?	Bulang	AC300::Week5::KI::NameRecall
+KI23 = ?	Shenfeng	AC300::Week5::KI::NameRecall
+KI24 = ?	Lingxu	AC300::Week5::KI::NameRecall
+KI25 = ?	Shencang	AC300::Week5::KI::NameRecall
+KI26 = ?	Yuzhong	AC300::Week5::KI::NameRecall
+KI27 = ?	Shufu	AC300::Week5::KI::NameRecall
