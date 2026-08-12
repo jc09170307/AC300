@@ -15,7 +15,9 @@ from PIL import Image
 sys.path.insert(0, "/home/claude/work")
 from wk6_content import (PC_META, SJ_META, GB_META, LR_META, PC_COURSE, SJ_COURSE,
                           GB_COURSE, LR_COURSE, PC_POINTS, SJ_POINTS, GB_POINTS_GROUPED,
-                          LR_POINTS, PC_FUNCTIONS, SJ_FUNCTIONS, GB_FUNCTIONS, LR_FUNCTIONS)
+                          LR_POINTS, PC_FUNCTIONS, SJ_FUNCTIONS, GB_FUNCTIONS, LR_FUNCTIONS,
+                          PC_CROSSING_DETAIL, SJ_CROSSING_DETAIL, GB_CROSSING_DETAIL,
+                          LR_CROSSING_DETAIL, DIRECTION_POSITION)
 
 FIGS_DIR = "/home/claude/work/figs"
 FONT_DIR = "/home/claude/work/fonts"
@@ -211,6 +213,24 @@ def internal_page(name, subtitle, color, tint, meta, course, functions, fig_moa,
     y -= 16
     y = section_label(y, "Internal Running Course", color)
 
+    direction, position = DIRECTION_POSITION[chan_label]
+    setfill(DARK); c.setFont("Lora-Bold", 7.6)
+    c.drawString(ML, y, "Direction: ")
+    dw = pdfmetrics.stringWidth("Direction: ", "Lora-Bold", 7.6)
+    c.setFont("Lora", 7.6)
+    c.drawString(ML + dw, y, direction)
+    y -= 10
+    c.setFont("Lora-Bold", 7.6)
+    c.drawString(ML, y, "Position: ")
+    pw = pdfmetrics.stringWidth("Position: ", "Lora-Bold", 7.6)
+    c.setFont("Lora", 7.6)
+    pos_lines = wrap_words(position, "Lora", 7.6, CW - pw - 4)
+    c.drawString(ML + pw, y, pos_lines[0])
+    for extra in pos_lines[1:]:
+        y -= 9.4
+        c.drawString(ML, y, extra)
+    y -= 14
+
     left_x, left_w = ML, 320
     right_x = ML + left_w + 16
     right_w = RX - right_x
@@ -253,7 +273,7 @@ def internal_page(name, subtitle, color, tint, meta, course, functions, fig_moa,
 # CAM image (right)
 # ============================================================
 def external_page(name, abbr, subtitle, color, tint, meta, points_rows, fig_cam, chan_label,
-                   grouped=None):
+                   grouped=None, crossing_detail=None):
     new_page()
     title = f"The {name} ({abbr})  -  External Running Course & CAM Figures"
     y = title_pills(title, subtitle, color, key_pills(meta))
@@ -307,6 +327,21 @@ def external_page(name, abbr, subtitle, color, tint, meta, points_rows, fig_cam,
     dy = draw_image_contain(fig_cam, img_x, y, img_w, y - 55, color)
     setfill(GRAY); c.setFont("Lora-Italic", 7.5)
     c.drawCentredString(img_x + img_w / 2, dy - 12, f"CAM Col. Fig. \u2014 {name}")
+
+    if crossing_detail:
+        cy = ty - 14
+        cy = section_label(cy, "Crossing Points -- Specifics", color)
+        setfill(DARK); c.setFont("Lora", 7.4)
+        for fact in crossing_detail:
+            lines = wrap_words(fact, "Lora", 7.4, table_w - 12)
+            setfill(color); c.circle(table_x + 2, cy + 2, 1.3, fill=1, stroke=0)
+            setfill(DARK)
+            for i, l in enumerate(lines):
+                c.drawString(table_x + 8, cy - i * 8.8, l)
+            cy -= max(1, len(lines)) * 8.8 + 3
+            if cy < 45:
+                break
+
     end_page(f"AC300/AC375 | Week 6 | {chan_label} Channel | VUIM Summer 2026")
 
 
@@ -374,22 +409,22 @@ end_page("AC300/AC375 | Week 6 | PC, SJ, GB, LR Channels | VUIM Summer 2026")
 internal_page("The Pericardium Meridian of Hand-Jueyin", "Ministerial Fire  |  7-9 PM  |  9 Points",
               MINISTER, MIN_TINT, PC_META, PC_COURSE, PC_FUNCTIONS, "MOA_PC", "PC")
 external_page("Pericardium Meridian", "PC", "Ministerial Fire  |  9 Points", MINISTER, MIN_TINT,
-              PC_META, PC_POINTS, "CAM_PC", "PC")
+              PC_META, PC_POINTS, "CAM_PC", "PC", crossing_detail=PC_CROSSING_DETAIL)
 
 internal_page("The San Jiao Meridian of Hand-Shaoyang", "Ministerial Fire  |  9-11 PM  |  23 Points",
               MINISTER, MIN_TINT, SJ_META, SJ_COURSE, SJ_FUNCTIONS, "MOA_SJ", "SJ")
 external_page("San Jiao Meridian", "SJ", "Ministerial Fire  |  23 Points", MINISTER, MIN_TINT,
-              SJ_META, SJ_POINTS, "CAM_SJ", "SJ")
+              SJ_META, SJ_POINTS, "CAM_SJ", "SJ", crossing_detail=SJ_CROSSING_DETAIL)
 
 internal_page("The Gallbladder Meridian of Foot-Shaoyang", "Wood  |  11 PM-1 AM  |  44 Points",
               WOOD, WOOD_TINT, GB_META, GB_COURSE, GB_FUNCTIONS, "MOA_GB", "GB")
 external_page("Gallbladder Meridian", "GB", "Wood  |  44 Points", WOOD, WOOD_TINT,
-              GB_META, None, "CAM_GB", "GB", grouped=GB_POINTS_GROUPED)
+              GB_META, None, "CAM_GB", "GB", grouped=GB_POINTS_GROUPED, crossing_detail=GB_CROSSING_DETAIL)
 
 internal_page("The Liver Meridian of Foot-Jueyin", "Wood  |  1-3 AM  |  14 Points",
               WOOD, WOOD_TINT, LR_META, LR_COURSE, LR_FUNCTIONS, "MOA_LR", "LR")
 external_page("Liver Meridian", "LR", "Wood  |  14 Points", WOOD, WOOD_TINT,
-              LR_META, LR_POINTS, "CAM_LR", "LR")
+              LR_META, LR_POINTS, "CAM_LR", "LR", crossing_detail=LR_CROSSING_DETAIL)
 
 c.save()
 print(f"Saved {OUT}")

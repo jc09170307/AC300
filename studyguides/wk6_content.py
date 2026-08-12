@@ -235,7 +235,41 @@ LR_FUNCTIONS = [
     "Completes the 12-channel Qi cycle by connecting back to LU inside the body -- 'the total basic circulation of the 12 primary meridians'",
 ]
 
-# Three Circuits reminder for this week (PC/SJ = Middle Circuit; GB continues Posterior/Inner Circuit; LR = Anterior Circuit)
+# ---------------------------------------------------------------------------
+# CROSSING POINT DETAIL -- explicit "channel X crosses channel Y at point Z"
+# facts, matching the quiz's own question format (e.g. "which crosses in
+# front of LR at SP9"). Verified against transcript where noted.
+# ---------------------------------------------------------------------------
+PC_CROSSING_DETAIL = [
+    "PC has NO crossing points -- no other channel crosses PC's pathway, and PC crosses no other channel's points. (Only PC and HT share this trait.)",
+]
+SJ_CROSSING_DETAIL = [
+    "SJ crosses BEHIND the Gallbladder channel at the shoulder (per transcript: SJ 'goes across and passes behind the Gallbladder meridian of Foot-Shaoyang' at the shoulder region)",
+    "SJ15 Tianliao is a crossing point shared with GB21 Jianjing (both at the shoulder/scapular region)",
+    "SJ meets GB infraorbitally near ST/GB5-6 region on the facial branch",
+    "SJ crosses GV14 Dazhui at the top of the shoulder before entering the supraclavicular fossa",
+]
+GB_CROSSING_DETAIL = [
+    "GB runs IN FRONT of San Jiao along the side of the neck to the shoulder, THEN turns back and crosses BEHIND San Jiao down to the supraclavicular fossa -- GB and SJ cross each other TWICE in this region (verified, transcript)",
+    "GB1 Tongziliao (first point) is a crossing point shared with SI and ST",
+    "GB21 Jianjing is a crossing point shared with SJ, ST, and is near GV14",
+    "GB's zigzag head course crosses/shares territory with SJ around the ear repeatedly -- both are Shaoyang channels ('same finger of Doctor Bobo' rule from transcript)",
+    "GB30 Huantiao is a crossing point shared with BL",
+]
+LR_CROSSING_DETAIL = [
+    "The SPLEEN channel crosses IN FRONT of LIVER at a point 8 cun above the medial malleolus (this is the exact quiz-style fact: 'which meridian crosses in front of LR at SP9' -> answer: Spleen) -- this is the ONE exception to the normal medial-leg Yin channel order (normally SP is anterior-most)",
+    "LR shares crossing points with CV (2 points) and SP (1 point) around the genital/lower abdomen region",
+    "LR reaches the VERTEX and meets the Governing Vessel at GV20 Baihui -- a crossing point on top of the head",
+]
+
+DIRECTION_POSITION = {
+    "PC": ("Chest -> Hand (Yin, Hand)", "Middle line of the anterior/medial arm -- between LU (anterior) and HT (posterior)"),
+    "SJ": ("Hand -> Head (Yang, Hand)", "Middle line, posterior forearm/upper arm -- between SI (posterior) and LI (anterior)"),
+    "GB": ("Head -> Foot (Yang, Foot)", "Lateral side of head, trunk, and leg -- unique zigzag/'Z-shape' course on the head"),
+    "LR": ("Foot -> Chest (Yin, Foot)", "Medial leg -- crosses IN FRONT of SP at 8 cun above the medial malleolus (exception to normal order); reaches highest of any channel via the vertex branch"),
+}
+
+
 CIRCUITS_NOTE = (
     "This week spans THREE different circuits: PC + SJ complete the Middle Circuit "
     "(per transcript, 'a totally middle circuit'); GB continues the Posterior Circuit "

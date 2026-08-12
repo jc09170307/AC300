@@ -215,6 +215,7 @@ traps = [
     ("LR is the ONLY primary channel reaching the VERTEX (GV20) -- vertex headache = Liver channel.", WOOD),
     ("LR crosses IN FRONT of SP at 8 cun above the medial malleolus -- the one exception to the normal leg-Yin channel order.", WOOD),
     ("LR3 + LI4 = 'Four Gates' -- classic pairing to move Qi/Blood, taught this week.", WOOD),
+    ("SJ crosses IN FRONT of GB at the neck/shoulder, then crosses BEHIND GB again before the supraclavicular fossa -- they cross each other TWICE in that region.", MINISTER),
     ("LR13 Zhangmen has a DOUBLE special-point status: Front-Mu of SPLEEN + Hui-Meeting of all 5 ZANG. Common exam mix-up.", WOOD),
     ("Active-hours clock this week: PC 7-9PM, SJ 9-11PM, GB 11PM-1AM, LR 1-3AM -- consecutive 2-hour blocks moving toward dawn.", NAVY),
     ("Quiz 4 (in-class this week) tested BL/KI (last week's material) -- Quiz 5 (next week) tests THIS week's PC/SJ/GB/LR.", NAVY),
