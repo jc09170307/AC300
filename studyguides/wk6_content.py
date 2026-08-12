@@ -51,7 +51,7 @@ GB_META = [
     ("Total points", "44 (GB1-GB44) -- 3rd largest channel after BL(67) and ST(45)"),
     ("Direction", "Head -> foot (Yang, foot)"),
     ("Position", "Lateral side of head, trunk, and leg -- zigzag/'Z-shape' course on the head, unique among channels"),
-    ("Circuit", "Posterior Circuit (also called Inner Circuit on earlier slide versions)"),
+    ("Circuit", "Middle Circuit (per transcript: GB continues 'the totally middle circuit' alongside PC/SJ)"),
     ("Active hours", "11 PM-1 AM (Zi)"),
     ("Back-Shu", "BL19"),
     ("Front-Mu", "GB24"),
@@ -69,7 +69,7 @@ LR_META = [
     ("Total points", "14 (LR1-LR14) -- smallest Yin channel of the foot"),
     ("Direction", "Foot -> chest (Yin, foot)"),
     ("Position", "Medial leg -- crosses IN FRONT of SP from ~8 cun above the medial malleolus upward (exception to the usual order); ends highest of the 3 leg Yin channels, reaching the vertex via the vertex branch"),
-    ("Circuit", "Anterior Circuit"),
+    ("Circuit", "Middle Circuit -- LR completes it (per transcript, the four hand/foot channels PC/SJ/GB/LR together form 'a totally middle circuit')"),
     ("Active hours", "1-3 AM (Chou) -- 'liver time'; per transcript, waking 1-3AM = treat Liver, waking 3-5AM = treat Lung"),
     ("Back-Shu", "BL18"),
     ("Front-Mu", "LR14"),
@@ -271,11 +271,13 @@ DIRECTION_POSITION = {
 
 
 CIRCUITS_NOTE = (
-    "This week spans THREE different circuits: PC + SJ complete the Middle Circuit "
-    "(per transcript, 'a totally middle circuit'); GB continues the Posterior Circuit "
-    "(also called Inner Circuit on earlier slide versions) that started with BL/KI; "
-    "LR completes the Anterior Circuit that began with LU/LI. Exam safety: always list "
-    "both circuit names together."
+    "This week completes the THIRD and final circuit: the Middle Circuit = "
+    "PC + SJ + GB + LR, all four of this week's channels (transcript, describing "
+    "GB/LR: 'it's a totally middle circuit'). This matches the pattern from "
+    "earlier weeks: Anterior Circuit = LU+LI+ST+SP (Weeks 2-3); Posterior Circuit "
+    "(also called Inner Circuit on earlier slide versions) = HT+SI+BL+KI (Weeks "
+    "4-5, already complete). Exam safety: GB/LR belong to the MIDDLE circuit, "
+    "not the Posterior one -- do not confuse with BL/KI's circuit."
 )
 
 QUIZ4_RECAP = [
