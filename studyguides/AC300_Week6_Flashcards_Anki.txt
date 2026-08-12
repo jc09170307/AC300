@@ -1,0 +1,150 @@
+PC point: 4th ICS, 1 cun lateral to the nipple	PC1 — Tianchi	AC300::Week6::PC::PointID
+PC point: 2 cun below the anterior axillary fold, between the two heads of biceps brachii	PC2 — Tianquan	AC300::Week6::PC::PointID
+PC point: Medial end of cubital crease, ulnar side of biceps tendon, elbow slightly flexed	PC3 — Quze	AC300::Week6::PC::PointID
+PC point: 5 cun proximal to the wrist crease, between the tendons of palmaris longus and flexor carpi radialis	PC4 — Ximen	AC300::Week6::PC::PointID
+PC point: 3 cun proximal to the wrist crease, same tendon groove	PC5 — Jianshi	AC300::Week6::PC::PointID
+PC point: 2 cun proximal to the wrist crease, same tendon groove	PC6 — Neiguan	AC300::Week6::PC::PointID
+PC point: Midpoint of the wrist crease, between the tendons of palmaris longus and flexor carpi radialis. Ghost point (Ghost Cave)	PC7 — Daling	AC300::Week6::PC::PointID
+PC point: Center of the palm, where the tip of the middle finger touches when a fist is made. Emergency point -- mental disorders, palpitations, syncope	PC8 — Laogong	AC300::Week6::PC::PointID
+PC point: Center of the tip of the middle finger. Last point of PC; emergency/resuscitation point	PC9 — Zhongchong	AC300::Week6::PC::PointID
+PC1 = ?	Tianchi	AC300::Week6::PC::NameRecall
+PC2 = ?	Tianquan	AC300::Week6::PC::NameRecall
+PC3 = ?	Quze	AC300::Week6::PC::NameRecall
+PC4 = ?	Ximen	AC300::Week6::PC::NameRecall
+PC5 = ?	Jianshi	AC300::Week6::PC::NameRecall
+PC6 = ?	Neiguan	AC300::Week6::PC::NameRecall
+PC7 = ?	Daling	AC300::Week6::PC::NameRecall
+PC8 = ?	Laogong	AC300::Week6::PC::NameRecall
+PC9 = ?	Zhongchong	AC300::Week6::PC::NameRecall
+PC — Back-Shu (of Pericardium) point?	BL14	AC300::Week6::PC::SpecialCategory
+PC — Front-Mu (of Pericardium) point?	CV17	AC300::Week6::PC::SpecialCategory
+PC — Yuan-Source point?	PC7	AC300::Week6::PC::SpecialCategory
+PC — Luo-Connecting point?	PC6	AC300::Week6::PC::SpecialCategory
+PC — He-Sea point?	PC3	AC300::Week6::PC::SpecialCategory
+PC — Xi-Cleft point?	PC4	AC300::Week6::PC::SpecialCategory
+PC — Jing-River point?	PC5 Jianshi	AC300::Week6::PC::SpecialCategory
+PC — Ying-Spring point?	PC8 Laogong	AC300::Week6::PC::SpecialCategory
+PC — Jing-Well point?	PC9 Zhongchong	AC300::Week6::PC::SpecialCategory
+SJ point: Ulnar side of the ring finger, ~0.1 cun from the corner of the nail. First point of SJ	SJ1 — Guanchong	AC300::Week6::SJ::PointID
+SJ point: Between the 4th and 5th fingers, proximal to the margin of the web	SJ2 — Yemen	AC300::Week6::SJ::PointID
+SJ point: Dorsum of hand, between the 4th and 5th metacarpal bones, in the depression proximal to the MCP joints	SJ3 — Zhongzhu	AC300::Week6::SJ::PointID
+SJ point: Dorsal wrist crease, in the depression lateral to the tendon of extensor digitorum	SJ4 — Yangchi	AC300::Week6::SJ::PointID
+SJ point: 2 cun proximal to the dorsal wrist crease, between radius and ulna	SJ5 — Waiguan	AC300::Week6::SJ::PointID
+SJ point: 3 cun proximal to the dorsal wrist crease, between radius and ulna	SJ6 — Zhigou	AC300::Week6::SJ::PointID
+SJ point: Same level as SJ6, one finger-breadth to the ulnar side	SJ7 — Huizong	AC300::Week6::SJ::PointID
+SJ point: 4 cun proximal to the dorsal wrist crease	SJ8 — Sanyangluo	AC300::Week6::SJ::PointID
+SJ point: 5 cun below the olecranon, between radius and ulna	SJ9 — Sidu	AC300::Week6::SJ::PointID
+SJ point: 1 cun proximal to the olecranon, in the depression above it, elbow flexed	SJ10 — Tianjing	AC300::Week6::SJ::PointID
+SJ point: 1 cun above SJ10	SJ11 — Qinglengyuan	AC300::Week6::SJ::PointID
+SJ point: Midpoint between SJ10/olecranon and shoulder	SJ12 — Xiaoluo	AC300::Week6::SJ::PointID
+SJ point: Posterior border of deltoid muscle	SJ13 — Naohui	AC300::Week6::SJ::PointID
+SJ point: Posterior/inferior to the acromion	SJ14 — Jianliao	AC300::Week6::SJ::PointID
+SJ point: Midpoint between GV14 and the acromion, superior scapular angle	SJ15 — Tianliao	AC300::Week6::SJ::PointID
+SJ point: Posterior border of SCM, level with the mandible angle	SJ16 — Tianyou	AC300::Week6::SJ::PointID
+SJ point: Posterior to the earlobe, in the depression between the mastoid process and the mandible	SJ17 — Yifeng	AC300::Week6::SJ::PointID
+SJ point: Center of the mastoid process	SJ18 — Chimai	AC300::Week6::SJ::PointID
+SJ point: Posterior to the ear, behind SJ18	SJ19 — Luxi	AC300::Week6::SJ::PointID
+SJ point: Directly above the ear apex, within the hairline	SJ20 — Jiaosun	AC300::Week6::SJ::PointID
+SJ point: Supratragic notch, anterior to the supratragic notch, mouth slightly open	SJ21 — Ermen	AC300::Week6::SJ::PointID
+SJ point: Anterior/superior to SJ21, at the hairline of the temple, posterior to the superficial temporal artery	SJ22 — Erheliao	AC300::Week6::SJ::PointID
+SJ point: Lateral end of the eyebrow, in the depression. LAST point of SJ, links to GB channel	SJ23 — Sizhukong	AC300::Week6::SJ::PointID
+SJ1 = ?	Guanchong	AC300::Week6::SJ::NameRecall
+SJ2 = ?	Yemen	AC300::Week6::SJ::NameRecall
+SJ3 = ?	Zhongzhu	AC300::Week6::SJ::NameRecall
+SJ4 = ?	Yangchi	AC300::Week6::SJ::NameRecall
+SJ5 = ?	Waiguan	AC300::Week6::SJ::NameRecall
+SJ6 = ?	Zhigou	AC300::Week6::SJ::NameRecall
+SJ7 = ?	Huizong	AC300::Week6::SJ::NameRecall
+SJ8 = ?	Sanyangluo	AC300::Week6::SJ::NameRecall
+SJ9 = ?	Sidu	AC300::Week6::SJ::NameRecall
+SJ10 = ?	Tianjing	AC300::Week6::SJ::NameRecall
+SJ11 = ?	Qinglengyuan	AC300::Week6::SJ::NameRecall
+SJ12 = ?	Xiaoluo	AC300::Week6::SJ::NameRecall
+SJ13 = ?	Naohui	AC300::Week6::SJ::NameRecall
+SJ14 = ?	Jianliao	AC300::Week6::SJ::NameRecall
+SJ15 = ?	Tianliao	AC300::Week6::SJ::NameRecall
+SJ16 = ?	Tianyou	AC300::Week6::SJ::NameRecall
+SJ17 = ?	Yifeng	AC300::Week6::SJ::NameRecall
+SJ18 = ?	Chimai	AC300::Week6::SJ::NameRecall
+SJ19 = ?	Luxi	AC300::Week6::SJ::NameRecall
+SJ20 = ?	Jiaosun	AC300::Week6::SJ::NameRecall
+SJ21 = ?	Ermen	AC300::Week6::SJ::NameRecall
+SJ22 = ?	Erheliao	AC300::Week6::SJ::NameRecall
+SJ23 = ?	Sizhukong	AC300::Week6::SJ::NameRecall
+SJ — Back-Shu (of San Jiao) point?	BL22	AC300::Week6::SJ::SpecialCategory
+SJ — Front-Mu (of San Jiao) point?	CV5	AC300::Week6::SJ::SpecialCategory
+SJ — Yuan-Source point?	SJ4	AC300::Week6::SJ::SpecialCategory
+SJ — Luo-Connecting point?	SJ5	AC300::Week6::SJ::SpecialCategory
+SJ — He-Sea point?	SJ10	AC300::Week6::SJ::SpecialCategory
+SJ — Xi-Cleft point?	SJ7	AC300::Week6::SJ::SpecialCategory
+SJ — Confluent point (opens which EV)?	SJ5 -- opens Yang Wei Mai, paired with GB41	AC300::Week6::SJ::SpecialCategory
+SJ — Jing-Well point?	SJ1 Guanchong	AC300::Week6::SJ::SpecialCategory
+SJ — Ying-Spring point?	SJ2 Yemen	AC300::Week6::SJ::SpecialCategory
+SJ — Jing-River point?	SJ6 Zhigou	AC300::Week6::SJ::SpecialCategory
+GB point: 0.5 cun lateral to the outer canthus. First point of GB	GB1 — Tongziliao	AC300::Week6::GB::PointID
+GB point: Anterior to the intertragic notch, posterior to the condyloid process of the mandible	GB2 — Tinghui	AC300::Week6::GB::PointID
+GB point: Upper border of the zygomatic arch, anterior to the ear	GB3 — Shangguan	AC300::Week6::GB::PointID
+GB point: 1 cun above the midpoint of the eyebrow	GB14 — Yangbai	AC300::Week6::GB::PointID
+GB point: Below the occiput, in the depression between sternocleidomastoid and trapezius. HIGH-YIELD (Wind Gate): headache, dizziness, common cold, hypertension, eye disorders	GB20 — Fengchi	AC300::Week6::GB::PointID
+GB point: Midpoint between GV14 and the acromion, at the highest point of the shoulder. FORBIDDEN IN PREGNANCY -- strong descending action, can induce labor	GB21 — Jianjing	AC300::Week6::GB::PointID
+GB point: 6th ICS, on the mamillary line	GB24 — Riyue	AC300::Week6::GB::PointID
+GB point: Free end (anterior/inferior border) of the 12th rib	GB25 — Jingmen	AC300::Week6::GB::PointID
+GB point: Below the free end of the 11th rib / anterior superior iliac spine level -- where the Dai Mai (Girdle Vessel) actually wraps the body	GB26/27 — Daimai / Wushu	AC300::Week6::GB::PointID
+GB point: Junction of lateral 1/3 and medial 2/3 of the line from the greater trochanter to the sacral hiatus	GB30 — Huantiao	AC300::Week6::GB::PointID
+GB point: Anterior/inferior to the head of the fibula	GB34 — Yanglingquan	AC300::Week6::GB::PointID
+GB point: 5 cun above the tip of the external malleolus, anterior to the fibula	GB37 — Guangming	AC300::Week6::GB::PointID
+GB point: 3 cun above the tip of the external malleolus, between the fibula and the tendons of peroneus longus/brevis	GB39 — Xuanzhong	AC300::Week6::GB::PointID
+GB point: Anteroinferior to the external malleolus, lateral to the tendon of extensor digitorum longus	GB40 — Qiuxu	AC300::Week6::GB::PointID
+GB point: Between the 4th/5th metatarsal bones, lateral to the tendon of extensor digitorum longus	GB41 — Zulinqi	AC300::Week6::GB::PointID
+GB point: Lateral side of the 4th toe, ~0.1 cun from the corner of the nail. LAST point of GB, links to LR channel	GB44 — Zuqiaoyin	AC300::Week6::GB::PointID
+GB1 = ?	Tongziliao	AC300::Week6::GB::NameRecall
+GB2 = ?	Tinghui	AC300::Week6::GB::NameRecall
+GB3 = ?	Shangguan	AC300::Week6::GB::NameRecall
+GB14 = ?	Yangbai	AC300::Week6::GB::NameRecall
+GB20 = ?	Fengchi	AC300::Week6::GB::NameRecall
+GB21 = ?	Jianjing	AC300::Week6::GB::NameRecall
+GB24 = ?	Riyue	AC300::Week6::GB::NameRecall
+GB25 = ?	Jingmen	AC300::Week6::GB::NameRecall
+GB26/27 = ?	Daimai / Wushu	AC300::Week6::GB::NameRecall
+GB30 = ?	Huantiao	AC300::Week6::GB::NameRecall
+GB34 = ?	Yanglingquan	AC300::Week6::GB::NameRecall
+GB37 = ?	Guangming	AC300::Week6::GB::NameRecall
+GB39 = ?	Xuanzhong	AC300::Week6::GB::NameRecall
+GB40 = ?	Qiuxu	AC300::Week6::GB::NameRecall
+GB41 = ?	Zulinqi	AC300::Week6::GB::NameRecall
+GB44 = ?	Zuqiaoyin	AC300::Week6::GB::NameRecall
+GB — Back-Shu (of Gallbladder) point?	BL19	AC300::Week6::GB::SpecialCategory
+GB — Front-Mu (of Gallbladder) point?	GB24	AC300::Week6::GB::SpecialCategory
+GB — Yuan-Source point?	GB40	AC300::Week6::GB::SpecialCategory
+GB — Luo-Connecting point?	GB37	AC300::Week6::GB::SpecialCategory
+GB — He-Sea point?	GB34	AC300::Week6::GB::SpecialCategory
+GB — Xi-Cleft point?	GB36	AC300::Week6::GB::SpecialCategory
+GB — Confluent point (opens which EV)?	GB41 -- opens Dai Mai (Girdle Vessel), paired with SJ5	AC300::Week6::GB::SpecialCategory
+GB — Jing-Well point?	GB44 Zuqiaoyin	AC300::Week6::GB::SpecialCategory
+LR point: Lateral side of the great toe, ~0.1 cun from the corner of the nail. First point of LR	LR1 — Dadun	AC300::Week6::LR::PointID
+LR point: Web margin between the 1st and 2nd toes	LR2 — Xingjian	AC300::Week6::LR::PointID
+LR point: Dorsum of foot, in the depression distal to the junction of the 1st/2nd metatarsal bones. HIGHEST-YIELD LR POINT: smooths Liver Qi, subdues Liver Yang/wind, pairs with LI4 (the 'Four Gates') -- classic combination for pain and to move Qi and Blood	LR3 — Taichong	AC300::Week6::LR::PointID
+LR point: Anterior to the medial malleolus, medial to tibialis anterior tendon	LR4 — Zhongfeng	AC300::Week6::LR::PointID
+LR point: 5 cun above the tip of the medial malleolus, on the medial tibial surface	LR5 — Ligou	AC300::Week6::LR::PointID
+LR point: 7 cun above the tip of the medial malleolus, medial tibial surface	LR6 — Zhongdu	AC300::Week6::LR::PointID
+LR point: Medial end of the popliteal crease, posterior to the medial condyle, knee flexed	LR8 — Ququan	AC300::Week6::LR::PointID
+LR point: Free end of the 11th floating rib, level with LR14	LR13 — Zhangmen	AC300::Week6::LR::PointID
+LR point: 6th ICS, directly below the nipple, on the mamillary line	LR14 — Qimen	AC300::Week6::LR::PointID
+LR1 = ?	Dadun	AC300::Week6::LR::NameRecall
+LR2 = ?	Xingjian	AC300::Week6::LR::NameRecall
+LR3 = ?	Taichong	AC300::Week6::LR::NameRecall
+LR4 = ?	Zhongfeng	AC300::Week6::LR::NameRecall
+LR5 = ?	Ligou	AC300::Week6::LR::NameRecall
+LR6 = ?	Zhongdu	AC300::Week6::LR::NameRecall
+LR8 = ?	Ququan	AC300::Week6::LR::NameRecall
+LR13 = ?	Zhangmen	AC300::Week6::LR::NameRecall
+LR14 = ?	Qimen	AC300::Week6::LR::NameRecall
+LR — Back-Shu (of Liver) point?	BL18	AC300::Week6::LR::SpecialCategory
+LR — Front-Mu (of Liver) point?	LR14	AC300::Week6::LR::SpecialCategory
+LR — Yuan-Source point?	LR3	AC300::Week6::LR::SpecialCategory
+LR — Luo-Connecting point?	LR5	AC300::Week6::LR::SpecialCategory
+LR — He-Sea point?	LR8	AC300::Week6::LR::SpecialCategory
+LR — Xi-Cleft point?	LR6	AC300::Week6::LR::SpecialCategory
+LR — Jing-Well point?	LR1 Dadun	AC300::Week6::LR::SpecialCategory
+LR — Ying-Spring point?	LR2 Xingjian	AC300::Week6::LR::SpecialCategory
+LR — Jing-River point?	LR4 Zhongfeng	AC300::Week6::LR::SpecialCategory
