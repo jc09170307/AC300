@@ -112,21 +112,24 @@ y -= 10
 
 # --- The Sequence ---
 y = section_tag(y, "1.  THE SEQUENCE  (write this from memory every session)")
-seq_h = 46
+seq_h = 58
 setfill(CARD_BG); c.rect(ML, y - seq_h, CW, seq_h, fill=1, stroke=0)
 n = len(CHANNELS)
-cell_w = (CW - 20) / n
-cx = ML + 10
+avail_w = CW - 20
+cell_w = avail_w / n
+circ_r = min(13, cell_w / 2 - 9)
+cx0 = ML + 10
 cy = y - 20
 for i, ch in enumerate(CHANNELS):
-    setfill(COLORS[ch]); c.circle(cx + cell_w * i + cell_w / 2 - 8, cy, 13, fill=1, stroke=0)
-    setfill((1, 1, 1)); c.setFont("Lora-Bold", 8.6)
-    c.drawCentredString(cx + cell_w * i + cell_w / 2 - 8, cy - 3, ch)
+    ccx = cx0 + cell_w * i + cell_w / 2
+    setfill(COLORS[ch]); c.circle(ccx, cy, circ_r, fill=1, stroke=0)
+    setfill((1, 1, 1)); c.setFont("Lora-Bold", 8.3)
+    c.drawCentredString(ccx, cy - 3, ch)
     if i < n - 1:
         setfill(DARK); c.setFont("Lora-Bold", 9)
-        c.drawCentredString(cx + cell_w * i + cell_w - 2, cy - 3, "->")
+        c.drawCentredString(ccx + cell_w / 2, cy - 3, "->")
 setfill(GRAY); c.setFont("Lora-Italic", 7.6)
-c.drawCentredString(W / 2, y - seq_h + 10, "LR -> (loops back to) LU  \u2014  the Qi cycle is closed, 24-hour clock")
+c.drawCentredString(W / 2, y - seq_h + 12, "LR -> (loops back to) LU  \u2014  the Qi cycle is closed, 24-hour clock")
 y -= seq_h + 16
 
 # --- The Cycle ---
@@ -192,19 +195,22 @@ end_page("Reference Page")
 y = header("Master Map \u2014 Blank Retrieval", "Close page 1. Fill this from memory. Check after, don't peek during.")
 
 y = section_tag(y, "1.  THE SEQUENCE  (fill in all 12, in order)")
-seq_h = 46
+seq_h = 58
 setfill(CARD_BG); c.rect(ML, y - seq_h, CW, seq_h, fill=1, stroke=0)
-cell_w = (CW - 20) / 12
-cx = ML + 10
+avail_w = CW - 20
+cell_w = avail_w / 12
+circ_r = min(13, cell_w / 2 - 9)
+cx0 = ML + 10
 cy = y - 20
 for i in range(12):
+    ccx = cx0 + cell_w * i + cell_w / 2
     setstroke(GRAY); c.setLineWidth(0.8)
-    c.circle(cx + cell_w * i + cell_w / 2 - 8, cy, 13, fill=0, stroke=1)
+    c.circle(ccx, cy, circ_r, fill=0, stroke=1)
     if i < 11:
         setfill(DARK); c.setFont("Lora-Bold", 9)
-        c.drawCentredString(cx + cell_w * i + cell_w - 2, cy - 3, "->")
+        c.drawCentredString(ccx + cell_w / 2, cy - 3, "->")
 setfill(GRAY); c.setFont("Lora-Italic", 7.6)
-c.drawCentredString(W / 2, y - seq_h + 10, "hint: starts with LU, loops back to LU")
+c.drawCentredString(W / 2, y - seq_h + 12, "hint: starts with LU, loops back to LU")
 y -= seq_h + 16
 
 y = section_tag(y, "2.  THE CYCLE  (fill in the 4 body regions)")

@@ -80,3 +80,24 @@ LIMB_POSITION = {
     "LR": "Medial leg -- MIDDLE above 8 cun/medial malleolus, ANTERIOR below (crosses SP)",
     "KI": "Medial leg -- POSTERIOR line throughout",
 }
+
+# The 5-element color system (locked palette). Ministerial Fire (PC/SJ) is a
+# lighter/coral tint of the same Fire hue -- still one of the 5 elements, not
+# a 6th separate color -- per the enforced element color-coding rule.
+ELEMENT_COLOR = {
+    "Metal": (0.32, 0.42, 0.53),
+    "Earth": (0.706, 0.518, 0.204),
+    "Fire": (0.627, 0.220, 0.180),
+    "Water": (0.153, 0.341, 0.514),
+    "Wood": (0.20, 0.48, 0.27),
+}
+MINISTERIAL = {"PC", "SJ"}
+
+def _tint(rgb, amt):
+    r, g, b = rgb
+    return (r + (1 - r) * amt, g + (1 - g) * amt, b + (1 - b) * amt)
+
+def element_color(ch):
+    base_elem = "Fire" if ATTR[ch]["elem"].startswith("Fire") else ATTR[ch]["elem"]
+    base = ELEMENT_COLOR[base_elem]
+    return _tint(base, 0.32) if ch in MINISTERIAL else base

@@ -8,7 +8,7 @@ from reportlab.pdfgen import canvas
 from reportlab.lib.pagesizes import letter
 from reportlab.pdfbase import pdfmetrics
 from reportlab.pdfbase.ttfonts import TTFont
-from shared_data import CHANNELS, COLORS, ATTR, TRIADS, LIMB_POSITION, DIRECTION, direction_key
+from shared_data import CHANNELS, COLORS, ATTR, TRIADS, LIMB_POSITION, DIRECTION, direction_key, ELEMENT_COLOR, element_color
 
 FONT_DIR = "/home/claude/fonts"
 pdfmetrics.registerFont(TTFont('Lora', f'{FONT_DIR}/Lora-Regular.ttf'))
@@ -131,6 +131,26 @@ for b in [
     y -= 15
 y -= 10
 
+# Element color legend -- 5 elements, Ministerial Fire shown as a tint of Fire
+setfill(NAVY); c.setFont("Lora-Bold", 9.5)
+c.drawCentredString(W / 2, y, "ELEMENT COLOR KEY")
+y -= 18
+legend = [("Metal", "LU / LI"), ("Earth", "ST / SP"), ("Fire", "HT / SI"),
+          ("Water", "BL / KI"), ("Wood", "GB / LR")]
+sw_w = (CW - 40) / 5
+lx = ML + 20
+for elem, chs in legend:
+    setfill(ELEMENT_COLOR[elem]); c.circle(lx + 7, y - 3, 6, fill=1, stroke=0)
+    setfill(DARK); c.setFont("Lora-Bold", 8.6)
+    c.drawString(lx + 18, y, elem)
+    setfill(GRAY); c.setFont("Lora-Italic", 7.6)
+    c.drawString(lx + 18, y - 11, chs)
+    lx += sw_w
+y -= 26
+setfill(GRAY); c.setFont("Lora-Italic", 7.6)
+c.drawCentredString(W / 2, y, "PC/SJ (Ministerial Fire) use a lighter coral tint of the Fire color -- same element, distinguishable subtype")
+y -= 16
+
 box_w = 480
 box_h = 50
 setfill(CARD_BG); c.rect(W / 2 - box_w / 2, y - box_h, box_w, box_h, fill=1, stroke=0)
@@ -156,7 +176,7 @@ end_page()
 FIELDS = [
     ("Yin/Yang", "yinyang"), ("Hand/Foot", "hf"), ("Element", "elem"),
     ("Direction", None), ("Limb position", None), ("Pair", "pair"),
-    ("# Points", "points"), ("Pertains", "pertains"), ("Connects", "connects"),
+    ("# Points", "points"), ("Pertaining Organ", "pertains"), ("Connecting Organ", "connects"),
     ("Yuan-Source", "yuan"), ("Luo-Connecting", "luo"), ("Xi-Cleft", "xi"),
     ("He-Sea", "hesea"), ("Front-Mu", "frontmu"), ("Back-Shu", "backshu"),
     ("Confluent (8EV)", "confluent"),
@@ -189,7 +209,7 @@ for title, chs, note in TRIADS:
     hdr_h = 22
     setfill(NAVY); c.rect(ML, y - hdr_h, label_w, hdr_h, fill=1, stroke=0)
     for i, ch in enumerate(chs):
-        setfill(COLORS[ch]); c.rect(ML + label_w + i * col_w, y - hdr_h, col_w, hdr_h, fill=1, stroke=0)
+        setfill(element_color(ch)); c.rect(ML + label_w + i * col_w, y - hdr_h, col_w, hdr_h, fill=1, stroke=0)
         setfill((1, 1, 1)); c.setFont("Lora-Bold", 12)
         c.drawCentredString(ML + label_w + i * col_w + col_w / 2, y - hdr_h + 7, ch)
     y -= hdr_h
@@ -222,7 +242,7 @@ for title, chs, note in TRIADS:
     c.drawString(ML, y, "Distinguishing features:")
     y -= 14
     for ch in chs:
-        setfill(COLORS[ch]); c.circle(ML + 5, y + 3, 4, fill=1, stroke=0)
+        setfill(element_color(ch)); c.circle(ML + 5, y + 3, 4, fill=1, stroke=0)
         setfill(NAVY); c.setFont("Lora-Bold", 8.6)
         c.drawString(ML + 14, y, f"{ch}:")
         setfill(DARK); c.setFont("Lora", 8.6)
@@ -257,7 +277,7 @@ row_h = 44
 for ridx, (a, b) in enumerate(PAIRS):
     bg = CARD_BG if ridx % 2 == 0 else ((1, 1, 1) if not IS_RM else PAGE_BG)
     setfill(bg); c.rect(ML, y - row_h, CW, row_h, fill=1, stroke=0)
-    setfill(COLORS[a]); c.rect(ML, y - row_h, 4, row_h, fill=1, stroke=0)
+    setfill(element_color(a)); c.rect(ML, y - row_h, 4, row_h, fill=1, stroke=0)
     da, db = ATTR[a], ATTR[b]
     ca, cb = da["confluent"], db["confluent"]
     if ca != "--" and cb != "--":
