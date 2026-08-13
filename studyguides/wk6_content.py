@@ -269,6 +269,62 @@ DIRECTION_POSITION = {
     "LR": ("Foot -> Chest (Yin, Foot)", "Medial leg -- crosses IN FRONT of SP at 8 cun above the medial malleolus (exception to normal order); reaches highest of any channel via the vertex branch"),
 }
 
+# ---------------------------------------------------------------------------
+# CROSSING/MEETING POINT DEFINITION -- this term was used throughout the
+# guide (PC/SJ/GB/LR crossing-point trivia) without ever being defined.
+# Added per Jon's request. "Crossing Point" and "Meeting Point" are the same
+# concept (Jiaohui Xue) in these materials -- terminology drifted across
+# weeks (earlier weeks used "meeting point," this week uses "crossing
+# point"); both names are noted so nothing reads as a new/different concept.
+# ---------------------------------------------------------------------------
+CROSSING_DEF_FULL = (
+    "A Crossing Point (also called a Meeting Point -- same concept, both terms appear across these "
+    "materials) is a point where one channel's pathway physically crosses, touches, or runs directly "
+    "alongside another channel's pathway. At that shared location, a single point can be understood as "
+    "belonging to more than one channel. This is a TOPOGRAPHICAL fact about where pathways cross in "
+    "space -- it is NOT one of the 14 special-point categories (Yuan-Source, Luo-Connecting, etc. -- see "
+    "the Special Points Decoder for those). A channel can have ZERO crossing points if its entire "
+    "pathway never touches another channel's points along the way -- PC and HT are the only two."
+)
+CROSSING_DEF_SHORT = (
+    "Reminder: a Crossing/Meeting Point is a point where two channels' pathways physically cross or "
+    "touch -- a topographical fact, not one of the 14 special-point categories. Full definition on the PC page."
+)
+
+# ---------------------------------------------------------------------------
+# POINT COMBINATIONS -- clinically-paired points, to fill reference space
+# and give the point tables clinical context beyond isolated locations.
+# ---------------------------------------------------------------------------
+PC_COMBINATIONS = [
+    ("PC6 + SP4", "The linked-vessel pair -- both are Luo + Confluent points opening related Extraordinary Vessels (Yin Wei Mai + Chong Mai). Classic combination for chest, heart, stomach, and epigastric disorders."),
+    ("PC7 + HT7", "Shu-Stream/Yuan-Source points of the two Fire-family Yin hand channels -- combined to calm the Shen; anxiety, insomnia, palpitations."),
+    ("PC3 + LU5", "He-Sea points of neighboring Yin hand channels at the elbow -- combined to clear heat and descend rebellious Qi from the chest."),
+    ("PC8 Laogong", "One of the classical 13 Ghost Points (Sun Simiao) -- used alone or with other Ghost Points for severe mental-emotional disturbance."),
+]
+GB_COMBINATIONS = [
+    ("GB34 + LR3", "He-Sea/Hui-Meeting of Sinews + Yuan-Source of the paired Liver channel -- combined for tendon/sinew disorders with a Liver-Qi component, e.g. tight/spasming muscles."),
+    ("GB20 + GB21", "Two of the most-used GB points together -- head/neck tension and headache with shoulder involvement."),
+    ("GB41 + SJ5", "The confluent-point pair that opens the Dai Mai + Yang Wei Mai -- treats conditions along the flank/waist and alternating chills and fever together."),
+    ("GB34 + BL18", "Hui-Meeting of Sinews + Liver's Back-Shu -- classic combination for hypochondriac pain and jaundice-type presentations."),
+]
+LR_COMBINATIONS = [
+    ("LR3 + LI4", "The 'Four Gates' (Si Guan) -- pairs the Yuan-Source points of LR and LI. Smooths Liver Qi, moves Qi and Blood broadly; used for pain of many origins."),
+    ("LR3 + SP6", "Both regulate Liver Blood and the lower jiao -- common combination for menstrual and gynecological disorders."),
+    ("LR14 + LR13", "LR's own Front-Mu plus SP's Front-Mu (which LR13 also serves, as Hui-Meeting of Zang) -- used together for Liver-Spleen disharmony."),
+    ("LR8 + KI10", "He-Sea points of neighboring Yin foot channels at the knee -- nourish Liver and Kidney Yin/Blood together ('Liver and Kidney share the same source')."),
+]
+
+# ---------------------------------------------------------------------------
+# QUICK COMPARE -- condensed cross-reference against the channel's same-
+# category neighbors (full version lives in the standalone Comparison Matrix).
+# ---------------------------------------------------------------------------
+PC_COMPARE = ("Quick compare vs. neighbors: LU (anterior line, Metal, 11 pts) -- PC (middle line, "
+              "Ministerial Fire, 9 pts) -- HT (posterior line, Fire, 9 pts). All three run Chest -> Hand. "
+              "PC and HT are the only 2 channels with zero crossing points.")
+LR_COMPARE = ("Quick compare vs. neighbors: SP (Earth, 21 pts) -- LR (Wood, 14 pts) -- KI (Water, 27 pts). "
+              "All three run Foot -> Chest/Abdomen on the medial leg. LR is the only one of the three "
+              "that reaches the vertex (GV20).")
+
 
 CIRCUITS_NOTE = (
     "This week completes the THIRD and final circuit: the Middle Circuit = "

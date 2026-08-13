@@ -17,7 +17,9 @@ from wk6_content import (PC_META, SJ_META, GB_META, LR_META, PC_COURSE, SJ_COURS
                           GB_COURSE, LR_COURSE, PC_POINTS, SJ_POINTS, GB_POINTS_GROUPED,
                           LR_POINTS, PC_FUNCTIONS, SJ_FUNCTIONS, GB_FUNCTIONS, LR_FUNCTIONS,
                           PC_CROSSING_DETAIL, SJ_CROSSING_DETAIL, GB_CROSSING_DETAIL,
-                          LR_CROSSING_DETAIL, DIRECTION_POSITION)
+                          LR_CROSSING_DETAIL, DIRECTION_POSITION, CROSSING_DEF_FULL,
+                          CROSSING_DEF_SHORT, PC_COMBINATIONS, LR_COMBINATIONS,
+                          PC_COMPARE, LR_COMPARE)
 
 FIGS_DIR = "/home/claude/work/figs"
 FONT_DIR = "/home/claude/work/fonts"
@@ -207,7 +209,8 @@ def key_pills(meta):
 # PAGE A: Internal Running Course -- MOA image (left) + numbered pathway
 # and Functions (right)
 # ============================================================
-def internal_page(name, subtitle, color, tint, meta, course, functions, fig_moa, chan_label):
+def internal_page(name, subtitle, color, tint, meta, course, functions, fig_moa, chan_label,
+                   combinations=None, compare_note=None):
     new_page()
     y = title_pills(name, subtitle, color, key_pills(meta))
     y -= 16
@@ -265,6 +268,39 @@ def internal_page(name, subtitle, color, tint, meta, course, functions, fig_moa,
         ry -= max(1, len(lines)) * 9.6 + 3
         if ry < 45:
             break
+
+    if combinations and ry > 90:
+        ry -= 6
+        setfill(color); c.setFont("Lora-Bold", 9)
+        c.drawString(right_x, ry, "Point Combinations")
+        ry -= 12
+        for label, note in combinations:
+            setfill(color); c.setFont("Lora-Bold", 7.6)
+            c.drawString(right_x, ry, label)
+            ry -= 9.2
+            setfill(DARK); c.setFont("Lora", 7.6)
+            lines = wrap_words(note, "Lora", 7.6, right_w - 6)
+            for l in lines:
+                c.drawString(right_x + 6, ry, l)
+                ry -= 9
+            ry -= 4
+            if ry < 55:
+                break
+
+    if compare_note and ry > 40:
+        lines = wrap_words(compare_note, "Lora", 7.3, right_w - 16)
+        box_h = 12 + len(lines) * 9
+        if ry - box_h > 40:
+            ry -= 4
+            setfill(tint); c.rect(right_x, ry - box_h, right_w, box_h, fill=1, stroke=0)
+            setstroke(color); c.setLineWidth(1.2)
+            c.line(right_x, ry - box_h, right_x, ry)
+            ty2 = ry - 10
+            setfill(DARK); c.setFont("Lora-Italic", 7.3)
+            for l in lines:
+                c.drawString(right_x + 8, ty2, l)
+                ty2 -= 9
+
     end_page(f"AC300/AC375 | Week 6 | {chan_label} Channel | VUIM Summer 2026")
 
 
@@ -273,7 +309,8 @@ def internal_page(name, subtitle, color, tint, meta, course, functions, fig_moa,
 # CAM image (right)
 # ============================================================
 def external_page(name, abbr, subtitle, color, tint, meta, points_rows, fig_cam, chan_label,
-                   grouped=None, crossing_detail=None):
+                   grouped=None, crossing_detail=None, crossing_def=None, combinations=None,
+                   compare_note=None):
     new_page()
     title = f"The {name} ({abbr})  -  External Running Course & CAM Figures"
     y = title_pills(title, subtitle, color, key_pills(meta))
@@ -331,6 +368,19 @@ def external_page(name, abbr, subtitle, color, tint, meta, points_rows, fig_cam,
     if crossing_detail:
         cy = ty - 14
         cy = section_label(cy, "Crossing Points -- Specifics", color)
+        if crossing_def:
+            setfill(tint); c.rect(table_x, cy - 2, table_w, 2, fill=0, stroke=0)
+            def_lines = wrap_words(crossing_def, "Lora-Italic", 6.8, table_w - 12)
+            def_h = len(def_lines) * 8.2 + 8
+            setfill(tint); c.rect(table_x, cy - def_h, table_w, def_h, fill=1, stroke=0)
+            setstroke(color); c.setLineWidth(1)
+            c.line(table_x, cy - def_h, table_x, cy)
+            dty = cy - 8
+            setfill(DARK); c.setFont("Lora-Italic", 6.8)
+            for l in def_lines:
+                c.drawString(table_x + 6, dty, l)
+                dty -= 8.2
+            cy -= def_h + 8
         setfill(DARK); c.setFont("Lora", 7.4)
         for fact in crossing_detail:
             lines = wrap_words(fact, "Lora", 7.4, table_w - 12)
@@ -341,6 +391,36 @@ def external_page(name, abbr, subtitle, color, tint, meta, points_rows, fig_cam,
             cy -= max(1, len(lines)) * 8.8 + 3
             if cy < 45:
                 break
+
+        if combinations and cy > 90:
+            cy -= 6
+            cy = section_label(cy, "Point Combinations", color)
+            for label, note in combinations:
+                setfill(color); c.setFont("Lora-Bold", 6.8)
+                c.drawString(table_x, cy, label)
+                cy -= 8.2
+                setfill(DARK); c.setFont("Lora", 6.8)
+                lines = wrap_words(note, "Lora", 6.8, table_w - 6)
+                for l in lines:
+                    c.drawString(table_x + 6, cy, l)
+                    cy -= 8
+                cy -= 4
+                if cy < 45:
+                    break
+
+        if compare_note and cy > 55:
+            lines = wrap_words(compare_note, "Lora", 6.8, table_w - 16)
+            box_h = 10 + len(lines) * 8.4
+            if cy - box_h > 40:
+                cy -= 6
+                setfill(tint); c.rect(table_x, cy - box_h, table_w, box_h, fill=1, stroke=0)
+                setstroke(color); c.setLineWidth(1.2)
+                c.line(table_x, cy - box_h, table_x, cy)
+                ty3 = cy - 9
+                setfill(DARK); c.setFont("Lora-Italic", 6.8)
+                for l in lines:
+                    c.drawString(table_x + 6, ty3, l)
+                    ty3 -= 8.4
 
     end_page(f"AC300/AC375 | Week 6 | {chan_label} Channel | VUIM Summer 2026")
 
@@ -407,9 +487,11 @@ end_page("AC300/AC375 | Week 6 | PC, SJ, GB, LR Channels | VUIM Summer 2026")
 # CHANNEL PAGES
 # ============================================================
 internal_page("The Pericardium Meridian of Hand-Jueyin", "Ministerial Fire  |  7-9 PM  |  9 Points",
-              MINISTER, MIN_TINT, PC_META, PC_COURSE, PC_FUNCTIONS, "MOA_PC", "PC")
+              MINISTER, MIN_TINT, PC_META, PC_COURSE, PC_FUNCTIONS, "MOA_PC", "PC",
+              combinations=PC_COMBINATIONS, compare_note=PC_COMPARE)
 external_page("Pericardium Meridian", "PC", "Ministerial Fire  |  9 Points", MINISTER, MIN_TINT,
-              PC_META, PC_POINTS, "CAM_PC", "PC", crossing_detail=PC_CROSSING_DETAIL)
+              PC_META, PC_POINTS, "CAM_PC", "PC", crossing_detail=PC_CROSSING_DETAIL,
+              crossing_def=CROSSING_DEF_FULL)
 
 internal_page("The San Jiao Meridian of Hand-Shaoyang", "Ministerial Fire  |  9-11 PM  |  23 Points",
               MINISTER, MIN_TINT, SJ_META, SJ_COURSE, SJ_FUNCTIONS, "MOA_SJ", "SJ")
@@ -422,9 +504,11 @@ external_page("Gallbladder Meridian", "GB", "Wood  |  44 Points", WOOD, WOOD_TIN
               GB_META, None, "CAM_GB", "GB", grouped=GB_POINTS_GROUPED, crossing_detail=GB_CROSSING_DETAIL)
 
 internal_page("The Liver Meridian of Foot-Jueyin", "Wood  |  1-3 AM  |  14 Points",
-              WOOD, WOOD_TINT, LR_META, LR_COURSE, LR_FUNCTIONS, "MOA_LR", "LR")
+              WOOD, WOOD_TINT, LR_META, LR_COURSE, LR_FUNCTIONS, "MOA_LR", "LR",
+              combinations=LR_COMBINATIONS, compare_note=LR_COMPARE)
 external_page("Liver Meridian", "LR", "Wood  |  14 Points", WOOD, WOOD_TINT,
-              LR_META, LR_POINTS, "CAM_LR", "LR", crossing_detail=LR_CROSSING_DETAIL)
+              LR_META, LR_POINTS, "CAM_LR", "LR", crossing_detail=LR_CROSSING_DETAIL,
+              crossing_def=CROSSING_DEF_SHORT, combinations=LR_COMBINATIONS, compare_note=LR_COMPARE)
 
 c.save()
 print(f"Saved {OUT}")

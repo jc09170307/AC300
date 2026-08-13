@@ -9,7 +9,8 @@ from reportlab.pdfbase.ttfonts import TTFont
 
 sys.path.insert(0, "/home/claude/work")
 from wk6_content import (PC_META, SJ_META, GB_META, LR_META, PC_POINTS, SJ_POINTS,
-                          LR_POINTS, WEEK6_TALLY, CIRCUITS_NOTE)
+                          LR_POINTS, WEEK6_TALLY, CIRCUITS_NOTE, CROSSING_DEF_SHORT,
+                          PC_COMBINATIONS, GB_COMBINATIONS, LR_COMBINATIONS)
 
 FONT_DIR = "/home/claude/work/fonts"
 pdfmetrics.registerFont(TTFont('Lora', f'{FONT_DIR}/Lora-Regular.ttf'))
@@ -197,6 +198,48 @@ y = col_block_title(ML, y, CW, "THREE CIRCUITS -- exam-safety naming", NAVY)
 setfill(DARK); c.setFont("Lora", 8)
 for l in wrap_words(CIRCUITS_NOTE, "Lora", 8, CW - 10):
     c.drawString(ML, y - 10, l); y -= 10.5
+y -= 10
+
+# Crossing/Meeting Point definition -- referenced throughout this sheet
+# (GB/LR META rows, PC/SJ trap on page 3) but never actually defined.
+def_lines = wrap_words(CROSSING_DEF_SHORT, "Lora-Italic", 8, CW - 20)
+def_h = 10 + len(def_lines) * 10.2
+setfill((0.968, 0.960, 0.930)); c.rect(ML, y - def_h, CW, def_h, fill=1, stroke=0)
+setstroke(GOLD); c.setLineWidth(2 * LW_MULT)
+c.line(ML, y - def_h, ML, y)
+dty = y - 10
+setfill(DARK); c.setFont("Lora-Italic", 8)
+for l in def_lines:
+    c.drawString(ML + 8, dty, l); dty -= 10.2
+y -= def_h + 10
+
+# Point Combinations -- fills the remaining space with clinically-useful
+# reference content rather than leaving it blank.
+y = col_block_title(ML, y, CW, "Point Combinations -- GB \u00b7 LR (this week) + PC (carried forward)", NAVY)
+y -= 4
+y0 = y
+combo_col_w = (CW - GUT) / 3
+cols = [("PC", PC_COMBINATIONS, MINISTER, MIN_TINT), ("GB", GB_COMBINATIONS, WOOD, WOOD_TINT),
+        ("LR", LR_COMBINATIONS, WOOD, WOOD_TINT)]
+col_bottoms = []
+for i, (label, combos, color, tint) in enumerate(cols):
+    cx = ML + i * (combo_col_w + GUT / 2)
+    cy = y0
+    setfill(color); c.setFont("Lora-Bold", 8)
+    c.drawString(cx, cy, label)
+    cy -= 11
+    for combo_label, note in combos:
+        setfill(color); c.setFont("Lora-Bold", 6.6)
+        clabel_lines = wrap_words(combo_label, "Lora-Bold", 6.6, combo_col_w - 4)
+        for l in clabel_lines:
+            c.drawString(cx, cy, l); cy -= 7.6
+        setfill(DARK); c.setFont("Lora", 6.6)
+        lines = wrap_words(note, "Lora", 6.6, combo_col_w - 4)
+        for l in lines:
+            c.drawString(cx, cy, l); cy -= 7.6
+        cy -= 3
+    col_bottoms.append(cy)
+y = min(col_bottoms)
 end_page()
 
 # ============================================================
