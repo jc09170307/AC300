@@ -197,6 +197,21 @@ DISTINGUISH = {
     "KI": "Only medial-leg channel with NO crossing exception -- posterior line throughout",
 }
 
+def draw_row_centered(x, y_top, row_h, lines, font, size, line_h, center=False, col_center_x=None):
+    """Vertically center a 1-3 line text block within a row of height row_h,
+    independent of how many lines any other cell in the same row needs."""
+    n = max(1, len(lines))
+    block_h = (n - 1) * line_h
+    row_center = y_top - row_h / 2
+    first_baseline = row_center + block_h / 2 + size * 0.33
+    for i, l in enumerate(lines):
+        by = first_baseline - i * line_h
+        if center:
+            c.drawCentredString(col_center_x, by, l)
+        else:
+            c.drawString(x, by, l)
+
+
 for title, chs, note in TRIADS:
     y = header(f"{title}  \u00b7  " + " vs ".join(chs))
     setfill(GRAY); c.setFont("Lora-Italic", 8.6)
@@ -219,8 +234,8 @@ for title, chs, note in TRIADS:
         bg = CARD_BG if ridx % 2 == 0 else ((1, 1, 1) if not IS_RM else PAGE_BG)
         setfill(NAVY); c.rect(ML, y - row_h, label_w, row_h, fill=1, stroke=0)
         setfill((1, 1, 1)); c.setFont("Lora-Bold", 7.6)
-        for li, l in enumerate(wrap_words(label, "Lora-Bold", 7.6, label_w - 10)):
-            c.drawString(ML + 6, y - row_h + 12 - li * 8.5, l)
+        label_lines = wrap_words(label, "Lora-Bold", 7.6, label_w - 10)
+        draw_row_centered(ML + 6, y, row_h, label_lines, "Lora-Bold", 7.6, 8.5)
         for i, ch in enumerate(chs):
             setfill(bg); c.rect(ML + label_w + i * col_w, y - row_h, col_w, row_h, fill=1, stroke=0)
             if key is not None:
@@ -230,9 +245,9 @@ for title, chs, note in TRIADS:
             else:
                 val = LIMB_POSITION[ch].split(" -- ")[0]
             setfill(DARK); c.setFont("Lora", 8.4)
-            lines = wrap_words(val, "Lora", 8.4, col_w - 8)
-            for li, l in enumerate(lines[:2]):
-                c.drawCentredString(ML + label_w + i * col_w + col_w / 2, y - row_h + 12 - li * 9, l)
+            lines = wrap_words(val, "Lora", 8.4, col_w - 8)[:2]
+            draw_row_centered(0, y, row_h, lines, "Lora", 8.4, 9, center=True,
+                               col_center_x=ML + label_w + i * col_w + col_w / 2)
         y -= row_h
     setstroke(GRAY); c.setLineWidth(0.5)
     c.rect(ML, y, CW, hdr_h + row_h * len(FIELDS), fill=0, stroke=1)
@@ -273,7 +288,7 @@ for w, lab in zip(col_w, col_headers):
     cx += w
 y -= hdr_h
 
-row_h = 44
+row_h = 32
 for ridx, (a, b) in enumerate(PAIRS):
     bg = CARD_BG if ridx % 2 == 0 else ((1, 1, 1) if not IS_RM else PAGE_BG)
     setfill(bg); c.rect(ML, y - row_h, CW, row_h, fill=1, stroke=0)
@@ -291,10 +306,11 @@ for ridx, (a, b) in enumerate(PAIRS):
     vals = [f"{a}-{b}", da["elem"], a, b, da["yuan"], db["yuan"], da["luo"], db["luo"], conf]
     cx = ML
     for i, (w, v) in enumerate(zip(col_w, vals)):
-        setfill(NAVY if i == 0 else DARK); c.setFont("Lora-Bold" if i == 0 else "Lora", 8.6 if i == 0 else 8.2)
-        lines = wrap_words(str(v), "Lora", 8.2, w - 8)
-        for li, l in enumerate(lines[:3]):
-            c.drawString(cx + 5, y - 14 - li * 10, l)
+        setfill(NAVY if i == 0 else DARK)
+        fsize = 8.6 if i == 0 else 8.2
+        c.setFont("Lora-Bold" if i == 0 else "Lora", fsize)
+        lines = wrap_words(str(v), "Lora", fsize, w - 8)[:3]
+        draw_row_centered(cx + 5, y, row_h, lines, "Lora", fsize, 10)
         cx += w
     y -= row_h
 setstroke(GRAY); c.setLineWidth(0.5)
