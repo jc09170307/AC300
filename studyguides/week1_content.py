@@ -47,7 +47,7 @@ TRUNK_POSITION_NOTE = (
     "all three Yin channels (Taiyin, Shaoyin, Jueyin) run together along the anterior aspect only - "
     "there's no separate Yin posterior or lateral position on the trunk the way there is on the limbs."
 )
-LIMB_POSITION_SOURCE = "Verified directly from Dr. Zhang's Week 1 lecture (AC300Week1.txt) - not just the slide image, which truncates the trunk Yin line."
+LIMB_POSITION_SOURCE = "Cross-verified against Dr. Zhang's Week 1 lecture (AC300Week1.txt) and Slide 27 of her lecture deck."
 
 MEETING_POINTS = [
     ("Hand Yin meets Hand Yang", "at the FINGERS", "e.g. LU7's branch meets LI1 at the index finger"),

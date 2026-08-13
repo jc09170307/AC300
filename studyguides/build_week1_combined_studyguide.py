@@ -276,24 +276,28 @@ for label, direction in DIRECTION_RULES:
 end_page()
 
 # ============================================================
-# PAGE: LIMB POSITION TABLE - YIN AND YANG NAMES (both instructors)
+# PAGE: LIMB DISTRIBUTION - REAL SLIDE 27 (Yin AND Yang, full table)
 # ============================================================
 new_page()
 y = H - 50
-y = section_header(y, "Limb Position Table - Yin AND Yang Names", "The slide image truncates the Yin trunk line - here is the full pairing, from lecture")
-y = source_tag_standalone(y, "BOTH", BOTH_GOLD, BOTH_TINT)
+y = section_header(y, "Limb Distribution - Yin AND Yang (Slide 27)", "The slide right before the head/trunk one - carries the full uncropped Yin+Yang table")
+y = source_tag_standalone(y, "ZHANG", ZHANG_BLUE, ZHANG_TINT)
 
-rows = [["Position (limb)", "Yin name", "Yang name"]]
-for pos, yin, yang in LIMB_POSITION_TABLE:
-    rows.append([pos, yin, yang])
-y = table(y, [150, CW / 2 - 75, CW / 2 - 75], rows, row_h=18, font_size=9.5) - 10
-y = callout(y, "Trunk vs. limb", [TRUNK_POSITION_NOTE], BOTH_GOLD, BOTH_TINT)
+img_w2 = CW
+img_h2 = img_w2 * (1890 / 3276)
+c.drawImage("/home/claude/wk1slides/slide27_limb_distribution.png", ML, y - img_h2, width=img_w2, height=img_h2)
+y -= img_h2 + 10
+setfill(GRAY); c.setFont("Lora-Italic", 8)
+c.drawCentredString(W / 2, y, "Source: Dr. Zhang's Week 1 lecture slides, Slide 27")
+y -= 18
+y = callout(y, "Trunk vs. limb", [TRUNK_POSITION_NOTE], BOTH_GOLD, BOTH_TINT, tag="BOTH")
+end_page()
 
-setfill(GRAY); c.setFont("Lora-Italic", 7.8)
-for l in wrap_words(LIMB_POSITION_SOURCE, "Lora-Italic", 7.8, CW):
-    c.drawString(ML, y, l); y -= 10
-y -= 16
-
+# ============================================================
+# PAGE: WORKED EXAMPLE - ALL 12 CHANNELS BY POSITION
+# ============================================================
+new_page()
+y = H - 50
 y = section_header(y, "Worked Example - All 12 Channels by Position")
 POSITION_MAP = {"Taiyin": "Anterior", "Yangming": "Anterior", "Jueyin": "Middle/Lateral",
                  "Shaoyang": "Middle/Lateral", "Shaoyin": "Posterior", "Taiyang": "Posterior"}
@@ -303,7 +307,13 @@ for ab, name, cls, yy_, direction, circuit in TWELVE_MERIDIANS:
     pos = POSITION_MAP.get(six_name, "?")
     yin_yang = "Yin" if six_name in ("Taiyin", "Jueyin", "Shaoyin") else "Yang"
     rows2.append([ab, name, six_name, pos, yin_yang])
-y = table(y, [30, 130, 95, 95, CW - 350], rows2, row_h=15.5, font_size=8.6)
+y = table(y, [30, 130, 95, 95, CW - 350], rows2, row_h=16, font_size=8.8) - 16
+
+pearl = ("The Liver Meridian of Foot-Jueyin ascends to an area 8 cun above the medial malleolus, "
+         "where it runs across and behind the Spleen Meridian of Foot-Taiyin - a named crossing "
+         "point between the Middle and Anterior limb positions, worth remembering as a landmark. "
+         "(Caption from Slide 27.)")
+y = callout(y, "Clinical Pearl from Slide 27", [pearl], RED, (0.976, 0.928, 0.919), tag="ZHANG")
 end_page()
 
 # ============================================================

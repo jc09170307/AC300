@@ -287,43 +287,31 @@ setfill(GRAY); c.setFont("Lora-Italic", 7.5)
 c.drawCentredString(W / 2, y, "Source: Dr. Zhang's Week 1 lecture slides")
 end_page()
 
-# ============= YIN + YANG LIMB POSITION TABLE (the piece the slide image truncates) =============
+# ============= REAL SLIDE 27: LIMB DISTRIBUTION (Yin + Yang, full table) =============
 new_page(f"Limb Positions  \u00b7  {EDLABEL}")
 y = H - HEADER_H - 26
-y = section_rule(y, "Limb Position Table - Yin AND Yang Names", width=280, size=11.5)
-y = para(y, "The slide image above cuts off the Yin side of this. On the LIMBS, every position has both "
-             "a Yin name and a Yang name - here is the full pairing, straight from lecture.", size=9, lh=11.5)
+y = section_rule(y, "Limb Distribution - Yin AND Yang (Slide 27)", width=280, size=11.5)
+y = para(y, "This is the slide immediately BEFORE the head/trunk distribution slide - it's the one that "
+             "actually carries the full Yin+Yang limb table, uncropped, plus the color-coded arm/leg "
+             "diagrams and the Chinese terms.", size=9, lh=11.5)
 y -= 6
-row_h = 18
-col_w = [130, CW / 2 - 60, CW / 2 - 60]
-headers = ["Position (limb)", "Yin name", "Yang name"]
-setfill(NAVY); c.rect(ML, y - row_h, sum(col_w), row_h, fill=1, stroke=0)
-setfill((1, 1, 1)); c.setFont("Lora-Bold", 9.3)
-cx = ML
-for i, h in enumerate(headers):
-    c.drawString(cx + 6, y - row_h + 5, h)
-    cx += col_w[i]
-y -= row_h
-for i, (pos, yin, yang) in enumerate(LIMB_POSITION_TABLE):
-    setfill((0.965, 0.967, 0.972) if i % 2 == 0 else (1, 1, 1))
-    c.rect(ML, y - row_h, sum(col_w), row_h, fill=1, stroke=0)
-    setfill(DARK); c.setFont("Lora-Bold", 9.3)
-    c.drawString(ML + 6, y - row_h + 5, pos)
-    c.setFont("Lora", 9.3)
-    c.drawString(ML + col_w[0] + 6, y - row_h + 5, yin)
-    c.drawString(ML + col_w[0] + col_w[1] + 6, y - row_h + 5, yang)
-    setstroke((0.6, 0.6, 0.6)); c.setLineWidth(0.4)
-    c.rect(ML, y - row_h, sum(col_w), row_h, fill=0, stroke=1)
-    y -= row_h
-y -= 10
+img_w2 = CW
+img_h2 = img_w2 * (1890 / 3276)
+c.drawImage("/home/claude/wk1slides/slide27_limb_distribution.png", ML, y - img_h2, width=img_w2, height=img_h2)
+y -= img_h2 + 8
+setfill(GRAY); c.setFont("Lora-Italic", 7.5)
+c.drawCentredString(W / 2, y, "Source: Dr. Zhang's Week 1 lecture slides, Slide 27")
+y -= 16
 y = para(y, TRUNK_POSITION_NOTE, size=8.6, lh=11.5, color=GRAY)
 y -= 4
 setfill(GRAY); c.setFont("Lora-Italic", 7.3)
 for l in wrap_words(LIMB_POSITION_SOURCE, "Lora-Italic", 7.3, CW):
     c.drawString(ML, y, l); y -= 9.5
-y -= 16
+end_page()
 
 # ============= WORKED EXAMPLE: ALL 12 CHANNELS, TAGGED BY POSITION =============
+new_page(f"Limb Positions, continued  \u00b7  {EDLABEL}")
+y = H - HEADER_H - 26
 y = section_rule(y, "Worked Example - All 12 Channels by Position", width=280, size=11.5)
 y = para(y, "Cross-referencing the table above against the Full Reference Table: every channel's "
              "classification already names its limb position - you just have to recognize it.", size=9, lh=11.5)
@@ -355,6 +343,16 @@ for i, (ab, name, cls, yy_, direction, circuit) in enumerate(TWELVE_MERIDIANS):
     setstroke((0.6, 0.6, 0.6)); c.setLineWidth(0.4)
     c.rect(ML, y - row_h2, sum(col_w2), row_h2, fill=0, stroke=1)
     y -= row_h2
+y -= 20
+
+y = section_rule(y, "Clinical Pearl from Slide 27")
+setfill((0.976, 0.928, 0.919)); c.rect(ML - 4, y - 46, CW + 8, 46, fill=1, stroke=0)
+setstroke((0.627, 0.220, 0.180)); c.setLineWidth(2.2)
+c.line(ML - 4, y - 46, ML - 4, y)
+y = para(y - 12, "The Liver Meridian of Foot-Jueyin ascends to an area 8 cun above the medial "
+                  "malleolus, where it runs across and behind the Spleen Meridian of Foot-Taiyin - a "
+                  "named crossing point between the Middle and Anterior limb positions, worth "
+                  "remembering as a landmark.", size=8.8, lh=11.5, color=DARK, width=CW - 20)
 end_page()
 
 # ============= THE THREE CIRCUITS + SUMMARY, 2 DIAGRAMS PER PAGE =============
