@@ -280,7 +280,7 @@ end_page()
 # ============================================================
 new_page()
 y = H - 50
-y = section_header(y, "Limb Distribution - Yin AND Yang (Slide 27)", "The slide right before the head/trunk one - carries the full uncropped Yin+Yang table")
+y = section_header(y, "Limb Distribution - Yin AND Yang (Slide 27)", "Dr. Zhang's slide showing the full Yin+Yang limb table, color-coded diagrams, and Chinese terms")
 y = source_tag_standalone(y, "ZHANG", ZHANG_BLUE, ZHANG_TINT)
 
 img_w2 = CW

@@ -273,36 +273,19 @@ setstroke(GOLD); c.setLineWidth(HAIRLINE)
 c.line(ML, y, ML + CW, y)
 y -= 16
 
-# ============= DISTRIBUTION DIAGRAM (from Dr. Zhang's slides, same page) =============
-y = section_rule(y, "Distribution of the 12 Main Meridians", width=280, size=11.5)
-y = para(y, "From Dr. Zhang's own lecture slides: on the limbs, Yin meridians run the medial aspect and Yang "
-             "meridians run the lateral aspect. On the head and trunk, Anterior = Yangming, Posterior = "
-             "Taiyang, Lateral = Shaoyang.", size=9, lh=11.5)
-y -= 6
-img_w = CW * 0.85
-img_h = img_w * 0.577
-c.drawImage("/home/claude/wk1slides/jpg_p27.jpg", ML, y - img_h, width=img_w, height=img_h)
-y -= img_h + 8
-setfill(GRAY); c.setFont("Lora-Italic", 7.5)
-c.drawCentredString(W / 2, y, "Source: Dr. Zhang's Week 1 lecture slides")
-end_page()
-
 # ============= REAL SLIDE 27: LIMB DISTRIBUTION (Yin + Yang, full table) =============
-new_page(f"Limb Positions  \u00b7  {EDLABEL}")
-y = H - HEADER_H - 26
 y = section_rule(y, "Limb Distribution - Yin AND Yang (Slide 27)", width=280, size=11.5)
-y = para(y, "This is the slide immediately BEFORE the head/trunk distribution slide - it's the one that "
-             "actually carries the full Yin+Yang limb table, uncropped, plus the color-coded arm/leg "
-             "diagrams and the Chinese terms.", size=9, lh=11.5)
+y = para(y, "Dr. Zhang's slide showing exactly how the 12 channels are distributed on the limbs, with "
+             "the full Yin+Yang table, color-coded arm/leg diagrams, and the Chinese terms.", size=9, lh=11.5)
 y -= 6
-img_w2 = CW
+img_w2 = CW * 0.94
 img_h2 = img_w2 * (1890 / 3276)
 c.drawImage("/home/claude/wk1slides/slide27_limb_distribution.png", ML, y - img_h2, width=img_w2, height=img_h2)
-y -= img_h2 + 8
+y -= img_h2 + 6
 setfill(GRAY); c.setFont("Lora-Italic", 7.5)
 c.drawCentredString(W / 2, y, "Source: Dr. Zhang's Week 1 lecture slides, Slide 27")
-y -= 16
-y = para(y, TRUNK_POSITION_NOTE, size=8.6, lh=11.5, color=GRAY)
+y -= 13
+y = para(y, TRUNK_POSITION_NOTE, size=8.3, lh=10.8, color=GRAY)
 y -= 4
 setfill(GRAY); c.setFont("Lora-Italic", 7.3)
 for l in wrap_words(LIMB_POSITION_SOURCE, "Lora-Italic", 7.3, CW):
