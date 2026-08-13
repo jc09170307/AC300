@@ -9,7 +9,8 @@ from reportlab.pdfbase.ttfonts import TTFont
 
 from week1_content import (TWELVE_MERIDIANS, ZANG_ORGANS, FU_ORGANS, CIRCUITS, DIRECTION_RULES,
                             MEETING_POINTS, MERIDIAN_CLOCK, CLOCK_ELEMENT, FUNCTIONS_OF_MERIDIANS, NOMENCLATURE,
-                            CHANNELS_VS_MERIDIANS, CLINICAL_PEARLS_WK1, QUIZ1_FUNDAMENTALS)
+                            CHANNELS_VS_MERIDIANS, CLINICAL_PEARLS_WK1, QUIZ1_FUNDAMENTALS,
+                            LIMB_POSITION_TABLE, TRUNK_POSITION_NOTE, LIMB_POSITION_SOURCE)
 
 pdfmetrics.registerFont(TTFont('Lora', '/home/claude/fonts/Lora-Regular.ttf'))
 pdfmetrics.registerFont(TTFont('Lora-Bold', '/home/claude/fonts/Lora-Bold.ttf'))
@@ -284,6 +285,76 @@ c.drawImage("/home/claude/wk1slides/jpg_p27.jpg", ML, y - img_h, width=img_w, he
 y -= img_h + 8
 setfill(GRAY); c.setFont("Lora-Italic", 7.5)
 c.drawCentredString(W / 2, y, "Source: Dr. Zhang's Week 1 lecture slides")
+end_page()
+
+# ============= YIN + YANG LIMB POSITION TABLE (the piece the slide image truncates) =============
+new_page(f"Limb Positions  \u00b7  {EDLABEL}")
+y = H - HEADER_H - 26
+y = section_rule(y, "Limb Position Table - Yin AND Yang Names", width=280, size=11.5)
+y = para(y, "The slide image above cuts off the Yin side of this. On the LIMBS, every position has both "
+             "a Yin name and a Yang name - here is the full pairing, straight from lecture.", size=9, lh=11.5)
+y -= 6
+row_h = 18
+col_w = [130, CW / 2 - 60, CW / 2 - 60]
+headers = ["Position (limb)", "Yin name", "Yang name"]
+setfill(NAVY); c.rect(ML, y - row_h, sum(col_w), row_h, fill=1, stroke=0)
+setfill((1, 1, 1)); c.setFont("Lora-Bold", 9.3)
+cx = ML
+for i, h in enumerate(headers):
+    c.drawString(cx + 6, y - row_h + 5, h)
+    cx += col_w[i]
+y -= row_h
+for i, (pos, yin, yang) in enumerate(LIMB_POSITION_TABLE):
+    setfill((0.965, 0.967, 0.972) if i % 2 == 0 else (1, 1, 1))
+    c.rect(ML, y - row_h, sum(col_w), row_h, fill=1, stroke=0)
+    setfill(DARK); c.setFont("Lora-Bold", 9.3)
+    c.drawString(ML + 6, y - row_h + 5, pos)
+    c.setFont("Lora", 9.3)
+    c.drawString(ML + col_w[0] + 6, y - row_h + 5, yin)
+    c.drawString(ML + col_w[0] + col_w[1] + 6, y - row_h + 5, yang)
+    setstroke((0.6, 0.6, 0.6)); c.setLineWidth(0.4)
+    c.rect(ML, y - row_h, sum(col_w), row_h, fill=0, stroke=1)
+    y -= row_h
+y -= 10
+y = para(y, TRUNK_POSITION_NOTE, size=8.6, lh=11.5, color=GRAY)
+y -= 4
+setfill(GRAY); c.setFont("Lora-Italic", 7.3)
+for l in wrap_words(LIMB_POSITION_SOURCE, "Lora-Italic", 7.3, CW):
+    c.drawString(ML, y, l); y -= 9.5
+y -= 16
+
+# ============= WORKED EXAMPLE: ALL 12 CHANNELS, TAGGED BY POSITION =============
+y = section_rule(y, "Worked Example - All 12 Channels by Position", width=280, size=11.5)
+y = para(y, "Cross-referencing the table above against the Full Reference Table: every channel's "
+             "classification already names its limb position - you just have to recognize it.", size=9, lh=11.5)
+y -= 6
+POSITION_MAP = {"Taiyin": "Anterior", "Yangming": "Anterior", "Jueyin": "Middle/Lateral",
+                 "Shaoyang": "Middle/Lateral", "Shaoyin": "Posterior", "Taiyang": "Posterior"}
+row_h2 = 15.5
+col_w2 = [32, 155, 90, 100, CW - 377]
+headers2 = ["Ab", "Name", "Six-Meridian Name", "Limb Position", "Yin or Yang"]
+setfill(NAVY); c.rect(ML, y - row_h2, sum(col_w2), row_h2, fill=1, stroke=0)
+setfill((1, 1, 1)); c.setFont("Lora-Bold", 8.6)
+cx = ML
+for i, h in enumerate(headers2):
+    c.drawString(cx + 5, y - row_h2 + 4, h)
+    cx += col_w2[i]
+y -= row_h2
+for i, (ab, name, cls, yy_, direction, circuit) in enumerate(TWELVE_MERIDIANS):
+    six_name = cls.split()[-1]
+    pos = POSITION_MAP.get(six_name, "?")
+    yin_yang = "Yin" if six_name in ("Taiyin", "Jueyin", "Shaoyin") else "Yang"
+    setfill((0.965, 0.967, 0.972) if i % 2 == 0 else (1, 1, 1))
+    c.rect(ML, y - row_h2, sum(col_w2), row_h2, fill=1, stroke=0)
+    setfill(DARK); c.setFont("Lora", 8.6)
+    vals = [ab, name, six_name, pos, yin_yang]
+    cx = ML
+    for j, v in enumerate(vals):
+        c.drawString(cx + 5, y - row_h2 + 4, v)
+        cx += col_w2[j]
+    setstroke((0.6, 0.6, 0.6)); c.setLineWidth(0.4)
+    c.rect(ML, y - row_h2, sum(col_w2), row_h2, fill=0, stroke=1)
+    y -= row_h2
 end_page()
 
 # ============= THE THREE CIRCUITS + SUMMARY, 2 DIAGRAMS PER PAGE =============

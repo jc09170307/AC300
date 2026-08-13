@@ -12,7 +12,8 @@ from reportlab.pdfbase import pdfmetrics
 from reportlab.pdfbase.ttfonts import TTFont
 
 sys.path.insert(0, "/home/claude/work/repo")
-from week1_content import TWELVE_MERIDIANS, CIRCUITS, DIRECTION_RULES, MEETING_POINTS, MERIDIAN_CLOCK
+from week1_content import (TWELVE_MERIDIANS, CIRCUITS, DIRECTION_RULES, MEETING_POINTS, MERIDIAN_CLOCK,
+                            LIMB_POSITION_TABLE, TRUNK_POSITION_NOTE, LIMB_POSITION_SOURCE)
 
 pdfmetrics.registerFont(TTFont('Lora', '/home/claude/fonts/Lora-Regular.ttf'))
 pdfmetrics.registerFont(TTFont('Lora-Bold', '/home/claude/fonts/Lora-Bold.ttf'))
@@ -272,6 +273,37 @@ for label, direction in DIRECTION_RULES:
     setfill(NAVY); c.setFont("Lora-Bold", 9.5)
     c.drawRightString(W - MR - 6, y, direction)
     y -= 15
+end_page()
+
+# ============================================================
+# PAGE: LIMB POSITION TABLE - YIN AND YANG NAMES (both instructors)
+# ============================================================
+new_page()
+y = H - 50
+y = section_header(y, "Limb Position Table - Yin AND Yang Names", "The slide image truncates the Yin trunk line - here is the full pairing, from lecture")
+y = source_tag_standalone(y, "BOTH", BOTH_GOLD, BOTH_TINT)
+
+rows = [["Position (limb)", "Yin name", "Yang name"]]
+for pos, yin, yang in LIMB_POSITION_TABLE:
+    rows.append([pos, yin, yang])
+y = table(y, [150, CW / 2 - 75, CW / 2 - 75], rows, row_h=18, font_size=9.5) - 10
+y = callout(y, "Trunk vs. limb", [TRUNK_POSITION_NOTE], BOTH_GOLD, BOTH_TINT)
+
+setfill(GRAY); c.setFont("Lora-Italic", 7.8)
+for l in wrap_words(LIMB_POSITION_SOURCE, "Lora-Italic", 7.8, CW):
+    c.drawString(ML, y, l); y -= 10
+y -= 16
+
+y = section_header(y, "Worked Example - All 12 Channels by Position")
+POSITION_MAP = {"Taiyin": "Anterior", "Yangming": "Anterior", "Jueyin": "Middle/Lateral",
+                 "Shaoyang": "Middle/Lateral", "Shaoyin": "Posterior", "Taiyang": "Posterior"}
+rows2 = [["Ab", "Name", "Six-Meridian Name", "Limb Position", "Yin/Yang"]]
+for ab, name, cls, yy_, direction, circuit in TWELVE_MERIDIANS:
+    six_name = cls.split()[-1]
+    pos = POSITION_MAP.get(six_name, "?")
+    yin_yang = "Yin" if six_name in ("Taiyin", "Jueyin", "Shaoyin") else "Yang"
+    rows2.append([ab, name, six_name, pos, yin_yang])
+y = table(y, [30, 130, 95, 95, CW - 350], rows2, row_h=15.5, font_size=8.6)
 end_page()
 
 # ============================================================

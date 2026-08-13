@@ -35,6 +35,20 @@ DIRECTION_RULES = [
     ("Yin meridians of the FOOT", "Foot -> Chest/Abdomen"),
 ]
 
+LIMB_POSITION_TABLE = [
+    # (Position, Yin name, Yang name)
+    ("Anterior", "Taiyin", "Yangming"),
+    ("Middle / Lateral", "Jueyin", "Shaoyang"),
+    ("Posterior", "Shaoyin", "Taiyang"),
+]
+TRUNK_POSITION_NOTE = (
+    "On the HEAD and TRUNK, only the Yang channels get a 3-way anterior/posterior/lateral split "
+    "(Yangming/Taiyang/Shaoyang) - Yin channels don't reach the head. On the trunk (chest/abdomen), "
+    "all three Yin channels (Taiyin, Shaoyin, Jueyin) run together along the anterior aspect only - "
+    "there's no separate Yin posterior or lateral position on the trunk the way there is on the limbs."
+)
+LIMB_POSITION_SOURCE = "Verified directly from Dr. Zhang's Week 1 lecture (AC300Week1.txt) - not just the slide image, which truncates the trunk Yin line."
+
 MEETING_POINTS = [
     ("Hand Yin meets Hand Yang", "at the FINGERS", "e.g. LU7's branch meets LI1 at the index finger"),
     ("Hand Yang meets Foot Yang", "at the FACE", "e.g. LI ends at LI20, ST begins there"),
