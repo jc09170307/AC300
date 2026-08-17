@@ -1,135 +1,128 @@
-"""Shared content for the Week 7 PLA -- Divergent Channels, Sinew Channels &
-Cutaneous Regions. Per Dr. Zhang's own Week 1 syllabus reading (AC300Week1.txt,
-verified transcript): 'in week seven, we'll get some knowledge about the
-additional channels and regions. And in week eight, we'll know about the
-eight extraordinary meridians.' This corrects an earlier assumption that
-Week 7 = Extraordinary Vessels -- that's Week 8.
+"""Shared content for the Week 7 PLA -- The Eight Extraordinary Vessels
+(Qi Jing Ba Mai). Confirmed via Jon's written syllabus table: 'Week 7 (CLO 2,4)
+Eight Extraordinary Meridians -- QUIZ 5 -- Homework 5 (material from week 6-7)
+-- CAM p.82-89 -- MOA p.17-25, 495-497, 529-533.' This matches the reading
+assignments on the closing slide of Lecture_7vivian11_12.pdf exactly, confirming
+that deck as this week's correct source (76 slides: GV, CV, Chong, Dai, Yang/Yin
+Qiao, Yang/Yin Wei, plus a 12-meridian review section).
 
-Reading assignment for this week (verified, from Lecture_61102.pdf 'For Next
-Week' slide, which follows the Week 6 GB lecture): MOA p.367-370, 387-390,
-417-421, 469-472; CAM p.77-82. Channels Projects due Week 8 (same slide).
+NOTE: An earlier build of this file assumed Week 7 = Divergent/Sinew/Cutaneous
+Channels based on Dr. Zhang's verbal Week 1 walkthrough. The written syllabus
+table overrides that -- Divergent/Sinew/Cutaneous's actual week is unconfirmed
+and should be re-checked before that week is built.
 """
 
-ACCENT_DIVERGENT = (0.114, 0.227, 0.369)   # navy
-ACCENT_SINEW = (0.55, 0.38, 0.16)          # brown/amber -- not an organ-element color
-ACCENT_CUTANEOUS = (0.16, 0.44, 0.46)      # slate teal -- not an organ-element color
+NAVY = (0.114, 0.227, 0.369)
+ACCENT_GV = (0.114, 0.227, 0.369)      # navy -- Du Mai, sea of yang
+ACCENT_CV = (0.753, 0.224, 0.169)      # red -- Ren Mai, sea of yin
+ACCENT_CHONG = (0.55, 0.38, 0.16)      # amber/brown -- Chong, sea of blood/12 meridians
+ACCENT_DAI = (0.16, 0.44, 0.46)        # slate teal -- Dai, the horizontal vessel
+ACCENT_QIAO = (0.20, 0.48, 0.27)       # green -- the two Heel vessels
+ACCENT_WEI = (0.45, 0.30, 0.55)        # muted purple -- the two Link vessels (distinct
+                                        # from element-coding purple ban, which applies to
+                                        # PC/SJ Ministerial Fire specifically, not vessels)
 GRAY = (0.40, 0.40, 0.40)
 
-READING_ASSIGNMENT = ("MOA p.367-370, 387-390, 417-421, 469-472; CAM p.77-82 "
-                       "(per Lecture 6 'For Next Week' slide) \u00b7 Channels Projects due Week 8")
+READING_ASSIGNMENT = "CAM p.82-89 \u00b7 MOA p.17-25, 495-497, 529-533 (per written syllabus, Week 7)"
 
-CONFLUENCES = [
-    ("Foot Taiyang / Foot Shaoyin", "BL", "KI"),
-    ("Foot Shaoyang / Foot Jueyin", "GB", "LR"),
-    ("Foot Yangming / Foot Taiyin", "ST", "SP"),
-    ("Hand Taiyang / Hand Shaoyin", "SI", "HT"),
-    ("Hand Shaoyang / Hand Jueyin", "SJ", "PC"),
-    ("Hand Yangming / Hand Taiyin", "LI", "LU"),
+# Structural parallel to the "6 Confluences" table used in the Week 7 Divergent-Channel
+# draft -- here, the 4 Confluent (Opening/Master-Couple) Point pairs that link each
+# Extraordinary Vessel to a Primary Meridian point, used clinically to "open" the vessel.
+CONFLUENT_PAIRS = [
+    ("Chong Mai + Yin Wei Mai", "SP 4  Gongsun", "PC 6  Neiguan"),
+    ("Du Mai + Yang Qiao Mai", "SI 3  Houxi", "BL 62  Shenmai"),
+    ("Ren Mai + Yin Qiao Mai", "LU 7  Lieque", "KI 6  Zhaohai"),
+    ("Dai Mai + Yang Wei Mai", "GB 41  Zulinqi", "SJ 5  Waiguan"),
 ]
 
 VOCAB = [
-    ("Jing Bie", "Divergent Channel", ACCENT_DIVERGENT),
-    ("Jing Jin", "Sinew Channel / Muscle Region", ACCENT_SINEW),
-    ("Pi Bu", "Cutaneous Region", ACCENT_CUTANEOUS),
-    ("Liu He", "Six Confluences / Six Unions", ACCENT_DIVERGENT),
-    ("Biao-Li", "Exterior-Interior (paired-channel relationship)", ACCENT_DIVERGENT),
-    ("Li", "\"Separate\" -- divergent channel leaves the primary pathway", ACCENT_DIVERGENT),
-    ("Ru", "\"Enter\" -- divergent channel enters the body cavity/organs", ACCENT_DIVERGENT),
-    ("Chu", "\"Emerge\" -- divergent channel re-emerges superficially", ACCENT_DIVERGENT),
-    ("He", "\"Converge/Join\" -- divergent channel rejoins at the neck/head", ACCENT_DIVERGENT),
-    ("Jing Luo", "General term: the whole channel system (jing = channels, luo = collaterals)", None),
+    ("Qi Jing Ba Mai", "The Eight Extraordinary Vessels", None),
+    ("Du Mai", "Governor Vessel (GV) -- posterior midline, \"sea of yang\"", ACCENT_GV),
+    ("Ren Mai", "Conception Vessel (CV) -- anterior midline, \"sea of yin\"", ACCENT_CV),
+    ("Chong Mai", "Thoroughfare Vessel -- \"sea of 12 meridians,\" \"sea of blood\"", ACCENT_CHONG),
+    ("Dai Mai", "Belt/Girdling Vessel -- only vessel running horizontally", ACCENT_DAI),
+    ("Qiao Mai", "Heel Vessel (Yang+Yin) -- limb movement, sleep/wake balance", ACCENT_QIAO),
+    ("Wei Mai", "Link Vessel (Yang+Yin) -- links all yang / all yin meridians", ACCENT_WEI),
+    ("Jiao Hui Xue", "Coalescent Point -- where a vessel crosses a primary meridian", None),
+    ("Ba Mai Jiao Hui Xue", "Eight Confluent (Master-Couple) Points", None),
+    ("Yi Yuan San Qi", "\"One Source, 3 Branches\" -- Du, Ren, Chong share an origin", ACCENT_CHONG),
 ]
 
 LEARNING_TARGETS = [
-    "Define a Divergent Channel (Jing Bie) and state how it differs functionally from a primary channel.",
-    "State where divergent channels mainly distribute (chest, abdomen, head) and their core function -- deepening the interior-exterior (Biao-Li) relationship between paired channels.",
-    "Name the pattern of a divergent channel's path using the 4 verbs: Li (separate) -> Ru (enter) -> Chu (emerge) -> He (converge).",
-    "List all 6 Confluences (Liu He) by their paired primary channels.",
-    "Define a Sinew Channel (Jing Jin) and state the one thing it does NOT have that a primary channel does (no pertaining Zang/Fu organ).",
-    "Define a Cutaneous Region (Pi Bu) as the surface/skin reflection zone of a primary channel, and state its diagnostic use.",
-    "Distinguish all 4 supplementary systems from each other in one line each: Collaterals (Luo), Divergent Channels (Jing Bie), Sinew Channels (Jing Jin), Cutaneous Regions (Pi Bu).",
-    "TRAP: state clearly that this week is NOT the Eight Extraordinary Vessels -- that's Week 8. Don't let study time bleed into next week's material by mistake.",
+    "Name all 8 Extraordinary Vessels and state which two have their OWN dedicated acupuncture points (GV, CV) versus the six that share points with primary meridians.",
+    "State the \u201csea\u201d designation for GV (sea of yang meridians), CV (sea of yin meridians), and Chong (sea of the 12 meridians / sea of blood / sea of the zang-fu organs).",
+    "Trace the basic course of the Governor Vessel (GV1 Changqiang to GV28 Yinjiao) and Conception Vessel (CV1 Huiyin to CV24 Chengjiang), including point totals (28 and 24).",
+    "Explain \u201cone source, three branches\u201d -- how Du, Ren, and Chong all arise from the lower abdomen before diverging.",
+    "Identify each vessel's confluent (opening) point and correctly pair all 4 master-couple combinations (SP4/PC6, SI3/BL62, LU7/KI6, GB41/SJ5).",
+    "State the core physiological function of the Belt Vessel (Dai) and explain why it is structurally unique among the 8 (horizontal, not vertical).",
+    "Contrast the Yang Qiao / Yin Qiao pair (limb movement, sleep-wake balance) with the Yang Wei / Yin Wei pair (exterior/interior yang-yin regulation).",
+    "Recognize characteristic pathological symptom patterns for each vessel (e.g. spinal stiffness = GV, infertility/urogenital = CV, waist pain with no clear direction = Dai) and explain why the extraordinary vessels lack a pertaining zang/fu organ.",
 ]
 
 CONNECT_BLANKS = [
-    ("Divergent channels branch out from the primary meridians and are mainly distributed on chest, abdomen, and", 70, "."),
-    ("Sinew channels reflect the relationship between channels and body", 90, "."),
-    ("Cutaneous regions are the surface", 90, "reflection of the 12 meridians."),
-    ("Divergent channels strengthen the interior-exterior (", 90, ") relationship between paired channels."),
-    ("The 4-verb divergent-channel pattern is: Li, Ru, Chu,", 60, "."),
-    ("The 12 divergent channels organize into", 40, "confluences (unions)."),
-    ("Next week (Week 8) covers the Eight", 100, "."),
+    ("Only GV and CV have their own dedicated acupuncture", 60, "-- the other six share points."),
+    ("The Governor Vessel is described as the sea of the", 50, "meridians."),
+    ("The Conception Vessel is described as the sea of the", 50, "meridians."),
+    ("The Chong Vessel is the sea of the 12 meridians, of blood, and of the", 90, "organs."),
+    ("Du, Ren, and Chong share a lower-abdomen origin -- \u201cone source,", 60, "branches.\u201d"),
+    ("The Belt (Dai) Vessel is the only vessel that runs", 70, "the body rather than up and down."),
+    ("Yang Qiao's confluent point is Shenmai,", 60, "-- and Yin Qiao's is Zhaohai, KI 6."),
+    ("None of the Eight Extraordinary Vessels pertain to a", 90, "organ, unlike the 12 primary meridians."),
 ]
 
-ANTICIPATORY_DIVERGENT = [
-    (1, True, "The 4-Verb Pattern", "Walk through Li -> Ru -> Chu -> He for a Yang-channel divergent branch. Where does it typically emerge from (hint: a joint)?"),
-    (2, True, "Yin vs Yang Rejoining", "Where does a YIN channel's divergent branch rejoin -- back to its own primary channel, or somewhere else? What's different about the Yang pattern?"),
-    (3, False, "The 6 Confluences", "List all 6 Confluences (Liu He) pairs by primary channel abbreviation."),
-    (4, False, "Clinical Value", "What can divergent channels treat that primary-channel points alone might miss?"),
+ANTICIPATORY_SEA_VESSELS = [
+    (1, True, "GV Course", "Trace the Governor Vessel from the lower abdomen to its ending point at the columnella of the nose. Where does it enter the brain along the way?"),
+    (2, True, "CV Course", "Trace the Conception Vessel from Huiyin (CV1) to Chengjiang (CV24). What structure does it pass through near the lips (hint: it shares a point with GV)?"),
+    (3, False, "GV Pathology", "Name at least 3 pathological symptoms associated with Governor Vessel disorder."),
+    (4, False, "CV Pathology", "Name at least 3 pathological symptoms associated with Conception Vessel disorder, especially involving the Liver/Kidney."),
 ]
-ANTICIPATORY_SINEW = [
-    (5, True, "Structural Difference", "What is the single biggest structural difference between a Sinew Channel and a primary Channel?"),
-    (6, False, "Where They Concentrate", "Sinew channels tend to gather/knot at which kind of body landmarks?"),
-    (7, False, "Clinical Association", "What category of clinical conditions are Sinew Channels most associated with treating?"),
+ANTICIPATORY_CHONG_DAI = [
+    (5, True, "One Source, Three Branches", "Explain what \u201cone source, three branches\u201d means for Du, Ren, and Chong. Why might this matter clinically?"),
+    (6, False, "Chong's Three Titles", "Chong Mai carries three \u201csea of...\u201d titles. Name all three."),
+    (7, True, "Dai's Uniqueness", "Why is the Belt Vessel structurally different from all 7 other extraordinary vessels? What is its core physiological function?"),
 ]
-ANTICIPATORY_CUTANEOUS = [
-    (8, True, "Diagnostic Use", "How can changes in a Cutaneous Region (color, texture, temperature) be used diagnostically?"),
-    (9, False, "Trap: Count", "How many Cutaneous Regions are there, and do they map 1:1 onto the 12 primary channels?"),
+ANTICIPATORY_QIAO_WEI = [
+    (8, True, "Qiao vs Wei", "Yang Qiao/Yin Qiao and Yang Wei/Yin Wei both come in yang/yin pairs. What is the FUNCTIONAL difference between what the Qiao pair regulates versus the Wei pair?"),
+    (9, False, "Sleep-Wake", "Which vessel keeps the body awake and active, and which promotes calm and restful sleep? Why might Dr. Zhang connect this to insomnia treatment?"),
+    (10, False, "Wei Function Overlap", "Yang Wei and Yin Wei are described as having a \u201cjoint function.\u201d What is it?"),
 ]
 ANTICIPATORY_COMPARE = [
-    (10, True, "Luo vs Jing Bie", "Collaterals (Luo) and Divergent Channels (Jing Bie) both 'branch off' a primary channel. What's the key functional difference between them?"),
-    (11, False, "Why This Order", "Why might Dr. Zhang's syllabus place Divergent/Sinew/Cutaneous (Week 7) BEFORE the Eight Extraordinary Vessels (Week 8), rather than after?"),
+    (11, True, "Confluent Point Pairing", "Without looking, try to pair all 4 master-couple confluent points (8 points total, 4 pairs). Which pairing do you feel least confident about?"),
+    (12, False, "Structural Trap", "State the one structural feature ALL 8 Extraordinary Vessels share that distinguishes them from the 12 primary meridians (hint: organs)."),
 ]
 
 IQ_CHECKPOINTS = [
     ("1-4", [
-        (1, "ACQ", "What does 'Jing Bie' mean, literally and functionally?"),
-        (2, "ACQ", "Name the 4 verbs describing a divergent channel's path, in order."),
-        (3, "ACQ", "How many Confluences (Liu He) do the 12 divergent channels form?"),
-        (4, "MAINT", "What are the 3 circuits from the Master Map, and which weeks completed each? (Wks 1-6 review)"),
+        (1, "ACQ", "What are the two \u201csea\u201d titles for GV and CV respectively?"),
+        (2, "ACQ", "How many points does the Governor Vessel have in total? The Conception Vessel?"),
+        (3, "ACQ", "What is Chong Mai's confluent (opening) point, and which primary meridian is it on?"),
+        (4, "MAINT", "Name the Pertaining Organ and Connecting Organ for the Lung meridian. (Wk 1-2 review)"),
     ]),
     ("5-8", [
-        (5, "ACQ", "Name the BL/KI confluence pairing by Yin/Yang stage name (e.g. Foot Taiyang/Foot Shaoyin)."),
-        (6, "ACQ", "What does a Sinew Channel lack that a primary channel has?"),
-        (7, "ACQ", "What is a Cutaneous Region, in one sentence?"),
-        (8, "MAINT", "Name all 8 confluent (opening) points you already know, with their vessel. (Wks 2-6 review)"),
+        (5, "ACQ", "What makes the Belt (Dai) Vessel structurally unique among the 8 extraordinary vessels?"),
+        (6, "ACQ", "Name the confluent point pairing for Du Mai + Yang Qiao Mai."),
+        (7, "ACQ", "Which vessel governs sleep/wake balance along with limb movement -- Qiao or Wei?"),
+        (8, "MAINT", "PC has zero of what, matching the same trap pattern as HT? (Wk 6 review)"),
     ]),
     ("9-12", [
-        (9, "ACQ", "TRAP: Which week covers the Eight Extraordinary Vessels -- 7 or 8?"),
-        (10, "ACQ", "What's the key functional difference between Luo (Collaterals) and Jing Bie (Divergent Channels)?"),
-        (11, "MAINT", "State the Yin/Yang direction rule for Hand-Yang channels. (Wk1 Master Map review)"),
-        (12, "MAINT", "GB's slide claims 12 points/6 meridians for crossing points, but only how many are actually named? (Wk6 flag)"),
+        (9, "ACQ", "What do all 8 Extraordinary Vessels lack that the 12 primary meridians have?"),
+        (10, "ACQ", "What does \u201cone source, three branches\u201d refer to?"),
+        (11, "MAINT", "Which 4 acupuncture points are forbidden in pregnancy through Week 5? (cumulative review)"),
+        (12, "ACQ", "Name the confluent point pairing for Ren Mai + Yin Qiao Mai."),
     ]),
 ]
 
 IQ_ANSWERS = [
-    "Jing Bie = 'channel divergence/separation' -- a deep branch that leaves the primary channel to strengthen ties between paired channels and the organs.",
-    "Li (separate) -> Ru (enter) -> Chu (emerge) -> He (converge).",
-    "6 Confluences (Liu He) -- one per Yin/Yang paired-channel relationship.",
-    "Anterior Circuit (LU-LI-ST-SP, Wks 2-3), Posterior/Inner Circuit (HT-SI-BL-KI, Wks 4-5), Middle Circuit (PC-SJ-GB-LR, Wk 6).",
-    "Foot Taiyang / Foot Shaoyin (BL-KI).",
-    "A pertaining Zang/Fu organ -- Sinew Channels have no internal organ connection, only muscle/joint distribution.",
-    "The surface/skin zone where a primary channel's Qi and Blood reflect onto the body -- used for observation-based diagnosis.",
-    "LU7 (Ren Mai), KI6 (Yin Qiao), SI3 (Du Mai), BL62 (Yang Qiao), SP4 (Chong Mai), PC6 (Yin Wei), SJ5 (Yang Wei), GB41 (Dai Mai) -- all 8 confluent points, already complete as of Week 6.",
-    "Week 8 -- NOT Week 7. Week 7 is Divergent/Sinew/Cutaneous systems.",
-    "Divergent Channels reach deep into the torso/organs and reinforce interior-exterior pairing; Collaterals are more superficial, branching from Luo points to link paired channels directly without the same deep organ-level detour.",
-    "Hand -> Head.",
-    "9 are actually named, though the slide states 12 points / 6 meridians -- flagged, unresolved pending Dr. Zhang confirmation.",
-]
-
-FLINNER_NOTE = (
-    "No Flinner transcript exists yet for this week's topic -- his parallel-section transcripts on file cover "
-    "only Weeks 1-4. Nothing below is presented as verified Flinner-lecture content; it reuses corrections "
-    "already verified from his Weeks 1-4 material, applied where directly relevant, and flags his general "
-    "teaching emphasis as a study-approach suggestion, not a content claim."
-)
-FLINNER_CROSSFIRE = [
-    "Don't confuse this week's NEW connections (Divergent-Channel Li/Ru/Chu/He links) with primary-channel "
-    "Crossing/Meeting Points from earlier weeks -- different systems. Per Flinner's verified corrections: LU has "
-    "only 1 true meeting point (shared with SP); LI has zero incoming meeting points; PC and HT both have zero "
-    "crossing points. Keep these separate from this week's divergent-channel confluences.",
-    "Per Flinner's general emphasis across Weeks 1-4: prioritize the ROUTE pattern (the 4-verb Li/Ru/Chu/He "
-    "logic and the 6 Confluences) over memorizing every point along each divergent branch -- most divergent "
-    "channels reuse points you already know from the primary channels, so the new information this week is "
-    "almost entirely structural, not point-level.",
+    "GV = \u201csea of the yang meridians.\u201d CV = \u201csea of the yin meridians.\u201d",
+    "Governor Vessel: 28 points (GV1 Changqiang to GV28 Yinjiao). Conception Vessel: 24 points (CV1 Huiyin to CV24 Chengjiang).",
+    "Chong Mai's confluent point is Gongsun, SP 4 -- on the Spleen Meridian of Foot-Taiyin. It is also the Luo-Connecting point of the Spleen meridian.",
+    "Pertaining Organ = Lung; Connecting Organ = Large Intestine (per the paired Yin-Yang / Interior-Exterior relationship).",
+    "The Dai (Belt) Vessel is the only one of the 8 that runs horizontally around the waist/body rather than vertically up and down; it controls/binds all the other longitudinally-running meridians.",
+    "Du Mai + Yang Qiao Mai confluent pair: Houxi (SI 3) with Shenmai (BL 62).",
+    "The Qiao (Heel) vessels govern sleep/wake balance -- Yang Qiao keeps the body awake/active, Yin Qiao promotes calm and restful sleep -- in addition to balancing limb movement.",
+    "PC has zero crossing points, the same trap pattern confirmed for HT in the Week 4/6 recap -- watch for this on quiz questions asking which channel(s) have no crossing points.",
+    "All 8 Extraordinary Vessels lack a pertaining zang/fu organ -- this is the core structural feature distinguishing them from the 12 primary meridians.",
+    "\u201cOne source, three branches\u201d describes how Du Mai, Ren Mai, and Chong Mai all arise together from the lower abdomen before diverging into their separate pathways.",
+    "Forbidden-in-pregnancy points through Week 5: LI4, SP6, BL60, BL67. (GB21 is added once Week 6 GB material is covered.)",
+    "Ren Mai + Yin Qiao Mai confluent pair: Lieque (LU 7) with Zhaohai (KI 6).",
 ]
