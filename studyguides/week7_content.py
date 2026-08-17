@@ -37,15 +37,30 @@ CONFLUENT_PAIRS = [
 
 VOCAB = [
     ("Qi Jing Ba Mai", "The Eight Extraordinary Vessels", None),
-    ("Du Mai", "Governor Vessel (GV) -- posterior midline, \"sea of yang\"", ACCENT_GV),
-    ("Ren Mai", "Conception Vessel (CV) -- anterior midline, \"sea of yin\"", ACCENT_CV),
-    ("Chong Mai", "Thoroughfare Vessel -- \"sea of 12 meridians,\" \"sea of blood\"", ACCENT_CHONG),
-    ("Dai Mai", "Belt/Girdling Vessel -- only vessel running horizontally", ACCENT_DAI),
-    ("Qiao Mai", "Heel Vessel (Yang+Yin) -- limb movement, sleep/wake balance", ACCENT_QIAO),
-    ("Wei Mai", "Link Vessel (Yang+Yin) -- links all yang / all yin meridians", ACCENT_WEI),
-    ("Jiao Hui Xue", "Coalescent Point -- where a vessel crosses a primary meridian", None),
-    ("Ba Mai Jiao Hui Xue", "Eight Confluent (Master-Couple) Points", None),
-    ("Yi Yuan San Qi", "\"One Source, 3 Branches\" -- Du, Ren, Chong share an origin", ACCENT_CHONG),
+    ("Du Mai", "Governor Vessel (GV)", ACCENT_GV),
+    ("Ren Mai", "Conception Vessel (CV)", ACCENT_CV),
+    ("Chong Mai", "Thoroughfare Vessel", ACCENT_CHONG),
+    ("Dai Mai", "Belt / Girdling Vessel", ACCENT_DAI),
+    ("Qiao Mai", "Heel Vessel", ACCENT_QIAO),
+    ("Wei Mai", "Link Vessel", ACCENT_WEI),
+    ("Jiao Hui Xue", "Coalescent Point", None),
+    ("Ba Mai Jiao Hui Xue", "Eight Confluent Points", None),
+    ("Yi Yuan San Qi", "One Source, Three Branches", ACCENT_CHONG),
+]
+
+# One-line key fact per vessel, shown as a reference key below the vocab table --
+# the ENGLISH column stays a short gloss so it never collides with the ruled
+# "MY DEFINITION / CLINICAL NOTE" column, which is meant for the student's own words.
+VOCAB_KEY_FACTS = [
+    ("Du Mai (GV)", "posterior midline, \"sea of the yang meridians,\" 28 points"),
+    ("Ren Mai (CV)", "anterior midline, \"sea of the yin meridians,\" 24 points"),
+    ("Chong Mai", "\"sea of 12 meridians,\" \"sea of blood\" -- shares points with primary meridians"),
+    ("Dai Mai", "the only vessel running horizontally around the waist"),
+    ("Qiao Mai", "Yang + Yin pair -- balance limb movement and sleep/wake"),
+    ("Wei Mai", "Yang + Yin pair -- link all yang meridians / all yin meridians"),
+    ("Jiao Hui Xue", "where a vessel crosses a primary meridian along its course"),
+    ("Ba Mai Jiao Hui Xue", "8 points, 4 pairs -- the classic \"master-couple\" opening points"),
+    ("Yi Yuan San Qi", "Du, Ren, and Chong all arise from the lower abdomen"),
 ]
 
 LEARNING_TARGETS = [

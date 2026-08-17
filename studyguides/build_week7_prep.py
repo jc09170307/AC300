@@ -11,9 +11,10 @@ sys.path.insert(0, "/home/claude/build")
 from pla_common import *
 from week7_content import (ACCENT_GV, ACCENT_CV, ACCENT_CHONG, ACCENT_DAI, ACCENT_QIAO,
                             ACCENT_WEI, GRAY, READING_ASSIGNMENT, CONFLUENT_PAIRS, VOCAB,
-                            LEARNING_TARGETS, CONNECT_BLANKS, ANTICIPATORY_SEA_VESSELS,
-                            ANTICIPATORY_CHONG_DAI, ANTICIPATORY_QIAO_WEI,
-                            ANTICIPATORY_COMPARE, IQ_CHECKPOINTS, IQ_ANSWERS)
+                            VOCAB_KEY_FACTS, LEARNING_TARGETS, CONNECT_BLANKS,
+                            ANTICIPATORY_SEA_VESSELS, ANTICIPATORY_CHONG_DAI,
+                            ANTICIPATORY_QIAO_WEI, ANTICIPATORY_COMPARE, IQ_CHECKPOINTS,
+                            IQ_ANSWERS)
 
 EDITION = sys.argv[1] if len(sys.argv) > 1 else "print"   # "print" | "remarkable"
 IS_RM = EDITION == "remarkable"
@@ -235,7 +236,17 @@ y = vocab_table_header(c, y)
 for py, en, accent in VOCAB:
     y = vocab_row(c, y, py, en, accent=accent)
 
-y -= 8
+y -= 10
+set_fill(c, NAVY); c.setFont("Lora-Bold", 9.5)
+c.drawString(MARGIN, y, "Key Facts -- one line per term (use to fill in your own definitions above)")
+y -= 15
+for term, fact in VOCAB_KEY_FACTS:
+    set_fill(c, GOLD_DARK); c.setFont("Lora-Bold", 7.8)
+    c.drawString(MARGIN, y, term)
+    set_fill(c, BLACK); c.setFont("Lora", 7.8)
+    c.drawString(MARGIN + 118, y, fact)
+    y -= 11.5
+y -= 6
 set_fill(c, NAVY); c.setFont("Lora-Bold", 9.5)
 c.drawString(MARGIN, y, "The 4 Confluent (Master-Couple) Point Pairs -- fill in as Dr. Zhang confirms in lecture")
 y -= 16
