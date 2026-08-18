@@ -93,7 +93,11 @@ def category_block(y, cat, definition, examples, color):
     ex_lines = []
     for ex in examples:
         ex_lines.extend(wrap_words(ex, "Lora", 8.3, CW - 130))
-    total_lines = max(len(lines_def), 1) + len(ex_lines) + 1
+    # If the category label itself is too wide for the label column, push the
+    # body text down to the next line instead of overlapping it.
+    label_w = pdfmetrics.stringWidth(cat, "Lora-Bold", 10.5)
+    label_wraps = label_w > 118
+    total_lines = max(len(lines_def), 1) + len(ex_lines) + 1 + (1 if label_wraps else 0)
     row_h = 13 + total_lines * 10.6
     if y - row_h < 55:
         end_page()
@@ -105,16 +109,17 @@ def category_block(y, cat, definition, examples, color):
     setfill(color); c.setFont("Lora-Bold", 10.5)
     c.drawString(ML + 10, y - 14, cat)
     setfill(DARK); c.setFont("Lora", 8.6)
-    yy = y - 14
+    yy = y - 14 - (14 if label_wraps else 0)
+    body_x = ML + 10 if label_wraps else ML + 130
     for l in lines_def:
-        c.drawString(ML + 130, yy, l); yy -= 10.6
+        c.drawString(body_x, yy, l); yy -= 10.6
     yy -= 2
     setfill(color); c.setFont("Lora-Bold", 8.3)
-    c.drawString(ML + 130, yy, "This week's examples:")
+    c.drawString(body_x, yy, "This week's examples:")
     yy -= 10.6
     setfill(DARK); c.setFont("Lora", 8.3)
     for l in ex_lines:
-        c.drawString(ML + 130, yy, l); yy -= 10.6
+        c.drawString(body_x, yy, l); yy -= 10.6
     return y - row_h - 8
 
 
