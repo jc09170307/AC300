@@ -14,8 +14,7 @@ from week1_content import (TWELVE_MERIDIANS, ZANG_ORGANS, FU_ORGANS, CIRCUITS, D
                             HISTORY_KEY_QUESTION, HISTORY_TIMELINE, HISTORY_FORMATION_THEORY,
                             HISTORY_MODERN_REINTERPRETATION, CLASSIFICATION_TREE_NOTE,
                             MERIDIAN_VS_COLLATERAL_TABLE, MERIDIAN_VS_COLLATERAL_SOURCE_QUOTE,
-                            FUNCTIONS_LING_SHU_CITATIONS, SYLLABUS_TABLE, GRADING_CRITERIA,
-                            GRADING_SOURCE_NOTE, QUIZ1_SCOPE_NOTE)
+                            FUNCTIONS_LING_SHU_CITATIONS)
 
 pdfmetrics.registerFont(TTFont('Lora', '/home/claude/fonts/Lora-Regular.ttf'))
 pdfmetrics.registerFont(TTFont('Lora-Bold', '/home/claude/fonts/Lora-Bold.ttf'))
@@ -85,7 +84,7 @@ def header(subtitle):
     setfill(NAVY); c.rect(0, H - HEADER_H, W, HEADER_H, fill=1, stroke=0)
     setfill(GOLD); c.rect(0, H - HEADER_H, W, 3, fill=1, stroke=0)
     setfill((1, 1, 1)); c.setFont("Lora-Bold", 11)
-    c.drawString(36, H - HEADER_H + 15, "AC300/AC375  |  Week 1  |  Channel Theory  |  VUIM Summer 2026")
+    c.drawString(36, H - HEADER_H + 15, "AC300/AC375  |  Week 1  |  VUIM Summer 2026")
     c.setFont("Lora-Italic", 9)
     c.drawRightString(W - 36, H - HEADER_H + 15, subtitle)
 
@@ -181,60 +180,8 @@ c.drawCentredString(W / 2, y, "Jonathan Centeno \u00b7 D.AcHM Candidate \u00b7 S
 
 end_page()
 
-# ============= NEW PAGE: HOW THIS COURSE WORKS (syllabus table + grading) =============
-new_page(f"How This Course Works  \u00b7  {EDLABEL}")
-y = H - HEADER_H - 24
-y = section_rule(y, "The Written Syllabus Table (Slide 8) \u2014 Authoritative Source", width=380, size=11.5)
-y = para(y, "This table overrides any verbal walkthrough for week/topic placement, quiz scope, and "
-             "reading assignments. CAM/MOA page numbers are Dr. Zhang's own assigned reading for each week.",
-         size=8.8, lh=11.5, color=GRAY)
-y -= 6
-img_w = CW
-img_h = img_w * (750/1300)
-c.drawImage("/home/claude/wk1slides/syllabus_table.jpg", ML, y - img_h, width=img_w, height=img_h)
-y -= img_h + 6
-setfill(GRAY); c.setFont("Lora-Italic", 7.3)
-c.drawCentredString(W / 2, y, "Source: Dr. Zhang's Week 1 lecture slides, Slide 8 (written syllabus table)")
-y -= 16
-
-y = section_rule(y, "Grading Breakdown", width=180, size=11.5)
-row_h = 14
-col_w = [190, 90, 70, 90]
-headers = ["Component", "Weight/Item", "Total %", "CLOs"]
-setfill(NAVY); c.rect(ML, y - row_h, sum(col_w), row_h, fill=1, stroke=0)
-setfill((1,1,1)); c.setFont("Lora-Bold", 8.6)
-cx = ML
-for i, h in enumerate(headers):
-    c.drawString(cx + 5, y - row_h + 4, h); cx += col_w[i]
-y -= row_h
-for i, (comp, per, tot, clo) in enumerate(GRADING_CRITERIA):
-    setfill(ROW_TINT if i % 2 == 0 else PAGE_BG); c.rect(ML, y - row_h, sum(col_w), row_h, fill=1, stroke=0)
-    setfill(DARK); c.setFont("Lora", 8.6)
-    vals = [comp, per, tot, clo]
-    cx = ML
-    for j, v in enumerate(vals):
-        c.drawString(cx + 5, y - row_h + 4, v); cx += col_w[j]
-    setstroke((0.6,0.6,0.6)); c.setLineWidth(0.4)
-    c.rect(ML, y - row_h, sum(col_w), row_h, fill=0, stroke=1)
-    y -= row_h
-y -= 12
-y = para(y, GRADING_SOURCE_NOTE, size=8.3, lh=11, color=GRAY)
-y -= 10
-setfill((0.976, 0.928, 0.919)); box_h = 58
-c.rect(ML - 4, y - box_h, CW + 8, box_h, fill=1, stroke=0)
-setstroke(RED); c.setLineWidth(2.2)
-c.line(ML - 4, y - box_h, ML - 4, y)
-y2 = y - 12
-setfill(RED); c.setFont("Lora-Bold", 9.3)
-c.drawString(ML + 10, y2, "Quiz 1 Scope \u2014 Read Before You Assume This Sheet Is Enough")
-y2 -= 14
-setfill(DARK); c.setFont("Lora", 8.5)
-for l in wrap_words(QUIZ1_SCOPE_NOTE, "Lora", 8.5, CW - 24):
-    c.drawString(ML + 10, y2, l); y2 -= 11
-end_page()
-
 # ============= PAGE 2: WHAT IS A CHANNEL =============
-new_page(f"What Is a Channel?  \u00b7  {EDLABEL}")
+new_page(f"What Is a Channel?")
 y = H - HEADER_H - 26
 y = section_rule(y, "Channels, Meridians, and Collaterals")
 y = para(y, CHANNELS_VS_MERIDIANS['definition'])
@@ -302,7 +249,7 @@ y = para(y, NOMENCLATURE['location_note'], size=9.3, lh=12, color=GRAY)
 end_page()
 
 # ============= NEW: HISTORY OF CHANNELS & POINTS, PAGE 1 =============
-new_page(f"History of Channels & Points  \u00b7  {EDLABEL}")
+new_page(f"History of Channels & Points")
 y = H - HEADER_H - 24
 y = section_rule(y, "The First Question: Which Came First?", width=340, size=12.5)
 setfill(RED); c.setFont("Lora-BoldItalic", 10.3)
@@ -327,7 +274,7 @@ for era, date, desc in HISTORY_TIMELINE:
 end_page()
 
 # ============= NEW: HISTORY OF CHANNELS & POINTS, PAGE 2 (images) =============
-new_page(f"History, continued  \u00b7  {EDLABEL}")
+new_page(f"History, continued")
 y = H - HEADER_H - 22
 y = section_rule(y, "The Inner Canon Marks the Formation of Acupuncture Theory", width=420, size=11)
 y = para(y, "The Huangdi Neijing (Yellow Emperor's Inner Canon) establishes the Meridian System as primarily "
@@ -376,7 +323,7 @@ for fact in history_facts:
 end_page()
 
 # ============= PAGE 4: 12 MERIDIANS TABLE =============
-new_page(f"The 12 Primary Meridians  \u00b7  {EDLABEL}")
+new_page(f"The 12 Primary Meridians")
 y = H - HEADER_H - 26
 y = section_rule(y, "Full Reference Table", width=200)
 setfill(NAVY); c.setFont("Lora-Bold", F_TABLE)
@@ -424,7 +371,7 @@ for l in wrap_words(LIMB_POSITION_SOURCE, "Lora-Italic", 7.3, CW):
 end_page()
 
 # ============= WORKED EXAMPLE: ALL 12 CHANNELS, TAGGED BY POSITION =============
-new_page(f"Limb Positions, continued  \u00b7  {EDLABEL}")
+new_page(f"Limb Positions, continued")
 y = H - HEADER_H - 26
 y = section_rule(y, "Worked Example - All 12 Channels by Position", width=280, size=11.5)
 y = para(y, "Cross-referencing the table above against the Full Reference Table: every channel's "
@@ -470,7 +417,7 @@ y = para(y - 12, "The Liver Meridian of Foot-Jueyin ascends to an area 8 cun abo
 end_page()
 
 # ============= NEW: THE FULL CHANNEL SYSTEM CLASSIFICATION TREE =============
-new_page(f"The Full Channel System, Visually  \u00b7  {EDLABEL}")
+new_page(f"The Full Channel System, Visually")
 y = H - HEADER_H - 22
 y = section_rule(y, "Classification Tree (Slide 21)", width=260, size=11.5)
 y = para(y, CLASSIFICATION_TREE_NOTE, size=8.6, lh=11.3)
@@ -517,15 +464,23 @@ setfill(GRAY); c.setFont("Lora-Italic", 7.6)
 for l in wrap_words(MERIDIAN_VS_COLLATERAL_SOURCE_QUOTE, "Lora-Italic", 7.6, CW - 4):
     c.drawString(ML, y, l); y -= 10
 y -= 14
+end_page()
 
-y = section_rule(y, "Six-Meridian Names \u2014 Hand and Foot (Slide 25)", width=340, size=10.5)
+new_page(f"Six-Meridian Names")
+y = H - HEADER_H - 22
+y = section_rule(y, "Six-Meridian Names \u2014 Hand and Foot (Slide 25)", width=340, size=11.5)
 img_w = CW * 0.86
 img_h = img_w * (750/1300)
 img_x = ML + (CW - img_w) / 2
 c.drawImage("/home/claude/wk1slides/six_meridians_table.jpg", img_x, y - img_h, width=img_w, height=img_h)
-y -= img_h + 6
-setfill(GRAY); c.setFont("Lora-Italic", 7.3)
+y -= img_h + 8
+setfill(GRAY); c.setFont("Lora-Italic", 7.5)
 c.drawCentredString(W / 2, y, "Source: Dr. Zhang's Week 1 lecture slides, Slide 25 \u2014 the full official name of every one of the 12 channels")
+y -= 24
+y = section_rule(y, "Quick Self-Test", width=180, size=10.5)
+y = para(y, "Cover the table above and try to write out all 12 full official names from memory (e.g. "
+             "'Lung Meridian of Hand-Taiyin, LU') before checking your answers against it. This is the exact "
+             "naming format tested on quizzes.", size=8.8, lh=11.5, color=GRAY)
 end_page()
 
 # ============= THE THREE CIRCUITS + SUMMARY, 2 DIAGRAMS PER PAGE =============
@@ -533,7 +488,7 @@ circuit_images = {"Outer Circuit": "jpg_p31.jpg", "Inner Circuit": "jpg_p33.jpg"
 circuit_titles = {"Outer Circuit": "The Anterior Circuit", "Inner Circuit": "The Posterior Circuit", "Middle Circuit": "The Middle Circuit"}
 
 
-def circuit_block(y, circuit_name, position, members, elements, mnemonic=None):
+def circuit_block(y, circuit_name, position, members, elements, mnemonic=None, img_scale=0.9):
     y = section_rule(y, f"{circuit_titles[circuit_name]} ({position})", width=280, size=11.5)
     setfill(GRAY); c.setFont("Lora-Italic", 8.3)
     c.drawString(ML, y, elements)
@@ -543,7 +498,7 @@ def circuit_block(y, circuit_name, position, members, elements, mnemonic=None):
     for l in wrap_words(seq, "Lora", 9, CW - 4):
         c.drawString(ML, y, l); y -= 11.5
     y -= 8
-    img_w = CW * 0.9
+    img_w = CW * img_scale
     img_h = img_w * 0.577
     img_x = ML + (CW - img_w) / 2
     c.drawImage(f"/home/claude/wk1slides/{circuit_images.get(circuit_name, 'jpg_p36.jpg')}", img_x, y - img_h, width=img_w, height=img_h)
@@ -569,15 +524,15 @@ CIRCUIT_MNEMONICS = {
         "the limb, and functionally the hinge between Yin and Yang in six-stage theory.",
 }
 
-new_page(f"The Anterior & Posterior Circuits  \u00b7  {EDLABEL}")
+new_page(f"The Anterior & Posterior Circuits")
 y = H - HEADER_H - 24
-y = circuit_block(y, "Outer Circuit", "Anterior", CIRCUITS[0][2], CIRCUITS[0][3], CIRCUIT_MNEMONICS["Outer Circuit"])
-y = circuit_block(y, "Inner Circuit", "Posterior", CIRCUITS[1][2], CIRCUITS[1][3], CIRCUIT_MNEMONICS["Inner Circuit"])
+y = circuit_block(y, "Outer Circuit", "Anterior", CIRCUITS[0][2], CIRCUITS[0][3], CIRCUIT_MNEMONICS["Outer Circuit"], img_scale=0.58)
+y = circuit_block(y, "Inner Circuit", "Posterior", CIRCUITS[1][2], CIRCUITS[1][3], CIRCUIT_MNEMONICS["Inner Circuit"], img_scale=0.58)
 end_page()
 
-new_page(f"The Middle Circuit  \u00b7  {EDLABEL}")
+new_page(f"The Middle Circuit")
 y = H - HEADER_H - 24
-y = circuit_block(y, "Middle Circuit", "Middle", CIRCUITS[2][2], CIRCUITS[2][3], CIRCUIT_MNEMONICS["Middle Circuit"])
+y = circuit_block(y, "Middle Circuit", "Middle", CIRCUITS[2][2], CIRCUITS[2][3], CIRCUIT_MNEMONICS["Middle Circuit"], img_scale=0.58)
 y = section_rule(y, "Middle Circuit, Whole-Body View", width=280, size=10.5)
 img_w = CW * 0.46
 img_h = img_w * (750/1300)
@@ -598,7 +553,7 @@ c.drawString(ML + 8, y - 40, "(Taiyin/Yangming) and posterior (Shaoyin/Taiyang).
 end_page()
 
 # ============= NEW: THE THREE CIRCUITS COMBINED MASTER DIAGRAM (Slide 37) =============
-new_page(f"Three Circuits \u2014 Master Diagram  \u00b7  {EDLABEL}")
+new_page(f"Three Circuits \u2014 Master Diagram")
 y = H - HEADER_H - 22
 y = section_rule(y, "All Three Circuits, Element-Coded, One Diagram (Slide 37)", width=420, size=11.5)
 y = para(y, "The Outer Circuit's Yang partner is Yangming; the Inner Circuit's is Taiyang; the Middle "
@@ -625,7 +580,7 @@ c.drawString(ML + 8, y - 41, "directions - you have mastered this week's core co
 end_page()
 
 # ============= PAGE 6: DIRECTION + MEETING POINTS =============
-new_page(f"Circulation & Meeting Points  \u00b7  {EDLABEL}")
+new_page(f"Circulation & Meeting Points")
 y = H - HEADER_H - 26
 y = section_rule(y, "Direction of Qi Flow", width=200)
 for rule, direction in DIRECTION_RULES:
@@ -660,7 +615,7 @@ for pair, location, note in MEETING_POINTS:
 end_page()
 
 # ============= NEW: FUNCTIONS OF THE MERIDIANS, WITH LING SHU CITATIONS =============
-new_page(f"Functions of the Meridians  \u00b7  {EDLABEL}")
+new_page(f"Functions of the Meridians")
 y = H - HEADER_H - 24
 y = section_rule(y, "The 3 Functions of Meridians \u2014 With Classical Citations (Slide 38)", width=420, size=11.3)
 for (name, desc), (short, cite, quote) in zip(FUNCTIONS_OF_MERIDIANS, FUNCTIONS_LING_SHU_CITATIONS):
@@ -686,7 +641,7 @@ c.drawCentredString(W / 2, y, "Source: Dr. Zhang's Week 1 lecture slides, Slide 
 end_page()
 
 # ============= MERIDIAN CLOCK (own page, generous margins) =============
-new_page(f"The Meridian Clock  \u00b7  {EDLABEL}")
+new_page(f"The Meridian Clock")
 y = H - HEADER_H - 26
 y = section_rule(y, "The Meridian Clock (24-Hour Cycle)", width=280)
 y = para(y, "Each meridian has a two-hour period of peak activity, following the same order the meridians "
@@ -727,7 +682,7 @@ c.drawCentredString(W / 2, y, "Metal (LU/LI)  \u00b7  Earth (ST/SP)  \u00b7  Fir
 end_page()
 
 # ============= PAGE 8: CLINICAL PEARLS + QUIZ 1 FUNDAMENTALS =============
-new_page(f"Clinical Pearls & Quiz 1 Fundamentals  \u00b7  {EDLABEL}")
+new_page(f"Clinical Pearls & Quiz 1 Fundamentals")
 y = H - HEADER_H - 26
 y = section_rule(y, "Dr. Zhang's Clinical Pearls \u2014 Direct from Lecture", width=340)
 for title, body in CLINICAL_PEARLS_WK1:

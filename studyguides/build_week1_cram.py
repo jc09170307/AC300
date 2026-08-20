@@ -10,7 +10,7 @@ from reportlab.pdfbase.ttfonts import TTFont
 from week1_content import (TWELVE_MERIDIANS, ZANG_ORGANS, FU_ORGANS, CIRCUITS, DIRECTION_RULES,
                             MEETING_POINTS, MERIDIAN_CLOCK, CLOCK_ELEMENT, FUNCTIONS_OF_MERIDIANS, NOMENCLATURE,
                             CHANNELS_VS_MERIDIANS, QUIZ1_FUNDAMENTALS, HISTORY_KEY_QUESTION, HISTORY_TIMELINE,
-                            GRADING_CRITERIA, QUIZ1_SCOPE_NOTE, MERIDIAN_VS_COLLATERAL_TABLE)
+                            MERIDIAN_VS_COLLATERAL_TABLE)
 
 pdfmetrics.registerFont(TTFont('Lora', '/home/claude/fonts/Lora-Regular.ttf'))
 pdfmetrics.registerFont(TTFont('Lora-Bold', '/home/claude/fonts/Lora-Bold.ttf'))
@@ -170,7 +170,7 @@ c.drawCentredString(W / 2, y, "Jonathan Centeno \u00b7 D.AcHM Candidate \u00b7 S
 end_page()
 
 # ============= PAGE 2: CORE DEFINITIONS =============
-new_page(f"Core Definitions  \u00b7  {EDLABEL}")
+new_page(f"Core Definitions")
 y = H - HEADER_H - 24
 y = section_rule(y, "What Is a Channel?", width=200)
 setfill(DARK); c.setFont("Lora", 9)
@@ -250,56 +250,8 @@ for aspect, mer, col in MERIDIAN_VS_COLLATERAL_TABLE:
 
 end_page()
 
-# ============= PAGE 2b: HOW THIS COURSE WORKS =============
-row_num[0] = 0
-new_page(f"How This Course Works  \u00b7  {EDLABEL}")
-y = H - HEADER_H - 24
-y = section_rule(y, "Grading Breakdown (Written Syllabus \u2014 Authoritative)", width=380)
-row_h = 13
-col_w = [190, 90, 70, 90]
-setfill(NAVY); c.rect(ML, y - row_h, sum(col_w), row_h, fill=1, stroke=0)
-setfill((1,1,1)); c.setFont("Lora-Bold", 8)
-cx = ML
-for h in ["Component", "Weight/Item", "Total %", "CLOs"]:
-    c.drawString(cx + 4, y - row_h + 3, h); cx += col_w[["Component","Weight/Item","Total %","CLOs"].index(h)]
-y -= row_h
-for i, (comp, per, tot, clo) in enumerate(GRADING_CRITERIA):
-    setfill(ROW_TINT if i % 2 == 0 else PAGE_BG); c.rect(ML, y - row_h, sum(col_w), row_h, fill=1, stroke=0)
-    setfill(DARK); c.setFont("Lora", 8)
-    cx = ML
-    for v, w in zip([comp, per, tot, clo], col_w):
-        c.drawString(cx + 4, y - row_h + 3, v); cx += w
-    y -= row_h
-y -= 14
-
-y = section_rule(y, "Quiz 1 Scope \u2014 Not Week 1 Alone", width=260)
-setfill(DARK); c.setFont("Lora", 8.3)
-for l in wrap_words(QUIZ1_SCOPE_NOTE, "Lora", 8.3, CW - 4):
-    c.drawString(ML, y, l); y -= 10.8
-y -= 12
-
-y = section_rule(y, "Week-by-Week Roadmap (Full Course)", width=300)
-setfill(DARK); c.setFont("Lora", 7.8)
-roadmap = [
-    "Wk1: Channel Theory (this week)   Wk2: LU/LI + Quiz 1   Wk3: ST/SP + Quiz 2   Wk4: HT/SI + Quiz 3",
-    "Wk5: Midterm + BL/KI   Wk6: PC/SJ/GB/LR + Quiz 4   Wk7: 8 Extraordinary Vessels + Quiz 5",
-    "Wk8: Muscle/Sinew/Cutaneous/Divergent + Quiz 6   Wk9: Acupuncture Points   Wk10: Final Exam",
-]
-for l in roadmap:
-    c.drawString(ML, y, l); y -= 11
-y -= 16
-
-y = section_rule(y, "The Written Syllabus Table (Slide 8)", width=280)
-img_w = CW
-img_h = img_w * (750/1300)
-c.drawImage("/home/claude/wk1slides/syllabus_table.jpg", ML, y - img_h, width=img_w, height=img_h)
-y -= img_h + 6
-setfill(GRAY); c.setFont("Lora-Italic", 7)
-c.drawCentredString(W / 2, y, "Source: Dr. Zhang's Week 1 lecture slides, Slide 8 \u2014 authoritative for week/quiz placement and grading")
-end_page()
-
 # ============= PAGE 3: 12 MERIDIANS TABLE + CIRCUITS =============
-new_page(f"12 Meridians & 3 Circuits  \u00b7  {EDLABEL}")
+new_page(f"12 Meridians & 3 Circuits")
 y = H - HEADER_H - 24
 y = section_rule(y, "The 12 Primary Meridians", width=220)
 setfill(NAVY); c.setFont("Lora-Bold", 8)
@@ -338,7 +290,7 @@ for circuit_name, position, members, elements in CIRCUITS:
 end_page()
 
 # ============= PAGE 4: DIRECTION, MEETING POINTS, CLOCK, FUNCTIONS =============
-new_page(f"Circulation, Clock & Functions  \u00b7  {EDLABEL}")
+new_page(f"Circulation, Clock & Functions")
 y = H - HEADER_H - 24
 y = section_rule(y, "Direction of Qi Flow", width=200)
 setfill(DARK); c.setFont("Lora", 8.8)
@@ -407,7 +359,7 @@ y -= 16
 if y < 260:
     end_page()
     row_num[0] = 0
-    new_page(f"Rapid Recall  \u00b7  {EDLABEL}")
+    new_page(f"Rapid Recall")
     y = H - HEADER_H - 24
 
 setfill(NAVY); c.setFont("Lora-Bold", 15)

@@ -217,12 +217,6 @@ QUIZ1_PRACTICE = [
     ("Which classical text formally established the Meridian System as composed primarily of the 12 Primary Meridians?",
      ["The Shang Han Lun", "The Huangdi Neijing (Yellow Emperor's Inner Canon)", "The Ben Cao Gang Mu", "The Nan Jing alone"], "B",
      "The Huangdi Neijing (read as Su Wen + Ling Shu) marks the formation of acupuncture theory and establishes the 12 Primary Meridian system.", "medium"),
-    ("Per the written syllabus table (Slide 8), what percentage of the final grade do the 6 quizzes contribute IN TOTAL?",
-     ["20%", "24%", "30%", "36%"], "C",
-     "Quizzes are 5% each x 6 quizzes = 30% of the total grade. Homework is 4% each x 5 = 20%; Midterm 20%; Final 30%.", "medium"),
-    ("True or False: Quiz 1 (given in Week 2) covers ONLY the Week 1 Channel Theory material.",
-     ["True - Quiz 1 is Week 1 content exclusively", "False - Quiz 1 covers Week 1 AND Week 2 (LU/LI) material together", "True - but only if you attended Week 1 live", "False - Quiz 1 covers Weeks 1 through 4"], "B",
-     "Per the syllabus table, Quiz 1's material spans Week 1-2 - Channel Theory foundations PLUS the LU/LI channels taught in Week 2.", "hard"),
     ("Per Ling Shu Chapter 71 (cited directly on Dr. Zhang's slide), pathogenic Qi that invades via the SPLEEN tends to linger where?",
      ["Both elbows", "Both axillae (armpits)", "Both groins", "Both popliteal fossae (backs of knees)"], "C",
      "Ling Shu Ch. 71: lung/heart invasion lingers in both elbows; liver in both axillae; SPLEEN in both groins; kidney in both popliteal fossae.", "hard"),
@@ -238,9 +232,15 @@ QUIZ1_PRACTICE = [
     ("On the Three Main Circuits master diagram (Slide 37), what is the complete circulation loop shown across all three circuits?",
      ["Chest -> Hands/Fingers -> Face/Head -> Foot/Toes -> Chest", "Head -> Chest -> Hands -> Foot -> Head", "Hands -> Chest -> Head -> Chest -> Foot", "Foot -> Head -> Hands -> Chest -> Foot"], "A",
      "The master diagram shows one continuous loop: Chest -> Hands/Fingers -> Face/Head -> Foot/Toes -> back to Chest, repeating across all three circuits.", "medium"),
-    ("Per the written syllabus (Slide 8), which CAM and MOA page ranges are assigned reading for Week 1?",
-     ["CAM p.1-68, MOA p.11-16", "CAM p.66-68, MOA p.73-99", "CAM p.115-134, MOA p.29-55", "CAM p.82-89, MOA p.17-25"], "A",
-     "Week 1's assigned reading is CAM p.1-68 and MOA p.11-16, per the written syllabus table.", "hard"),
+    ("Modern research reframes meridians as a combination of which structures/processes, per lecture?",
+     ["Only nerve pathways", "Peripheral nerve pathways, arterial pathways, and myofascial referred-pain patterns", "Only blood vessels", "Only fascial planes"], "B",
+     "The modern reframe: meridians can be understood as a combination of peripheral nerve pathways, arterial pathways, and myofascial referred-pain patterns - favorable access points to the nervous system found empirically.", "medium"),
+    ("Which historical TCM figure is mentioned in lecture as having mapped the meridians in old maps?",
+     ["Sun Simiao", "Zhang Zhongjing", "Li Shizhen", "Hua Tuo"], "A",
+     "Dr. Zhang names Sun Simiao among famous TCM doctors who mapped the meridians historically.", "hard"),
+    ("Per Ling Shu Chapter 9 (cited on Dr. Zhang's slide as supporting the Treatment function), what must acupuncture treatment aim at regulating?",
+     ["The pulse", "The flow of Qi", "Body temperature", "Muscle tension"], "B",
+     "Ling Shu Ch. 9: \"Acupuncture treatment must aim at regulating the flow of Qi.\" - the classical citation for the meridians' Treatment function.", "hard"),
 ]
 
 assert len(QUIZ1_PRACTICE) == 40
@@ -298,7 +298,7 @@ y -= 16
 c.drawString(ML + 6, y, "10 trap/nuance questions (exceptions, EXCEPT format, exact terminology)")
 c.drawRightString(W - MR, y, "Q21-Q30")
 y -= 16
-c.drawString(ML + 6, y, "10 NEW: history, syllabus/grading, classical citations, classification tree")
+c.drawString(ML + 6, y, "10 NEW: history, classical citations, classification tree, master diagram")
 c.drawRightString(W - MR, y, "Q31-Q40")
 y -= 16
 c.drawString(ML + 6, y, "Full answer key with explanations for all 40")
@@ -344,7 +344,7 @@ setfill(CREAM); c.rect(ML - 4, y - 40, CW + 8, 40, fill=1, stroke=0)
 setstroke(GOLD); c.setLineWidth(2.2)
 c.line(ML - 4, y - 40, ML - 4, y)
 setfill(RED); c.setFont("Lora-Italic", 9.5)
-c.drawString(ML + 6, y - 16, "40 questions, 30 core + 10 new (history/syllabus/citations) - covers Week 1 comprehensively.")
+c.drawString(ML + 6, y - 16, "40 questions, 30 core + 10 new (history/citations/classification) - covers Week 1 comprehensively.")
 setfill(GRAY); c.setFont("Lora-Italic", 9)
 c.drawString(ML + 6, y - 30, "Cross-checked against the Week 1 Study Guide's verified content - nothing invented.")
 
@@ -435,7 +435,7 @@ end_page()
 
 new_page()
 y = H - 46
-y = section_bar(y, "Questions 31-40  \u2014  New: History, Syllabus, Citations", SET_LABEL, NAVY, size=13)
+y = section_bar(y, "Questions 31-40  \u2014  New: History, Citations, Classification", SET_LABEL, NAVY, size=13)
 for i in range(30, 40):
     q, opts, correct, expl, diff = QUIZ1_PRACTICE[i]
     needed_est = estimate_card_height(q, opts)
