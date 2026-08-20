@@ -9,7 +9,8 @@ from reportlab.pdfbase.ttfonts import TTFont
 
 from week1_content import (TWELVE_MERIDIANS, ZANG_ORGANS, FU_ORGANS, CIRCUITS, DIRECTION_RULES,
                             MEETING_POINTS, MERIDIAN_CLOCK, CLOCK_ELEMENT, FUNCTIONS_OF_MERIDIANS, NOMENCLATURE,
-                            CHANNELS_VS_MERIDIANS, QUIZ1_FUNDAMENTALS)
+                            CHANNELS_VS_MERIDIANS, QUIZ1_FUNDAMENTALS, HISTORY_KEY_QUESTION, HISTORY_TIMELINE,
+                            GRADING_CRITERIA, QUIZ1_SCOPE_NOTE, MERIDIAN_VS_COLLATERAL_TABLE)
 
 pdfmetrics.registerFont(TTFont('Lora', '/home/claude/fonts/Lora-Regular.ttf'))
 pdfmetrics.registerFont(TTFont('Lora-Bold', '/home/claude/fonts/Lora-Bold.ttf'))
@@ -75,9 +76,9 @@ row_num = [0]
 def header(subtitle):
     setfill(NAVY); c.rect(0, H - HEADER_H, W, HEADER_H, fill=1, stroke=0)
     setfill(GOLD); c.rect(0, H - HEADER_H, W, 3, fill=1, stroke=0)
-    setfill((1, 1, 1)); c.setFont("Lora-Bold", 11)
-    c.drawString(36, H - HEADER_H + 15, "AC300/AC375  |  Week 1 Cram Sheet  |  Channel Theory  |  VUIM Summer 2026")
-    c.setFont("Lora-Italic", 9)
+    setfill((1, 1, 1)); c.setFont("Lora-Bold", 10)
+    c.drawString(36, H - HEADER_H + 15, "AC300/AC375  |  Week 1 Cram Sheet  |  VUIM Summer 2026")
+    c.setFont("Lora-Italic", 8.6)
     c.drawRightString(W - 36, H - HEADER_H + 15, subtitle)
 
 
@@ -217,7 +218,84 @@ y -= 2
 setfill(GRAY); c.setFont("Lora-Italic", 8.2)
 for l in wrap_words(NOMENCLATURE['example'], "Lora-Italic", 8.2, CW - 4):
     c.drawString(ML, y, l); y -= 10.5
+y -= 12
 
+y = section_rule(y, "History \u2014 Which Came First: Channels or Points?", width=380)
+setfill(RED); c.setFont("Lora-BoldItalic", 8.8)
+c.drawString(ML, y, "Answer: CHANNELS (Mawangdui Silk Manuscripts predate point-specific texts).")
+y -= 13
+setfill(DARK); c.setFont("Lora", 8.4)
+for era, date, desc in HISTORY_TIMELINE:
+    line = f"{era} ({date}): {desc.split('.')[0]}."
+    for l in wrap_words(line, "Lora", 8.4, CW - 4):
+        c.drawString(ML, y, l); y -= 10.8
+    y -= 1
+y -= 10
+
+y = section_rule(y, "Meridians vs. Collaterals", width=220)
+row_h = 11.5
+col_w = [86, (CW - 86) / 2, (CW - 86) / 2]
+setfill(NAVY); c.setFont("Lora-Bold", 7.6)
+c.drawString(ML, y, "Aspect"); c.drawString(ML + col_w[0], y, "Meridians (Jingmai)")
+c.drawString(ML + col_w[0] + col_w[1], y, "Collaterals (Luomai)")
+y -= 12
+setfill(DARK); c.setFont("Lora", 7.8)
+for aspect, mer, col in MERIDIAN_VS_COLLATERAL_TABLE:
+    short_mer = mer.split(" - ")[0].split(",")[0]
+    short_col = col.split(" - ")[0].split(",")[0]
+    c.drawString(ML, y, aspect)
+    c.drawString(ML + col_w[0], y, short_mer[:34])
+    c.drawString(ML + col_w[0] + col_w[1], y, short_col[:34])
+    y -= 10.5
+
+end_page()
+
+# ============= PAGE 2b: HOW THIS COURSE WORKS =============
+row_num[0] = 0
+new_page(f"How This Course Works  \u00b7  {EDLABEL}")
+y = H - HEADER_H - 24
+y = section_rule(y, "Grading Breakdown (Written Syllabus \u2014 Authoritative)", width=380)
+row_h = 13
+col_w = [190, 90, 70, 90]
+setfill(NAVY); c.rect(ML, y - row_h, sum(col_w), row_h, fill=1, stroke=0)
+setfill((1,1,1)); c.setFont("Lora-Bold", 8)
+cx = ML
+for h in ["Component", "Weight/Item", "Total %", "CLOs"]:
+    c.drawString(cx + 4, y - row_h + 3, h); cx += col_w[["Component","Weight/Item","Total %","CLOs"].index(h)]
+y -= row_h
+for i, (comp, per, tot, clo) in enumerate(GRADING_CRITERIA):
+    setfill(ROW_TINT if i % 2 == 0 else PAGE_BG); c.rect(ML, y - row_h, sum(col_w), row_h, fill=1, stroke=0)
+    setfill(DARK); c.setFont("Lora", 8)
+    cx = ML
+    for v, w in zip([comp, per, tot, clo], col_w):
+        c.drawString(cx + 4, y - row_h + 3, v); cx += w
+    y -= row_h
+y -= 14
+
+y = section_rule(y, "Quiz 1 Scope \u2014 Not Week 1 Alone", width=260)
+setfill(DARK); c.setFont("Lora", 8.3)
+for l in wrap_words(QUIZ1_SCOPE_NOTE, "Lora", 8.3, CW - 4):
+    c.drawString(ML, y, l); y -= 10.8
+y -= 12
+
+y = section_rule(y, "Week-by-Week Roadmap (Full Course)", width=300)
+setfill(DARK); c.setFont("Lora", 7.8)
+roadmap = [
+    "Wk1: Channel Theory (this week)   Wk2: LU/LI + Quiz 1   Wk3: ST/SP + Quiz 2   Wk4: HT/SI + Quiz 3",
+    "Wk5: Midterm + BL/KI   Wk6: PC/SJ/GB/LR + Quiz 4   Wk7: 8 Extraordinary Vessels + Quiz 5",
+    "Wk8: Muscle/Sinew/Cutaneous/Divergent + Quiz 6   Wk9: Acupuncture Points   Wk10: Final Exam",
+]
+for l in roadmap:
+    c.drawString(ML, y, l); y -= 11
+y -= 16
+
+y = section_rule(y, "The Written Syllabus Table (Slide 8)", width=280)
+img_w = CW
+img_h = img_w * (750/1300)
+c.drawImage("/home/claude/wk1slides/syllabus_table.jpg", ML, y - img_h, width=img_w, height=img_h)
+y -= img_h + 6
+setfill(GRAY); c.setFont("Lora-Italic", 7)
+c.drawCentredString(W / 2, y, "Source: Dr. Zhang's Week 1 lecture slides, Slide 8 \u2014 authoritative for week/quiz placement and grading")
 end_page()
 
 # ============= PAGE 3: 12 MERIDIANS TABLE + CIRCUITS =============

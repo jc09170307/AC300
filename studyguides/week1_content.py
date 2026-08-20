@@ -123,6 +123,148 @@ CLINICAL_PEARLS_WK1 = [
      "as the primary meridians need."),
 ]
 
+# =========================================================================
+# HISTORY OF CHANNELS & POINTS (Slides 12-18; verified against transcript
+# lines ~347-359). New section added per Jon's request to make Week 1
+# genuinely comprehensive - this content was in the lecture and on the
+# slides but had not yet been built into any document.
+# =========================================================================
+HISTORY_KEY_QUESTION = dict(
+    question="Which were discovered first: the channels, or the points?",
+    answer="The CHANNELS were discovered first, then the points. This is confirmed by the Mawangdui "
+           "Silk Manuscripts (excavated from a Western Han Dynasty tomb): the silk texts describe channel "
+           "pathways but do not yet reference specific points - meaning the pathway concept predates the "
+           "point concept in the historical record.",
+    source="Dr. Zhang, Week 1 lecture (verbatim transcript) + Slide 13",
+)
+
+HISTORY_TIMELINE = [
+    ("Origins", "c. 2000+ years ago", "Theoretical foundation laid in China; earliest surviving textual "
+     "evidence is the Mawangdui Silk Manuscripts (Western Han Dynasty tomb), which describe the Yin and "
+     "Yang meridians but predate point-specific texts."),
+    ("Formalization", "Zhou & Han Dynasties", "The Huangdi Neijing (Yellow Emperor's Inner Canon) - "
+     "read as two volumes, Su Wen (Basic Questions) and Ling Shu (Miraculous Pivot) - details the "
+     "location, properties, and uses of acupuncture points, laying the foundation of modern practice. "
+     "This text marks the formal establishment of the Meridian System as composed of the 12 Primary "
+     "Meridians."),
+    ("Spread to East Asia", "6th century CE", "Channel theory and acupuncture practice spread to East "
+     "Asian countries neighboring China."),
+    ("Spread to the West", "17th century onward", "Acupuncture reached Europe and, later, North America."),
+    ("Modern Recognition", "Present day", "Recognized by the WHO as an evidence-based complementary "
+     "therapy and integrated into healthcare systems worldwide; modern research reinterprets meridians "
+     "as networks integrating neural, circulatory, connective-tissue, and bioelectrical processes rather "
+     "than fixed anatomical structures like nerves or blood vessels."),
+]
+
+HISTORY_FORMATION_THEORY = [
+    ("\u58f9  Observation", "Observation of stimulation induction and conduction (needle sensation, Qi)."),
+    ("\u8d30  Documentation", "Summary of acupoint effects (Points -> The Line)."),
+    ("\u53c1  Classical text support", "Ling Shu: \u201cAs for a man eight feet tall, his skin and flesh are "
+     "right here: outwardly they can be measured, palpated, and examined; after death, they can be "
+     "dissected and observed.\u201d"),
+    ("\u8086  Internal Qi flow", "The phenomenon of internal Qi flow (the small cycle) discovered by "
+     "ancient people in qigong and guided breathing practice."),
+]
+
+HISTORY_MODERN_REINTERPRETATION = (
+    "A key point from lecture: acupuncture's mechanism is increasingly understood through neuroscience, "
+    "not superseded by it. The reason acupuncture works isn't because of the ancient explanations "
+    "themselves, but because the loci ancient clinicians selected are direct access points to the "
+    "nervous system. In this framing, meridians can be understood as a combination of peripheral nerve "
+    "pathways, arterial pathways, and myofascial referred-pain patterns - a map of favorable access "
+    "points to the nervous system discovered empirically, centuries before that neuroscience existed to "
+    "explain why they worked."
+)
+
+CLASSIFICATION_TREE_NOTE = (
+    "Slide 21's classification table organizes the full channel system as one tree: the 12 Primary "
+    "Meridians (Hand: 3 Yin + 3 Yang; Foot: 3 Yin + 3 Yang) sit at the center, branching into the 15 "
+    "Collaterals (12 primary Luo-points + Du/Ren/Spleen's Great Luo), the 12 Divergent Meridians, and "
+    "outward into the 12 Muscle (Sinew) Regions and 12 Cutaneous Regions - with the 8 Extraordinary "
+    "Vessels running alongside as a separate reservoir system, sharing 2 members (Du Mai, Ren Mai) with "
+    "the 14-meridian count some texts use."
+)
+
+MERIDIAN_VS_COLLATERAL_TABLE = [
+    # (Aspect, Meridians/Jingmai, Collaterals/Luomai)
+    ("Meaning", "Pathway", "Network"),
+    ("Standing", "Trunk", "Branch"),
+    ("Distribution", "Vertical line", "Running amok (irregular, web-like)"),
+    ("Depth", "Deep", "Shallow"),
+    ("Number", "Few (12 Primary)", "Many (15 named + further branching)"),
+    ("Function", "Leading - the pathways through which Qi and Blood circulate",
+     "Supplement and bond - promotes Qi and Blood circulation between meridians"),
+]
+MERIDIAN_VS_COLLATERAL_SOURCE_QUOTE = (
+    "Classical source cited on Slide 22: \u300a\u96f5\u62ec\u300b - \u7ecf\u8109\u4e3a\u91cc\uff0c\u652f\u800c"
+    "\u6a2a\u8005\u4e3a\u7edc\u4e5f\uff0c\u7edc\u4e4b\u522b\u8005\u4e3a\u5b59\u3002 "
+    "(\u201cThe meridians run through the interior; the branches running crosswise from them are the "
+    "collaterals; and the branches of the collaterals are the grandchild-vessels.\u201d)"
+)
+
+FUNCTIONS_LING_SHU_CITATIONS = [
+    ("A. Transporting Qi and blood and regulating Yin and Yang.",
+     "Ling Shu, Ch. 47", "\u201cThe meridians and collaterals transport blood and Qi to adjust Yin and "
+     "Yang, nourish tendons and bones, and improve joint function.\u201d"),
+    ("B. Resisting pathogens and reflecting symptoms and signs.",
+     "Ling Shu, Ch. 71", "\u201cWhen the lung and heart are involved in a pathogenic invasion, the "
+     "pathogenic Qi lingers in both elbows; when the liver is involved, it lingers in both axillae; when "
+     "the spleen is involved, it stays in both groins; when the kidney is involved, it stays in both "
+     "popliteal fossae.\u201d"),
+    ("C. Transmitting needling sensation and regulating deficiency and excess conditions.",
+     "Ling Shu, Ch. 5 / Ch. 9", "\u201cThe key point in acupuncture treatment is to know how to regulate "
+     "Yin and Yang.\u201d (Ch. 5)  /  \u201cAcupuncture treatment must aim at regulating the flow of "
+     "Qi.\u201d (Ch. 9)"),
+]
+
+# =========================================================================
+# WRITTEN SYLLABUS TABLE (Slide 8) - authoritative per project rules, and
+# overrides any verbal walkthrough. Captured in full for reference.
+# =========================================================================
+SYLLABUS_TABLE = [
+    # (Week, Lecture Contents, Quiz/Exam, Assignments)
+    ("1", "Introduction to Channels: History, Nomenclature, Distribution, Circulation & Function",
+     "-", "CAM p.1-68 \u00b7 MOA p.11-16"),
+    ("2", "Primary Meridians: LU & LI channels", "QUIZ 1 + Homework 1 (material from wk 1-2)",
+     "CAM p.66-68 \u00b7 MOA p.73-75, 95-99"),
+    ("3", "Primary Meridians: ST & SP channels", "QUIZ 2 + Homework 2 (material from wk 2-3)",
+     "CAM p.68-71 \u00b7 MOA p.125-129, 177-181"),
+    ("4", "Primary Meridians: HT & SI channels", "QUIZ 3 + Homework 3 (material from wk 3-4)",
+     "CAM p.69-74 \u00b7 MOA p.209-212, 227-230"),
+    ("5", "MIDTERM EXAM \u00b7 BL & KI channels", "MID TERM (material from wk 1-4)",
+     "CAM p.73-77 \u00b7 MOA p.251-256, 331-335"),
+    ("6", "PC, SJ (TE), GB, & LR channels", "QUIZ 4 + Homework 4",
+     "CAM p.77-82 \u00b7 MOA p.367-370, 387-390, 417-421, 469-472"),
+    ("7", "Eight Extraordinary Meridians", "QUIZ 5 + Homework 5 (material from wk 6-7)",
+     "CAM p.82-89 \u00b7 MOA p.17-25, 495-497, 529-533"),
+    ("8", "Additional Channels/Regions: 12 Muscle/Sinew channels, 15 collaterals, 12 cutaneous "
+     "regions, 12 Divergent Channels", "QUIZ 6 (material from wk 7)",
+     "CAM p.88-114 \u00b7 MOA p.16-17, 26-28 + intro to all 12 Primary Meridians"),
+    ("9", "Acupuncture Points: General Functions and Categories", "-", "CAM p.115-134 \u00b7 MOA p.29-55"),
+    ("10", "COMPREHENSIVE FINAL EXAMINATION", "Final Exam (material from wk 1-9)", "Prepare for Final Exam"),
+]
+
+GRADING_CRITERIA = [
+    ("Homework (5 total)", "4% each", "20%", "CLO 2-5"),
+    ("Quizzes (6 total)", "5% each", "30%", "CLO 1-5"),
+    ("Midterm", "-", "20%", "CLO 1-5"),
+    ("Final Exam", "-", "30%", "CLO 1-5"),
+]
+GRADING_SOURCE_NOTE = (
+    "Verified directly from the written syllabus table (Slide 8), which is the authoritative source "
+    "and overrides Dr. Zhang's verbal walkthrough of grading during Week 1 lecture. Attendance is a "
+    "separate pass/fail-style requirement (per the syllabus text portion): a minimum attendance rate is "
+    "required or a grade of F is assigned; each unexcused absence beyond the allowed count requires a "
+    "500-word written explanation to avoid losing attendance credit."
+)
+QUIZ1_SCOPE_NOTE = (
+    "IMPORTANT: per the syllabus table, Quiz 1 (Week 2) covers material from BOTH Week 1 (Channel "
+    "Theory) AND Week 2 (LU & LI channels) - not Week 1 content alone. Per Slide 41, Quiz 1 itself is "
+    "5 questions worth 100 points total, plus 1 bonus question worth 20 points (6 questions, 120 points "
+    "possible). This Week 1 material is necessary but not sufficient prep for Quiz 1 - pair it with the "
+    "Week 2 LU/LI materials before that quiz."
+)
+
 QUIZ1_FUNDAMENTALS = dict(
     key_terms=[
         "Channel (Jing-Luo) = Meridians + Collaterals (the whole system)",

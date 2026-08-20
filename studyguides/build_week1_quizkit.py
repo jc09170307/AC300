@@ -209,9 +209,41 @@ QUIZ1_PRACTICE = [
     ("Which statement correctly distinguishes 'meridians' from 'collaterals' as Dr. Zhang described them?",
      ["Meridians are superficial branches; collaterals run deep like a river", "Meridians run deep like a river; collaterals are more superficial branches spreading from Luo-connecting points", "There is no functional distinction - the terms are interchangeable in all contexts", "Collaterals outnumber meridians 20 to 12"], "B",
      "Dr. Zhang's river/branch metaphor: meridians (Jing) run deep like a river; collaterals (Luo) are the more superficial branches, spreading from each meridian's Luo-connecting point.", "hard"),
+
+    # ---- NEW: History, Syllabus/Grading, Ling Shu citations, Classification (Q31-40) ----
+    ("Per the Mawangdui Silk Manuscripts (excavated from a Western Han Dynasty tomb), which was discovered/recorded first?",
+     ["The acupuncture points", "The channel pathways", "Both simultaneously", "Neither - they appear only in the Huangdi Neijing"], "B",
+     "The silk manuscripts describe channel pathways without yet referencing specific points - channels came first, then points.", "medium"),
+    ("Which classical text formally established the Meridian System as composed primarily of the 12 Primary Meridians?",
+     ["The Shang Han Lun", "The Huangdi Neijing (Yellow Emperor's Inner Canon)", "The Ben Cao Gang Mu", "The Nan Jing alone"], "B",
+     "The Huangdi Neijing (read as Su Wen + Ling Shu) marks the formation of acupuncture theory and establishes the 12 Primary Meridian system.", "medium"),
+    ("Per the written syllabus table (Slide 8), what percentage of the final grade do the 6 quizzes contribute IN TOTAL?",
+     ["20%", "24%", "30%", "36%"], "C",
+     "Quizzes are 5% each x 6 quizzes = 30% of the total grade. Homework is 4% each x 5 = 20%; Midterm 20%; Final 30%.", "medium"),
+    ("True or False: Quiz 1 (given in Week 2) covers ONLY the Week 1 Channel Theory material.",
+     ["True - Quiz 1 is Week 1 content exclusively", "False - Quiz 1 covers Week 1 AND Week 2 (LU/LI) material together", "True - but only if you attended Week 1 live", "False - Quiz 1 covers Weeks 1 through 4"], "B",
+     "Per the syllabus table, Quiz 1's material spans Week 1-2 - Channel Theory foundations PLUS the LU/LI channels taught in Week 2.", "hard"),
+    ("Per Ling Shu Chapter 71 (cited directly on Dr. Zhang's slide), pathogenic Qi that invades via the SPLEEN tends to linger where?",
+     ["Both elbows", "Both axillae (armpits)", "Both groins", "Both popliteal fossae (backs of knees)"], "C",
+     "Ling Shu Ch. 71: lung/heart invasion lingers in both elbows; liver in both axillae; SPLEEN in both groins; kidney in both popliteal fossae.", "hard"),
+    ("Which classical citation supports the meridians' 'Transporting' function (Function A)?",
+     ["Ling Shu, Chapter 47", "Ling Shu, Chapter 71", "Ling Shu, Chapter 5", "Ling Shu, Chapter 9"], "A",
+     "Ling Shu Ch. 47: meridians/collaterals transport blood and Qi to adjust Yin-Yang and nourish tendons and bones - the Transporting function.", "hard"),
+    ("On Dr. Zhang's classification tree (Slide 21), the 12 Primary Meridians branch outward into which set of structures (among others)?",
+     ["Only the 8 Extraordinary Vessels", "The 15 Collaterals, 12 Divergent Meridians, 12 Muscle Regions, and 12 Cutaneous Regions", "Only acupuncture points", "Only the Zang-Fu organs directly"], "B",
+     "The full classification tree branches the 12 Primary Meridians into Collaterals, Divergent Meridians, Muscle/Sinew Regions, and Cutaneous Regions, with the 8 Extraordinary Vessels as a separate reservoir system.", "hard"),
+    ("On the 'Meridians vs. Collaterals' comparison table, which column is described as 'Leading - the pathways through which Qi and Blood circulate'?",
+     ["Collaterals (Luomai)", "Meridians (Jingmai)", "Both equally", "Neither - that describes the Extraordinary Vessels"], "B",
+     "Meridians (Jingmai) are the 'leading' pathway - deep, trunk-like, few in number, through which Qi and Blood actually circulate. Collaterals are the shallower, branching network.", "medium"),
+    ("On the Three Main Circuits master diagram (Slide 37), what is the complete circulation loop shown across all three circuits?",
+     ["Chest -> Hands/Fingers -> Face/Head -> Foot/Toes -> Chest", "Head -> Chest -> Hands -> Foot -> Head", "Hands -> Chest -> Head -> Chest -> Foot", "Foot -> Head -> Hands -> Chest -> Foot"], "A",
+     "The master diagram shows one continuous loop: Chest -> Hands/Fingers -> Face/Head -> Foot/Toes -> back to Chest, repeating across all three circuits.", "medium"),
+    ("Per the written syllabus (Slide 8), which CAM and MOA page ranges are assigned reading for Week 1?",
+     ["CAM p.1-68, MOA p.11-16", "CAM p.66-68, MOA p.73-99", "CAM p.115-134, MOA p.29-55", "CAM p.82-89, MOA p.17-25"], "A",
+     "Week 1's assigned reading is CAM p.1-68 and MOA p.11-16, per the written syllabus table.", "hard"),
 ]
 
-assert len(QUIZ1_PRACTICE) == 30
+assert len(QUIZ1_PRACTICE) == 40
 
 # ============================================================
 # COVER PAGE
@@ -266,7 +298,10 @@ y -= 16
 c.drawString(ML + 6, y, "10 trap/nuance questions (exceptions, EXCEPT format, exact terminology)")
 c.drawRightString(W - MR, y, "Q21-Q30")
 y -= 16
-c.drawString(ML + 6, y, "Full answer key with explanations for all 30")
+c.drawString(ML + 6, y, "10 NEW: history, syllabus/grading, classical citations, classification tree")
+c.drawRightString(W - MR, y, "Q31-Q40")
+y -= 16
+c.drawString(ML + 6, y, "Full answer key with explanations for all 40")
 c.drawRightString(W - MR, y, "at the back")
 
 y -= 30
@@ -309,7 +344,7 @@ setfill(CREAM); c.rect(ML - 4, y - 40, CW + 8, 40, fill=1, stroke=0)
 setstroke(GOLD); c.setLineWidth(2.2)
 c.line(ML - 4, y - 40, ML - 4, y)
 setfill(RED); c.setFont("Lora-Italic", 9.5)
-c.drawString(ML + 6, y - 16, "30 questions, 10 easy + 10 medium + 10 hard - covers Week 1 channel theory comprehensively.")
+c.drawString(ML + 6, y - 16, "40 questions, 30 core + 10 new (history/syllabus/citations) - covers Week 1 comprehensively.")
 setfill(GRAY); c.setFont("Lora-Italic", 9)
 c.drawString(ML + 6, y - 30, "Cross-checked against the Week 1 Study Guide's verified content - nothing invented.")
 
@@ -323,10 +358,27 @@ end_page()
 # ============================================================
 # QUESTION PAGES
 # ============================================================
+def estimate_card_height(q, opts):
+    q_lines = wrap_words(q, "Lora", 10.3, CW - 60)
+    col_gap = 14
+    col_w = (CW - 30 - col_gap) / 2
+    labeled = [f"A. {opts[0]}", f"B. {opts[1]}", f"C. {opts[2]}", f"D. {opts[3]}"]
+    wrapped = [wrap_words(o, "Lora", 9.6, col_w) for o in labeled]
+    row_lines = [max(len(wrapped[0]), len(wrapped[1])), max(len(wrapped[2]), len(wrapped[3]))]
+    opt_h = sum(row_lines) * 12.2
+    return len(q_lines) * 13 + opt_h + 20 + 10  # +10 for the gap after the card
+
+
 def question_card(y, num, q, opts, diff):
     q_lines = wrap_words(q, "Lora", 10.3, CW - 60)
-    opt_lines = [(f"A. {opts[0]}", f"B. {opts[1]}"), (f"C. {opts[2]}", f"D. {opts[3]}")]
-    card_h = len(q_lines) * 13 + len(opt_lines) * 13 + 16
+    col_gap = 14
+    col_w = (CW - 30 - col_gap) / 2
+    opt_font = 9.6
+    labeled = [f"A. {opts[0]}", f"B. {opts[1]}", f"C. {opts[2]}", f"D. {opts[3]}"]
+    wrapped = [wrap_words(o, "Lora", opt_font, col_w) for o in labeled]
+    row_lines = [max(len(wrapped[0]), len(wrapped[1])), max(len(wrapped[2]), len(wrapped[3]))]
+    opt_h = sum(row_lines) * 12.2
+    card_h = len(q_lines) * 13 + opt_h + 20
     tint = DIFF_TINT[diff]
     setfill(tint); c.rect(ML - 4, y - card_h, CW + 8, card_h, fill=1, stroke=0)
     setfill(DIFF_COLOR[diff]); c.circle(ML + 12, y - 13, 9, fill=1, stroke=0)
@@ -337,12 +389,18 @@ def question_card(y, num, q, opts, diff):
     for l in q_lines:
         c.drawString(ML + 30, yy, l)
         yy -= 13
-    setfill(DARK); c.setFont("Lora", 9.6)
-    col2 = ML + CW / 2
-    for left, right in opt_lines:
-        c.drawString(ML + 30, yy, left)
-        c.drawString(col2, yy, right)
-        yy -= 13
+    yy -= 3
+    setfill(DARK); c.setFont("Lora", opt_font)
+    col2 = ML + 30 + col_w + col_gap
+    for pair_idx, (li, ri) in enumerate([(0, 1), (2, 3)]):
+        row_top = yy
+        yl = row_top
+        for l in wrapped[li]:
+            c.drawString(ML + 30, yl, l); yl -= 12.2
+        yr = row_top
+        for l in wrapped[ri]:
+            c.drawString(col2, yr, l); yr -= 12.2
+        yy = row_top - row_lines[pair_idx] * 12.2
     return y - card_h - 10
 
 
@@ -352,7 +410,7 @@ y = H - 46
 y = section_bar(y, "Questions 1-15", SET_LABEL, NAVY, size=14)
 for i in range(15):
     q, opts, correct, expl, diff = QUIZ1_PRACTICE[i]
-    needed_est = 70
+    needed_est = estimate_card_height(q, opts)
     if y - needed_est < 45:
         end_page()
         new_page()
@@ -366,12 +424,26 @@ y = H - 46
 y = section_bar(y, "Questions 16-30", SET_LABEL, NAVY, size=14)
 for i in range(15, 30):
     q, opts, correct, expl, diff = QUIZ1_PRACTICE[i]
-    needed_est = 70
+    needed_est = estimate_card_height(q, opts)
     if y - needed_est < 45:
         end_page()
         new_page()
         y = H - 46
         y = section_bar(y, "Questions 16-30 (continued)", SET_LABEL, NAVY, size=14)
+    y = question_card(y, i + 1, q, opts, diff)
+end_page()
+
+new_page()
+y = H - 46
+y = section_bar(y, "Questions 31-40  \u2014  New: History, Syllabus, Citations", SET_LABEL, NAVY, size=13)
+for i in range(30, 40):
+    q, opts, correct, expl, diff = QUIZ1_PRACTICE[i]
+    needed_est = estimate_card_height(q, opts)
+    if y - needed_est < 45:
+        end_page()
+        new_page()
+        y = H - 46
+        y = section_bar(y, "Questions 31-40 (continued)", SET_LABEL, NAVY, size=13)
     y = question_card(y, i + 1, q, opts, diff)
 end_page()
 
@@ -381,7 +453,7 @@ end_page()
 # ============================================================
 new_page()
 y = H - 46
-y = section_bar(y, "Answer Key  -  All 30 Questions", "score, then re-drill only the misses", NAVY, size=14)
+y = section_bar(y, "Answer Key  -  All 40 Questions", "score, then re-drill only the misses", NAVY, size=14)
 
 for i, (q, opts, correct, expl, diff) in enumerate(QUIZ1_PRACTICE, 1):
     q_lines = wrap_words(q, "Lora-Bold", 9.6, CW - 40)
