@@ -77,7 +77,8 @@ GV = dict(
     ],
     pathology=["Stiffness and pain along the spinal column", "Heavy sensation in the head",
                "Vertigo and shaking", "Mental disorders", "Fever"],
-    figure="CAM_GV",
+    figure="VESSEL_GV",
+    figure_source="Lecture_7vivian11_12.pdf, slide 17 (Dr. Zhang)",
     confluent_location="Ulnar side of the hand, just behind the head of the 5th metacarpal bone, at the junction of the palm and dorsal skin.",
     mnemonic="GV runs the length of the spine and ends at the nose -- think \u201cspine to face, yang runs the race.\u201d Its confluent point Houxi (SI 3) sits on the SAME side of the hand as the vessel's posterior course, which is why it treats spinal stiffness so directly.",
 )
@@ -104,7 +105,8 @@ CV = dict(
     ],
     pathology=["Pathology of the yin channels (esp. Liver + Kidney)", "Infertility",
                "Disorders of the urogenital system", "Irregular menstruation", "Abdominal pain"],
-    figure=None,
+    figure="VESSEL_CV",
+    figure_source="Lecture_7vivian11_12.pdf, slide 25 (Dr. Zhang)",
     confluent_location="Radial (thumb) side of the forearm, about 1.5 cun above the transverse wrist crease.",
     mnemonic="CV is GV's mirror image: anterior midline instead of posterior, sea of YIN instead of yang. Its confluent point Lieque (LU 7) doubles as the Lung Luo-Connecting point -- one point, two jobs, which is why it's so often chosen for throat/chest complaints tied to yin-channel patterns.",
 )
@@ -131,7 +133,8 @@ CHONG = dict(
         "Confluent point Gongsun (SP 4) is also the Luo-Connecting point of the Spleen meridian",
     ],
     pathology=["Gynecological disorders", "Male urological disease / male infertility", "Abdominal pain"],
-    figure=None,
+    figure="VESSEL_CHONG",
+    figure_source="Lecture_7vivian11_12.pdf, slide 34 (Dr. Zhang)",
     confluent_location="Medial side of the foot, in front of and below the base of the 1st metatarsal bone.",
     mnemonic="Chong shares its very first station (CV1 Huiyin) with GV and CV -- \u201cone source, three branches\u201d -- then runs the length of the trunk right beside the Kidney meridian. Three \u201csea\u201d titles (12 meridians / blood / zang-fu organs) makes it the single most powerful of the 8 vessels for constitutional/gynecological work.",
 )
@@ -154,7 +157,8 @@ DAI = dict(
         "Structurally unique: horizontal, not vertical -- no true \u201csea\u201d title in the lecture",
     ],
     pathology=["Fullness in the abdomen", "Irregular menstruation", "Pain in the lumbar region"],
-    figure=None,
+    figure="VESSEL_DAI",
+    figure_source="Lecture_7vivian11_12.pdf, slide 41 (Dr. Zhang)",
     confluent_location="Dorsum of the foot, near the proximal end of the 4th toe.",
     mnemonic="Dai is the odd one out geometrically -- picture a literal belt cinched around the waist at GB 26/27/28, binding every vertical vessel and meridian that passes through it. No course to trace top-to-bottom, just a horizontal loop -- which is exactly why \u201cwaist pain with no clear up/down direction\u201d points here.",
 )
@@ -179,7 +183,8 @@ YANG_QIAO = dict(
     ],
     pathology=["Diseases of the eyes", "Tightness/spasm of lateral lower-leg muscles (seizures, paralysis)",
                "Pain and stiffness in the lumbar region"],
-    figure=None,
+    figure="VESSEL_YANG_QIAO",
+    figure_source="Lecture_7vivian11_12.pdf, slide 47 (Dr. Zhang)",
     confluent_location="Directly below the external malleolus, in a depression between BL 60 and BL 62's landmark bony structures.",
     mnemonic="Yang Qiao = LATERAL heel to LATERAL/posterior head, ending by merging into GB. Pairs with Du Mai (both \u201cyang\u201d) via Houxi + Shenmai. Remember the function split with its Yin partner: Yang Qiao keeps you UP and moving; Yin Qiao brings you DOWN to rest.",
 )
@@ -203,7 +208,8 @@ YIN_QIAO = dict(
     ],
     pathology=["Diseases of the eyes", "Tightness/spasm of medial lower-leg muscles (seizures, paralysis)",
                "Lower abdominal pain"],
-    figure=None,
+    figure="VESSEL_YIN_QIAO",
+    figure_source="Lecture_7vivian11_12.pdf, slide 53 (Dr. Zhang)",
     confluent_location="Directly below the medial malleolus, in the depression at the posterior aspect of the navicular bone (this IS the confluent point -- KI 6 is also the vessel's starting point).",
     mnemonic="Yin Qiao = MEDIAL heel to the inner canthus, merging into Bladder/Yang Qiao at the eye. The two Heel vessels literally meet at the inner canthus -- that shared meeting point is why both show up on \u201ceye disease\u201d pathology lists. Yin Qiao's job: calm, rest, sleep.",
 )
@@ -230,7 +236,8 @@ YANG_WEI = dict(
     ],
     pathology=["Chills and fever, vertigo", "Muscular fatigue, stiffness, and pain",
                "Pain and distension in the waist"],
-    figure=None,
+    figure="VESSEL_YANG_WEI",
+    figure_source="Lecture_7vivian11_12.pdf, slide 60 (Dr. Zhang)",
     confluent_location="Back of the forearm, two finger-widths above the wrist crease, between the radius and ulna.",
     mnemonic="Yang Wei runs UP the lateral body from the heel, gathers nearly the whole GB channel along the head (GB13-20) before merging into Du Mai -- \u201cdominates the exterior.\u201d Waiguan (SJ 5) pairs with Zulinqi (GB 41, Dai Mai) -- both vessels patrol the lateral/exterior body, which is why the pairing treats lateral-body and febrile-exterior patterns.",
 )
@@ -253,7 +260,8 @@ YIN_WEI = dict(
         "Joint function with Yang Wei: regulates qi flow and maintains yin-yang equilibrium",
     ],
     pathology=["Chest pain", "Waist pain", "Hard lumps in the upper abdomen"],
-    figure=None,
+    figure="VESSEL_YIN_WEI",
+    figure_source="Lecture_7vivian11_12.pdf, slide 67 (Dr. Zhang)",
     confluent_location="Two finger-widths above the wrist crease, on the inner (palmar) forearm, between the two tendons.",
     mnemonic="Yin Wei runs UP the medial body from KI 9, crosses SP and LR points on its way to the chest, then merges into Ren Mai at the neck -- \u201cdominates the interior.\u201d Neiguan (PC 6) pairs with Gongsun (SP 4, Chong Mai) -- the single most-used confluent pairing in clinic for chest, stomach, and heart complaints (deep-breathing + bilateral pressure, per Dr. Zhang's demonstration).",
 )

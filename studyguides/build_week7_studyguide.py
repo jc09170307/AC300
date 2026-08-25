@@ -65,9 +65,12 @@ def vessel_page(vessel):
     # LEFT: course + first/last points
     ly = section_label(c, y, "Running Course", accent, x=left_x)
     if vessel["figure"]:
-        ly = draw_image_contain(c, vessel["figure"], left_x, ly, col_w, 300, accent)
+        ly = draw_image_contain(c, vessel["figure"], left_x, ly, col_w, 380, accent)
         setfill(c, GRAY); c.setFont("Lora-Italic", 7.3)
-        c.drawCentredString(left_x + col_w / 2, ly - 11, f"CAM Color Fig. \u2014 {vessel['name']}")
+        c.drawCentredString(left_x + col_w / 2, ly - 11, f"Lecture Fig. \u2014 {vessel['name']}")
+        ly -= 10
+        setfill(c, LGRAY); c.setFont("Lora-Italic", 6.6)
+        c.drawCentredString(left_x + col_w / 2, ly - 9, vessel.get("figure_source", ""))
         ly -= 22
         ly = section_label(c, ly, "Course Summary", accent, size=8.5, x=left_x)
         for step in vessel["course"]:
