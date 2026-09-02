@@ -95,7 +95,11 @@ y = draw_paragraph(c,
     "They are the clinical \u201copening\u201d points used to access that vessel's function, and they pair up "
     "into 4 \u201cmaster-couple\u201d combinations used together in treatment.",
     ML, y, CW, size=9.3, leading=12.5)
-y -= 14
+y -= 8
+setfill(c, GOLD_DARK); c.setFont("Lora-Italic", 7.8)
+from wk7_content import CONFLUENT_POINTS_MOA_NOTE
+y = draw_paragraph(c, CONFLUENT_POINTS_MOA_NOTE, ML, y, CW, font="Lora-Italic", size=7.8, leading=10)
+y -= 6
 
 for pair_name, master, couple, note in CONFLUENT_PAIRS:
     box_h = 56

@@ -189,7 +189,7 @@ studyguide_cover(
     ],
     info_lines=[
         "QUIZ 5 (this week) covers: the Eight Extraordinary Vessels + cumulative Middle Circuit review.",
-        f"{READING_ASSIGNMENT}",
+        "CAM p.82-89, 275-293  |  MOA p.17-25, 493-497, 527-533 (verified vs. physical copies)",
         "Slides: Dr. Vivian Zhang, Lecture_7vivian11_12.pdf (76 slides)",
     ],
 )

@@ -24,7 +24,13 @@ ACCENT_DAI = (0.16, 0.44, 0.46)        # slate teal -- the horizontal vessel
 ACCENT_QIAO = (0.20, 0.48, 0.27)       # green -- Heel vessels
 ACCENT_WEI = (0.45, 0.30, 0.55)        # muted purple -- Link vessels
 
-READING_ASSIGNMENT = "CAM p.82-89  |  MOA p.17-25, 495-497, 529-533 (per written syllabus, Week 7)"
+READING_ASSIGNMENT = "CAM p.82-89, 275-293  |  MOA p.17-25, 493-497, 527-533 (per written syllabus, Week 7; page ranges verified against physical CAM/MOA copies -- CAM 275=GV points, 287=CV points, added to the syllabus's original theory-only pg.82-89 range so the actual point locations are covered too)"
+CONFLUENT_POINTS_MOA_NOTE = (
+    "MOA also has a dedicated \u201cConfluent points of the eight extraordinary "
+    "channels\u201d section at p.45 -- directly on-topic for this week's Decoder "
+    "but not in the original syllabus range. Not required, but worth asking "
+    "Dr. Zhang whether it should be."
+)
 
 # One-source-three-branches vessels (Du, Ren, Chong) all arise in the lower
 # abdomen and share the perineum (Huiyin) as a common meeting area.

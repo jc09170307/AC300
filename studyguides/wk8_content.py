@@ -28,6 +28,16 @@ FLAGGED DISCREPANCIES (not silently resolved):
     verified slide-deck material (Dr. Zhang's own slides, not a third-party
     source) but flagged as NOT YET LIVE-LECTURED -- treat as read-ahead /
     self-study material, not confirmed-by-live-walkthrough content.
+  - RESOLVED (2026-09-02): Slide 85's MOA citation "p.16-17, 26-28" was
+    checked against physical CAM/MOA copies (photographed TOC pages) and is
+    CORRECT -- MOA pg.16 = twelve divergent channels, pg.26 = Luo-connecting/
+    sinew/minute collaterals, pg.27 = twelve cutaneous regions. This part of
+    the flag is lifted. The CAM citation "p.88-114" was NOT correct -- real
+    range is CAM p.93-118 (IV. Divergent Meridians + Fifteen Collaterals,
+    starting p.93; V. Muscle Regions + Cutaneous Regions, ending p.118; p.88
+    belongs to Week 7's Eight Extra Meridians theory section instead). The
+    "intro to 12 Primary Meridians" phrasing and the Quiz2/Homework2 text
+    remain flagged as stale template leftovers.
 """
 
 NAVY = (0.114, 0.227, 0.369)
@@ -48,11 +58,14 @@ ACCENT_SINEW = (0.45, 0.30, 0.55)        # muted purple -- 12 Muscle/Sinew Regio
 ACCENT_CUTANEOUS = (0.35, 0.35, 0.35)    # kept distinct via LBLUE tint boxes, not flat gray, in layout
 
 READING_NOTE = (
-    "Written-syllabus Week 8 reading entry not available in project files "
-    "(flagged, not verified). Slide 85 lists MOA p.16-17, 26-28 + intro to "
-    "the 12 Primary Meridians and CAM p.88-114 under \u201cFor Next Week,\u201d but "
-    "this appears to be recycled template text (see discrepancy note in "
-    "wk8_content.py) -- confirm with Dr. Zhang before treating as assigned."
+    "Written-syllabus Week 8 reading entry not available in project files. "
+    "Verified against physical CAM/MOA copies: MOA p.16-17 (twelve divergent "
+    "channels) + p.26-28 (Luo-connecting/sinew/cutaneous regions) -- CONFIRMED "
+    "correct. CAM p.93-118 (IV. Divergent Meridians + Fifteen Collaterals; "
+    "V. Muscle Regions + Cutaneous Regions) -- CORRECTED from slide 85's "
+    "\u201cp.88-114,\u201d which bled into Week 7's territory and cut off before the "
+    "Cutaneous Regions section finished. Still no written-syllabus entry to "
+    "cross-check against; confirm with Dr. Zhang before treating as final."
 )
 
 HOMEWORK_QUIZ_NOTE = (
