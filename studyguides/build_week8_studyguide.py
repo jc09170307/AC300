@@ -243,6 +243,43 @@ y = draw_paragraph(c, "This is exactly the \u201cone point, multiple jobs\u201d 
 db.end_page()
 
 # ============================================================
+# PAGES: COLLATERAL PATHWAY DIAGRAMS -- Dr. Zhang's own lecture figures,
+# one per meridian (slides 19-20, 29-30, 39-40, 47-48, 58-59, 66-67)
+# ============================================================
+
+def collateral_diagram_page(title, abbrs, slide_note):
+    db.new_page()
+    y = page_title(title, ACCENT_LUO)
+    col_w = (CW - 16) / 2
+    cell_h = 218
+    for i, abbr in enumerate(abbrs):
+        luo = next(l for l in LUO_POINTS if l["abbr"] == abbr)
+        col, row = i % 2, i // 2
+        x0 = ML + col * (col_w + 16)
+        y0 = y - row * (cell_h + 10)
+        draw_image_contain(c, f"LUO_{abbr}", x0, y0, col_w, 190, luo["accent"])
+        setfill(c, NAVY); c.setFont("Lora-Bold", 10)
+        c.drawCentredString(x0 + col_w / 2, y0 - 202, f"{_short_name(luo['meridian'])} ({abbr})")
+        setfill(c, luo["accent"]); c.setFont("Lora-Bold", 8.6)
+        c.drawCentredString(x0 + col_w / 2, y0 - 215, luo["point"])
+    y -= 3 * (cell_h + 10) + 10
+    setfill(c, GRAY); c.setFont("Lora-Italic", 7.2)
+    draw_paragraph(c, slide_note, ML, y, CW, font="Lora-Italic", size=7.2, leading=9.4)
+    db.end_page()
+
+
+collateral_diagram_page(
+    "Collateral Pathway Diagrams -- Outer & Inner Circuit",
+    ["LU", "LI", "ST", "SP", "HT", "SI"],
+    "Lecture Fig. -- Lecture8vivian1119.pdf, slides 19-20 (LU/LI), 29-30 (ST/SP), 39-40 (HT/SI). Dr. Zhang.",
+)
+collateral_diagram_page(
+    "Collateral Pathway Diagrams -- Inner & Middle Circuit",
+    ["BL", "KI", "PC", "SJ", "GB", "LR"],
+    "Lecture Fig. -- Lecture8vivian1119.pdf, slides 47-48 (BL/KI), 58-59 (PC/SJ), 66-67 (GB/LR, self-study). Dr. Zhang.",
+)
+
+# ============================================================
 # PAGE: 15 COLLATERALS -- THE 3 EXTRA
 # ============================================================
 db.new_page()
@@ -508,18 +545,30 @@ def sinew_circuit_page(circuit_key, circuit_label):
     circ = next(cc for cc in CIRCUITS if cc["key"] == circuit_key)
     y = page_title(f"Muscle Regions -- {circuit_label}", circ["accent"])
     regions = SINEW_BY_CIRCUIT[circuit_key]
+    img_w = 108
     for s in regions:
-        bh = 70
+        bh = 88
+        text_w = CW - img_w - 26
         box(c, ML, y, CW, bh, tint(s["accent"], 0.9))
         setfill(c, s["accent"]); c.rect(ML, y - bh, 4, bh, fill=1, stroke=0)
         setfill(c, NAVY); c.setFont("Lora-Bold", 10)
         title_txt = s["meridian"] + (" [self-study]" if s.get("self_study") else "")
         c.drawString(ML + 14, y - 15, title_txt)
         setfill(c, GOLD_DARK); c.setFont("Lora-Bold", 7.8)
-        c.drawString(ML + 14, y - 28, "Binds at: " + s["binds"])
+        by = draw_paragraph(c, "Binds at: " + s["binds"], ML + 14, y - 28, text_w, font="Lora-Bold", size=7.8, leading=9.6)
         setfill(c, DARK); c.setFont("Lora", 7.9)
-        draw_paragraph(c, "Pathway: " + s["path"], ML + 14, y - 41, CW - 28, size=7.7, leading=10)
+        draw_paragraph(c, "Pathway: " + s["path"], ML + 14, by - 3, text_w, size=7.7, leading=10)
+        draw_image_contain(c, f"SINEW_{s['abbr']}", ML + CW - img_w, y - 4, img_w, bh - 8, s["accent"])
         y -= bh + 10
+    if circuit_key == "inner":
+        setfill(c, GRAY); c.setFont("Lora-Italic", 6.8)
+        draw_paragraph(c,
+            "Note: the source lecture slide for the Kidney diagram above is mistitled \u201cMuscle Region of "
+            "Foot Taiyang (Bladder)\u201d in Dr. Zhang's deck, but its body text and image content are the "
+            "Kidney muscle region -- a source-slide labeling error, flagged here rather than silently "
+            "corrected in the image itself. The text card is labeled correctly (Kidney).",
+            ML, y, CW, font="Lora-Italic", size=6.8, leading=8.8)
+        y -= 22
     db.end_page()
 
 

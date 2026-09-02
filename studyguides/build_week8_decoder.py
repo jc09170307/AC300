@@ -11,7 +11,7 @@ sys.path.insert(0, "/home/claude/ac300wk8")
 from common_wk8 import (DocBuilder, setfill, setstroke, box, hairline, draw_paragraph,
                          wrap_words, W, H, ML, MR, RX, CW, NAVY, GOLD, GOLD_DARK, RED,
                          LBLUE, DARK, GRAY, LGRAY, WHITE, CARD_BG, tint, EDITION, IS_RM,
-                         EDLABEL)
+                         EDLABEL, draw_image_contain)
 from wk8_content import (LUO_POINTS, LUO_EXTRA, LUO_DEFINITION, LUO_WHY_15_LOGIC,
                           LUO_FUNCTION, ACCENT_LUO)
 
@@ -131,6 +131,43 @@ y -= 10
 setfill(c, GRAY); c.setFont("Lora-Italic", 7.4)
 c.drawString(ML, y, "[self-study] = GB/LR collaterals were slide-deck content Dr. Zhang did not reach live.")
 db.end_page()
+
+# ============================================================
+# PAGES: Luo point pathway diagrams -- Dr. Zhang's own lecture figures
+# ============================================================
+
+def luo_diagram_page(title, abbrs, slide_note):
+    db.new_page()
+    y = title_bar(title, None)
+    y -= 6
+    col_w = (CW - 16) / 2
+    cell_h = 218
+    for i, abbr in enumerate(abbrs):
+        luo = next(l for l in LUO_POINTS if l["abbr"] == abbr)
+        col, row = i % 2, i // 2
+        x0 = ML + col * (col_w + 16)
+        y0 = y - row * (cell_h + 10)
+        draw_image_contain(c, f"LUO_{abbr}", x0, y0, col_w, 190, luo["accent"])
+        setfill(c, NAVY); c.setFont("Lora-Bold", 10)
+        c.drawCentredString(x0 + col_w / 2, y0 - 202, f"{_short(luo['meridian'])} ({abbr})")
+        setfill(c, luo["accent"]); c.setFont("Lora-Bold", 8.6)
+        c.drawCentredString(x0 + col_w / 2, y0 - 215, luo["point"])
+    y -= 3 * (cell_h + 10) + 10
+    setfill(c, GRAY); c.setFont("Lora-Italic", 7.2)
+    draw_paragraph(c, slide_note, ML, y, CW, font="Lora-Italic", size=7.2, leading=9.4)
+    db.end_page()
+
+
+luo_diagram_page(
+    "Luo Point Pathway Diagrams -- Outer & Inner Circuit",
+    ["LU", "LI", "ST", "SP", "HT", "SI"],
+    "Lecture Fig. -- Lecture8vivian1119.pdf, slides 19-20 (LU/LI), 29-30 (ST/SP), 39-40 (HT/SI). Dr. Zhang.",
+)
+luo_diagram_page(
+    "Luo Point Pathway Diagrams -- Inner & Middle Circuit",
+    ["BL", "KI", "PC", "SJ", "GB", "LR"],
+    "Lecture Fig. -- Lecture8vivian1119.pdf, slides 47-48 (BL/KI), 58-59 (PC/SJ), 66-67 (GB/LR, self-study). Dr. Zhang.",
+)
 
 # ============================================================
 # PAGE: Why 15 + Course details for the 3 extras
