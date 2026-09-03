@@ -458,7 +458,7 @@ bullets = [
     "San Jiao Meridian of Hand-Shaoyang (SJ1-SJ23) with MOA + CAM figures",
     "SJ5 opens the Yang Wei Mai (confluent, pairs with GB41)",
     "Gallbladder Meridian of Foot-Shaoyang (GB1-GB44) with MOA + CAM figures",
-    "GB crossing-point count flagged (12 on slide / 9 named) -- pending Dr. Zhang",
+    "GB has 12 crossing points across 6 meridians -- confirmed against the 2026 slide deck",
     "Liver Meridian of Foot-Jueyin (LR1-LR14) with MOA + CAM figures",
     "LR is the only channel reaching the vertex; LR3+LI4 'Four Gates' combination",
 ]

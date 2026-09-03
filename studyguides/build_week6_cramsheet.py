@@ -254,7 +254,7 @@ traps = [
     ("GB is the 3rd largest channel (44 pts) -- after BL (67) and ST (45). Don't confuse with SJ (23).", WOOD),
     ("GB21 is FORBIDDEN in pregnancy -- same trap category as LI4 and SP6.", WOOD),
     ("GB34 = He-Sea AND Hui-Meeting for Sinews/Tendons -- dual designation, easy to under-count on an exam.", WOOD),
-    ("GB crossing point count is UNRESOLVED (12 vs 9 named) -- if tested, defer to what Dr. Zhang confirms in class.", WOOD),
+    ("GB has 12 crossing points across 6 meridians (SJ, LR, PC, SI, ST, GV) -- confirmed against the 2026 slide deck.", WOOD),
     ("LR is the ONLY primary channel reaching the VERTEX (GV20) -- vertex headache = Liver channel.", WOOD),
     ("LR crosses IN FRONT of SP at 8 cun above the medial malleolus -- the one exception to the normal leg-Yin channel order.", WOOD),
     ("LR3 + LI4 = 'Four Gates' -- classic pairing to move Qi/Blood, taught this week.", WOOD),

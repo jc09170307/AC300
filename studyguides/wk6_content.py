@@ -60,7 +60,7 @@ GB_META = [
     ("He-Sea", "GB34 (also Hui-Meeting Sinews)"),
     ("Xi-Cleft", "GB36"),
     ("Confluent (opens EV)", "GB41 -- opens Dai Mai (Girdle Vessel), paired with SJ5"),
-    ("Crossing points", "12 on slide / only 9 named -- UNRESOLVED, flagged for Dr. Zhang"),
+    ("Crossing points", "12, across 6 meridians (SJ/TE, LR, PC, SI, ST, GV) -- confirmed against the 2026 slide deck, all 12 named"),
 ]
 
 LR_META = [
@@ -223,7 +223,7 @@ GB_FUNCTIONS = [
     "GB41 opens the Dai Mai (paired with SJ5) -- the only channel whose confluent point connects to an EV that encircles the waist",
     "Alternating fever and chills + bitter taste in the mouth = classic Shaoyang syndrome, specific to GB (transcript emphasized this repeatedly)",
     "GB21 is FORBIDDEN in pregnancy -- strong descending/labor-inducing action (matches GB's overall 'descending' channel character)",
-    "CONTENT FLAG: crossing points slide lists '12 points / 6 meridians' but only 9 points are actually named -- confirm with Dr. Zhang before quiz",
+    "GB has 12 crossing points across 6 meridians -- SJ/TE (Yifeng, Jiaosun, Erheliao), LR (Dadun, Zhangmen), PC (Tianchi), SI (Bingfeng, Tianrong, Tinggong), ST (Xiaguan, Touwei), GV (Dazhui); confirmed against the 2026 slide deck, resolving the earlier 9-named discrepancy",
 ]
 LR_FUNCTIONS = [
     "Governs the smooth flow of Qi throughout the body (Liver Qi stagnation is the most common TCM pattern taught from this channel)",
@@ -255,6 +255,7 @@ GB_CROSSING_DETAIL = [
     "GB21 Jianjing is a crossing point shared with SJ, ST, and is near GV14",
     "GB's zigzag head course crosses/shares territory with SJ around the ear repeatedly -- both are Shaoyang channels ('same finger of Doctor Bobo' rule from transcript)",
     "GB30 Huantiao is a crossing point shared with BL",
+    "All 12 GB crossing points by meridian (2026 slide deck, confirmed): SJ/TE -- Yifeng (SJ17), Jiaosun (SJ20), Erheliao (SJ22); LR -- Dadun (LR1), Zhangmen (LR13); PC -- Tianchi (PC1); SI -- Bingfeng (SI12), Tianrong (SI17), Tinggong (SI19); ST -- Xiaguan (ST7), Touwei (ST8); GV -- Dazhui (GV14)",
 ]
 LR_CROSSING_DETAIL = [
     "The SPLEEN channel crosses IN FRONT of LIVER at a point 8 cun above the medial malleolus (this is the exact quiz-style fact: 'which meridian crosses in front of LR at SP9' -> answer: Spleen) -- this is the ONE exception to the normal medial-leg Yin channel order (normally SP is anterior-most)",
@@ -349,6 +350,6 @@ QUIZ4_RECAP = [
 WEEK6_TALLY = {
     "PC": dict(points=9, element="Ministerial Fire", crossing=0),
     "SJ": dict(points=23, element="Ministerial Fire", crossing=10),
-    "GB": dict(points=44, element="Wood", crossing=12),  # per slide, though only 9 named -- flagged
+    "GB": dict(points=44, element="Wood", crossing=12),  # confirmed: all 12 named across 6 meridians (2026 deck)
     "LR": dict(points=14, element="Wood", crossing=6),
 }
