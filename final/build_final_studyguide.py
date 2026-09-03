@@ -3,6 +3,7 @@
 Usage: python3 build_final_studyguide_v2.py <print|remarkable>
 """
 import sys
+import os
 from reportlab.pdfgen import canvas
 from reportlab.lib.pagesizes import letter
 from reportlab.pdfbase import pdfmetrics
@@ -66,6 +67,13 @@ c = canvas.Canvas(OUT, pagesize=(W, H))
 ML, MR = (16, 16) if IS_MOBILE else (36, 36)
 CW = W - ML - MR
 page_num = [1]
+TOC_ENTRIES = []  # (title, page_number, indent_level) collected as the doc is built
+
+
+def toc_mark(title, indent=0):
+    """Call at the start of a major section to record it for the table of contents."""
+    TOC_ENTRIES.append((title, page_num[0], indent))
+
 
 # Font-size multiplier -- mobile uses noticeably larger absolute point sizes so
 # that "fit width" zoom on a phone is already comfortably readable.
@@ -523,6 +531,7 @@ else:
 # PAGE: WHAT DR. ZHANG SAID
 # =====================================================================
 new_page("What Dr. Zhang Said Is On The Final")
+toc_mark("What Dr. Zhang Said Is On The Final")
 y[0] = H - HEADER_H - 24
 section_bar("WHAT DR. ZHANG SAID IS ON THE FINAL", accent=RED, sub="Sourced directly from the Week 9 live transcript")
 for label, text in ZHANG_FINAL_FACTS:
@@ -533,6 +542,7 @@ end_page()
 # PAGE: MASTER PATHWAY TABLE + CIRCUITS
 # =====================================================================
 new_page("Master Pathway Table & The 3 Circuits")
+toc_mark("Master Pathway Table & Direction Rules")
 y[0] = H - HEADER_H - 24
 section_bar("MASTER PATHWAY TABLE -- ALL 12 PRIMARY MERIDIANS", accent=NAVY,
             sub="Dr. Zhang's #1 review emphasis")
@@ -549,18 +559,17 @@ mini_table(["Rule", "Direction"], DIRECTION_RULES, [0.34 * CW, 0.66 * CW], accen
 
 section_bar("HAND-OFF POINTS BETWEEN CIRCUITS", accent=GOLD)
 mini_table(["Transition", "Location", "Example"], HANDOFF_POINTS, [0.26 * CW, 0.17 * CW, 0.57 * CW], accent=GOLD, size=7.8)
-
-section_bar("THE THREE CIRCUITS, DETAILED", accent=NAVY)
-for name, pos, chain, poles, accent in CIRCUITS:
-    bullet(f"{name} ({pos})", f"{' -> '.join(chain)}   |   {poles}", accent=accent, size=8.3)
 end_page()
 
-# ---- PATHWAY DISTRIBUTION -- real lecture figures (now cropped to just the
-# diagram, no slide chrome), packed tightly with real explanatory text ----
+# ---- PATHWAY DISTRIBUTION -- WHERE each division sits on the body (Limbs,
+# Head/Trunk). Dropped the Qi-Flow-Direction and Circulation-Rules images
+# from this section since they just re-drew the Direction-of-Flow Rules
+# table above in picture form -- kept only the genuinely new spatial info. ----
 new_page("Pathway Distribution -- Lecture Figures")
+toc_mark("Pathway Distribution (Lecture Figures)")
 y[0] = H - HEADER_H - 24
 section_bar("PATHWAY DISTRIBUTION ON THE BODY -- LECTURE FIGURES", accent=GOLD,
-            sub="Visual support for the Direction-of-Flow Rules above")
+            sub="WHERE each division sits -- not just the flow order above")
 for fig_key, fig_title, accent, explain in [
     ("DIST_LIMBS", "Distribution on the Limbs", GOLD,
      "Medial aspect of the limbs = Yin meridians. Lateral aspect = Yang meridians. On the arm/leg cross-section: "
@@ -568,12 +577,6 @@ for fig_key, fig_title, accent, explain in [
     ("DIST_HEAD_TRUNK", "Distribution on the Head & Trunk", GOLD,
      "On the head and trunk the same 3-way split applies: Anterior = Yangming, Posterior = Taiyang, Lateral = "
      "Shaoyang. On the chest/abdomen specifically, the order from the midline outward is Shaoyin, Taiyin, Jueyin."),
-    ("DIST_QI_FLOW_DIRECTIONS", "Directions of Qi Flow", NAVY,
-     "Same 4 direction rules as the Master Pathway Table, shown on a body: Yin-of-hand runs chest->hand, "
-     "Yang-of-hand runs hand->head, Yang-of-foot runs head->foot, Yin-of-foot runs foot->abdomen."),
-    ("DIST_CIRCULATION_RULES", "Circulation of the 12 Meridians", NAVY,
-     "The full loop: 3 Yin-of-hand meridians (chest->hand) hand off to 3 Yang-of-hand (hand->head) hand off to "
-     "3 Yang-of-foot (head->foot) hand off to 3 Yin-of-foot (foot->abdomen->chest), closing the circuit."),
 ]:
     img_path = f"{FIGS}/{fig_key}.jpeg"
     iw, ih = img_size(img_path)
@@ -600,6 +603,7 @@ end_page()
 # ---- SIX DIVISIONS OVERVIEW -- Taiyin/Yangming/Shaoyin/Taiyang/Jueyin/Shaoyang
 # tied directly to the 3 circuits (Week 1 lecture deck) ----
 new_page("Six Divisions & The 3 Circuits -- Overview")
+toc_mark("Six Divisions & Circuit Diagrams")
 y[0] = H - HEADER_H - 24
 section_bar("SIX DIVISIONS -- TAIYIN/YANGMING/SHAOYIN/TAIYANG/JUEYIN/SHAOYANG", accent=NAVY,
             sub="How the six divisions map onto the 3 circuits")
@@ -676,6 +680,7 @@ def channel_page(abbr):
     cc = CHANNEL_CONTENT[abbr]
     # ---- PAGE A: ID card + Functions + Indications + Highest-Yield + Pearls (all on one dense page) ----
     new_page(f"{abbr} {d['name']} -- Full Reference")
+    toc_mark(f"{abbr} -- {d['name']}", indent=1)
     y[0] = H - HEADER_H - 24
     section_bar(f"{abbr} -- {d['name'].upper()}", accent=d['accent'],
                 sub=f"{d['n_points']} pts | {d['element']} | {d['polarity']} | {d['clock']} | {d['direction']}")
@@ -760,6 +765,7 @@ VESSEL_IMG_MAP = {
 }
 
 new_page("Eight Extraordinary Vessels")
+toc_mark("Eight Extraordinary Vessels")
 y[0] = H - HEADER_H - 24
 section_bar("EIGHT EXTRAORDINARY VESSELS", accent=EXTRA, sub="Week 7 -- confluent points started live in Week 9 review")
 
@@ -814,6 +820,7 @@ CONF_IMG_MAP = {
 }
 
 new_page("Confluent Point Pairings -- With Locations")
+toc_mark("Eight Confluent Points")
 y[0] = H - HEADER_H - 24
 section_bar("EIGHT CONFLUENT POINTS -- LOCATIONS", accent=TEAL, sub="Connect the 8 EVs to the 12 regular meridians")
 for a, b, opens, use, note in CONFLUENT_PAIRS_QUICK:
@@ -849,6 +856,7 @@ end_page()
 # 15 COLLATERALS
 # =====================================================================
 new_page("15 Collaterals (Luo-Connecting Points)")
+toc_mark("Meridians vs. Collaterals + 15 Collaterals")
 y[0] = H - HEADER_H - 24
 section_bar("MERIDIANS VS. COLLATERALS -- THE CONCEPTUAL DIFFERENCE", accent=AMBER_LUO,
             sub="Week 1 lecture deck")
@@ -877,6 +885,7 @@ end_page()
 # FIVE SHU MASTER TABLE
 # =====================================================================
 new_page("Five Shu (Transport) Points -- Master Table")
+toc_mark("Five Shu (Transport) Points -- Master Table")
 y[0] = H - HEADER_H - 24
 section_bar("FIVE SHU POINTS -- MASTER TABLE (60 POINTS)", accent=NAVY, sub="Week 9 -- all 12 meridians")
 para(FIVE_SHU_DEFINITION, size=8.3, color=GRAY)
@@ -900,6 +909,7 @@ end_page()
 # EXAM TRAPS
 # =====================================================================
 new_page("Exam Traps -- Consolidated \"Read These Last\"")
+toc_mark("Exam Traps -- Consolidated")
 y[0] = H - HEADER_H - 24
 section_bar("EXAM TRAPS -- CONSOLIDATED FROM EVERY WEEK", accent=RED,
             sub="Read this page last, right before the final")
@@ -911,10 +921,88 @@ end_page()
 # WEEKLY MAP
 # =====================================================================
 new_page("Course Map -- Weeks 1-10")
+toc_mark("Course Map -- Weeks 1-10")
 y[0] = H - HEADER_H - 24
 section_bar("COURSE MAP -- WEEKS 1-10", accent=GOLD, sub="Syllabus reference")
 mini_table(["Week", "Topic", "Notes"], WEEKLY_MAP, [0.11 * CW, 0.37 * CW, 0.52 * CW], accent=GOLD, size=8.0)
 end_page()
 
 c.save()
-print("SAVED:", OUT)
+print("SAVED (pre-TOC):", OUT)
+
+# =====================================================================
+# TABLE OF CONTENTS -- built after the fact (page numbers only known once
+# the whole document has been drawn), then spliced in right after the
+# cover using PyMuPDF.
+# =====================================================================
+import fitz as _fitz
+
+toc_path = OUT.replace(".pdf", "_TOC_TEMP.pdf")
+tc = canvas.Canvas(toc_path, pagesize=(W, H))
+
+
+def _tc_setfill(rgb): tc.setFillColorRGB(*rgb)
+def _tc_setstroke(rgb): tc.setStrokeColorRGB(*rgb)
+
+
+_tc_setfill(PAGE_BG); tc.rect(0, 0, W, H, fill=1, stroke=0)
+_tc_setfill(NAVY); tc.rect(0, H - HEADER_H, W, HEADER_H, fill=1, stroke=0)
+_tc_setfill(GOLD); tc.rect(0, H - HEADER_H, W, 3, fill=1, stroke=0)
+_tc_setfill((1, 1, 1)); tc.setFont("Lora-Bold", 12)
+tc.drawString(ML, H - HEADER_H + 15, "AC300 FINAL STUDY GUIDE")
+tc.setFont("Lora-Italic", 9.5)
+tc.drawRightString(W - ML, H - HEADER_H + 15, "Table of Contents")
+
+ty = H - HEADER_H - 34
+_tc_setfill(NAVY); tc.setFont("Lora-Bold", 15)
+tc.drawString(ML, ty, "TABLE OF CONTENTS")
+ty -= 8
+_tc_setstroke(NAVY); tc.setLineWidth(1.2)
+tc.line(ML, ty, ML + CW, ty)
+ty -= 22
+
+PAGE_OFFSET = 1  # inserting this ONE toc page shifts every recorded page number by 1
+for title, pnum, indent in TOC_ENTRIES:
+    shown_page = pnum + PAGE_OFFSET
+    x = ML + (16 if indent else 0)
+    fsize = 9.3 if indent else 10.5
+    font = "Lora" if indent else "Lora-Bold"
+    color = DARK if indent else NAVY
+    _tc_setfill(color); tc.setFont(font, fsize)
+    tc.drawString(x, ty, title)
+    tc.setFont("Lora", fsize)
+    _tc_setfill(GRAY)
+    num_str = str(shown_page)
+    num_w = pdfmetrics.stringWidth(num_str, "Lora", fsize)
+    dot_right = ML + CW - num_w - 4
+    title_w = pdfmetrics.stringWidth(title, font, fsize)
+    dot_start = x + title_w + 6
+    if dot_right > dot_start:
+        tc.setDash(1, 2)
+        tc.setLineWidth(0.6)
+        _tc_setstroke((0.75, 0.75, 0.75))
+        tc.line(dot_start, ty + 2, dot_right, ty + 2)
+        tc.setDash()
+    _tc_setfill(NAVY if not indent else GRAY)
+    tc.drawRightString(ML + CW, ty, num_str)
+    ty -= (18 if indent else 21)
+    if ty < 55:
+        break  # safety -- should never trigger with ~21 entries on one page
+
+_tc_setstroke(GOLD); tc.setLineWidth(HAIRLINE * 1.2)
+tc.line(ML, 34, W - ML, 34)
+_tc_setfill(GRAY); tc.setFont("Lora-Italic", 7.5)
+tc.drawCentredString(W / 2, 22, "AC300/AC375 Final Study Guide (Wk 1-9)  \u00b7  VUIM Summer 2026  \u00b7  Table of Contents")
+tc.save()
+
+# splice the TOC page into the main document right after the cover (page 1)
+main_doc = _fitz.open(OUT)
+toc_doc = _fitz.open(toc_path)
+main_doc.insert_pdf(toc_doc, start_at=1)  # insert after page index 0 (the cover)
+tmp_out = OUT.replace(".pdf", "_WITH_TOC_TEMP.pdf")
+main_doc.save(tmp_out)
+main_doc.close()
+toc_doc.close()
+os.remove(toc_path)
+os.replace(tmp_out, OUT)
+print("SAVED (with TOC):", OUT)
