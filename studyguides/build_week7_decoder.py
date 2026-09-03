@@ -8,7 +8,7 @@ included for continuity). Print + reMarkable."""
 import sys
 sys.path.insert(0, "/home/claude/ac300wk7")
 from common_wk7 import (DocBuilder, setfill, setstroke, box, hairline, draw_paragraph,
-                         wrap_words, W, H, ML, MR, RX, CW, NAVY, GOLD, GOLD_DARK, RED,
+                         wrap_words, draw_image_contain, W, H, ML, MR, RX, CW, NAVY, GOLD, GOLD_DARK, RED,
                          LBLUE, DARK, GRAY, LGRAY, WHITE, CARD_BG, tint, EDITION, IS_RM,
                          EDLABEL)
 from wk7_content import ALL_VESSELS, CONFLUENT_PAIRS, NO_ORGAN_NOTE
@@ -76,7 +76,7 @@ box_h = 50
 box(c, ML, y, CW, box_h, tint(GOLD, 0.88))
 setfill(c, DARK); c.setFont("Lora-Italic", 9)
 c.drawString(ML + 16, y - 18, "No new organ-based special points this week -- GV/CV/Chong/Dai/Qiao/Wei pertain to no zang-fu organ.")
-c.drawString(ML + 16, y - 32, "Confluent Points ARE the special-point content for Quiz 5.")
+c.drawString(ML + 16, y - 32, "Confluent Points ARE the special-point content for Quiz 6.")
 y -= box_h + 40
 setfill(c, GRAY); c.setFont("Lora-Italic", 9)
 c.drawCentredString(W / 2, 40, "Dr. Vivian Zhang, Ph.D.  |  Jon Centeno  |  D.AcHM Candidate  |  VUIM")
@@ -125,6 +125,50 @@ y = draw_paragraph(c,
     "yin pairs, Bladder/Gallbladder for the yang pairs).",
     ML, y, CW, font="Lora-Italic", size=8.6, leading=11)
 
+db.end_page()
+
+# ============================================================
+# PAGE: Confluent Points -- individual location cards (new, from
+# 2026AC300Lecture_8Vivian.pdf slides 8-9, real point diagrams)
+# ============================================================
+db.new_page()
+y = title_bar("Confluent Points \u2014 Location Cards", "New for this edition -- Dr. Zhang's own review slides")
+y -= 6
+
+from wk7_content import CONFLUENT_POINT_DETAIL
+point_order = ["SI 3  Houxi", "LU 7  Lieque", "SP 4  Gongsun", "GB 41  Zulinqi",
+               "KI 6  Zhaohai", "BL 62  Shenmai", "PC 6  Neiguan", "SJ 5  Waiguan"]
+
+col_w = (CW - 14) / 2
+card_h = 118
+for i, pt in enumerate(point_order):
+    d = CONFLUENT_POINT_DETAIL[pt]
+    col = i % 2
+    row = i // 2
+    x0 = ML + col * (col_w + 14)
+    yy = y - row * (card_h + 10)
+    box(c, x0, yy, col_w, card_h, tint(GOLD, 0.93))
+    img_w = 78
+    draw_image_contain(c, d["figure"], x0 + 6, yy - 6, img_w, card_h - 12, GOLD_DARK)
+    tx = x0 + img_w + 16
+    setfill(c, RED); c.setFont("Lora-Bold", 10.5)
+    c.drawString(tx, yy - 16, pt)
+    setfill(c, GRAY); c.setFont("Lora-Italic", 7.6)
+    c.drawString(tx, yy - 27, d["vessel"])
+    setfill(c, DARK); c.setFont("Lora-Bold", 7.4)
+    c.drawString(tx, yy - 41, "LOCATION")
+    setfill(c, DARK); c.setFont("Lora", 7.4)
+    ty = yy - 52
+    for ln in wrap_words(d["location"], "Lora", 7.4, col_w - img_w - 22):
+        c.drawString(tx, ty, ln); ty -= 9.6
+    ty -= 4
+    setfill(c, DARK); c.setFont("Lora-Bold", 7.4)
+    c.drawString(tx, ty, "KEY FUNCTIONS"); ty -= 10.5
+    setfill(c, DARK); c.setFont("Lora", 7.2)
+    for ln in wrap_words(d["functions"], "Lora", 7.2, col_w - img_w - 22):
+        c.drawString(tx, ty, ln); ty -= 9.4
+
+y -= 4 * (card_h + 10) - 10
 db.end_page()
 
 # ============================================================

@@ -75,7 +75,7 @@ cramsheet_cover(
         ("4 Confluent Pairs", RED, ["8 points total", "master-couple system"]),
         ("Zero Organs", NAVY, ["no zang/fu pertaining", "no interior-exterior pair"]),
     ],
-    extras_line="+ Confluent pairs table \u00b7 one-source-three-branches \u00b7 Quiz 5 MAINT review",
+    extras_line="+ Confluent pairs table \u00b7 one-source-three-branches \u00b7 Quiz 5 MAINT review \u00b7 Homework 5 rubric",
 )
 
 # ============================================================
@@ -172,6 +172,15 @@ for item in QUIZ5_REVIEW_TRANSCRIPT_ITEMS:
         c.drawString(ML + 4, y, ln)
         y -= 10.2
     y -= 1
+y -= 10
+
+from wk7_content import HOMEWORK5_NOTE
+y = block_header(y, "HOMEWORK 5  (new for this edition -- 2026 deck)", GOLD_DARK)
+y -= 3
+setfill(c, DARK); c.setFont("Lora", 7.8)
+for ln in wrap_words(HOMEWORK5_NOTE, "Lora", 7.8, CW - 8):
+    c.drawString(ML + 4, y, ln)
+    y -= 10.2
 
 db.end_page()
 db.save()

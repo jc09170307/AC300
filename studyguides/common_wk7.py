@@ -236,7 +236,7 @@ def cramsheet_cover(db, points_line, box_triplets, extras_line):
     c.drawCentredString(W / 2, y, points_line)
     y -= 15
     setfill(c, GOLD_DARK); c.setFont("Lora-BoldItalic", 10.5)
-    c.drawCentredString(W / 2, y, "Quiz Ready \u2014 Quiz 5")
+    c.drawCentredString(W / 2, y, "Quiz Ready \u2014 Quiz 6")
     y -= 20
     rule_w = 240
     hairline(c, (W - rule_w) / 2, y, (W + rule_w) / 2, rgb=GOLD, w=1.2)

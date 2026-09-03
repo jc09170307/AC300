@@ -98,3 +98,21 @@ MAINT_QUESTIONS = [
     dict(q="Where does the Gallbladder meridian of Foot-Shaoyang start and end?",
          answer="Starts at the outer canthus (GB 1 Tongziliao); ends at the tip of the 4th toe (GB 44 Zuqiaoyin)."),
 ]
+
+# ---------------------------------------------------------------------------
+# SECTION F -- Crossing-Point Review (Dr. Zhang's own Q1/Q2/Q3 end-of-lecture
+# questions, 2026 deck slides 68-71 -- new this edition)
+# ---------------------------------------------------------------------------
+CROSSING_POINT_QUESTIONS = [
+    dict(q="Which meridians intersect with the Governor Vessel at GV 14 (Dazhui)?",
+         answer="Large Intestine (Hand-Yangming), Small Intestine (Hand-Taiyang), Bladder (Foot-Taiyang), "
+                 "Triple Energizer/San Jiao (Hand-Shaoyang), and Gallbladder (Foot-Shaoyang)."),
+    dict(q="Which meridians pass through the supraclavicular fossa?",
+         answer="Large Intestine (Hand-Yangming), Stomach (Foot-Yangming), Small Intestine (Hand-Taiyang), "
+                 "Triple Energizer/San Jiao (Hand-Shaoyang), and Gallbladder (Foot-Shaoyang)."),
+    dict(q="Which meridians pass through the area surrounding the eyes, and how does each relate to the eye?",
+         answer="Stomach (ascends to the inner corner of the eye), Heart (connects to the \u201cEye System\u201d "
+                 "via the throat), Small Intestine (reaches both inner and outer canthus), Bladder (starts "
+                 "at the inner canthus, BL 1), Triple Energizer/San Jiao (terminates at the outer canthus), "
+                 "Gallbladder (starts at the outer canthus, GB 1), Liver (connects to the \u201cEye System,\u201d mu xi)."),
+]

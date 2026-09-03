@@ -166,6 +166,26 @@ def vessel_page(vessel):
         ly = draw_paragraph(c, f"{vessel['confluent_point']}: " + vessel["confluent_location"],
                              left_x, ly, col_w, size=8, leading=10.8)
 
+    # RIGHT column: additional branches (GV/CV/Chong only -- new from 2026 deck).
+    # Placed in the right column since the left column is already full for
+    # these vessels (real diagram + course summary + first/last + confluent loc).
+    if vessel.get("extra_branches"):
+        ry -= 14
+        ry = section_label(c, ry, "Additional Branches (per lecture reference table)", accent, x=right_x)
+        setfill(c, DARK); c.setFont("Lora", 7.8)
+        for b in vessel["extra_branches"]:
+            lines = wrap_words(b, "Lora", 7.8, col_w - 4)
+            for ln in lines:
+                c.drawString(right_x, ry, ln)
+                ry -= 10.2
+            ry -= 2
+        ry -= 2
+        src_lines = wrap_words(vessel["extra_branches_source"], "Lora-Italic", 6.8, col_w - 4)
+        setfill(c, LGRAY); c.setFont("Lora-Italic", 6.8)
+        for ln in src_lines:
+            c.drawString(right_x, ry, ln)
+            ry -= 9
+
     db.end_page()
 
 
@@ -188,7 +208,7 @@ studyguide_cover(
         "Two coalescent-point-count discrepancies flagged for Dr. Zhang (Yang Qiao, Yang Wei)",
     ],
     info_lines=[
-        "QUIZ 5 (this week) covers: the Eight Extraordinary Vessels + cumulative Middle Circuit review.",
+        "QUIZ 6 (next week) covers: the Eight Extraordinary Vessels + cumulative Middle Circuit review.",
         "CAM p.82-89, 275-293  |  MOA p.17-25, 493-497, 527-533 (verified vs. physical copies)",
         "Slides: Dr. Vivian Zhang, Lecture_7vivian11_12.pdf (76 slides)",
     ],
@@ -277,6 +297,77 @@ for pair_name, master, couple, note in CONFLUENT_PAIRS:
     setfill(c, GRAY); c.setFont("Lora-Italic", 8)
     ny = draw_paragraph(c, note, ML + 14, y - 44, CW - 24, font="Lora-Italic", size=8, leading=10.5)
     y -= box_h + 10
+
+db.end_page()
+
+# ============================================================
+# AREA SUPPLIED TABLE (new, from 2026 deck slide 65)
+# ============================================================
+db.new_page()
+y = H - 60
+setfill(c, NAVY); c.setFont("Lora-Bold", 15)
+c.drawString(ML, y, "Area Supplied by Each Vessel")
+y -= 10
+hairline(c, ML, y, RX, rgb=GOLD, w=1)
+y -= 8
+setfill(c, GRAY); c.setFont("Lora-Italic", 8.5)
+c.drawString(ML, y, "New for this edition -- from Dr. Zhang's 2026 slide deck, not in the original materials.")
+y -= 20
+from wk7_content import AREA_SUPPLIED
+for i, (name, area) in enumerate(AREA_SUPPLIED):
+    row_h = 22
+    tc = tint(NAVY, 0.93) if i % 2 == 0 else WHITE
+    setfill(c, tc); c.rect(ML, y - row_h, CW, row_h, fill=1, stroke=0)
+    setfill(c, DARK); c.setFont("Lora-Bold", 9.3)
+    c.drawString(ML + 10, y - 15, name)
+    setfill(c, GRAY); c.setFont("Lora", 9)
+    c.drawString(ML + 190, y - 15, area)
+    y -= row_h
+db.end_page()
+
+# ============================================================
+# CROSSING-POINT REVIEW (new, from 2026 deck Q1/Q2/Q3 slides)
+# ============================================================
+db.new_page()
+y = H - 60
+setfill(c, NAVY); c.setFont("Lora-Bold", 15)
+c.drawString(ML, y, "Crossing-Point Review Questions")
+y -= 10
+hairline(c, ML, y, RX, rgb=GOLD, w=1)
+y -= 8
+setfill(c, GRAY); c.setFont("Lora-Italic", 8.5)
+c.drawString(ML, y, "New for this edition -- Dr. Zhang's own end-of-lecture review questions (2026 deck).")
+y -= 22
+from wk7_content import CROSSING_POINT_QA, PERIOCULAR_TABLE
+for i, item in enumerate(CROSSING_POINT_QA):
+    setfill(c, RED); c.setFont("Lora-Bold", 10.5)
+    ql = wrap_words(f"Q{i+1}. {item['q']}", "Lora-Bold", 10.5, CW)
+    for ln in ql:
+        c.drawString(ML, y, ln); y -= 13
+    y -= 2
+    setfill(c, DARK); c.setFont("Lora", 8.8)
+    for a in item["answers"]:
+        c.drawString(ML + 10, y, "\u2022 " + a)
+        y -= 11.5
+    y -= 10
+
+y -= 4
+setfill(c, NAVY); c.setFont("Lora-Bold", 10.5)
+c.drawString(ML, y, "Q3 Detail -- Periocular Meridian Table")
+y -= 16
+for name, rel, desc in PERIOCULAR_TABLE:
+    lines = wrap_words(desc, "Lora", 7.8, CW - 308)
+    row_h = max(20, 10.4 * len(lines) + 6)
+    box(c, ML, y, CW, row_h, CARD_BG)
+    setfill(c, DARK); c.setFont("Lora-Bold", 8.2)
+    c.drawString(ML + 8, y - 12, name)
+    setfill(c, GRAY); c.setFont("Lora-Italic", 7.8)
+    c.drawString(ML + 130, y - 12, rel)
+    setfill(c, DARK); c.setFont("Lora", 7.8)
+    ty = y - 12
+    for ln in lines:
+        c.drawString(ML + 300, ty, ln); ty -= 10.4
+    y -= row_h + 4
 
 db.end_page()
 

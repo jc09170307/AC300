@@ -57,6 +57,36 @@ CONFLUENT_PAIRS = [
      "Outer canthus, ear, cheek, neck, shoulder -- lateral-body pain, febrile disease, exterior patterns."),
 ]
 
+# Per-point detail (location + key functions), verbatim from Dr. Zhang's
+# 2026AC300Lecture_8Vivian.pdf slides 8-9 ("Eight Confluent Points" review
+# cards). New for this edition -- did not exist in the original materials.
+CONFLUENT_POINT_DETAIL = {
+    "SI 3  Houxi": dict(vessel="Du Vessel", figure="CONF_HOUXI",
+        location="On the ulnar side of the hand, proximal to the fifth metacarpophalangeal joint, at the border of the red and white skin.",
+        functions="Benefits the spine and neck; clears heat; treats febrile disease and back pain."),
+    "LU 7  Lieque": dict(vessel="Ren Vessel", figure="CONF_LIEQUE",
+        location="On the radial forearm, 1.5 cun proximal to the wrist crease, superior to the styloid process of the radius.",
+        functions="Releases the exterior, benefits the throat and lungs, and regulates the Ren Vessel."),
+    "SP 4  Gongsun": dict(vessel="Chong Vessel", figure="CONF_GONGSUN",
+        location="On the medial foot, distal and inferior to the base of the first metatarsal bone.",
+        functions="Harmonizes the middle jiao, regulates the Chong Vessel, and treats abdominal or menstrual disorders."),
+    "GB 41  Zulinqi": dict(vessel="Dai Vessel", figure="CONF_ZULINQI",
+        location="On the dorsum of the foot, distal to the junction of the fourth and fifth metatarsal bones.",
+        functions="Spreads Liver qi, regulates the Dai Vessel, benefits the breasts, and treats pelvic or lateral-body pain."),
+    "KI 6  Zhaohai": dict(vessel="Yin Qiao Vessel", figure="CONF_ZHAOHAI",
+        location="In the depression directly below the medial malleolus.",
+        functions="Nourishes yin, benefits the throat, regulates sleep, in charge of movement."),
+    "BL 62  Shenmai": dict(vessel="Yang Qiao Vessel", figure="CONF_SHENMAI",
+        location="In the depression directly below the lateral malleolus.",
+        functions="Regulates the Yang Qiao Vessel, benefits the eyes, calms the spirit, and motor functions."),
+    "PC 6  Neiguan": dict(vessel="Yin Wei Vessel", figure="CONF_NEIGUAN",
+        location="Two cun proximal to the wrist crease, between the tendons of palmaris longus and flexor carpi radialis.",
+        functions="Opens the chest, regulates the Heart, calms the spirit, harmonizes the Stomach, and relieves nausea."),
+    "SJ 5  Waiguan": dict(vessel="Yang Wei Vessel", figure="CONF_WAIGUAN",
+        location="Two cun proximal to the dorsal wrist crease, between the radius and ulna.",
+        functions="Releases the exterior, clears heat, benefits the head and ears, and relieves pain along the yang channels."),
+}
+
 # ---------------------------------------------------------------------------
 # Per-vessel structured data
 # ---------------------------------------------------------------------------
@@ -73,6 +103,16 @@ GV = dict(
         "Ascends to the vertex (GV 20 Baihui)",
         "Winds along the forehead to the columnella of the nose, ends at GV 28 Yinjiao",
     ],
+    extra_branches=[
+        "(B) Pelvic region -> descends to the genitals and perineum -> tip of the coccyx -> diverges: "
+        "(1) the gluteal region, intersecting the Kidney and Bladder channels, (2) the spinal column -> kidneys.",
+        "(C) The inner canthus (with the Bladder channel) -> ascends across the forehead -> vertex -> "
+        "brain -> emerges at the lower nape -> divides into two branches -> descends along the spine "
+        "-> waist -> kidneys.",
+        "(D) The lower abdomen -> across the navel -> heart -> the trachea -> crosses the cheek -> "
+        "encircles the mouth -> terminates at the middle of the eye.",
+    ],
+    extra_branches_source="Per slide's embedded reference table, cited as \u201cText 1, pp.67-68\u201d in Dr. Zhang's 2026 lecture -- source text unidentified, not confirmed as CAM or MOA. Presented as supplementary; the 5-step main branch above is the primary taught course.",
     coalescent_points=["BL 12  Fengmen", "CV 1  Huiyin"],
     confluent_point="SI 3  Houxi",
     confluent_partner="BL 62  Shenmai (Yang Qiao Mai)",
@@ -101,6 +141,10 @@ CV = dict(
         "Curves around the lips (meets GV 28 Yinjiao)",
         "Passes through the cheek, enters the infraorbital region, ends at ST 1 Chengqi",
     ],
+    extra_branches=[
+        "(B) The pelvic region -> enters the spine -> ascends the back.",
+    ],
+    extra_branches_source="Per slide's embedded reference table, cited as \u201cText 1, pp.69\u201d in Dr. Zhang's 2026 lecture -- source text unidentified, not confirmed as CAM or MOA. Presented as supplementary; the 5-step main branch above is the primary taught course.",
     coalescent_points=["ST 1  Chengqi", "GV 28  Yinjiao"],
     confluent_point="LU 7  Lieque",
     confluent_partner="KI 6  Zhaohai (Yin Qiao Mai)",
@@ -129,6 +173,12 @@ CHONG = dict(
         "Runs along both sides of the abdomen (beside KI 11-KI 21) up to the throat",
         "Curves around the lips",
     ],
+    extra_branches=[
+        "(B) Kidney -> ST 30 Qichong -> medial side of the thigh -> the popliteal fossa -> medial side "
+        "of the leg -> behind the medial malleolus -> sole.",
+        "(C) Behind the medial malleolus -> the dorsum of the foot -> the great toe.",
+    ],
+    extra_branches_source="Per slide's embedded reference table, cited as \u201cText 1\u201d (page not legible) in Dr. Zhang's 2026 lecture -- source text unidentified, not confirmed as CAM or MOA. Presented as supplementary; the 5-step main branch above is the primary taught course.",
     coalescent_points=["CV 1", "CV 7", "ST 30", "KI 11", "KI 12", "KI 13", "KI 14", "KI 15",
                         "KI 16", "KI 17", "KI 18", "KI 19", "KI 20", "KI 21"],
     confluent_point="SP 4  Gongsun",
@@ -273,6 +323,61 @@ YIN_WEI = dict(
 )
 
 ALL_VESSELS = [GV, CV, CHONG, DAI, YANG_QIAO, YIN_QIAO, YANG_WEI, YIN_WEI]
+
+# ---------------------------------------------------------------------------
+# NEW from 2026AC300Lecture_7Vivian.pdf (authoritative deck, confirmed by
+# Jon over the older Lecture_7vivian11_12.pdf) -- content below did not exist
+# in the original Week 7 materials.
+# ---------------------------------------------------------------------------
+
+QUIZ_NUMBER = "Quiz 6"  # CORRECTED from "Quiz 5" -- 2026 deck slide 72 explicitly
+                          # says "Prepare for Quiz 6." Old deck/materials said Quiz 5.
+
+AREA_SUPPLIED = [
+    ("Governor Vessel", "Posterior midline"),
+    ("Conception Vessel", "Anterior midline"),
+    ("Thoroughfare Vessel", "1st lateral line of the abdomen"),
+    ("Belt Vessel", "Lateral side of the lumbar region"),
+    ("Yang Heel Vessel", "Lateral side of the lower extremities, shoulder and head"),
+    ("Yin Heel Vessel", "Medial aspect of the lower extremities and eye"),
+    ("Yang Link Vessel", "Lateral aspect of the lower extremities, shoulder and vertex"),
+    ("Yin Link Vessel", "Medial aspect of the lower extremities, 3rd lateral line of the abdomen and neck"),
+]
+
+CROSSING_POINT_QA = [
+    dict(q="Which meridians intersect with the Governor Vessel at GV 14 (Dazhui)?",
+         answers=["Large Intestine Meridian of Hand-Yangming", "Small Intestine Meridian of Hand-Taiyang",
+                   "Bladder Meridian of Foot-Taiyang", "Triple Energizer (San Jiao) Meridian of Hand-Shaoyang",
+                   "Gallbladder Meridian of Foot-Shaoyang"]),
+    dict(q="Which meridians pass through the supraclavicular fossa?",
+         answers=["Large Intestine Meridian of Hand-Yangming", "Stomach Meridian of Foot-Yangming",
+                   "Small Intestine Meridian of Hand-Taiyang", "Triple Energizer (San Jiao) Meridian of Hand-Shaoyang",
+                   "Gallbladder Meridian of Foot-Shaoyang"]),
+    dict(q="Which meridians pass through the area surrounding the eyes?",
+         answers=["Stomach Meridian of Foot-Yangming", "Heart Meridian of Hand-Shaoyin",
+                   "Small Intestine Meridian of Hand-Taiyang", "Bladder Meridian of Foot-Taiyang",
+                   "Triple Energizer (San Jiao) Meridian of Hand-Shaoyang", "Gallbladder Meridian of Foot-Shaoyang",
+                   "Liver Meridian of Foot-Jueyin"]),
+]
+
+PERIOCULAR_TABLE = [
+    ("Bladder (BL)", "Starts at the inner canthus", "Starts at the inner canthus (BL 1 Jingming)"),
+    ("Gallbladder (GB)", "Starts at the outer canthus", "Starts at the outer canthus (GB 1 Tongziliao)"),
+    ("Small Intestine (SI)", "Reaches both inner & outer canthus",
+     "A branch goes to the outer canthus; another travels below the eye to the inner canthus"),
+    ("Triple Energizer (SJ)", "Terminates at the outer canthus",
+     "A branch runs from behind the ear to the outer canthus"),
+    ("Liver (LR)", "Connects to the \u201cEye System\u201d", "Follows the throat upward, connects to the \u2018Eye System\u2019 (mu xi)"),
+    ("Heart (HT)", "Connects to the Eye System", "A branch links the heart to the \u201cEye System\u201d via the throat"),
+    ("Stomach (ST)", "Ascends to the inner corner of the eye",
+     "Ascends to the bridge of the nose, meets BL 1 Jingming"),
+]
+
+HOMEWORK5_NOTE = (
+    "Homework 5 (per 2026 slide deck): a diagram assignment -- draw an assigned vessel's complete "
+    "course. Graded on 4 criteria (1 point each): accurate start/end points, complete route, correct "
+    "direction of the route, clarity and proper labeling. Submit one day before the next class."
+)
 
 # Structural facts that don't pertain to any organ -- the defining trait of
 # all 8 Extraordinary Vessels, used repeatedly across all Week 7 documents.

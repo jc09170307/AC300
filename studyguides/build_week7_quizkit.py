@@ -9,7 +9,8 @@ from common_wk7 import (DocBuilder, setfill, setstroke, box, hairline, draw_para
                          LBLUE, DARK, GRAY, LGRAY, WHITE, CARD_BG, tint, EDITION, IS_RM,
                          EDLABEL)
 from wk7_quiz_questions import (MC_QUESTIONS, CONFLUENT_MATCH_LEFT, CONFLUENT_MATCH_RIGHT,
-                                 CONFLUENT_MATCH_ANSWER, FILL_BLANK, SHORT_ANSWER, MAINT_QUESTIONS)
+                                 CONFLUENT_MATCH_ANSWER, FILL_BLANK, SHORT_ANSWER, MAINT_QUESTIONS,
+                                 CROSSING_POINT_QUESTIONS)
 
 OUT = f"/mnt/user-data/outputs/AC300_Week7_QuizKit_{'reMarkable' if IS_RM else 'Print'}.pdf"
 DOC_LABEL = "Week 7 Quiz Kit"
@@ -127,6 +128,7 @@ bullets = [
     "Fill-in-the-Blank \u2014 coalescent points, Luo-Connecting overlaps, first/last points",
     "Short Answer \u2014 pathology recognition tied to specific vessels",
     "MAINT Review \u2014 pulled directly from Dr. Zhang's live Quiz 5 review (PC/SJ/GB/LR)",
+    "Crossing-Point Review \u2014 Dr. Zhang's own Q1/Q2/Q3 (GV14 intersections, supraclavicular fossa, periocular meridians)",
     "Full Answer Key with explanations for every question",
 ]
 for b in bullets:
@@ -141,7 +143,7 @@ y -= 8
 box_h = 58
 box(c, ML, y, CW, box_h, tint(GOLD, 0.88))
 setfill(c, DARK); c.setFont("Lora-Italic", 9)
-c.drawString(ML + 16, y - 18, "QUIZ 5 covers: the Eight Extraordinary Vessels + cumulative Middle Circuit review.")
+c.drawString(ML + 16, y - 18, "QUIZ 6 (next week) covers: the Eight Extraordinary Vessels + cumulative Middle Circuit review.")
 c.drawString(ML + 16, y - 32, "Study first from the Week 7 Study Guide, then self-test here before class.")
 c.drawString(ML + 16, y - 46, "Answer key begins after the final question block \u2014 no peeking until you've answered!")
 y -= box_h + 40
@@ -249,6 +251,25 @@ for i, item in enumerate(MAINT_QUESTIONS):
 db.end_page()
 
 # ============================================================
+# SECTION F -- Crossing-Point Review (new, Dr. Zhang's own Q1/Q2/Q3)
+# ============================================================
+db.new_page()
+y = title_bar("Section F: Crossing-Point Review", "Dr. Zhang's own end-of-lecture questions (2026 deck)")
+y -= 14
+for i, item in enumerate(CROSSING_POINT_QUESTIONS):
+    lines = wrap_words(f"Q{i+1}. {item['q']}", "Lora-Bold", 9.4, CW - 16)
+    box_h = 12.2 * len(lines) + 34
+    box(c, ML, y, CW, box_h, MINT if i % 2 == 0 else (1, 1, 1))
+    setfill(c, DARK); c.setFont("Lora-Bold", 9.4)
+    ty = y - 13
+    for l in lines:
+        c.drawString(ML + 8, ty, l); ty -= 12.2
+    ty -= 6
+    hairline(c, ML + 8, ty, RX - 8, rgb=(0.75, 0.75, 0.7), w=0.5)
+    y -= box_h + 8
+db.end_page()
+
+# ============================================================
 # ANSWER KEY
 # ============================================================
 
@@ -329,6 +350,16 @@ for i, item in enumerate(MAINT_QUESTIONS):
     if y - rh < 55:
         db.end_page(); db.new_page(); y = title_bar("Answer Key \u2014 Sections B-E (continued)", None); y -= 10
     y = answer_row(y, "", item["answer"], None)
+y -= 6
+
+setfill(c, NAVY); c.setFont("Lora-Bold", 10.5)
+c.drawString(ML, y, "Section F: Crossing-Point Review")
+y -= 16
+for i, item in enumerate(CROSSING_POINT_QUESTIONS):
+    rh = measure_answer_row(f"Q{i+1}.", item["answer"])
+    if y - rh < 55:
+        db.end_page(); db.new_page(); y = title_bar("Answer Key \u2014 Sections B-F (continued)", None); y -= 10
+    y = answer_row(y, "", f"Q{i+1}: " + item["answer"], None)
 
 db.end_page()
 db.save()
