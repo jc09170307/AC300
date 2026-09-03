@@ -224,6 +224,21 @@ def para(text, size=9, font="Lora", color=DARK, indent=0, leading=None, gap=6):
 
 def bullet(label, text, accent=NAVY, size=8.6):
     size = size * FS
+    if IS_MOBILE:
+        lab_lines = wrap_words(label, "Lora-Bold", size, CW - 8)
+        txt_lines = wrap_words(text, "Lora", size, CW - 8)
+        needed = (len(lab_lines) + len(txt_lines)) * (size * 1.3) + 6
+        ensure_space(needed, "")
+        setfill(accent); c.rect(ML, y[0] - needed + 6, 3, needed - 6, fill=1, stroke=0)
+        yy = y[0]
+        setfill(NAVY); c.setFont("Lora-Bold", size)
+        for ln in lab_lines:
+            c.drawString(ML + 8, yy, ln); yy -= size * 1.3
+        setfill(DARK); c.setFont("Lora", size)
+        for ln in txt_lines:
+            c.drawString(ML + 8, yy, ln); yy -= size * 1.3
+        y[0] -= needed
+        return
     label_w = 132
     lab_lines = wrap_words(label, "Lora-Bold", size, label_w)
     txt_lines = wrap_words(text, "Lora", size, CW - label_w - 10)
@@ -535,6 +550,34 @@ mini_table(["Transition", "Location", "Example"], HANDOFF_POINTS, [0.26 * CW, 0.
 section_bar("THE THREE CIRCUITS, DETAILED", accent=NAVY)
 for name, pos, chain, poles, accent in CIRCUITS:
     bullet(f"{name} ({pos})", f"{' -> '.join(chain)}   |   {poles}", accent=accent, size=8.3)
+end_page()
+
+# ---- CIRCUIT DIAGRAMS -- real lecture figures (Week 1 deck), one per circuit ----
+new_page("Circuit Diagrams -- Anterior / Posterior / Middle")
+y[0] = H - HEADER_H - 24
+section_bar("CIRCUIT DIAGRAMS -- LECTURE FIGURES", accent=NAVY,
+            sub="Each circuit's 4 channels, in sequence")
+for circuit_key, circuit_name, accent in [
+    ("CIRCUIT_ANTERIOR", "Anterior Circuit -- LU -> LI -> ST -> SP", METAL),
+    ("CIRCUIT_POSTERIOR", "Posterior Circuit -- HT -> SI -> BL -> KI", FIRE),
+    ("CIRCUIT_MIDDLE", "Middle Circuit -- PC -> SJ -> GB -> LR", FIREMIN),
+]:
+    img_path = f"{FIGS}/{circuit_key}.jpeg"
+    iw, ih = img_size(img_path)
+    img_h = CW * ih / iw
+    label_h = 16 * FS
+    caption_h = 18 * FS
+    needed = label_h + img_h + 10 + caption_h
+    ensure_space(needed, "Circuit Diagrams -- Anterior / Posterior / Middle")
+    setfill(accent); c.setFont("Lora-Bold", 10 * FS)
+    c.drawString(ML, y[0], circuit_name)
+    y[0] -= label_h
+    img_top = y[0]
+    used_h = draw_image_fit(img_path, ML, img_top, CW, img_h + 10)
+    y[0] = img_top - used_h - 10
+    setfill(GRAY); c.setFont("Lora-Italic", 7.2 * FS)
+    c.drawCentredString(W / 2, y[0], "Source: Dr. Zhang's Week 1 lecture deck")
+    y[0] -= caption_h
 end_page()
 
 # =====================================================================
