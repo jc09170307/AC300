@@ -17,7 +17,7 @@ from final_content import (
     DECODER_TIERS, LOWER_HE_SEA, LOWER_HE_SEA_NOTE, HUI_MEETING_POINTS, HUI_MEETING_NOTE,
     COMMAND_POINTS_CLASSICAL, COMMAND_POINTS_NOTE, MEETING_CROSSING_SUMMARY,
     YUAN_SOURCE_TABLE, LUO_CONNECTING_TABLE, BACK_SHU_SERIES, BACK_SHU_NOTE,
-    FRONT_MU_TABLE, XI_CLEFT_TABLE, HE_SEA_TABLE,
+    FRONT_MU_TABLE, XI_CLEFT_TABLE, HE_SEA_TABLE, CATEGORY_DEFINITIONS,
 )
 
 FIGS = '/home/claude/final/figs'
@@ -307,6 +307,33 @@ c.line(50, 55, W - 50, 55)
 c.setFont("Lora-Italic", 8.5); setfill(GRAY)
 c.drawCentredString(W / 2, 38, "Jonathan Centeno \u00b7 D.AcHM Candidate \u00b7 VUIM \u00b7 Sourced from Dr. Zhang's lectures, CAM 4th Ed., MOA (Deadman 3rd)")
 c.showPage(); page_num[0] += 1
+
+# =====================================================================
+# DEFINITIONS -- what each category actually MEANS (the page that was
+# missing entirely from v1)
+# =====================================================================
+new_page("What Each Point Category Means")
+y[0] = H - HEADER_H - 24
+section_bar("SPECIAL POINT CATEGORY DEFINITIONS", accent=NAVY,
+            sub="Read this page FIRST -- every table after assumes you know these terms")
+for name, accent, definition in CATEGORY_DEFINITIONS:
+    label_w = 158
+    lab_lines = wrap_words(name, "Lora-Bold", 9.3, label_w)
+    txt_lines = wrap_words(definition, "Lora", 8.5, CW - label_w - 12)
+    n = max(len(lab_lines), len(txt_lines))
+    needed = n * 12.2 + 8
+    ensure_space(needed, "What Each Point Category Means")
+    setfill(accent); c.rect(ML, y[0] - needed + 6, 3, needed - 6, fill=1, stroke=0)
+    yy = y[0]
+    setfill(NAVY); c.setFont("Lora-Bold", 9.3)
+    for ln in lab_lines:
+        c.drawString(ML + 10, yy, ln); yy -= 12.2
+    yy2 = y[0]
+    setfill(DARK); c.setFont("Lora", 8.5)
+    for ln in txt_lines:
+        c.drawString(ML + 10 + label_w, yy2, ln); yy2 -= 12.2
+    y[0] -= needed
+end_page()
 
 # =====================================================================
 # FIVE SHU MASTER TABLE (Tier A)

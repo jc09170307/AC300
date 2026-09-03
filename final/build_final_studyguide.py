@@ -13,7 +13,7 @@ sys.path.insert(0, '/home/claude/final')
 from final_content import (
     NAVY, GOLD, RED, DARK, GRAY, METAL, EARTH, FIRE, WATER, FIREMIN, WOOD, EXTRA, TEAL, AMBER_LUO,
     ZHANG_FINAL_FACTS, TWELVE_MERIDIANS, DIRECTION_RULES, CIRCUITS, HANDOFF_POINTS,
-    CHANNEL_META, CHANNEL_ORDER, FIVE_SHU_DEFINITION, FIVE_SHU_MASTER, FIVE_SHU_COLS, FIVE_SHU_YUAN_NOTE,
+    CHANNEL_META, CHANNEL_ORDER, CHANNEL_CONTENT, FIVE_SHU_DEFINITION, FIVE_SHU_MASTER, FIVE_SHU_COLS, FIVE_SHU_YUAN_NOTE,
     EXTRAORDINARY_VESSELS, CONFLUENT_PAIRS_QUICK, LUO_15, LUO_RULE, LOW_PRIORITY_NOTE,
     DIVERGENT_SUMMARY, SINEW_SUMMARY, CUTANEOUS_SUMMARY, EXAM_TRAPS, WEEKLY_MAP,
 )
@@ -185,6 +185,20 @@ def bullet(label, text, accent=NAVY, size=8.6):
     setfill(DARK); c.setFont("Lora", size)
     for ln in txt_lines:
         c.drawString(ML + 8 + label_w, yy2, ln); yy2 -= size * 1.3
+    y[0] -= needed
+
+
+def bullet_line(text, accent=NAVY, size=8.6):
+    """A single flowing bulleted sentence (no label column) -- for Functions/Indications/Pearls."""
+    lines = wrap_words(text, "Lora", size, CW - 16)
+    needed = len(lines) * (size * 1.32) + 5
+    ensure_space(needed, "")
+    setfill(accent); c.circle(ML + 3, y[0] - 3, 1.8, fill=1, stroke=0)
+    setfill(DARK); c.setFont("Lora", size)
+    yy = y[0]
+    for i, ln in enumerate(lines):
+        c.drawString(ML + 12, yy, ln)
+        yy -= size * 1.32
     y[0] -= needed
 
 
@@ -366,8 +380,9 @@ end_page()
 # =====================================================================
 def channel_page(abbr):
     d = CHANNEL_META[abbr]
-    # ---- PAGE A: ID card + MOA (internal pathway) figure ----
-    new_page(f"Channel ID Card -- {abbr} {d['name']} (MOA Internal)")
+    cc = CHANNEL_CONTENT[abbr]
+    # ---- PAGE A: ID card + Functions + Indications + Highest-Yield + Pearls (all on one dense page) ----
+    new_page(f"{abbr} {d['name']} -- Full Reference")
     y[0] = H - HEADER_H - 24
     section_bar(f"{abbr} -- {d['name'].upper()}", accent=d['accent'],
                 sub=f"{d['n_points']} pts | {d['element']} | {d['polarity']} | {d['clock']} | {d['direction']}")
@@ -384,21 +399,45 @@ def channel_page(abbr):
         ("Crossing Points", d['crossing']),
         ("First / Last Point", d['first_last']),
     ]
-    mini_table(["Category", "Detail"], rows, [128, CW - 128], accent=d['accent'], size=7.9, striped=True)
+    mini_table(["Category", "Detail"], rows, [122, CW - 122], accent=d['accent'], size=7.2, header_size=7.4, striped=True)
+
+    section_bar("FUNCTIONS", accent=d['accent'])
+    for f in cc['functions']:
+        bullet_line(f, accent=d['accent'], size=7.9)
+
+    section_bar("CLINICAL INDICATIONS", accent=d['accent'])
+    for ind in cc['indications']:
+        bullet_line(ind, accent=d['accent'], size=7.9)
+
+    section_bar("HIGHEST-YIELD POINTS", accent=d['accent'])
+    hy_rows = [(p, cat, use) for p, cat, use in cc['highest_yield']]
+    mini_table(["Point", "Category", "Clinical Use"], hy_rows, [50, 140, CW - 190], accent=d['accent'], size=7.3, header_size=7.5)
+
+    section_bar("CLINICAL PEARLS & EXAM TRAPS", accent=RED)
+    for pearl in cc['pearls']:
+        bullet_line(pearl, accent=RED, size=7.9)
+
+    # ---- MOA (internal pathway) figure -- flows onto same page if room remains,
+    # otherwise starts fresh. This avoids stranding 1-2 leftover bullets on a
+    # near-blank page. ----
     moa_path = f"{FIGS}/MOA_{abbr}.jpeg"
     remaining_h = y[0] - 60
-    if remaining_h > 100:
-        section_bar(f"MOA -- INTERNAL PATHWAY (Deadman)", accent=d['accent'],
-                    sub="Organ-level course: chest/abdomen branches, internal connections")
-        cap_h = 14
-        img_top = y[0]
-        used_h = draw_image_fit(moa_path, ML, img_top, CW, remaining_h - cap_h - 20)
-        y[0] = img_top - used_h - cap_h
-        setfill(GRAY); c.setFont("Lora-Italic", 7.5)
-        c.drawCentredString(W / 2, y[0], f"Source: A Manual of Acupuncture (Deadman, 3rd Ed.) -- {d['name']} Meridian")
+    if remaining_h < 260:
+        end_page()
+        new_page(f"Channel ID Card -- {abbr} {d['name']} (MOA Internal)")
+        y[0] = H - HEADER_H - 24
+        remaining_h = y[0] - 60
+    section_bar(f"MOA -- INTERNAL PATHWAY (Deadman)", accent=d['accent'],
+                sub="Organ-level course: chest/abdomen branches, internal connections")
+    cap_h = 14
+    img_top = y[0]
+    used_h = draw_image_fit(moa_path, ML, img_top, CW, remaining_h - cap_h - 20)
+    y[0] = img_top - used_h - cap_h
+    setfill(GRAY); c.setFont("Lora-Italic", 7.5)
+    c.drawCentredString(W / 2, y[0], f"Source: A Manual of Acupuncture (Deadman, 3rd Ed.) -- {d['name']} Meridian")
     end_page()
 
-    # ---- PAGE B: CAM (external surface points) figure ----
+    # ---- PAGE C: CAM (external surface points) figure ----
     cam_path = f"{FIGS}/CAM_{abbr}.jpeg"
     import os
     if os.path.exists(cam_path):
