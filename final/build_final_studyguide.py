@@ -555,6 +555,42 @@ for name, pos, chain, poles, accent in CIRCUITS:
     bullet(f"{name} ({pos})", f"{' -> '.join(chain)}   |   {poles}", accent=accent, size=8.3)
 end_page()
 
+# ---- SIX DIVISIONS OVERVIEW -- Taiyin/Yangming/Shaoyin/Taiyang/Jueyin/Shaoyang
+# tied directly to the 3 circuits (Week 1 lecture deck) ----
+new_page("Six Divisions & The 3 Circuits -- Overview")
+y[0] = H - HEADER_H - 24
+section_bar("SIX DIVISIONS -- TAIYIN/YANGMING/SHAOYIN/TAIYANG/JUEYIN/SHAOYANG", accent=NAVY,
+            sub="How the six divisions map onto the 3 circuits")
+six_div_path = f"{FIGS}/SIX_DIVISIONS.jpeg"
+iw, ih = img_size(six_div_path)
+img_h = CW * ih / iw
+img_top = y[0]
+used_h = draw_image_fit(six_div_path, ML, img_top, CW, img_h)
+y[0] = img_top - used_h - 14
+setfill(GRAY); c.setFont("Lora-Italic", 8.5)
+c.drawCentredString(W / 2, y[0], "Source: Dr. Zhang's Week 1 lecture deck -- \"Three Main Circuits in the Flow of Qi\"")
+y[0] -= 26
+para("Each ROW is one circuit (Outer/Anterior, Inner/Posterior, Middle), and each row pairs a Yin division on "
+     "the left (Taiyin, Shaoyin, Jueyin) with its Yang partner on the right (Yangming, Taiyang, Shaoyang) -- "
+     "exactly the same Yin/Yang channel pairs from the Master Pathway Table, just visualized with the element "
+     "colors and hand-off arrows (chest -> hand -> face -> foot -> chest) laid out together.", size=9.5, color=DARK, gap=14)
+
+section_bar("HOW TO READ THIS DIAGRAM", accent=GOLD)
+for label, txt in [
+    ("Rows = Circuits", "Top row is the Outer/Anterior Circuit, middle row the Inner/Posterior Circuit, bottom "
+     "row the Middle Circuit -- the exact same 3 circuits from the Master Pathway Table, in the same order."),
+    ("Left column = Yin", "Taiyin (LU/SP), Shaoyin (HT/KI), Jueyin (PC/LR) -- each is the FIRST channel Qi "
+     "reaches when a circuit begins at the chest."),
+    ("Right column = Yang", "Yangming (LI/ST), Taiyang (SI/BL), Shaoyang (SJ/GB) -- each receives Qi from its "
+     "Yin partner at the hand, then carries it up to the face before handing off to the foot."),
+    ("Colored arrows = the Five-Phase link", "Metal (LU-LI), Earth (SP-ST), Fire (HT-SI), Water (KI-BL), "
+     "Ministerial Fire (PC-SJ), Wood (LR-GB) -- the internal-external pair for each row shares one Element."),
+    ("Bottom arrow band", "Chest -> Hands/Fingers -> Face/Head -> Foot/Toes -> Chest -- the SAME 4-stage "
+     "hand-off sequence that repeats identically across all 3 circuits, just with different channels."),
+]:
+    bullet(label, txt, accent=GOLD, size=8.6)
+end_page()
+
 # ---- CIRCUIT DIAGRAMS -- real lecture figures (Week 1 deck), one per circuit ----
 new_page("Circuit Diagrams -- Anterior / Posterior / Middle")
 y[0] = H - HEADER_H - 24
