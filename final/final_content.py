@@ -380,6 +380,101 @@ EXAM_TRAPS = [
 ]
 
 # ---------------------------------------------------------------------------
+# MASTER DECODER -- category-pivoted special point data (built from
+# CHANNEL_META plus classical reference categories not already captured
+# per-channel). Tier A = Dr. Zhang's confirmed review emphasis; Tier B =
+# quiz-tested / high clinical yield; Tier C = classical/reference, lower
+# priority for the final per Dr. Zhang's explicit Week 9 statement.
+# ---------------------------------------------------------------------------
+DECODER_TIERS = [
+    ("TIER A", RED, "Dr. Zhang's confirmed final-exam review emphasis -- know cold"),
+    ("TIER B", GOLD, "Quiz-tested (Quiz 1-6) and/or high clinical yield -- know well"),
+    ("TIER C", GRAY, "Classical/reference material -- lower priority per Dr. Zhang's Week 9 statement"),
+]
+
+LOWER_HE_SEA = [
+    ("ST37 Shangjuxu", "Large Intestine", "LI bowel disorders (diarrhea, appendicitis-type pain)"),
+    ("ST39 Xiajuxu", "Small Intestine", "SI bowel disorders, lower abdominal pain"),
+    ("BL39 Weiyang", "San Jiao", "water metabolism, edema, lower back/leg pain"),
+    ("ST36 Zusanli", "Stomach (own)", "master tonic, digestion, immunity"),
+    ("GB34 Yanglingquan", "Gallbladder (own)", "also Hui-Meeting of Sinews -- tendons, hypochondriac pain"),
+    ("BL40 Weizhong", "Bladder (own)", "also Command Point of the back"),
+]
+LOWER_HE_SEA_NOTE = (
+    "The 6 Fu (hollow) organs each have a Lower He-Sea point on the leg. ST, GB, and BL simply use their "
+    "own He-Sea point (already Fu channels). LI, SI, and SJ -- despite being Hand channels -- BORROW a "
+    "Lower He-Sea point on a FOOT channel (ST or BL) instead of using a point on their own pathway. This is "
+    "a classic exam trap: LI's and SI's Lower He-Sea points are NOT on the LI or SI channel at all."
+)
+
+HUI_MEETING_POINTS = [
+    ("CV12 Zhongwan", "Fu (Hollow) Organs", "digestive disorders, all six Fu organs"),
+    ("LR13 Zhangmen", "Zang (Solid) Organs", "organ-level disharmony, hypochondriac pain"),
+    ("CV17 Danzhong", "Qi", "chest Qi stagnation, breathing, lactation"),
+    ("BL17 Geshu", "Blood", "all blood disorders -- bleeding, stasis, deficiency"),
+    ("BL11 Dazhu", "Bone", "bone disorders, also a classic exterior-releasing point"),
+    ("GB39 Xuanzhong (Juegu)", "Marrow", "marrow, brain, spinal cord, also relates to bone marrow"),
+    ("GB34 Yanglingquan", "Sinew (Tendon)", "tendons/ligaments, also He-Sea of GB and Lower He-Sea of GB"),
+    ("LU9 Taiyuan", "Vessels (Pulse)", "all pulse/vessel disorders, also Yuan-Source of LU"),
+]
+HUI_MEETING_NOTE = (
+    "The 8 Hui-Meeting (Influential) Points are classical CAM/MOA reference material -- each governs a "
+    "tissue/substance category rather than a single channel. Not explicitly confirmed as part of Dr. Zhang's "
+    "live review, but standard course-textbook material worth recognizing (Tier C)."
+)
+
+COMMAND_POINTS_CLASSICAL = [
+    ("ST36 Zusanli", "Abdomen", "the #1 tonic point in TCM; He-Sea + Lower He-Sea of ST"),
+    ("BL40 Weizhong", "Back", "He-Sea of BL; \"aspirin of acupuncture\""),
+    ("LU7 Lieque", "Head / Nape", "Luo of LU; also Confluent point opening Ren Mai"),
+    ("LI4 Hegu", "Face / Mouth", "Yuan-Source of LI; FORBIDDEN in pregnancy"),
+]
+COMMAND_POINTS_NOTE = (
+    "The Four Command Points (Si Zong Xue) -- a classical mnemonic distinct from, but often confused with, "
+    "the 8 Confluent Points. \"Command\" points treat a whole body REGION; Confluent points open an "
+    "Extraordinary Vessel. Some points (LU7, LI4) do double duty as both a Command point AND part of another "
+    "special category -- always check whether a question is asking about regional command or vessel confluence."
+)
+
+MEETING_CROSSING_SUMMARY = [
+    ("ST", "11", "the MOST of any single primary channel -- LI20, BL1, GB3/4/6, SP1, GV24, GV26, CV12/13/24"),
+    ("BL", "14", "shared specifically with GV and Gallbladder, concentrated around the head"),
+    ("GB", "12", "across 6 meridians (SJ, LR, PC, SI, ST, GV) -- confirmed against the 2026 slide deck"),
+    ("SJ", "10+", "shares crossing points with GB around head/ear/shoulder, plus GV14, SI12"),
+    ("SP", "6", "abdomen/chest region -- CV3, CV4, CV10, GB24, LR14, LU1"),
+    ("LR", "6", "shared with CV (2) and SP (1) around the genital/abdomen region"),
+    ("SI / LI", "few", "crosses GV14 and the cheek/eye/shoulder region"),
+    ("HT / PC", "0", "the ONLY 2 primary channels with ZERO named crossing points -- classic paired trap"),
+]
+
+# Auto-pivot CHANNEL_META into category tables so the Decoder never drifts
+# out of sync with the Study Guide's per-channel data.
+def _pivot(field):
+    return [(abbr, CHANNEL_META[abbr][field]) for abbr in CHANNEL_ORDER]
+
+YUAN_SOURCE_TABLE = _pivot("yuan")
+LUO_CONNECTING_TABLE = _pivot("luo")
+BACK_SHU_TABLE = _pivot("back_shu")
+FRONT_MU_TABLE = _pivot("front_mu")
+XI_CLEFT_TABLE = _pivot("xi_cleft")
+HE_SEA_TABLE = _pivot("he_sea")
+
+# Back-Shu series organized by point number (ascending along the back) --
+# the more clinically useful ordering for a decoder vs. by-channel.
+BACK_SHU_SERIES = [
+    ("BL13 Feishu", "Lung"), ("BL14 Jueyinshu", "Pericardium"), ("BL15 Xinshu", "Heart"),
+    ("BL18 Ganshu", "Liver"), ("BL19 Danshu", "Gallbladder"), ("BL20 Pishu", "Spleen"),
+    ("BL21 Weishu", "Stomach"), ("BL22 Sanjiaoshu", "San Jiao"), ("BL23 Shenshu", "Kidney"),
+    ("BL25 Dachangshu", "Large Intestine"), ("BL27 Xiaochangshu", "Small Intestine"),
+    ("BL28 Pangguangshu", "Bladder"),
+]
+BACK_SHU_NOTE = (
+    "All 12 Back-Shu points sit on the Bladder channel's inner line, 1.5 cun lateral to the spine -- roughly "
+    "in organ order top-to-bottom. BL20 (Spleen) and BL21 (Stomach) sit directly adjacent and are a classic "
+    "confusable pair."
+)
+
+# ---------------------------------------------------------------------------
 # WEEKLY MAP -- syllabus reference
 # ---------------------------------------------------------------------------
 WEEKLY_MAP = [

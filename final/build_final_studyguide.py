@@ -1,12 +1,13 @@
 #!/usr/bin/env python3
-"""AC300 Comprehensive Final Study Guide (Weeks 1-9, cumulative).
-Usage: python3 build_final_studyguide.py <print|remarkable>
+"""AC300 Comprehensive Final Study Guide (Weeks 1-9, cumulative) -- v2, with figures.
+Usage: python3 build_final_studyguide_v2.py <print|remarkable>
 """
 import sys
 from reportlab.pdfgen import canvas
 from reportlab.lib.pagesizes import letter
 from reportlab.pdfbase import pdfmetrics
 from reportlab.pdfbase.ttfonts import TTFont
+from PIL import Image
 
 sys.path.insert(0, '/home/claude/final')
 from final_content import (
@@ -16,6 +17,8 @@ from final_content import (
     EXTRAORDINARY_VESSELS, CONFLUENT_PAIRS_QUICK, LUO_15, LUO_RULE, LOW_PRIORITY_NOTE,
     DIVERGENT_SUMMARY, SINEW_SUMMARY, CUTANEOUS_SUMMARY, EXAM_TRAPS, WEEKLY_MAP,
 )
+
+FIGS = '/home/claude/final/figs'
 
 EDITION = sys.argv[1] if len(sys.argv) > 1 else "print"
 IS_RM = EDITION == "remarkable"
@@ -73,7 +76,31 @@ def wrap_words(text, font, size, max_width):
     return lines
 
 
-def header(subtitle, section_label=""):
+def block_height(text, font, size, max_width, leading=None):
+    leading = leading or size * 1.28
+    return len(wrap_words(text, font, size, max_width)) * leading
+
+
+_img_cache = {}
+def img_size(path):
+    if path not in _img_cache:
+        with Image.open(path) as im:
+            _img_cache[path] = im.size
+    return _img_cache[path]
+
+
+def draw_image_fit(path, x, top_y, max_w, max_h, align="center"):
+    """Draw image fit within max_w x max_h box whose TOP-LEFT is (x, top_y). Returns height used."""
+    iw, ih = img_size(path)
+    scale = min(max_w / iw, max_h / ih)
+    dw, dh = iw * scale, ih * scale
+    dx = x + (max_w - dw) / 2 if align == "center" else x
+    dy = top_y - dh
+    c.drawImage(path, dx, dy, width=dw, height=dh, preserveAspectRatio=True, mask='auto')
+    return dh
+
+
+def header(subtitle):
     setfill(NAVY); c.rect(0, H - HEADER_H, W, HEADER_H, fill=1, stroke=0)
     setfill(GOLD); c.rect(0, H - HEADER_H, W, 3, fill=1, stroke=0)
     setfill((1, 1, 1)); c.setFont("Lora-Bold", 12)
@@ -114,18 +141,21 @@ def ensure_space(needed, subtitle):
     if y[0] - needed < 55:
         end_page()
         new_page(subtitle)
-        y[0] = H - HEADER_H - 22
+        y[0] = H - HEADER_H - 24
 
 
 def section_bar(text, accent=NAVY, sub=""):
-    ensure_space(28, text)
-    setfill(accent); c.rect(ML, y[0] - 3, CW, 3, fill=1, stroke=0)
+    ensure_space(34, text)
+    setfill(accent); c.rect(ML, y[0] - 20, 3, 18, fill=1, stroke=0)
     setfill(NAVY); c.setFont("Lora-Bold", 13)
-    c.drawString(ML, y[0] - 19, text)
+    c.drawString(ML + 10, y[0] - 15, text)
     if sub:
         setfill(GRAY); c.setFont("Lora-Italic", 8.5)
-        c.drawRightString(ML + CW, y[0] - 19, sub)
-    y[0] -= 32
+        c.drawRightString(ML + CW, y[0] - 15, sub)
+    y[0] -= 22
+    setstroke(accent); c.setLineWidth(1.2)
+    c.line(ML, y[0], ML + CW, y[0])
+    y[0] -= 14
 
 
 def para(text, size=9, font="Lora", color=DARK, indent=0, leading=None, gap=6):
@@ -144,9 +174,9 @@ def bullet(label, text, accent=NAVY, size=8.6):
     lab_lines = wrap_words(label, "Lora-Bold", size, label_w)
     txt_lines = wrap_words(text, "Lora", size, CW - label_w - 10)
     n = max(len(lab_lines), len(txt_lines))
-    needed = n * (size * 1.3) + 5
+    needed = n * (size * 1.3) + 6
     ensure_space(needed, "")
-    setfill(accent); c.rect(ML, y[0] - 2, 3, needed - 6, fill=1, stroke=0)
+    setfill(accent); c.rect(ML, y[0] - needed + 6, 3, needed - 6, fill=1, stroke=0)
     yy = y[0]
     setfill(NAVY); c.setFont("Lora-Bold", size)
     for ln in lab_lines:
@@ -158,28 +188,24 @@ def bullet(label, text, accent=NAVY, size=8.6):
     y[0] -= needed
 
 
-def mini_table(headers, rows, col_w, accent=NAVY, size=7.8, header_size=8.0, row_h=None, striped=True):
+def mini_table(headers, rows, col_w, accent=NAVY, size=7.8, header_size=8.0, striped=True):
     total_w = sum(col_w)
-    row_h = row_h or (size * 1.9)
-    n_header_lines = 1
-    needed_header = header_size * 1.6 + 4
-    ensure_space(needed_header + row_h * min(len(rows), 3), "")
-    # header row
-    setfill(accent); c.rect(ML, y[0] - needed_header + 4, total_w, needed_header - 4, fill=1, stroke=0)
+    needed_header = header_size * 1.9 + 6
+    ensure_space(needed_header + 10, "")
+    setfill(accent); c.rect(ML, y[0] - needed_header + 3, total_w, needed_header - 3, fill=1, stroke=0)
     setfill((1, 1, 1)); c.setFont("Lora-Bold", header_size)
     xx = ML
     for h, w in zip(headers, col_w):
         c.drawString(xx + 4, y[0] - needed_header + 9, h)
         xx += w
-    y[0] -= needed_header
+    y[0] -= (needed_header + 2)
     for ridx, row in enumerate(rows):
-        # compute needed height for this row (wrap each cell)
         cell_lines = []
         for cell, w in zip(row, col_w):
             cl = wrap_words(str(cell), "Lora", size, w - 8)
             cell_lines.append(cl if cl else [""])
         nlines = max(len(cl) for cl in cell_lines)
-        rh = nlines * (size * 1.25) + 5
+        rh = nlines * (size * 1.35) + 5
         ensure_space(rh, "")
         if striped and ridx % 2 == 0:
             setfill(ROW_TINT); c.rect(ML, y[0] - rh + 3, total_w, rh - 3, fill=1, stroke=0)
@@ -189,10 +215,32 @@ def mini_table(headers, rows, col_w, accent=NAVY, size=7.8, header_size=8.0, row
             yy = y[0] - 2
             for ln in cl:
                 c.drawString(xx + 4, yy, ln)
-                yy -= size * 1.25
+                yy -= size * 1.35
             xx += w
         y[0] -= rh
     y[0] -= 6
+
+
+def callout_box(title, lines, accent=GOLD, size=8.6):
+    """A box sized dynamically to its content -- never overflows."""
+    pad = 10
+    title_h = 15
+    line_h = size * 1.35
+    wrapped = []
+    for ln in lines:
+        wrapped.extend(wrap_words(ln, "Lora", size, CW - 2 * pad) or [""])
+    box_h = pad * 2 + title_h + len(wrapped) * line_h
+    ensure_space(box_h + 8, "")
+    setfill(CALLOUT_TINT); c.rect(ML, y[0] - box_h, CW, box_h, fill=1, stroke=0)
+    setfill(accent); c.rect(ML, y[0] - 4, CW, 4, fill=1, stroke=0)
+    setfill(NAVY); c.setFont("Lora-Bold", 10.5)
+    c.drawString(ML + pad, y[0] - pad - 11, title)
+    yy = y[0] - pad - 11 - title_h
+    setfill(DARK); c.setFont("Lora", size)
+    for ln in wrapped:
+        c.drawString(ML + pad, yy, ln)
+        yy -= line_h
+    y[0] -= (box_h + 10)
 
 
 # =====================================================================
@@ -211,7 +259,7 @@ c.drawCentredString(W / 2, H - COVER_MASTHEAD_H + 35, "AC300/AC375 - Acupuncture
 c.setFont("Lora-Italic", 9)
 c.drawCentredString(W / 2, H - COVER_MASTHEAD_H + 18, EDLABEL)
 
-bx, by, bs = W / 2 - 34, H - 165, 68
+bx, by, bs = W / 2 - 34, H - 160, 68
 setfill((0.929, 0.949, 0.965) if not IS_RM else (0.902, 0.878, 0.816))
 c.rect(bx, by, bs, bs, fill=1, stroke=0)
 setfill(GOLD); c.rect(bx, by + bs - 8, bs, 8, fill=1, stroke=0)
@@ -220,45 +268,52 @@ c.drawCentredString(W / 2, by + bs - 22, "WEEK")
 c.setFont("Lora-Bold", 20)
 c.drawCentredString(W / 2, by + 18, "10")
 
-c.setFont("Lora-Bold", 30); setfill(NAVY)
-c.drawCentredString(W / 2, H - 227, "COMPREHENSIVE FINAL STUDY GUIDE")
-c.setFont("Lora-BoldItalic", 13); setfill(RED)
-c.drawCentredString(W / 2, H - 250, "Weeks 1-9, Cumulative -- Channel Theory through Cutaneous Regions")
+c.setFont("Lora-Bold", 27); setfill(NAVY)
+c.drawCentredString(W / 2, H - 222, "COMPREHENSIVE FINAL STUDY GUIDE")
+c.setFont("Lora-BoldItalic", 12.5); setfill(RED)
+c.drawCentredString(W / 2, H - 245, "Weeks 1-9, Cumulative -- with MOA + Lecture Figures")
 c.setFont("Lora", 10.5); setfill(DARK)
-c.drawCentredString(W / 2, H - 268, "Built around Dr. Zhang's live Final Exam Review \u00b7 30 questions \u00b7 reuses quiz material")
+c.drawCentredString(W / 2, H - 263, "Built around Dr. Zhang's live Final Exam Review \u00b7 30 questions \u00b7 reuses quiz material")
 
 setstroke(GOLD); c.setLineWidth(1)
-c.line(W / 2 - 120, H - 282, W / 2 - 40, H - 282)
-c.line(W / 2 + 40, H - 282, W / 2 + 120, H - 282)
-setfill(GOLD); c.circle(W / 2, H - 282, 2.5, fill=1, stroke=0)
+c.line(W / 2 - 120, H - 277, W / 2 - 40, H - 277)
+c.line(W / 2 + 40, H - 277, W / 2 + 120, H - 277)
+setfill(GOLD); c.circle(W / 2, H - 277, 2.5, fill=1, stroke=0)
 
-# This-week-covers box
-box_x, box_y, box_w2, box_h2 = 60, H - 470, W - 120, 130
+# ---- dynamic "This Guide Covers" box (never overflows) ----
+covers = [
+    "All 12 primary meridians -- full ID cards + real MOA (Deadman) channel figures, one per page",
+    "The 3 Circuits (Outer/Inner/Middle), 24-hr clock, direction rules -- Dr. Zhang's #1 review emphasis",
+    "GV, CV, and all 8 Extraordinary Vessels -- with lecture-sourced vessel figures + Confluent Point pairs",
+    "The 15 Collaterals (Luo-Connecting points) + a low-priority summary of Divergent/Sinew/Cutaneous material",
+    "Full Five Shu (Transport) Points master table -- all 60 points, all 12 meridians",
+    "A dedicated Exam Traps page consolidating every verified fact from every weekly Cram Sheet",
+]
+box_x, box_w2 = 60, W - 120
+pad, title_h2, item_gap = 14, 20, 3
+item_size = 9.1
+wrapped_items = []
+for item in covers:
+    wrapped_items.append(wrap_words(item, "Lora", item_size, box_w2 - 40))
+box_h2 = pad * 2 + title_h2 + sum(len(w) for w in wrapped_items) * (item_size * 1.35) + len(covers) * item_gap
+box_y = H - 300 - box_h2
 setfill((0.929, 0.949, 0.965) if not IS_RM else (0.902, 0.878, 0.816))
 c.rect(box_x, box_y, box_w2, box_h2, fill=1, stroke=0)
 setfill(GOLD); c.rect(box_x, box_y + box_h2 - 4, box_w2, 4, fill=1, stroke=0)
 setfill(NAVY); c.setFont("Lora-Bold", 11)
-c.drawString(box_x + 14, box_y + box_h2 - 22, "This Guide Covers:")
-c.setFont("Lora", 9.3); setfill(DARK)
-covers = [
-    "All 12 primary meridians -- full ID cards (points, Back-Shu/Front-Mu, Yuan/Luo/Xi-Cleft/He-Sea, crossing points)",
-    "The 3 Circuits (Outer/Inner/Middle), 24-hr clock, and direction-of-flow rules -- Dr. Zhang's #1 review emphasis",
-    "GV, CV, and all 8 Extraordinary Vessels with their Confluent Point pairings",
-    "The 15 Collaterals (Luo-Connecting points) and a low-priority summary of Divergent/Sinew/Cutaneous material",
-    "Full Five Shu (Transport) Points master table -- all 60 points, all 12 meridians",
-    "A dedicated Exam Traps page consolidating every verified \u201cread this last\u201d fact from every weekly Cram Sheet",
-]
-yy = box_y + box_h2 - 40
-for item in covers:
-    c.setFillColorRGB(*GOLD); c.circle(box_x + 16, yy + 3, 1.6, fill=1, stroke=0)
+c.drawString(box_x + pad, box_y + box_h2 - pad - 11, "This Guide Covers:")
+yy = box_y + box_h2 - pad - 11 - title_h2
+c.setFont("Lora", item_size); setfill(DARK)
+for wlines in wrapped_items:
+    setfill(GOLD); c.circle(box_x + pad + 4, yy + 3, 1.6, fill=1, stroke=0)
     setfill(DARK)
-    lines = wrap_words(item, "Lora", 9.3, box_w2 - 40)
-    for ln in lines:
-        c.drawString(box_x + 24, yy, ln)
-        yy -= 12.5
+    for ln in wlines:
+        c.drawString(box_x + pad + 12, yy, ln)
+        yy -= item_size * 1.35
+    yy -= item_gap
 
-# quiz-date / reading box
-box2_y = box_y - 62
+# quiz-date / reading box below, with its own gap
+box2_y = box_y - 14 - 50
 setfill((0.961, 0.941, 0.918) if not IS_RM else (0.918, 0.886, 0.816))
 c.rect(box_x, box2_y, box_w2, 50, fill=1, stroke=0)
 setfill(RED); c.rect(box_x, box2_y + 46, box_w2, 4, fill=1, stroke=0)
@@ -277,7 +332,7 @@ c.showPage(); page_num[0] += 1
 # PAGE: WHAT DR. ZHANG SAID
 # =====================================================================
 new_page("What Dr. Zhang Said Is On The Final")
-y[0] = H - HEADER_H - 22
+y[0] = H - HEADER_H - 24
 section_bar("WHAT DR. ZHANG SAID IS ON THE FINAL", accent=RED, sub="Sourced directly from the Week 9 live transcript")
 for label, text in ZHANG_FINAL_FACTS:
     bullet(label, text, accent=RED, size=8.7)
@@ -287,7 +342,7 @@ end_page()
 # PAGE: MASTER PATHWAY TABLE + CIRCUITS
 # =====================================================================
 new_page("Master Pathway Table & The 3 Circuits")
-y[0] = H - HEADER_H - 22
+y[0] = H - HEADER_H - 24
 section_bar("MASTER PATHWAY TABLE -- ALL 12 PRIMARY MERIDIANS", accent=NAVY,
             sub="Dr. Zhang's #1 review emphasis")
 headers = ["Ch", "Organ", "Classification", "Y/Y", "Direction", "Circuit", "Clock"]
@@ -300,23 +355,20 @@ mini_table(["Rule", "Direction"], DIRECTION_RULES, [280, CW - 280], accent=GOLD,
 
 section_bar("HAND-OFF POINTS BETWEEN CIRCUITS", accent=GOLD)
 mini_table(["Transition", "Location", "Example"], HANDOFF_POINTS, [140, 90, CW - 230], accent=GOLD, size=7.8)
-end_page()
 
-new_page("The 3 Circuits, Detailed")
-y[0] = H - HEADER_H - 22
-section_bar("THE THREE CIRCUITS", accent=NAVY)
+section_bar("THE THREE CIRCUITS, DETAILED", accent=NAVY)
 for name, pos, chain, poles, accent in CIRCUITS:
-    bullet(f"{name} ({pos})", f"{' -> '.join(chain)}   |   {poles}", accent=accent, size=8.6)
-para("Course sequence: Outer/Anterior completes first (Weeks 2-3), then Inner/Posterior (Weeks 4-5), then "
-     "Middle (Week 6). Each circuit's 4 channels hand off Qi in the same chest->hand->head->foot->chest pattern.",
-     size=8.6, color=GRAY)
+    bullet(f"{name} ({pos})", f"{' -> '.join(chain)}   |   {poles}", accent=accent, size=8.3)
 end_page()
 
 # =====================================================================
-# CHANNEL ID CARDS -- 12 primary meridians, 2 per page
+# CHANNEL ID CARDS -- 12 primary meridians, ONE PER PAGE with MOA figure
 # =====================================================================
-def channel_card(abbr):
+def channel_page(abbr):
     d = CHANNEL_META[abbr]
+    # ---- PAGE A: ID card + MOA (internal pathway) figure ----
+    new_page(f"Channel ID Card -- {abbr} {d['name']} (MOA Internal)")
+    y[0] = H - HEADER_H - 24
     section_bar(f"{abbr} -- {d['name'].upper()}", accent=d['accent'],
                 sub=f"{d['n_points']} pts | {d['element']} | {d['polarity']} | {d['clock']} | {d['direction']}")
     rows = [
@@ -333,83 +385,138 @@ def channel_card(abbr):
         ("First / Last Point", d['first_last']),
     ]
     mini_table(["Category", "Detail"], rows, [128, CW - 128], accent=d['accent'], size=7.9, striped=True)
+    moa_path = f"{FIGS}/MOA_{abbr}.jpeg"
+    remaining_h = y[0] - 60
+    if remaining_h > 100:
+        section_bar(f"MOA -- INTERNAL PATHWAY (Deadman)", accent=d['accent'],
+                    sub="Organ-level course: chest/abdomen branches, internal connections")
+        cap_h = 14
+        img_top = y[0]
+        used_h = draw_image_fit(moa_path, ML, img_top, CW, remaining_h - cap_h - 20)
+        y[0] = img_top - used_h - cap_h
+        setfill(GRAY); c.setFont("Lora-Italic", 7.5)
+        c.drawCentredString(W / 2, y[0], f"Source: A Manual of Acupuncture (Deadman, 3rd Ed.) -- {d['name']} Meridian")
+    end_page()
+
+    # ---- PAGE B: CAM (external surface points) figure ----
+    cam_path = f"{FIGS}/CAM_{abbr}.jpeg"
+    import os
+    if os.path.exists(cam_path):
+        new_page(f"Channel Surface Points -- {abbr} {d['name']} (CAM External)")
+        y[0] = H - HEADER_H - 24
+        section_bar(f"{abbr} -- CAM EXTERNAL POINT MAP", accent=d['accent'],
+                    sub="Every point, numbered and located on the body surface")
+        img_top = y[0]
+        remaining_h = y[0] - 60
+        used_h = draw_image_fit(cam_path, ML, img_top, CW, remaining_h - 20)
+        y[0] = img_top - used_h - 14
+        setfill(GRAY); c.setFont("Lora-Italic", 7.5)
+        c.drawCentredString(W / 2, y[0], f"Source: Chinese Acupuncture and Moxibustion (CAM, Cheng Xinnong, 4th Ed.) -- {d['name']} Meridian")
+        end_page()
 
 
-new_page("Channel ID Cards -- LU / LI")
-y[0] = H - HEADER_H - 22
-channel_card("LU")
-channel_card("LI")
-end_page()
-
-new_page("Channel ID Cards -- ST / SP")
-y[0] = H - HEADER_H - 22
-channel_card("ST")
-channel_card("SP")
-end_page()
-
-new_page("Channel ID Cards -- HT / SI")
-y[0] = H - HEADER_H - 22
-channel_card("HT")
-channel_card("SI")
-end_page()
-
-new_page("Channel ID Cards -- BL / KI")
-y[0] = H - HEADER_H - 22
-channel_card("BL")
-channel_card("KI")
-end_page()
-
-new_page("Channel ID Cards -- PC / SJ")
-y[0] = H - HEADER_H - 22
-channel_card("PC")
-channel_card("SJ")
-end_page()
-
-new_page("Channel ID Cards -- GB / LR")
-y[0] = H - HEADER_H - 22
-channel_card("GB")
-channel_card("LR")
-end_page()
+for abbr in CHANNEL_ORDER:
+    channel_page(abbr)
 
 # =====================================================================
-# EXTRAORDINARY VESSELS
+# EXTRAORDINARY VESSELS -- with lecture figures, 2 per page
 # =====================================================================
-new_page("Eight Extraordinary Vessels")
-y[0] = H - HEADER_H - 22
+VESSEL_IMG_MAP = {
+    "GV": "VESSEL_GV", "CV": "VESSEL_CV", "Chong": "VESSEL_CHONG", "Dai": "VESSEL_DAI",
+    "Yang Qiao": "VESSEL_YANG_QIAO", "Yin Qiao": "VESSEL_YIN_QIAO",
+    "Yang Wei": "VESSEL_YANG_WEI", "Yin Wei": "VESSEL_YIN_WEI",
+}
+
+new_page("Eight Extraordinary Vessels -- GV / CV")
+y[0] = H - HEADER_H - 24
 section_bar("EIGHT EXTRAORDINARY VESSELS", accent=EXTRA, sub="Week 7 -- confluent points started live in Week 9 review")
-for v in EXTRAORDINARY_VESSELS:
+
+
+def vessel_block(v):
+    imgkey = VESSEL_IMG_MAP.get(v['abbr'])
+    img_path = f"{FIGS}/{imgkey}.jpeg" if imgkey else None
     npts = f"{v['n_points']} pts" if v['n_points'] else "no own points (except GV/CV)"
     label = f"{v['abbr']} -- {v['name']}"
     detail = (f"{npts} | Sea: {v['sea']} | Confluent: {v['confluent']} (partner: {v['partner']}) | "
               f"Course: {v['course']} | Function: {v['function']}")
-    bullet(label, detail, accent=v['accent'], size=8.0)
+    text_lines = wrap_words(label, "Lora-Bold", 9.5, CW - 140)
+    detail_lines = wrap_words(detail, "Lora", 8.4, CW - 140)
+    img_h = 150
+    needed = max(img_h, (len(text_lines) + len(detail_lines)) * 12 + 10)
+    ensure_space(needed + 14, f"Eight Extraordinary Vessels -- {v['abbr']}")
+    top = y[0]
+    if img_path:
+        draw_image_fit(img_path, ML, top, 120, img_h)
+    setfill(v['accent']); c.setFont("Lora-Bold", 9.5)
+    yy = top - 4
+    for ln in text_lines:
+        c.drawString(ML + 132, yy, ln); yy -= 12.5
+    setfill(DARK); c.setFont("Lora", 8.4)
+    yy -= 3
+    for ln in detail_lines:
+        c.drawString(ML + 132, yy, ln); yy -= 11.5
+    y[0] = top - needed - 10
+    setstroke((0.85, 0.85, 0.85)); c.setLineWidth(0.5)
+    c.line(ML, y[0] + 4, ML + CW, y[0] + 4)
+
+
+vessel_block(EXTRAORDINARY_VESSELS[0])
+vessel_block(EXTRAORDINARY_VESSELS[1])
 end_page()
 
-new_page("Confluent Point Pairings -- Quick Map")
-y[0] = H - HEADER_H - 22
-section_bar("EIGHT CONFLUENT POINTS -- PAIRED QUICK MAP", accent=TEAL,
-            sub="Connect the 8 EVs to the 12 regular meridians")
-mini_table(["Point A", "Point B", "Vessels Opened", "Clinical Use"], CONFLUENT_PAIRS_QUICK,
-           [86, 86, 130, CW - 302], accent=TEAL, size=7.8)
-para("Rule: Confluent points always pair one Hand channel point with one Foot channel point, and the pairing "
-     "is fixed -- these four pairs never mix.", size=8.4, color=GRAY)
+new_page("Eight Extraordinary Vessels -- Chong / Dai / Qiao / Wei")
+y[0] = H - HEADER_H - 24
+section_bar("EIGHT EXTRAORDINARY VESSELS (CONT.)", accent=EXTRA)
+for v in EXTRAORDINARY_VESSELS[2:]:
+    vessel_block(v)
+end_page()
+
+# =====================================================================
+# CONFLUENT POINTS -- with point-location images
+# =====================================================================
+CONF_IMG_MAP = {
+    "SI3 Houxi": "CONF_HOUXI", "BL62 Shenmai": "CONF_SHENMAI",
+    "LU7 Lieque": "CONF_LIEQUE", "KI6 Zhaohai": "CONF_ZHAOHAI",
+    "SP4 Gongsun": "CONF_GONGSUN", "PC6 Neiguan": "CONF_NEIGUAN",
+    "GB41 Zulinqi": "CONF_ZULINQI", "SJ5 Waiguan": "CONF_WAIGUAN",
+}
+
+new_page("Confluent Point Pairings -- With Locations")
+y[0] = H - HEADER_H - 24
+section_bar("EIGHT CONFLUENT POINTS -- LOCATIONS", accent=TEAL, sub="Connect the 8 EVs to the 12 regular meridians")
+for a, b, opens, use in CONFLUENT_PAIRS_QUICK:
+    a_key = a.split(" (")[0] if "(" in a else a
+    # a and b are like "SI3 Houxi"
+    img_a = CONF_IMG_MAP.get(a)
+    img_b = CONF_IMG_MAP.get(b)
+    row_h = 96
+    ensure_space(row_h + 24, "Confluent Point Pairings -- With Locations")
+    top = y[0]
+    if img_a:
+        draw_image_fit(f"{FIGS}/{img_a}.jpeg", ML, top, 90, row_h)
+    if img_b:
+        draw_image_fit(f"{FIGS}/{img_b}.jpeg", ML + 100, top, 90, row_h)
+    setfill(TEAL); c.setFont("Lora-Bold", 9.5)
+    c.drawString(ML + 202, top - 12, f"{a}  +  {b}")
+    setfill(NAVY); c.setFont("Lora-Bold", 8.6)
+    c.drawString(ML + 202, top - 28, f"Opens: {opens}")
+    setfill(DARK); c.setFont("Lora", 8.4)
+    for i, ln in enumerate(wrap_words(f"Use: {use}", "Lora", 8.4, CW - 210)):
+        c.drawString(ML + 202, top - 44 - i * 11.5, ln)
+    y[0] = top - row_h - 14
+    setstroke((0.85, 0.85, 0.85)); c.setLineWidth(0.5)
+    c.line(ML, y[0] + 6, ML + CW, y[0] + 6)
 end_page()
 
 # =====================================================================
 # 15 COLLATERALS
 # =====================================================================
 new_page("15 Collaterals (Luo-Connecting Points)")
-y[0] = H - HEADER_H - 22
+y[0] = H - HEADER_H - 24
 section_bar("15 COLLATERALS -- LUO-CONNECTING POINTS", accent=AMBER_LUO, sub="Week 8")
 mini_table(["Luo Point", "Connection", "Note"], LUO_15, [90, 90, CW - 180], accent=AMBER_LUO, size=7.8)
 para(LUO_RULE, size=8.4, color=GRAY)
-end_page()
 
-# =====================================================================
-# LOW-PRIORITY: DIVERGENT / SINEW / CUTANEOUS
-# =====================================================================
-new_page("Divergent Channels, Sinew & Cutaneous Regions (Low-Priority)")
-y[0] = H - HEADER_H - 22
 section_bar("DIVERGENT / SINEW / CUTANEOUS -- LOW PRIORITY FOR THE FINAL", accent=WOOD)
 para(LOW_PRIORITY_NOTE, size=8.6, color=RED)
 bullet("12 Divergent Channels", DIVERGENT_SUMMARY, accent=WOOD, size=8.3)
@@ -421,7 +528,7 @@ end_page()
 # FIVE SHU MASTER TABLE
 # =====================================================================
 new_page("Five Shu (Transport) Points -- Master Table")
-y[0] = H - HEADER_H - 22
+y[0] = H - HEADER_H - 24
 section_bar("FIVE SHU POINTS -- MASTER TABLE (60 POINTS)", accent=NAVY, sub="Week 9 -- all 12 meridians")
 para(FIVE_SHU_DEFINITION, size=8.3, color=GRAY)
 headers = ["Meridian"] + FIVE_SHU_COLS
@@ -435,7 +542,7 @@ end_page()
 # EXAM TRAPS
 # =====================================================================
 new_page("Exam Traps -- Consolidated \"Read These Last\"")
-y[0] = H - HEADER_H - 22
+y[0] = H - HEADER_H - 24
 section_bar("EXAM TRAPS -- CONSOLIDATED FROM EVERY WEEK", accent=RED,
             sub="Read this page last, right before the final")
 for label, text in EXAM_TRAPS:
@@ -446,7 +553,7 @@ end_page()
 # WEEKLY MAP
 # =====================================================================
 new_page("Course Map -- Weeks 1-10")
-y[0] = H - HEADER_H - 22
+y[0] = H - HEADER_H - 24
 section_bar("COURSE MAP -- WEEKS 1-10", accent=GOLD, sub="Syllabus reference")
 mini_table(["Week", "Topic", "Notes"], WEEKLY_MAP, [56, 190, CW - 246], accent=GOLD, size=8.0)
 end_page()
