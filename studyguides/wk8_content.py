@@ -28,16 +28,6 @@ FLAGGED DISCREPANCIES (not silently resolved):
     verified slide-deck material (Dr. Zhang's own slides, not a third-party
     source) but flagged as NOT YET LIVE-LECTURED -- treat as read-ahead /
     self-study material, not confirmed-by-live-walkthrough content.
-  - RESOLVED (2026-09-02): Slide 85's MOA citation "p.16-17, 26-28" was
-    checked against physical CAM/MOA copies (photographed TOC pages) and is
-    CORRECT -- MOA pg.16 = twelve divergent channels, pg.26 = Luo-connecting/
-    sinew/minute collaterals, pg.27 = twelve cutaneous regions. This part of
-    the flag is lifted. The CAM citation "p.88-114" was NOT correct -- real
-    range is CAM p.93-118 (IV. Divergent Meridians + Fifteen Collaterals,
-    starting p.93; V. Muscle Regions + Cutaneous Regions, ending p.118; p.88
-    belongs to Week 7's Eight Extra Meridians theory section instead). The
-    "intro to 12 Primary Meridians" phrasing and the Quiz2/Homework2 text
-    remain flagged as stale template leftovers.
 """
 
 NAVY = (0.114, 0.227, 0.369)
@@ -58,22 +48,40 @@ ACCENT_SINEW = (0.45, 0.30, 0.55)        # muted purple -- 12 Muscle/Sinew Regio
 ACCENT_CUTANEOUS = (0.35, 0.35, 0.35)    # kept distinct via LBLUE tint boxes, not flat gray, in layout
 
 READING_NOTE = (
-    "Written-syllabus Week 8 reading entry not available in project files. "
-    "Verified against physical CAM/MOA copies: MOA p.16-17 (twelve divergent "
-    "channels) + p.26-28 (Luo-connecting/sinew/cutaneous regions) -- CONFIRMED "
-    "correct. CAM p.93-118 (IV. Divergent Meridians + Fifteen Collaterals; "
-    "V. Muscle Regions + Cutaneous Regions) -- CORRECTED from slide 85's "
-    "\u201cp.88-114,\u201d which bled into Week 7's territory and cut off before the "
-    "Cutaneous Regions section finished. Still no written-syllabus entry to "
-    "cross-check against; confirm with Dr. Zhang before treating as final."
+    "No CAM or MOA reading pages are assigned specifically for Week 8 in either the written syllabus "
+    "excerpts or any \u201cFor Next Week\u201d slide located in project files (checked both Lecture 7's forward-look "
+    "and Lecture 8's own final slide, both editions of the deck). The AC300_CunAndChannels.pdf (CAM) and "
+    "AC300_MOA_Channels.pdf (MOA) figure sets in project files are organized around the 12 PRIMARY organ "
+    "meridians only (already used in Weeks 2-6) and contain no chapter/figures on Collaterals, Divergent "
+    "Channels, Muscle Regions, or Cutaneous Regions -- consistent with the same gap already documented "
+    "for Week 7's Extraordinary Vessels. This week's figures are therefore sourced entirely from Dr. "
+    "Zhang's own lecture slides, as in Week 7."
 )
 
 HOMEWORK_QUIZ_NOTE = (
-    "Dr. Zhang stated verbally that Week 8 has NO new homework, and Week 9 "
-    "(review week) has NO new quiz -- Week 9 is pure review before the final "
-    "exam. Slide 85's \u201cHomework2 Due Week 8 / Quiz 2\u201d text conflicts with "
-    "this and is flagged as likely stale template text, not silently "
-    "corrected."
+    "CONFIRMED via the official 2026 slide deck (2026AC300Lecture_8Vivian.pdf) and cross-checked against "
+    "Lecture 7's own \u201cFor Next Week\u201d slide: Lecture 7 originally planned \u201cQuiz 6\u201d (5 questions, 100 "
+    "points, plus 1 bonus question worth 20 points) and \u201cHomework 5\u201d to cover this week's material "
+    "(15 Collaterals, 12 Divergent Channels, 12 Muscle Regions, 12 Cutaneous Regions). However, Dr. Zhang "
+    "stated verbally in the Week 8 lecture that there is NO new homework this week, and the Week 8 deck's "
+    "own final slide (\u201cFor Next Week\u201d) confirms Week 9 covers \u201cAcupuncture Points: General Functions "
+    "and Categories\u201d and to \u201cPrepare for Final Exam (material from week 1-9)\u201d -- with no quiz or "
+    "homework mentioned. The older Lecture8vivian1119.pdf's \u201cHomework2 Due Week 8 / Quiz 2\u201d text is "
+    "confirmed stale template text (its reading assignment -- \u201cintro to all 12 Primary Meridians\u201d -- "
+    "matches Week 2-level content, not Week 8/9). Net effect: Quiz 6 / Homework 5 were planned but not "
+    "administered as new Week 8 deliverables -- treat this Quiz Kit as review material, not a stand-in "
+    "for a graded quiz."
+)
+
+LUO_NOMENCLATURE_ERROR = (
+    "Flagged, not silently corrected: the \u201cGeneral Nomenclature of TCM 15 Collaterals\u201d summary table in "
+    "the 2026 slide deck (2026AC300Lecture_8Vivian.pdf, and also 2026AC300Lecture_9Vivian.pdf) has a "
+    "row-swap error in its first two rows -- it pairs \u201cPericardium Meridian of Hand Taiyin\u201d with \u201cLie Que "
+    "LU7\u201d and \u201cLung Meridian of Hand Jueyin\u201d with \u201cNeiguan PC6.\u201d This is backwards: Lieque LU7 belongs "
+    "to the Lung (Hand-Taiyin), and Neiguan PC6 belongs to the Pericardium (Hand-Jueyin), as correctly "
+    "shown elsewhere in this SAME deck's own point-by-point collateral slides, and as correctly shown in "
+    "the original prior-year deck (Lecture8vivian1119.pdf). All tables and figures in these materials use "
+    "the correct pairing (LU7=Lung, PC6=Pericardium)."
 )
 
 # ---------------------------------------------------------------------------
@@ -234,6 +242,140 @@ LUO_FUNCTION = (
     "from a Confluent point (opens an Extraordinary Vessel). One acupoint can carry more than one of "
     "these special-point identities at once (e.g. LU 7 is both Luo point AND CV's Confluent point) -- "
     "when a point carries multiple special functions, its clinical reach is broader/stronger."
+)
+
+LUO_COURSE_DISTRIBUTION = (
+    "Course and distribution (CAM textbook, cited in lecture): the twelve collateral channels branch out "
+    "from the Luo-Connecting points of their respective meridians and travel toward their "
+    "interior-exteriorly related paired meridians. The collateral channels of the Ren (CV), Du (GV), and "
+    "Spleen meridians branch out from their own Luo-Connecting points, spreading across the abdomen, "
+    "back of the head, and chest-rib regions respectively."
+)
+
+# Precise location + clinical indications for the 12 paired-meridian Luo points, sourced from the
+# Special Points lecture (Lecture_9_Vivian1125.pdf), cross-referenced against MOA/Deadman-style
+# point data. Location text here is MORE PRECISE than the course-narrative location given on the
+# main collateral slides (e.g. exact cun measurements and landmark muscles/tendons).
+LUO_CLINICAL = {
+    "LU": dict(location="Superior to the styloid process of the radius, 1.5 cun above the transverse "
+                         "wrist crease, between brachioradialis and the tendon of abductor pollicis longus.",
+               indications="Headache, migraine, neck rigidity, cough, asthma, sore throat, facial "
+                            "paralysis, toothache, pain and weakness of the wrist."),
+    "LI": dict(location="With the elbow flexed, radial side of the arm upward: on the line joining "
+                         "Yangxi (LI 5) and Quchi (LI 11), 3 cun above the wrist crease.",
+               indications="Redness of the eye, tinnitus, deafness, epistaxis, aching of the hand and "
+                            "arm, sore throat, edema."),
+    "ST": dict(location="8 cun superior to the tip of the external malleolus, lateral to Tiaokou (ST 38), "
+                         "about two fingerbreadths lateral to the anterior border of the tibia.",
+               indications="Headache, dizziness and vertigo, cough, asthma, excessive sputum, chest "
+                            "pain, constipation, mania, epilepsy, muscular atrophy, motor impairment, "
+                            "pain, swelling or paralysis of the lower extremities."),
+    "SP": dict(location="In the depression distal and inferior to the base of the 1st metatarsal bone, "
+                         "at the junction of the red and white skin.",
+               indications="Gastric pain, vomiting, abdominal pain and distension, diarrhea, dysentery, "
+                            "borborygmus."),
+    "HT": dict(location="Palm facing upward: on the radial side of the flexor carpi ulnaris tendon, "
+                         "1 cun above the transverse wrist crease.",
+               indications="Palpitation, dizziness, blurring of vision, sore throat, sudden loss of "
+                            "voice, aphasia with stiffness of the tongue, pain in the wrist and elbow."),
+    "SI": dict(location="On the line joining Yanggu (SI 5) and Xiaohai (SI 8), 5 cun proximal to the "
+                         "dorsal wrist crease.",
+               indications="Neck rigidity, headache, dizziness, spasmodic pain in the elbow and "
+                            "fingers, febrile diseases, mania."),
+    "BL": dict(location="7 cun directly above Kunlun (BL 60), on the posterior border of the fibula, "
+                         "about 1 cun lateral and inferior to Chengshan (BL 57).",
+               indications="Headache, blurring of vision, nasal obstruction, epistaxis, back pain, "
+                            "hemorrhoids, weakness of the leg."),
+    "KI": dict(location="Posterior and inferior to the medial malleolus, in the depression anterior to "
+                         "the medial side of the Achilles tendon attachment.",
+               indications="Spitting of blood, asthma, stiffness and pain of the lower back, dysuria, "
+                            "constipation, pain in the heel, dementia."),
+    "PC": dict(location="2 cun above the transverse wrist crease, between the tendons of palmaris "
+                         "longus and flexor carpi radialis.",
+               indications="Cardiac pain, palpitation, stuffy chest, pain in the hypochondriac region, "
+                            "stomachache, nausea, vomiting, hiccup, mental disorders, epilepsy, "
+                            "insomnia, febrile diseases, irritability, malaria, contracture and pain of "
+                            "the elbow and arm."),
+    "SJ": dict(location="2 cun proximal to the dorsal wrist crease, on the line connecting Yangchi "
+                         "(SJ 4) and the tip of the olecranon, between the radius and ulna.",
+               indications="Febrile diseases, headache, cheek pain, strained neck, deafness, tinnitus, "
+                            "hypochondriac pain, motor impairment of the elbow and arm, finger pain, "
+                            "hand tremor."),
+    "GB": dict(location="5 cun directly above the tip of the external malleolus, on the anterior "
+                         "border of the fibula.",
+               indications="Knee pain, muscular atrophy, motor impairment and pain of the lower "
+                            "extremities, blurring of vision, ophthalmalgia, night blindness, "
+                            "distending pain of the breast."),
+    "LR": dict(location="5 cun above the tip of the medial malleolus, on the midline of the medial "
+                         "surface of the tibia.",
+               indications="Retention of urine, enuresis, hernia, irregular menstruation, leukorrhea, "
+                            "pruritus vulvae, weakness and atrophy of the leg."),
+}
+
+# 8 Confluent Points -- detailed location + key clinical functions, from the 2026 deck's own
+# dedicated review slides (2026AC300Lecture_8Vivian.pdf, slides "Eight Confluent Points"). More
+# precise than a bare Q&A recap -- used to expand the Week 7 bridge section this week.
+CONFLUENT_DETAIL = [
+    dict(point="Houxi (SI 3)", vessel="Du Vessel", partner="Shenmai (BL 62)", fig="CONFLUENT_HOUXI",
+         location="On the ulnar side of the hand, proximal to the 5th metacarpophalangeal joint, at "
+                   "the border of the red and white skin.",
+         function="Benefits the spine and neck; clears heat; treats febrile disease and back pain."),
+    dict(point="Lieque (LU 7)", vessel="Ren Vessel", partner="Zhaohai (KI 6)", fig="CONFLUENT_LIEQUE",
+         location="On the radial forearm, 1.5 cun proximal to the wrist crease, superior to the "
+                   "styloid process of the radius.",
+         function="Releases the exterior, benefits the throat and lungs, and regulates the Ren Vessel."),
+    dict(point="Gongsun (SP 4)", vessel="Chong Vessel", partner="Neiguan (PC 6)", fig="CONFLUENT_GONGSUN",
+         location="On the medial foot, distal and inferior to the base of the 1st metatarsal bone.",
+         function="Harmonizes the middle jiao, regulates the Chong Vessel, and treats abdominal or "
+                   "menstrual disorders."),
+    dict(point="Zulinqi (GB 41)", vessel="Dai Vessel", partner="Waiguan (SJ 5)", fig="CONFLUENT_ZULINQI",
+         location="On the dorsum of the foot, distal to the junction of the 4th and 5th metatarsal bones.",
+         function="Spreads Liver qi, regulates the Dai Vessel, benefits the breasts, and treats pelvic "
+                   "or lateral-body pain."),
+    dict(point="Zhaohai (KI 6)", vessel="Yin Qiao Vessel", partner="Lieque (LU 7)", fig="CONFLUENT_ZHAOHAI",
+         location="In the depression directly below the medial malleolus.",
+         function="Nourishes yin, benefits the throat, regulates sleep, governs movement."),
+    dict(point="Shenmai (BL 62)", vessel="Yang Qiao Vessel", partner="Houxi (SI 3)", fig="CONFLUENT_SHENMAI",
+         location="In the depression directly below the lateral malleolus.",
+         function="Regulates the Yang Qiao Vessel, benefits the eyes, calms the spirit, and governs "
+                   "motor function."),
+    dict(point="Neiguan (PC 6)", vessel="Yin Wei Vessel", partner="Gongsun (SP 4)", fig="CONFLUENT_NEIGUAN",
+         location="2 cun proximal to the wrist crease, between the tendons of palmaris longus and "
+                   "flexor carpi radialis.",
+         function="Opens the chest, regulates the Heart, calms the spirit, harmonizes the Stomach, and "
+                   "relieves nausea."),
+    dict(point="Waiguan (SJ 5)", vessel="Yang Wei Vessel", partner="Zulinqi (GB 41)", fig="CONFLUENT_WAIGUAN",
+         location="2 cun proximal to the dorsal wrist crease, between the radius and ulna.",
+         function="Releases the exterior, clears heat, benefits the head and ears, and relieves pain "
+                   "along the yang channels."),
+]
+
+# Detailed eye-relationship table (2026 deck's own discussion-answer slide) -- more precise than a
+# paraphrased summary; used to replace/upgrade the informal WEEK7_REVIEW_DISCUSSION eye answer.
+EYE_RELATIONSHIP_TABLE = [
+    ("Bladder (BL)", "Starts at the inner canthus", "Starts at the inner canthus (BL 1 Jingming)..."),
+    ("Gallbladder (GB)", "Starts at the outer canthus", "Starts at the outer canthus (GB 1 Tongziliao)..."),
+    ("Small Intestine (SI)", "Reaches both inner & outer canthus",
+     "A branch goes to the outer canthus; another travels below the eye to the inner canthus."),
+    ("Sanjiao / Triple Energizer (SJ)", "Terminates at the outer canthus",
+     "A branch runs from behind the ear to the outer canthus."),
+    ("Liver (LR)", "Connects to the \u201cEye System\u201d",
+     "Follows the throat upward, connects to the \u2018Eye System.\u2019"),
+    ("Heart (HT)", "Connects to the \u201cEye System\u201d",
+     "A branch links the heart to the \u2018Eye System\u2019 via the throat."),
+    ("Stomach (ST)", "Ascends to the inner corner of the eye",
+     "Ascends to the bridge of the nose, where it meets the Bladder meridian (Jingming, BL 1)."),
+]
+
+LUO_GENERAL_DEF = (
+    "General Luo-point definition (Special Points lecture): \u201cFrom the point where each of the fifteen "
+    "Collaterals diverges from the main channels, there is one shu-acupoint.\u201d Location pattern: the Luo "
+    "points of the 12 paired meridians sit below the elbow or knee joints; the Luo point of the CV "
+    "(Jiuwei, CV 15) sits in the upper abdomen; the Luo point of the GV (Changqiang, GV 1) sits in the "
+    "sacrococcygeal region; the Great Luo of the Spleen (Dabao, SP 21) sits in the chest/hypochondriac "
+    "region. Function: treats deficiency and excess patterns; communicates and connects the exterior and "
+    "interior meridians; the Luo points of CV, GV, and the Great Luo of the Spleen specifically treat "
+    "ANTERIOR and POSTERIOR lesions of the trunk (front/back/side coverage, per the \u201cwhy 15\u201d logic)."
 )
 
 # ---------------------------------------------------------------------------

@@ -17,7 +17,8 @@ from wk8_content import (CIRCUITS, THREE_CIRCUITS_RULE, LUO_POINTS, LUO_EXTRA, L
                           SINEW_PATTERN_RULES, SINEW_CLINICAL_NOTE, SINEW_REGIONS,
                           CUTANEOUS_DEFINITION, CUTANEOUS_FUNCTIONS, CUTANEOUS_DIVISIONS,
                           WEEK7_REVIEW_QA, FINAL_EXAM_SUMMARY, READING_NOTE, HOMEWORK_QUIZ_NOTE,
-                          ACCENT_LUO, ACCENT_DIVERGENT, ACCENT_SINEW, DIVERGENT_PAIR_NOTES)
+                          ACCENT_LUO, ACCENT_DIVERGENT, ACCENT_SINEW, DIVERGENT_PAIR_NOTES,
+                          CONFLUENT_DETAIL, EYE_RELATIONSHIP_TABLE, LUO_NOMENCLATURE_ERROR)
 
 OUT = f"/mnt/user-data/outputs/AC300_Week8_StudyGuide_Classic_{'reMarkable' if IS_RM else 'Print'}.pdf"
 DOC_LABEL = "Week 8 Study Guide"
@@ -71,7 +72,8 @@ studyguide_cover(
     info_lines=[
         f"{HOMEWORK_QUIZ_NOTE}",
         f"{READING_NOTE}",
-        "Slides: Dr. Vivian Zhang, Lecture8vivian1119.pdf (85 slides; 1-61 delivered live, 62-85 self-study)",
+        "Slides: Dr. Vivian Zhang -- 2026AC300Lecture_8Vivian.pdf (89 pages, current-year deck) "
+        "cross-checked against Lecture8vivian1119.pdf (85 slides, prior-year deck).",
     ],
 )
 
@@ -80,24 +82,28 @@ studyguide_cover(
 # ============================================================
 db.new_page()
 y = page_title("The Three Circuits -- Dr. Zhang's Organizing Structure")
-y = draw_paragraph(c, THREE_CIRCUITS_RULE, ML, y, CW, size=9.3, leading=13)
-y -= 16
+iy = draw_image_contain(c, "THREE_CIRCUITS", ML, y, CW, 165, NAVY)
+setfill(c, GRAY); c.setFont("Lora-Italic", 7)
+c.drawCentredString(W / 2, iy - 10, "Lecture Fig. -- 2026AC300Lecture_8Vivian.pdf, \u201cThree Main Circuits in the Flow of Qi\u201d (Dr. Zhang)")
+y = iy - 22
+y = draw_paragraph(c, THREE_CIRCUITS_RULE, ML, y, CW, size=9, leading=12.4)
+y -= 12
 
 for circ in CIRCUITS:
     accent = circ["accent"]
-    bh = 46
+    bh = 40
     box(c, ML, y, CW, bh, tint(accent, 0.87))
     setfill(c, accent); c.rect(ML, y - bh, 4, bh, fill=1, stroke=0)
-    setfill(c, NAVY); c.setFont("Lora-Bold", 10.5)
-    c.drawString(ML + 14, y - 15, f"{circ['name']}  ({circ['pinyin']})")
-    setfill(c, DARK); c.setFont("Lora", 8.4)
-    c.drawString(ML + 14, y - 29, "Pairs: " + "   |   ".join(circ["pairs"]))
-    setfill(c, GRAY); c.setFont("Lora-Italic", 7.8)
-    draw_paragraph(c, circ["note"], ML + 14, y - 41, CW - 28, font="Lora-Italic", size=7.6, leading=9.6)
-    y -= bh + 10
+    setfill(c, NAVY); c.setFont("Lora-Bold", 10)
+    c.drawString(ML + 14, y - 13, f"{circ['name']}  ({circ['pinyin']})")
+    setfill(c, DARK); c.setFont("Lora", 7.8)
+    c.drawString(ML + 14, y - 25, "Pairs: " + "   |   ".join(circ["pairs"]))
+    setfill(c, GRAY); c.setFont("Lora-Italic", 7.2)
+    draw_paragraph(c, circ["note"], ML + 14, y - 36, CW - 28, font="Lora-Italic", size=7, leading=8.8)
+    y -= bh + 7
 
-y -= 10
-y = section_label(c, y, "This Week's Four New Layers (all built on TOP of the 12 primary meridians)", NAVY, size=10)
+y -= 6
+y = section_label(c, y, "This Week's Four New Layers (all built on TOP of the 12 primary meridians)", NAVY, size=9.5)
 layer_rows = [
     ("15 Collaterals (Luo Mai)", ACCENT_LUO, "ON the surface -- links each paired meridian via one Luo-Connecting point."),
     ("12 Divergent Channels (Jing Bie)", ACCENT_DIVERGENT, "run DEEP inside -- no points, no pertaining organ; reinforce the organ relationship."),
@@ -251,18 +257,21 @@ def collateral_diagram_page(title, abbrs, slide_note):
     db.new_page()
     y = page_title(title, ACCENT_LUO)
     col_w = (CW - 16) / 2
-    cell_h = 218
+    img_h = 165
+    cell_h = img_h + 30  # image + 2 label lines + small pad
+    row_gap = 8
     for i, abbr in enumerate(abbrs):
         luo = next(l for l in LUO_POINTS if l["abbr"] == abbr)
         col, row = i % 2, i // 2
         x0 = ML + col * (col_w + 16)
-        y0 = y - row * (cell_h + 10)
-        draw_image_contain(c, f"LUO_{abbr}", x0, y0, col_w, 190, luo["accent"])
-        setfill(c, NAVY); c.setFont("Lora-Bold", 10)
-        c.drawCentredString(x0 + col_w / 2, y0 - 202, f"{_short_name(luo['meridian'])} ({abbr})")
-        setfill(c, luo["accent"]); c.setFont("Lora-Bold", 8.6)
-        c.drawCentredString(x0 + col_w / 2, y0 - 215, luo["point"])
-    y -= 3 * (cell_h + 10) + 10
+        y0 = y - row * (cell_h + row_gap)
+        draw_image_contain(c, f"LUO_{abbr}", x0, y0, col_w, img_h, luo["accent"])
+        setfill(c, NAVY); c.setFont("Lora-Bold", 9.5)
+        c.drawCentredString(x0 + col_w / 2, y0 - img_h - 12, f"{_short_name(luo['meridian'])} ({abbr})")
+        setfill(c, luo["accent"]); c.setFont("Lora-Bold", 8.2)
+        c.drawCentredString(x0 + col_w / 2, y0 - img_h - 24, luo["point"])
+    n_rows = (len(abbrs) + 1) // 2
+    y = y - n_rows * (cell_h + row_gap) + row_gap - 6
     setfill(c, GRAY); c.setFont("Lora-Italic", 7.2)
     draw_paragraph(c, slide_note, ML, y, CW, font="Lora-Italic", size=7.2, leading=9.4)
     db.end_page()
@@ -309,22 +318,10 @@ y = draw_paragraph(c,
     ML, y, CW, size=8.6, leading=11.6)
 y -= 16
 
-col_w3 = (CW - 24) / 3
-trio = [("FRONT", "CV 15 Jiuwei", "Ren Mai collateral", ACCENT_LUO),
-        ("BACK", "GV 1 Changqiang", "Du Mai collateral", ACCENT_LUO),
-        ("SIDE", "SP 21 Dabao", "Spleen Great Collateral", ACCENT_LUO)]
-for i, (dir_label, pt, desc, accent) in enumerate(trio):
-    x0 = ML + i * (col_w3 + 12)
-    bh = 62
-    box(c, x0, y, col_w3, bh, tint(accent, 0.87))
-    setfill(c, accent); c.rect(x0, y - bh, col_w3, 3, fill=1, stroke=0)
-    setfill(c, NAVY); c.setFont("Lora-Bold", 11)
-    c.drawCentredString(x0 + col_w3 / 2, y - 20, dir_label)
-    setfill(c, RED); c.setFont("Lora-Bold", 9)
-    c.drawCentredString(x0 + col_w3 / 2, y - 36, pt)
-    setfill(c, GRAY); c.setFont("Lora-Italic", 7.6)
-    c.drawCentredString(x0 + col_w3 / 2, y - 50, desc)
-y -= bh + 16
+iy = draw_image_contain(c, "LUO_EXTRA_DIAGRAM", ML, y, CW, 175, ACCENT_LUO)
+setfill(c, GRAY); c.setFont("Lora-Italic", 6.8)
+c.drawCentredString(W / 2, iy - 10, "Lecture Fig. -- 2026AC300Lecture_8Vivian.pdf, \u201cAdditional (Luo) Channels\u201d (Dr. Zhang)")
+y = iy - 22
 
 y = section_label(c, y, "Memory Aid", GOLD_DARK, size=9.5)
 setfill(c, DARK); c.setFont("Lora-Italic", 8.4)
@@ -637,19 +634,95 @@ y -= 16
 y = section_label(c, y, "Week 7 Recap \u2014 the 8 Confluent Points (bridge review)", GOLD_DARK, size=9.5)
 setfill(c, DARK); c.setFont("Lora-Italic", 7.8)
 y = draw_paragraph(c, "Dr. Zhang opened Lecture 8 with a live Q&A review of the 8 Extraordinary Vessels' "
-                       "confluent points before starting new content -- see the Week 8 Cram Sheet / PLA for "
-                       "the full Q&A. Reference table (Dr. Zhang's own review slide):",
+                       "confluent points before starting new content. Full location + clinical-function "
+                       "detail cards for all 8 points follow on the next two pages.",
                        ML, y, CW, font="Lora-Italic", size=7.8, leading=10.2)
-y -= 6
-iy2 = draw_image_contain(c, "CONFLUENT_REVIEW", ML, y, CW, 175, GOLD_DARK)
-setfill(c, LGRAY); c.setFont("Lora-Italic", 6.6)
-c.drawCentredString(ML + CW / 2, iy2 - 10, "Lecture8vivian1119.pdf, slide 78 (Dr. Zhang) \u2014 Week 7 confluent points review")
-y = iy2 - 26
-hairline(c, ML, y, RX, rgb=GOLD, w=0.8)
-y -= 18
-y = section_label(c, y, "Dr. Zhang's Own Exam-Focus Summary (verbatim, slide 84)", RED, size=10)
-setfill(c, DARK); c.setFont("Lora-Italic", 8.6)
-y = draw_paragraph(c, FINAL_EXAM_SUMMARY, ML, y, CW, font="Lora-Italic", size=8.6, leading=11.6)
 db.end_page()
+
+# ============================================================
+# PAGES: 8 CONFLUENT POINTS -- DETAILED CARDS (Week 7 bridge, expanded)
+# ============================================================
+
+def confluent_detail_page(title, items):
+    db.new_page()
+    y = page_title(title, GOLD_DARK)
+    col_w = (CW - 16) / 2
+    cell_h = 235
+    for i, item in enumerate(items):
+        col, row = i % 2, i // 2
+        x0 = ML + col * (col_w + 16)
+        y0 = y - row * (cell_h + 12)
+        draw_image_contain(c, item["fig"], x0, y0, col_w, 148, GOLD_DARK)
+        ty = y0 - 160
+        setfill(c, NAVY); c.setFont("Lora-Bold", 10)
+        c.drawString(x0, ty, item["point"])
+        setfill(c, RED); c.setFont("Lora-Bold", 8)
+        c.drawRightString(x0 + col_w, ty, item["vessel"])
+        ty -= 13
+        setfill(c, DARK); c.setFont("Lora", 7.4)
+        loc_lines = wrap_words("Location: " + item["location"], "Lora", 7.4, col_w)
+        for ln in loc_lines:
+            c.drawString(x0, ty, ln); ty -= 9.4
+        ty -= 2
+        setfill(c, GOLD_DARK); c.setFont("Lora", 7.4)
+        fn_lines = wrap_words("Function: " + item["function"], "Lora", 7.4, col_w)
+        for ln in fn_lines:
+            c.drawString(x0, ty, ln); ty -= 9.4
+        setfill(c, GRAY); c.setFont("Lora-Italic", 6.8)
+        c.drawString(x0, ty - 2, "Paired with " + item["partner"])
+    y = max(y - 2 * (cell_h + 12) - 6, 44)
+    setfill(c, GRAY); c.setFont("Lora-Italic", 6.8)
+    draw_paragraph(c, "Lecture Fig. -- 2026AC300Lecture_8Vivian.pdf, \u201cEight Confluent Points\u201d review "
+                       "slides (Dr. Zhang). Gongsun's diagram has a small identifying caption cropped out.",
+                       ML, y, CW, font="Lora-Italic", size=6.8, leading=8.8)
+    db.end_page()
+
+
+confluent_detail_page("The 8 Confluent Points, in Detail (1 of 2)", CONFLUENT_DETAIL[:4])
+confluent_detail_page("The 8 Confluent Points, in Detail (2 of 2)", CONFLUENT_DETAIL[4:])
+
+# ============================================================
+# PAGE: EXAM FOCUS SUMMARY
+# ============================================================
+db.new_page()
+y = page_title("Dr. Zhang's Own Exam-Focus Summary", RED)
+setfill(c, DARK); c.setFont("Lora-Italic", 9)
+y = draw_paragraph(c, FINAL_EXAM_SUMMARY, ML, y, CW, font="Lora-Italic", size=9, leading=12.4)
+y -= 16
+flag_lines = wrap_words(LUO_NOMENCLATURE_ERROR, "Lora-Italic", 7.6, CW - 16)
+flag_h = len(flag_lines) * 9.8 + 12
+box(c, ML, y, CW, flag_h, tint(RED, 0.87))
+setfill(c, RED); c.setFont("Lora-Italic", 7.6)
+ty = y - 10
+for ln in flag_lines:
+    c.drawString(ML + 8, ty, ln); ty -= 9.8
+y -= flag_h + 16
+
+y = section_label(c, y, "Eye-Relationship Table (2026 deck, Discussion Q3)", NAVY, size=9.5)
+hdr_h = 14
+setfill(c, NAVY); c.rect(ML, y - hdr_h, CW, hdr_h, fill=1, stroke=0)
+setfill(c, WHITE); c.setFont("Lora-Bold", 7)
+c.drawString(ML + 6, y - hdr_h + 4, "MERIDIAN")
+c.drawString(ML + 150, y - hdr_h + 4, "RELATIONSHIP TO THE EYE")
+c.drawString(ML + 320, y - hdr_h + 4, "KEY PATHWAY")
+y -= hdr_h
+col1_w, col2_w, col3_w = 140, 165, RX - ML - 320 - 4
+for i, (merid, rel, path) in enumerate(EYE_RELATIONSHIP_TABLE):
+    rel_lines = wrap_words(rel, "Lora", 6.8, col2_w)
+    path_lines = wrap_words(path, "Lora-Italic", 6.6, col3_w)
+    row_h = max(15, max(len(rel_lines), len(path_lines)) * 9 + 6)
+    bg = tint(GOLD, 0.9) if i % 2 == 0 else WHITE
+    box(c, ML, y, CW, row_h, bg)
+    setfill(c, DARK); c.setFont("Lora-Bold", 7.2)
+    c.drawString(ML + 6, y - 10, merid)
+    setfill(c, DARK); c.setFont("Lora", 6.8)
+    ty = y - 10
+    for ln in rel_lines:
+        c.drawString(ML + 150, ty, ln); ty -= 9
+    setfill(c, GRAY); c.setFont("Lora-Italic", 6.6)
+    ty = y - 10
+    for ln in path_lines:
+        c.drawString(ML + 320, ty, ln); ty -= 9
+    y -= row_h
 
 db.save()

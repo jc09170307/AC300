@@ -13,7 +13,8 @@ from common_wk8 import (DocBuilder, setfill, setstroke, box, hairline, draw_para
                          LBLUE, DARK, GRAY, LGRAY, WHITE, CARD_BG, tint, EDITION, IS_RM,
                          EDLABEL, draw_image_contain)
 from wk8_content import (LUO_POINTS, LUO_EXTRA, LUO_DEFINITION, LUO_WHY_15_LOGIC,
-                          LUO_FUNCTION, ACCENT_LUO)
+                          LUO_FUNCTION, ACCENT_LUO, LUO_CLINICAL, CONFLUENT_DETAIL,
+                          LUO_NOMENCLATURE_ERROR, LUO_GENERAL_DEF, LUO_COURSE_DISTRIBUTION)
 
 OUT = f"/mnt/user-data/outputs/AC300_Week8_SpecialPointsDecoder_{'reMarkable' if IS_RM else 'Print'}.pdf"
 DOC_LABEL = "Week 8 Special Points Decoder"
@@ -130,6 +131,17 @@ for extra in LUO_EXTRA:
 y -= 10
 setfill(c, GRAY); c.setFont("Lora-Italic", 7.4)
 c.drawString(ML, y, "[self-study] = GB/LR collaterals were slide-deck content Dr. Zhang did not reach live.")
+y -= 20
+
+y = draw_paragraph(c, LUO_GENERAL_DEF, ML, y, CW, size=8, leading=10.8)
+y -= 8
+flag_lines = wrap_words(LUO_NOMENCLATURE_ERROR, "Lora-Italic", 7.2, CW - 16)
+flag_h = len(flag_lines) * 9.2 + 12
+box(c, ML, y, CW, flag_h, tint(RED, 0.87))
+setfill(c, RED); c.setFont("Lora-Italic", 7.2)
+ty = y - 10
+for ln in flag_lines:
+    c.drawString(ML + 8, ty, ln); ty -= 9.2
 db.end_page()
 
 # ============================================================
@@ -141,18 +153,21 @@ def luo_diagram_page(title, abbrs, slide_note):
     y = title_bar(title, None)
     y -= 6
     col_w = (CW - 16) / 2
-    cell_h = 218
+    img_h = 165
+    cell_h = img_h + 30
+    row_gap = 8
     for i, abbr in enumerate(abbrs):
         luo = next(l for l in LUO_POINTS if l["abbr"] == abbr)
         col, row = i % 2, i // 2
         x0 = ML + col * (col_w + 16)
-        y0 = y - row * (cell_h + 10)
-        draw_image_contain(c, f"LUO_{abbr}", x0, y0, col_w, 190, luo["accent"])
-        setfill(c, NAVY); c.setFont("Lora-Bold", 10)
-        c.drawCentredString(x0 + col_w / 2, y0 - 202, f"{_short(luo['meridian'])} ({abbr})")
-        setfill(c, luo["accent"]); c.setFont("Lora-Bold", 8.6)
-        c.drawCentredString(x0 + col_w / 2, y0 - 215, luo["point"])
-    y -= 3 * (cell_h + 10) + 10
+        y0 = y - row * (cell_h + row_gap)
+        draw_image_contain(c, f"LUO_{abbr}", x0, y0, col_w, img_h, luo["accent"])
+        setfill(c, NAVY); c.setFont("Lora-Bold", 9.5)
+        c.drawCentredString(x0 + col_w / 2, y0 - img_h - 12, f"{_short(luo['meridian'])} ({abbr})")
+        setfill(c, luo["accent"]); c.setFont("Lora-Bold", 8.2)
+        c.drawCentredString(x0 + col_w / 2, y0 - img_h - 24, luo["point"])
+    n_rows = (len(abbrs) + 1) // 2
+    y = y - n_rows * (cell_h + row_gap) + row_gap - 6
     setfill(c, GRAY); c.setFont("Lora-Italic", 7.2)
     draw_paragraph(c, slide_note, ML, y, CW, font="Lora-Italic", size=7.2, leading=9.4)
     db.end_page()
@@ -210,6 +225,61 @@ y = draw_paragraph(c,
     "perineum, lateral chest), because their entire purpose is to cover trunk surface area no "
     "limb-based point could reach.",
     ML, y, CW, font="Lora-Italic", size=8.6, leading=11.4)
+db.end_page()
+
+# ============================================================
+# PAGE: Extra Collaterals -- lecture diagram (GV/CV/Great Luo of Spleen)
+# ============================================================
+db.new_page()
+y = title_bar("The 3 Extra Collaterals -- Lecture Diagram", None)
+y -= 8
+draw_image_contain(c, "LUO_EXTRA_DIAGRAM", ML, y, CW, 420, ACCENT_LUO)
+y -= 434
+setfill(c, GRAY); c.setFont("Lora-Italic", 7.4)
+draw_paragraph(c, "Lecture Fig. -- 2026AC300Lecture_8Vivian.pdf, \u201cAdditional (Luo) Channels\u201d slide. Dr. "
+                   "Zhang. Not present as a diagram in the older Lecture8vivian1119.pdf deck (text-only "
+                   "there) -- sourced from the current-year deck.",
+                   ML, y, CW, font="Lora-Italic", size=7.4, leading=9.6)
+db.end_page()
+
+# ============================================================
+# PAGE: Clinical Indications -- all 12 paired Luo points
+# ============================================================
+db.new_page()
+y = title_bar("Clinical Indications -- The 12 Paired Luo Points", "Precise location + treats")
+y -= 6
+setfill(c, DARK)
+y = draw_paragraph(c, LUO_COURSE_DISTRIBUTION, ML, y, CW, size=8.2, leading=11)
+y -= 10
+for luo in LUO_POINTS:
+    clin = LUO_CLINICAL.get(luo["abbr"])
+    if not clin:
+        continue
+    loc_lines = wrap_words("Location: " + clin["location"], "Lora", 7.8, CW - 24)
+    ind_lines = wrap_words("Indications: " + clin["indications"], "Lora", 7.8, CW - 24)
+    box_h = 16 + len(loc_lines) * 10 + 4 + len(ind_lines) * 10 + 8
+    if y - box_h < 65:
+        setfill(c, GRAY); c.setFont("Lora-Italic", 7)
+        c.drawString(ML, 40, "Source: Special Points lecture (Lecture_9_Vivian1125.pdf), MOA-style clinical indications.")
+        db.end_page()
+        db.new_page()
+        y = title_bar("Clinical Indications -- The 12 Paired Luo Points (cont.)", None)
+        y -= 10
+    box(c, ML, y, CW, box_h, tint(luo["accent"], 0.9))
+    setfill(c, luo["accent"]); c.rect(ML, y - box_h, 4, box_h, fill=1, stroke=0)
+    setfill(c, NAVY); c.setFont("Lora-Bold", 9.4)
+    c.drawString(ML + 12, y - 13, f"{luo['point']}  ({_short(luo['meridian'])})" + (" [self-study]" if luo.get("self_study") else ""))
+    ty = y - 26
+    setfill(c, DARK); c.setFont("Lora", 7.8)
+    for ln in loc_lines:
+        c.drawString(ML + 12, ty, ln); ty -= 10
+    ty -= 4
+    setfill(c, GOLD_DARK); c.setFont("Lora", 7.8)
+    for ln in ind_lines:
+        c.drawString(ML + 12, ty, ln); ty -= 10
+    y -= box_h + 6
+setfill(c, GRAY); c.setFont("Lora-Italic", 7)
+c.drawString(ML, 40, "Source: Special Points lecture (Lecture_9_Vivian1125.pdf), MOA-style clinical indications.")
 db.end_page()
 
 # ============================================================
