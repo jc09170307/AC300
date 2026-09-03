@@ -555,6 +555,36 @@ for name, pos, chain, poles, accent in CIRCUITS:
     bullet(f"{name} ({pos})", f"{' -> '.join(chain)}   |   {poles}", accent=accent, size=8.3)
 end_page()
 
+# ---- PATHWAY DISTRIBUTION -- real lecture figures showing WHERE each
+# direction/division sits on the body (Week 1 deck) ----
+new_page("Pathway Distribution -- Lecture Figures")
+y[0] = H - HEADER_H - 24
+section_bar("PATHWAY DISTRIBUTION ON THE BODY -- LECTURE FIGURES", accent=GOLD,
+            sub="Visual support for the Direction-of-Flow Rules above")
+for fig_key, fig_title, accent in [
+    ("DIST_LIMBS", "Distribution on the Limbs -- Anterior/Middle/Posterior x Yin/Yang", GOLD),
+    ("DIST_HEAD_TRUNK", "Distribution on the Head & Trunk -- Anterior/Posterior/Lateral", GOLD),
+    ("DIST_QI_FLOW_DIRECTIONS", "Directions of Qi Flow -- Yin/Yang, Hand/Foot (same rules, shown on a body)", NAVY),
+    ("DIST_CIRCULATION_RULES", "Circulation of the 12 Meridians -- the Chest-Hand-Head-Foot-Abdomen Loop", NAVY),
+]:
+    img_path = f"{FIGS}/{fig_key}.jpeg"
+    iw, ih = img_size(img_path)
+    img_h = CW * ih / iw
+    label_h = 15
+    caption_h = 15
+    needed = label_h + img_h + 8 + caption_h
+    ensure_space(needed, "Pathway Distribution -- Lecture Figures")
+    setfill(accent); c.setFont("Lora-Bold", 9.5)
+    for ln in wrap_words(fig_title, "Lora-Bold", 9.5, CW):
+        c.drawString(ML, y[0], ln); y[0] -= label_h
+    img_top = y[0]
+    used_h = draw_image_fit(img_path, ML, img_top, CW, img_h)
+    y[0] = img_top - used_h - 8
+    setfill(GRAY); c.setFont("Lora-Italic", 7)
+    c.drawCentredString(W / 2, y[0], "Source: Dr. Zhang's Week 1 lecture deck")
+    y[0] -= caption_h
+end_page()
+
 # ---- SIX DIVISIONS OVERVIEW -- Taiyin/Yangming/Shaoyin/Taiyang/Jueyin/Shaoyang
 # tied directly to the 3 circuits (Week 1 lecture deck) ----
 new_page("Six Divisions & The 3 Circuits -- Overview")
@@ -801,6 +831,18 @@ end_page()
 # =====================================================================
 new_page("15 Collaterals (Luo-Connecting Points)")
 y[0] = H - HEADER_H - 24
+section_bar("MERIDIANS VS. COLLATERALS -- THE CONCEPTUAL DIFFERENCE", accent=AMBER_LUO,
+            sub="Week 1 lecture deck")
+mvc_path = f"{FIGS}/DIST_MERIDIAN_VS_COLLATERAL.jpeg"
+iw, ih = img_size(mvc_path)
+img_h = CW * ih / iw
+img_top = y[0]
+used_h = draw_image_fit(mvc_path, ML, img_top, CW, img_h)
+y[0] = img_top - used_h - 12
+setfill(GRAY); c.setFont("Lora-Italic", 7.5)
+c.drawCentredString(W / 2, y[0], "Source: Dr. Zhang's Week 1 lecture deck")
+y[0] -= 18
+
 section_bar("15 COLLATERALS -- LUO-CONNECTING POINTS", accent=AMBER_LUO, sub="Week 8")
 mini_table(["Luo Point", "Connection", "Note"], LUO_15, [0.18 * CW, 0.18 * CW, 0.64 * CW], accent=AMBER_LUO, size=7.8)
 para(LUO_RULE, size=8.4, color=GRAY)
