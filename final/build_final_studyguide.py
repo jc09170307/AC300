@@ -113,7 +113,7 @@ def draw_image_fit(path, x, top_y, max_w, max_h, align="center"):
     dw, dh = iw * scale, ih * scale
     dx = x + (max_w - dw) / 2 if align == "center" else x
     dy = top_y - dh
-    c.drawImage(path, dx, dy, width=dw, height=dh, preserveAspectRatio=True, mask='auto')
+    c.drawImage(path, dx, dy, width=dw, height=dh, preserveAspectRatio=True, mask=None)
     return dh
 
 
