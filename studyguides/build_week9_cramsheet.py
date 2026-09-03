@@ -133,6 +133,16 @@ for extra in LUO_EXTRA:
     setfill(c, GOLD_DARK); c.setFont("Lora-Bold", 6.5)
     c.drawString(ML + 260, y - 8.5, extra["point"])
     y -= 12
+y -= 12
+
+y = block_header(y, "THE 6 CUTANEOUS GROUPS", (0.35, 0.35, 0.35))
+y -= 3
+for div in CUTANEOUS_DIVISIONS:
+    setfill(c, div["accent"]); c.setFont("Lora-Bold", 6.8)
+    c.drawString(ML + 3, y, div["group"] + ":")
+    setfill(c, DARK); c.setFont("Lora", 6.6)
+    c.drawString(ML + 90, y, "  \u00b7  ".join(div["members"]))
+    y -= 9.6
 db.end_page()
 
 # ============================================================
@@ -212,16 +222,6 @@ for m, note in EYE_RELATIONSHIP_TABLE:
         c.drawString(right_x + 4, yr, ln); yr -= 7.4
     yr -= 1.5
 y = min(yl, yr) - 10
-
-y = block_header(y, "THE 6 CUTANEOUS GROUPS", (0.35, 0.35, 0.35))
-y -= 3
-for div in CUTANEOUS_DIVISIONS:
-    setfill(c, div["accent"]); c.setFont("Lora-Bold", 6.8)
-    c.drawString(ML + 3, y, div["group"] + ":")
-    setfill(c, DARK); c.setFont("Lora", 6.6)
-    c.drawString(ML + 90, y, "  \u00b7  ".join(div["members"]))
-    y -= 9.6
-y -= 8
 
 box_lines_flag = wrap_words(HOMEWORK_QUIZ_NOTE, "Lora", 6.6, CW - 16)
 bh2 = len(box_lines_flag) * 8.6 + 12

@@ -140,50 +140,45 @@ y = draw_paragraph(c, FIVE_SHU_YUAN_NOTE, ML, y, CW, size=8.4, leading=11.4)
 db.end_page()
 
 # ============================================================
-# PAGE(s): Five Shu master table -- full drillable, all 12 meridians
+# PAGE: Five Shu master table -- full drillable, all 12 meridians,
+# all 3 cycles on one page
 # ============================================================
-def fiveshu_table_page(rows, title, subtitle):
-    db.new_page()
-    y = title_bar(title, ACCENT_FIVESHU, subtitle)
-    y -= 6
-    hdr_h = 15
-    setfill(c, NAVY); c.rect(ML, y - hdr_h, CW, hdr_h, fill=1, stroke=0)
-    setfill(c, WHITE); c.setFont("Lora-Bold", 7.6)
-    col_w = (CW - 140) / 5
-    c.drawString(ML + 5, y - hdr_h + 4.5, "MERIDIAN")
-    labels = ["JING-WELL", "YING-SPRING", "SHU-STREAM", "JING-RIVER", "HE-SEA"]
-    for i, lab in enumerate(labels):
-        c.drawString(ML + 140 + i * col_w, y - hdr_h + 4.5, lab)
-    y -= hdr_h
-    row_h = 22
-    for i, row in enumerate(rows):
-        bg = tint(row["accent"], 0.9) if i % 2 == 0 else WHITE
-        box(c, ML, y, CW, row_h, bg)
-        setfill(c, row["accent"]); c.setFont("Lora-Bold", 9)
-        c.drawString(ML + 5, y - row_h + 7.5, row["meridian"])
-        setfill(c, DARK); c.setFont("Lora", 7.8)
-        for j, pt in enumerate(row["pts"]):
-            c.drawString(ML + 140 + j * col_w, y - row_h + 7.5, pt)
-        y -= row_h
-    return y
-
-
-y = fiveshu_table_page([r for r in FIVE_SHU_MASTER if r["cycle"] == "Anterior"], "Five Shu Points \u2014 Anterior Cycle", "Lung \u00b7 Large Intestine \u00b7 Stomach \u00b7 Spleen")
-y -= 12
-setfill(c, GRAY); c.setFont("Lora-Italic", 7.6)
-c.drawString(ML, y, "The Anterior Cycle runs Chest -> Hand -> Head -> Foot -> Chest along the anterior aspect of the body.")
-db.end_page()
-
-y = fiveshu_table_page([r for r in FIVE_SHU_MASTER if r["cycle"] == "Posterior"], "Five Shu Points \u2014 Posterior Cycle", "Heart \u00b7 Small Intestine \u00b7 Bladder \u00b7 Kidney")
-y -= 12
-setfill(c, GRAY); c.setFont("Lora-Italic", 7.6)
-c.drawString(ML, y, "The Posterior Cycle runs the same 4-station course along the posterior aspect of the body.")
-db.end_page()
-
-y = fiveshu_table_page([r for r in FIVE_SHU_MASTER if r["cycle"] == "Middle"], "Five Shu Points \u2014 Middle Cycle", "Pericardium \u00b7 Sanjiao \u00b7 Gallbladder \u00b7 Liver")
-y -= 12
-setfill(c, GRAY); c.setFont("Lora-Italic", 7.6)
-c.drawString(ML, y, "The Middle Cycle runs the lateral aspect of the body -- Jueyin/Shaoyang pairing.")
+db.new_page()
+y = title_bar("Five Shu Points \u2014 Master Table, All 3 Cycles", ACCENT_FIVESHU, "All 12 meridians, full drillable detail")
+y -= 6
+hdr_h = 15
+setfill(c, NAVY); c.rect(ML, y - hdr_h, CW, hdr_h, fill=1, stroke=0)
+setfill(c, WHITE); c.setFont("Lora-Bold", 7.6)
+col_w = (CW - 140) / 5
+c.drawString(ML + 5, y - hdr_h + 4.5, "MERIDIAN")
+labels = ["JING-WELL", "YING-SPRING", "SHU-STREAM", "JING-RIVER", "HE-SEA"]
+for i, lab in enumerate(labels):
+    c.drawString(ML + 140 + i * col_w, y - hdr_h + 4.5, lab)
+y -= hdr_h
+row_h = 17.5
+cycle_info = [
+    ("Anterior", "ANTERIOR CYCLE \u2014 Lung \u00b7 Large Intestine \u00b7 Stomach \u00b7 Spleen (Chest -> Hand -> Head -> Foot -> Chest)"),
+    ("Posterior", "POSTERIOR CYCLE \u2014 Heart \u00b7 Small Intestine \u00b7 Bladder \u00b7 Kidney (same 4-station course, posterior aspect)"),
+    ("Middle", "MIDDLE CYCLE \u2014 Pericardium \u00b7 Sanjiao \u00b7 Gallbladder \u00b7 Liver (lateral aspect, Jueyin/Shaoyang)"),
+]
+last_cycle = None
+for i, row in enumerate(FIVE_SHU_MASTER):
+    if row["cycle"] != last_cycle:
+        cyc_label = next(lbl for key, lbl in cycle_info if key == row["cycle"])
+        setfill(c, GRAY); c.setFont("Lora-Bold", 7.4)
+        c.drawString(ML + 2, y - 9.5, cyc_label)
+        y -= 13
+        last_cycle = row["cycle"]
+    bg = tint(row["accent"], 0.9) if i % 2 == 0 else WHITE
+    box(c, ML, y, CW, row_h, bg)
+    setfill(c, row["accent"]); c.setFont("Lora-Bold", 8.6)
+    c.drawString(ML + 5, y - row_h + 6, row["meridian"])
+    setfill(c, DARK); c.setFont("Lora", 7.6)
+    for j, pt in enumerate(row["pts"]):
+        c.drawString(ML + 140 + j * col_w, y - row_h + 6, pt)
+    y -= row_h
+y -= 10
+y = draw_paragraph(c, FIVE_SHU_YUAN_NOTE, ML, y, CW, size=8.2, leading=11.2)
 db.end_page()
 
 # ============================================================

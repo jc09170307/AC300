@@ -315,35 +315,26 @@ y -= 6
 setfill(c, DARK); c.setFont("Lora-Bold", 8.8)
 c.drawString(ML, y, "Middle Circuit Divergent Channels (PC \u00b7 SJ \u00b7 GB \u00b7 LR):")
 y -= 13
-setfill(c, DARK); c.setFont("Lora-Italic", 7.8)
+setfill(c, DARK); c.setFont("Lora-Italic", 7.6)
 y = draw_paragraph(c, "Each is described by Li (beginning) / He (organs involved) / Chu (exiting) / Ru "
-                       "(merging to). Divergent Channels have NO acupoints of their own; the full table is "
-                       "on the next page.",
-                    ML, y, CW, font="Lora-Italic", size=7.8, leading=10.2)
-db.end_page()
-
-# ============================================================
-# PAGE: Middle Circuit Divergent Channels table + Muscle Region pathway
-# text + structural pattern rules -- consolidated
-# ============================================================
-db.new_page()
-y = title_bar("Middle Circuit \u2014 Divergent Channels & Muscle Regions", ACCENT_MIDDLE, "PC \u00b7 SJ \u00b7 GB \u00b7 LR")
-y -= 4
-hdr_h = 13
-setfill(c, NAVY); c.rect(ML, y - hdr_h, CW, hdr_h, fill=1, stroke=0)
+                       "(merging to). Divergent Channels have NO acupoints of their own.",
+                    ML, y, CW, font="Lora-Italic", size=7.6, leading=10.2)
+y -= 8
+hdr_h3 = 13
+setfill(c, NAVY); c.rect(ML, y - hdr_h3, CW, hdr_h3, fill=1, stroke=0)
 setfill(c, WHITE); c.setFont("Lora-Bold", 6.6)
-c.drawString(ML + 5, y - hdr_h + 3.4, "MERIDIAN")
-c.drawString(ML + 95, y - hdr_h + 3.4, "BEGINNING (LI)")
-c.drawString(ML + 225, y - hdr_h + 3.4, "ORGANS/SYSTEMS (HE)")
-c.drawString(ML + 350, y - hdr_h + 3.4, "EXITING (CHU) / MERGING (RU)")
-y -= hdr_h
+c.drawString(ML + 5, y - hdr_h3 + 3.4, "MERIDIAN")
+c.drawString(ML + 95, y - hdr_h3 + 3.4, "BEGINNING (LI)")
+c.drawString(ML + 225, y - hdr_h3 + 3.4, "ORGANS/SYSTEMS (HE)")
+c.drawString(ML + 350, y - hdr_h3 + 3.4, "EXITING (CHU) / MERGING (RU)")
+y -= hdr_h3
 for i, d in enumerate(DIVERGENT_MIDDLE):
     exit_merge = f"{d['exiting']}  ->  {d['merging']}"
     lines_organs = wrap_words(d["organs"], "Lora", 6.6, 118)
     lines_em = wrap_words(exit_merge, "Lora", 6.4, RX - ML - 350 - 4)
-    row_h = max(18, 8.8 * max(len(lines_organs), len(lines_em)) + 7)
+    row_h3 = max(18, 8.8 * max(len(lines_organs), len(lines_em)) + 7)
     bg = tint(d["accent"], 0.9) if i % 2 == 0 else WHITE
-    box(c, ML, y, CW, row_h, bg)
+    box(c, ML, y, CW, row_h3, bg)
     setfill(c, d["accent"]); c.setFont("Lora-Bold", 7.2)
     c.drawString(ML + 5, y - 10.5, d["meridian"])
     setfill(c, DARK); c.setFont("Lora", 6.6)
@@ -353,31 +344,68 @@ for i, d in enumerate(DIVERGENT_MIDDLE):
         c.drawString(ML + 225, y - 10.5 - j * 8.8, ln)
     for j, ln in enumerate(lines_em):
         c.drawString(ML + 350, y - 10.5 - j * 8.8, ln)
-    y -= row_h
+    y -= row_h3
 y -= 8
 setfill(c, DARK); c.setFont("Lora-Italic", 7.6)
 y = draw_paragraph(c, "PC + SJ divergent channels converge with each other; GB + LR divergent channels "
                        "converge with each other -- Divergent Channels always travel in Yin/Yang "
                        "paired-meridian sets before merging into the Yang meridian.",
                     ML, y, CW, font="Lora-Italic", size=7.6, leading=10)
-y -= 14
+db.end_page()
 
-setfill(c, NAVY); c.setFont("Lora-Bold", 9.6)
-c.drawString(ML, y, "Muscle (Sinew) Region Pathways \u2014 Middle Circuit")
-y -= 14
-for s in SINEW_MIDDLE:
-    setfill(c, s["accent"]); c.setFont("Lora-Bold", 8.4)
-    c.drawString(ML, y, s["meridian"]); y -= 11
-    lines = wrap_words(s["path"], "Lora", 7.4, CW - 4)
+# ============================================================
+# PAGE: Middle Circuit Muscle Region pathway text + structural rules
+# ============================================================
+db.new_page()
+y = title_bar("Middle Circuit \u2014 Muscle (Sinew) Region Pathways", ACCENT_MIDDLE, "PC \u00b7 SJ \u00b7 GB \u00b7 LR")
+y -= 6
+setfill(c, NAVY); c.setFont("Lora-Bold", 9.2)
+c.drawString(ML, y, "General Functions of the 12 Muscle Regions:")
+y -= 13
+for f in SINEW_FUNCTIONS:
+    lines = wrap_words("\u2022 " + f, "Lora", 8, CW - 8)
     for ln in lines:
-        c.setFont("Lora", 7.4); setfill(c, DARK)
-        c.drawString(ML + 4, y, ln); y -= 9.6
-    setfill(c, GOLD_DARK); c.setFont("Lora-Italic", 7.2)
-    c.drawString(ML + 4, y, "Binds @ " + s["binds"]); y -= 13
+        c.setFont("Lora", 8); setfill(c, DARK)
+        c.drawString(ML + 4, y, ln); y -= 10.4
+    y -= 2
+y -= 10
+
+col_w3 = (CW - 14) / 2
+card_hs3 = []
+for s in SINEW_MIDDLE:
+    path_lines = wrap_words(s["path"], "Lora", 7.4, col_w3 - 8)
+    card_hs3.append(30 + len(path_lines) * 9.6)
+row_max3 = [max(card_hs3[0], card_hs3[1]), max(card_hs3[2], card_hs3[3])]
+yy = y
+y_top3 = y
+for i, s in enumerate(SINEW_MIDDLE):
+    col, row = i % 2, i // 2
+    x0 = ML + col * (col_w3 + 14)
+    if col == 0:
+        y_top3 = yy
+    ch = row_max3[row]
+    box(c, x0, y_top3, col_w3, ch, tint(s["accent"], 0.92))
+    setfill(c, s["accent"]); c.rect(x0, y_top3 - ch, 3, ch, fill=1, stroke=0)
+    setfill(c, s["accent"]); c.setFont("Lora-Bold", 8.6)
+    c.drawString(x0 + 10, y_top3 - 12, s["meridian"])
+    ty = y_top3 - 24
+    setfill(c, DARK); c.setFont("Lora", 7.4)
+    for ln in wrap_words(s["path"], "Lora", 7.4, col_w3 - 18):
+        c.drawString(x0 + 10, ty, ln); ty -= 9.6
+    if col == 1:
+        yy = y_top3 - ch - 8
+y = yy
 y -= 4
-setfill(c, DARK); c.setFont("Lora-Bold", 8.6)
-c.drawString(ML, y, "The 4 Structural Pattern Rules (all 12 Muscle Regions):")
+# Binds line strip beneath the cards, compact
+setfill(c, GOLD_DARK); c.setFont("Lora-Italic", 7.4)
+binds_line = "   |   ".join(f"{s['meridian'].split(' (')[0]}: {s['binds']}" for s in SINEW_MIDDLE)
+for ln in wrap_words(binds_line, "Lora-Italic", 7.4, CW):
+    c.drawString(ML, y, ln); y -= 9.8
 y -= 12
+
+setfill(c, DARK); c.setFont("Lora-Bold", 8.8)
+c.drawString(ML, y, "The 4 Structural Pattern Rules (all 12 Muscle Regions):")
+y -= 13
 for r in SINEW_PATTERN_RULES:
     lines = wrap_words("\u2022 " + r, "Lora", 7.6, CW - 8)
     for ln in lines:
@@ -556,58 +584,61 @@ for row in EXAM_MASTER_TABLE:
 db.end_page()
 
 # ============================================================
-# PAGE: Clinical Evidence -- PCOS/PMOS
+# PAGE: Clinical Evidence -- PCOS/PMOS + Urinary Incontinence + EMMA,
+# two-column layout to fit on one page
 # ============================================================
 db.new_page()
-y = title_bar("Clinical Evidence \u2014 PCOS/PMOS Protocol", ACCENT_CLINICAL, "Appendix -- not exam material")
+y = title_bar("Clinical Evidence \u2014 PCOS/PMOS, Incontinence & EMMA", ACCENT_CLINICAL, "Appendix -- not exam material")
 y -= 4
+col_w4 = (CW - 18) / 2
+left_x4, right_x4 = ML, ML + col_w4 + 18
+y_top4 = y
+
+# --- LEFT COLUMN: PCOS/PMOS ---
+setfill(c, NAVY); c.setFont("Lora-Bold", 9)
+c.drawString(left_x4, y, "PCOS/PMOS Acupuncture Protocol")
+yl = y - 13
 setfill(c, DARK)
-y = draw_paragraph(c, PCOS_INTRO, ML, y, CW, size=7.9, leading=10.6)
-y -= 8
+yl = draw_paragraph(c, PCOS_INTRO, left_x4, yl, col_w4, size=7.3, leading=9.8)
+yl -= 6
 for label, key in [("Study Design", "design"), ("Dosing", "dosing"), ("Protocol 1", "points_1"),
                     ("Protocol 2 (alternated)", "points_2"), ("Outcomes", "outcomes"), ("Basic Reference Set", "basic_set")]:
-    setfill(c, GOLD_DARK); c.setFont("Lora-Bold", 8.2)
-    c.drawString(ML, y, label + ":")
-    y -= 10.4
-    y = draw_paragraph(c, PCOS_PROTOCOL[key], ML + 6, y, CW - 6, size=7.4, leading=9.8)
-    y -= 5
-y -= 4
-y = draw_paragraph(c, PCOS_DISCLAIMER, ML, y, CW, font="Lora-Italic", size=7, leading=9.4, color=GRAY)
-db.end_page()
+    setfill(c, GOLD_DARK); c.setFont("Lora-Bold", 7.6)
+    c.drawString(left_x4, yl, label + ":")
+    yl -= 9.6
+    yl = draw_paragraph(c, PCOS_PROTOCOL[key], left_x4 + 4, yl, col_w4 - 4, size=6.9, leading=9.1)
+    yl -= 4
+yl -= 3
+yl = draw_paragraph(c, PCOS_DISCLAIMER, left_x4, yl, col_w4, font="Lora-Italic", size=6.6, leading=8.8, color=GRAY)
 
-# ============================================================
-# PAGE: Clinical Evidence -- Urinary Incontinence + EMMA
-# ============================================================
-db.new_page()
-y = title_bar("Clinical Evidence \u2014 Urinary Incontinence & EMMA", ACCENT_CLINICAL, "Appendix -- not exam material")
-y -= 4
-setfill(c, NAVY); c.setFont("Lora-Bold", 8.8)
-c.drawString(ML, y, "Urinary Incontinence Types:")
-y -= 12
+# --- RIGHT COLUMN: Incontinence + EMMA ---
+setfill(c, NAVY); c.setFont("Lora-Bold", 9)
+c.drawString(right_x4, y, "Urinary Incontinence & EMMA Pilot Data")
+yr = y - 13
 for name, desc in INCONTINENCE_TYPES:
-    setfill(c, GOLD_DARK); c.setFont("Lora-Bold", 7.6); c.drawString(ML + 4, y, name + ": ")
-    setfill(c, DARK); c.setFont("Lora", 7.6)
-    lines = wrap_words(desc, "Lora", 7.6, CW - 130)
-    c.drawString(ML + 130, y, lines[0]); y -= 9.6
+    setfill(c, GOLD_DARK); c.setFont("Lora-Bold", 7.2); c.drawString(right_x4, yr, name + ": ")
+    setfill(c, DARK); c.setFont("Lora", 7.2)
+    lines = wrap_words(desc, "Lora", 7.2, col_w4 - 100)
+    c.drawString(right_x4 + 100, yr, lines[0]); yr -= 9
     for ln in lines[1:]:
-        c.drawString(ML + 130, y, ln); y -= 9.6
-y -= 5
-setfill(c, NAVY); c.setFont("Lora-Bold", 8.4)
-c.drawString(ML, y, "JAMA 2017 Electroacupuncture RCT (" + INCONTINENCE_STUDY["citation"] + "):")
-y -= 11
+        c.drawString(right_x4 + 100, yr, ln); yr -= 9
+yr -= 4
+setfill(c, NAVY); c.setFont("Lora-Bold", 7.8)
+yr = draw_paragraph(c, "JAMA 2017 Electroacupuncture RCT (" + INCONTINENCE_STUDY["citation"] + "):",
+                     right_x4, yr, col_w4, font="Lora-Bold", size=7.8, leading=10, color=NAVY)
 for key in ["design", "points", "technique", "course", "outcome", "caution"]:
-    y = draw_paragraph(c, INCONTINENCE_STUDY[key], ML + 4, y, CW - 4, size=7.3, leading=9.8)
-    y -= 3.5
-y -= 3
-y = draw_paragraph(c, INCONTINENCE_RED_FLAGS, ML, y, CW, font="Lora-Italic", size=7.1, leading=9.6, color=RED)
-y -= 8
+    yr = draw_paragraph(c, INCONTINENCE_STUDY[key], right_x4, yr, col_w4, size=6.8, leading=9.1)
+    yr -= 3
+yr -= 2
+yr = draw_paragraph(c, INCONTINENCE_RED_FLAGS, right_x4, yr, col_w4, font="Lora-Italic", size=6.6, leading=8.8, color=RED)
+yr -= 6
 
-setfill(c, NAVY); c.setFont("Lora-Bold", 8.4)
-c.drawString(ML, y, "EMMA Robotic Massage \u2014 Pelvic Pain Pilot Data:")
-y -= 11
+setfill(c, NAVY); c.setFont("Lora-Bold", 7.8)
+c.drawString(right_x4, yr, "EMMA Robotic Massage \u2014 Pelvic Pain Pilot Data:")
+yr -= 10
 for key in ["intro", "cohort", "results", "takeaway"]:
-    y = draw_paragraph(c, EMMA_DATA[key], ML + 4, y, CW - 4, size=7.2, leading=9.7)
-    y -= 4
-db.end_page()
+    yr = draw_paragraph(c, EMMA_DATA[key], right_x4, yr, col_w4, size=6.7, leading=9.0)
+    yr -= 4
 
+db.end_page()
 db.save()
