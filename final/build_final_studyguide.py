@@ -22,15 +22,28 @@ FIGS = '/home/claude/final/figs'
 
 EDITION = sys.argv[1] if len(sys.argv) > 1 else "print"
 IS_RM = EDITION == "remarkable"
+IS_MOBILE = EDITION == "mobile"
 
 pdfmetrics.registerFont(TTFont('Lora', '/home/claude/fonts/Lora-Regular.ttf'))
 pdfmetrics.registerFont(TTFont('Lora-Bold', '/home/claude/fonts/Lora-Bold.ttf'))
 pdfmetrics.registerFont(TTFont('Lora-Italic', '/home/claude/fonts/Lora-Italic.ttf'))
 pdfmetrics.registerFont(TTFont('Lora-BoldItalic', '/home/claude/fonts/Lora-BoldItalic.ttf'))
 
-W, H = letter
+if IS_MOBILE:
+    W, H = 400, 690   # phone-width page -- "fit to screen" already reads comfortably, no pinch-zoom needed
+else:
+    W, H = letter
 
-if IS_RM:
+if IS_MOBILE:
+    PAGE_BG = (1, 1, 1)
+    ROW_TINT = (0.955, 0.958, 0.966)
+    CALLOUT_TINT = (0.961, 0.941, 0.918)
+    HEADER_H = 46
+    COVER_MASTHEAD_H = 70
+    HAIRLINE = 0.6
+    OUT = "/mnt/user-data/outputs/AC300_Final_StudyGuide_Wk1-9_Mobile.pdf"
+    EDLABEL = "Mobile Edition -- reads at 100% zoom, no pinch-zoom needed"
+elif IS_RM:
     PAGE_BG = (0.973, 0.953, 0.902)
     ROW_TINT = (0.925, 0.902, 0.855)
     CALLOUT_TINT = (0.918, 0.886, 0.816)
@@ -49,10 +62,14 @@ else:
     OUT = "/mnt/user-data/outputs/AC300_Final_StudyGuide_Wk1-9_Print.pdf"
     EDLABEL = "Print Edition"
 
-c = canvas.Canvas(OUT, pagesize=letter)
-ML, MR = 36, 36
+c = canvas.Canvas(OUT, pagesize=(W, H))
+ML, MR = (16, 16) if IS_MOBILE else (36, 36)
 CW = W - ML - MR
 page_num = [1]
+
+# Font-size multiplier -- mobile uses noticeably larger absolute point sizes so
+# that "fit width" zoom on a phone is already comfortably readable.
+FS = 1.35 if IS_MOBILE else 1.0
 
 
 def setfill(rgb): c.setFillColorRGB(*rgb)
@@ -103,26 +120,28 @@ def draw_image_fit(path, x, top_y, max_w, max_h, align="center"):
 def header(subtitle):
     setfill(NAVY); c.rect(0, H - HEADER_H, W, HEADER_H, fill=1, stroke=0)
     setfill(GOLD); c.rect(0, H - HEADER_H, W, 3, fill=1, stroke=0)
-    setfill((1, 1, 1)); c.setFont("Lora-Bold", 12)
-    title = "AC300 FINAL STUDY GUIDE"
-    c.drawString(36, H - HEADER_H + 15, title)
-    title_w = pdfmetrics.stringWidth(title, "Lora-Bold", 12)
-    avail = (W - 36) - (36 + title_w) - 10
-    fs = 9.5
+    title_size = 12 * FS
+    setfill((1, 1, 1)); c.setFont("Lora-Bold", title_size)
+    title = "AC300 STUDY GUIDE" if IS_MOBILE else "AC300 FINAL STUDY GUIDE"
+    c.drawString(ML, H - HEADER_H + 15, title)
+    title_w = pdfmetrics.stringWidth(title, "Lora-Bold", title_size)
+    avail = (W - ML) - (ML + title_w) - 10
+    fs = 9.5 * FS
     sw = pdfmetrics.stringWidth(subtitle, "Lora-Italic", fs)
     while sw > avail and fs > 6.5:
         fs -= 0.5
         sw = pdfmetrics.stringWidth(subtitle, "Lora-Italic", fs)
     if avail > 40:
         c.setFont("Lora-Italic", fs)
-        c.drawRightString(W - 36, H - HEADER_H + 15, subtitle)
+        c.drawRightString(W - ML, H - HEADER_H + 15, subtitle)
 
 
 def footer(label):
     setstroke(GOLD); c.setLineWidth(HAIRLINE * 1.2)
-    c.line(36, 34, W - 36, 34)
-    setfill(GRAY); c.setFont("Lora-Italic", 7.5)
-    c.drawCentredString(W / 2, 22, f"AC300/AC375 Final Study Guide (Wk 1-9)  \u00b7  VUIM Summer 2026  \u00b7  {label}")
+    c.line(ML, 34, W - ML, 34)
+    setfill(GRAY); c.setFont("Lora-Italic", 7.5 * FS)
+    foot_text = f"AC300 Final SG (Wk 1-9) \u00b7 {label}" if IS_MOBILE else f"AC300/AC375 Final Study Guide (Wk 1-9)  \u00b7  VUIM Summer 2026  \u00b7  {label}"
+    c.drawCentredString(W / 2, 22, foot_text)
 
 
 def new_page(subtitle):
@@ -145,20 +164,54 @@ def ensure_space(needed, subtitle):
 
 
 def section_bar(text, accent=NAVY, sub=""):
-    ensure_space(34, text)
-    setfill(accent); c.rect(ML, y[0] - 20, 3, 18, fill=1, stroke=0)
-    setfill(NAVY); c.setFont("Lora-Bold", 13)
-    c.drawString(ML + 10, y[0] - 15, text)
-    if sub:
-        setfill(GRAY); c.setFont("Lora-Italic", 8.5)
-        c.drawRightString(ML + CW, y[0] - 15, sub)
-    y[0] -= 22
+    title_size = 13 * FS
+    title_lines = wrap_words(text, "Lora-Bold", title_size, CW - 10)
+    title_line_h = title_size * 1.15
+    sub_line_h = 11 * FS
+    sub_inline = False
+    sub_fs = 8.5 * FS
+    if sub and len(title_lines) == 1:
+        title_w = pdfmetrics.stringWidth(title_lines[0], "Lora-Bold", title_size)
+        avail = CW - 10 - title_w - 12
+        if avail > 60:
+            sw = pdfmetrics.stringWidth(sub, "Lora-Italic", sub_fs)
+            while sw > avail and sub_fs > 6.0 * FS:
+                sub_fs -= 0.5
+                sw = pdfmetrics.stringWidth(sub, "Lora-Italic", sub_fs)
+            if sw <= avail:
+                sub_inline = True
+    sub_lines = [] if (sub_inline or not sub) else wrap_words(sub, "Lora-Italic", 8 * FS, CW - 10)
+
+    # Estimate needed space up front (for pagination) -- exact positioning below
+    # uses the running pen position, not this estimate, so no mismatch is possible.
+    est_h = len(title_lines) * title_line_h + len(sub_lines) * sub_line_h
+    ensure_space(est_h + 24 * FS, text)
+
+    bar_top = y[0]
+    yy = y[0] - 15 * FS
+    setfill(NAVY); c.setFont("Lora-Bold", title_size)
+    for ln in title_lines:
+        c.drawString(ML + 10, yy, ln)
+        yy -= title_line_h
+    if sub_inline:
+        setfill(GRAY); c.setFont("Lora-Italic", sub_fs)
+        c.drawRightString(ML + CW, y[0] - 15 * FS, sub)
+    elif sub_lines:
+        setfill(GRAY); c.setFont("Lora-Italic", 8 * FS)
+        for ln in sub_lines:
+            c.drawString(ML + 10, yy, ln)
+            yy -= sub_line_h
+    # yy is now positioned one line-height below the last line actually drawn --
+    # exactly where the rule should go, with a small extra buffer for descenders.
+    y[0] = yy - 2 * FS
+    setfill(accent); c.rect(ML, y[0], 3, bar_top - y[0], fill=1, stroke=0)
     setstroke(accent); c.setLineWidth(1.2)
     c.line(ML, y[0], ML + CW, y[0])
-    y[0] -= 14
+    y[0] -= 14 * FS
 
 
 def para(text, size=9, font="Lora", color=DARK, indent=0, leading=None, gap=6):
+    size = size * FS
     leading = leading or size * 1.28
     lines = wrap_words(text, font, size, CW - indent)
     ensure_space(len(lines) * leading + gap, "")
@@ -170,6 +223,7 @@ def para(text, size=9, font="Lora", color=DARK, indent=0, leading=None, gap=6):
 
 
 def bullet(label, text, accent=NAVY, size=8.6):
+    size = size * FS
     label_w = 132
     lab_lines = wrap_words(label, "Lora-Bold", size, label_w)
     txt_lines = wrap_words(text, "Lora", size, CW - label_w - 10)
@@ -189,6 +243,7 @@ def bullet(label, text, accent=NAVY, size=8.6):
 
 
 def bullet_line(text, accent=NAVY, size=8.6):
+    size = size * FS
     """A single flowing bulleted sentence (no label column) -- for Functions/Indications/Pearls."""
     lines = wrap_words(text, "Lora", size, CW - 16)
     needed = len(lines) * (size * 1.32) + 5
@@ -203,6 +258,7 @@ def bullet_line(text, accent=NAVY, size=8.6):
 
 
 def record_block(title, fields, accent=NAVY, title_size=9.3, field_size=8.0):
+    title_size = title_size * FS; field_size = field_size * FS
     """Narrow, phone-friendly replacement for wide (5+ column) tables.
     One record per channel/item: bold title line, then wrapped 'Label: value' pairs
     below, in a single narrow column -- never requires horizontal scrolling."""
@@ -225,16 +281,21 @@ def record_block(title, fields, accent=NAVY, title_size=9.3, field_size=8.0):
 
 
 def mini_table(headers, rows, col_w, accent=NAVY, size=7.8, header_size=8.0, striped=True):
+    size = size * FS; header_size = header_size * FS
     total_w = sum(col_w)
     needed_header = header_size * 1.9 + 6
-    ensure_space(needed_header + 10, "")
-    setfill(accent); c.rect(ML, y[0] - needed_header + 3, total_w, needed_header - 3, fill=1, stroke=0)
-    setfill((1, 1, 1)); c.setFont("Lora-Bold", header_size)
-    xx = ML
-    for h, w in zip(headers, col_w):
-        c.drawString(xx + 4, y[0] - needed_header + 9, h)
-        xx += w
-    y[0] -= (needed_header + 2)
+
+    def draw_header():
+        ensure_space(needed_header + 10, "")
+        setfill(accent); c.rect(ML, y[0] - needed_header + 3, total_w, needed_header - 3, fill=1, stroke=0)
+        setfill((1, 1, 1)); c.setFont("Lora-Bold", header_size)
+        xx = ML
+        for h, w in zip(headers, col_w):
+            c.drawString(xx + 4, y[0] - needed_header + 9, h)
+            xx += w
+        y[0] -= (needed_header + 2)
+
+    draw_header()
     for ridx, row in enumerate(rows):
         cell_lines = []
         for cell, w in zip(row, col_w):
@@ -242,7 +303,12 @@ def mini_table(headers, rows, col_w, accent=NAVY, size=7.8, header_size=8.0, str
             cell_lines.append(cl if cl else [""])
         nlines = max(len(cl) for cl in cell_lines)
         rh = nlines * (size * 1.35) + 5
+        y_before = y[0]
         ensure_space(rh, "")
+        if y[0] > y_before:
+            # page broke mid-table -- repeat the header so the continuation
+            # page isn't headerless
+            draw_header()
         if striped and ridx % 2 == 0:
             setfill(ROW_TINT); c.rect(ML, y[0] - rh + 3, total_w, rh - 3, fill=1, stroke=0)
         xx = ML
@@ -258,6 +324,7 @@ def mini_table(headers, rows, col_w, accent=NAVY, size=7.8, header_size=8.0, str
 
 
 def callout_box(title, lines, accent=GOLD, size=8.6):
+    size = size * FS
     """A box sized dynamically to its content -- never overflows."""
     pad = 10
     title_h = 15
@@ -283,86 +350,156 @@ def callout_box(title, lines, accent=GOLD, size=8.6):
 # COVER
 # =====================================================================
 page_bg()
-setfill(NAVY); c.rect(0, H - COVER_MASTHEAD_H, W, COVER_MASTHEAD_H, fill=1, stroke=0)
-setfill(GOLD)
-if IS_RM:
-    c.rect(0, H - COVER_MASTHEAD_H, W, 3, fill=1, stroke=0)
-    c.rect(0, H - COVER_MASTHEAD_H - 5, W, 2, fill=1, stroke=0)
+if IS_MOBILE:
+    setfill(NAVY); c.rect(0, H - COVER_MASTHEAD_H, W, COVER_MASTHEAD_H, fill=1, stroke=0)
+    setfill(GOLD); c.rect(0, H - COVER_MASTHEAD_H, W, 3, fill=1, stroke=0)
+    setfill((1, 1, 1)); c.setFont("Lora-Bold", 11)
+    c.drawCentredString(W / 2, H - COVER_MASTHEAD_H + 38, "AC300/AC375")
+    c.setFont("Lora-Italic", 9)
+    c.drawCentredString(W / 2, H - COVER_MASTHEAD_H + 22, EDLABEL)
+
+    yy = H - COVER_MASTHEAD_H - 40
+    c.setFont("Lora-Bold", 22); setfill(NAVY)
+    for ln in wrap_words("COMPREHENSIVE FINAL STUDY GUIDE", "Lora-Bold", 22, CW):
+        c.drawCentredString(W / 2, yy, ln); yy -= 26
+    yy -= 6
+    c.setFont("Lora-BoldItalic", 11); setfill(RED)
+    for ln in wrap_words("Weeks 1-9, Cumulative -- with MOA + Lecture Figures", "Lora-BoldItalic", 11, CW):
+        c.drawCentredString(W / 2, yy, ln); yy -= 15
+    yy -= 4
+    c.setFont("Lora", 9.5); setfill(DARK)
+    for ln in wrap_words("Built around Dr. Zhang's live Final Exam Review -- 30 questions -- reuses quiz material",
+                         "Lora", 9.5, CW):
+        c.drawCentredString(W / 2, yy, ln); yy -= 13
+    yy -= 14
+    setstroke(GOLD); c.setLineWidth(1)
+    c.line(W / 2 - 60, yy, W / 2 - 15, yy)
+    c.line(W / 2 + 15, yy, W / 2 + 60, yy)
+    setfill(GOLD); c.circle(W / 2, yy, 2, fill=1, stroke=0)
+    yy -= 22
+
+    covers = [
+        "All 12 primary meridians -- ID cards + real MOA + CAM channel figures",
+        "The 3 Circuits, 24-hr clock, direction rules -- Dr. Zhang's #1 review emphasis",
+        "All 8 Extraordinary Vessels with figures + Confluent Point pairs",
+        "15 Collaterals + low-priority Divergent/Sinew/Cutaneous summary",
+        "Full Five Shu Points master table -- all 60 points",
+        "Exam Traps page from every weekly Cram Sheet",
+    ]
+    box_x, box_w2 = ML, CW
+    pad, item_size = 12, 9.3
+    wrapped_items = [wrap_words(item, "Lora", item_size, box_w2 - 34) for item in covers]
+    box_h2 = pad * 2 + 18 + sum(len(w) for w in wrapped_items) * (item_size * 1.4) + len(covers) * 3
+    box_y = yy - box_h2
+    setfill((0.929, 0.949, 0.965) if not IS_RM else (0.902, 0.878, 0.816))
+    c.rect(box_x, box_y, box_w2, box_h2, fill=1, stroke=0)
+    setfill(GOLD); c.rect(box_x, box_y + box_h2 - 4, box_w2, 4, fill=1, stroke=0)
+    setfill(NAVY); c.setFont("Lora-Bold", 10.5)
+    c.drawString(box_x + pad, box_y + box_h2 - pad - 11, "This Guide Covers:")
+    zz = box_y + box_h2 - pad - 11 - 18
+    c.setFont("Lora", item_size); setfill(DARK)
+    for wlines in wrapped_items:
+        setfill(GOLD); c.circle(box_x + pad + 4, zz + 3, 1.5, fill=1, stroke=0)
+        setfill(DARK)
+        for ln in wlines:
+            c.drawString(box_x + pad + 12, zz, ln)
+            zz -= item_size * 1.4
+        zz -= 3
+
+    box2_y = box_y - 12 - 44
+    setfill((0.961, 0.941, 0.918) if not IS_RM else (0.918, 0.886, 0.816))
+    c.rect(box_x, box2_y, box_w2, 44, fill=1, stroke=0)
+    setfill(RED); c.rect(box_x, box2_y + 40, box_w2, 4, fill=1, stroke=0)
+    c.setFont("Lora-Bold", 9.3); setfill(NAVY)
+    for i, ln in enumerate(wrap_words("FINAL EXAM: Week 10 -- 30 Qs -- cumulative, reuses Quiz 1-6", "Lora-Bold", 9.3, box_w2 - 24)):
+        c.drawString(box_x + 12, box2_y + 30 - i * 12, ln)
+
+    setstroke(GOLD); c.setLineWidth(1)
+    c.line(20, 40, W - 20, 40)
+    c.setFont("Lora-Italic", 7.5); setfill(GRAY)
+    c.drawCentredString(W / 2, 26, "Jonathan Centeno \u00b7 D.AcHM Candidate \u00b7 VUIM")
+    c.showPage(); page_num[0] += 1
 else:
-    c.rect(0, H - COVER_MASTHEAD_H, W, 3, fill=1, stroke=0)
-setfill((1, 1, 1)); c.setFont("Lora-Bold", 10.5)
-c.drawCentredString(W / 2, H - COVER_MASTHEAD_H + 35, "AC300/AC375 - Acupuncture Channels & Points I | VUIM Summer 2026")
-c.setFont("Lora-Italic", 9)
-c.drawCentredString(W / 2, H - COVER_MASTHEAD_H + 18, EDLABEL)
+    setfill(NAVY); c.rect(0, H - COVER_MASTHEAD_H, W, COVER_MASTHEAD_H, fill=1, stroke=0)
+    setfill(GOLD)
+    if IS_RM:
+        c.rect(0, H - COVER_MASTHEAD_H, W, 3, fill=1, stroke=0)
+        c.rect(0, H - COVER_MASTHEAD_H - 5, W, 2, fill=1, stroke=0)
+    else:
+        c.rect(0, H - COVER_MASTHEAD_H, W, 3, fill=1, stroke=0)
+    setfill((1, 1, 1)); c.setFont("Lora-Bold", 10.5)
+    c.drawCentredString(W / 2, H - COVER_MASTHEAD_H + 35, "AC300/AC375 - Acupuncture Channels & Points I | VUIM Summer 2026")
+    c.setFont("Lora-Italic", 9)
+    c.drawCentredString(W / 2, H - COVER_MASTHEAD_H + 18, EDLABEL)
 
-bx, by, bs = W / 2 - 34, H - 160, 68
-setfill((0.929, 0.949, 0.965) if not IS_RM else (0.902, 0.878, 0.816))
-c.rect(bx, by, bs, bs, fill=1, stroke=0)
-setfill(GOLD); c.rect(bx, by + bs - 8, bs, 8, fill=1, stroke=0)
-setfill(NAVY); c.setFont("Lora-Bold", 7)
-c.drawCentredString(W / 2, by + bs - 22, "WEEK")
-c.setFont("Lora-Bold", 20)
-c.drawCentredString(W / 2, by + 18, "10")
+    bx, by, bs = W / 2 - 34, H - 160, 68
+    setfill((0.929, 0.949, 0.965) if not IS_RM else (0.902, 0.878, 0.816))
+    c.rect(bx, by, bs, bs, fill=1, stroke=0)
+    setfill(GOLD); c.rect(bx, by + bs - 8, bs, 8, fill=1, stroke=0)
+    setfill(NAVY); c.setFont("Lora-Bold", 7)
+    c.drawCentredString(W / 2, by + bs - 22, "WEEK")
+    c.setFont("Lora-Bold", 20)
+    c.drawCentredString(W / 2, by + 18, "10")
 
-c.setFont("Lora-Bold", 27); setfill(NAVY)
-c.drawCentredString(W / 2, H - 222, "COMPREHENSIVE FINAL STUDY GUIDE")
-c.setFont("Lora-BoldItalic", 12.5); setfill(RED)
-c.drawCentredString(W / 2, H - 245, "Weeks 1-9, Cumulative -- with MOA + Lecture Figures")
-c.setFont("Lora", 10.5); setfill(DARK)
-c.drawCentredString(W / 2, H - 263, "Built around Dr. Zhang's live Final Exam Review \u00b7 30 questions \u00b7 reuses quiz material")
+    c.setFont("Lora-Bold", 27); setfill(NAVY)
+    c.drawCentredString(W / 2, H - 222, "COMPREHENSIVE FINAL STUDY GUIDE")
+    c.setFont("Lora-BoldItalic", 12.5); setfill(RED)
+    c.drawCentredString(W / 2, H - 245, "Weeks 1-9, Cumulative -- with MOA + Lecture Figures")
+    c.setFont("Lora", 10.5); setfill(DARK)
+    c.drawCentredString(W / 2, H - 263, "Built around Dr. Zhang's live Final Exam Review \u00b7 30 questions \u00b7 reuses quiz material")
 
-setstroke(GOLD); c.setLineWidth(1)
-c.line(W / 2 - 120, H - 277, W / 2 - 40, H - 277)
-c.line(W / 2 + 40, H - 277, W / 2 + 120, H - 277)
-setfill(GOLD); c.circle(W / 2, H - 277, 2.5, fill=1, stroke=0)
+    setstroke(GOLD); c.setLineWidth(1)
+    c.line(W / 2 - 120, H - 277, W / 2 - 40, H - 277)
+    c.line(W / 2 + 40, H - 277, W / 2 + 120, H - 277)
+    setfill(GOLD); c.circle(W / 2, H - 277, 2.5, fill=1, stroke=0)
 
-# ---- dynamic "This Guide Covers" box (never overflows) ----
-covers = [
-    "All 12 primary meridians -- full ID cards + real MOA (Deadman) channel figures, one per page",
-    "The 3 Circuits (Outer/Inner/Middle), 24-hr clock, direction rules -- Dr. Zhang's #1 review emphasis",
-    "GV, CV, and all 8 Extraordinary Vessels -- with lecture-sourced vessel figures + Confluent Point pairs",
-    "The 15 Collaterals (Luo-Connecting points) + a low-priority summary of Divergent/Sinew/Cutaneous material",
-    "Full Five Shu (Transport) Points master table -- all 60 points, all 12 meridians",
-    "A dedicated Exam Traps page consolidating every verified fact from every weekly Cram Sheet",
-]
-box_x, box_w2 = 60, W - 120
-pad, title_h2, item_gap = 14, 20, 3
-item_size = 9.1
-wrapped_items = []
-for item in covers:
-    wrapped_items.append(wrap_words(item, "Lora", item_size, box_w2 - 40))
-box_h2 = pad * 2 + title_h2 + sum(len(w) for w in wrapped_items) * (item_size * 1.35) + len(covers) * item_gap
-box_y = H - 300 - box_h2
-setfill((0.929, 0.949, 0.965) if not IS_RM else (0.902, 0.878, 0.816))
-c.rect(box_x, box_y, box_w2, box_h2, fill=1, stroke=0)
-setfill(GOLD); c.rect(box_x, box_y + box_h2 - 4, box_w2, 4, fill=1, stroke=0)
-setfill(NAVY); c.setFont("Lora-Bold", 11)
-c.drawString(box_x + pad, box_y + box_h2 - pad - 11, "This Guide Covers:")
-yy = box_y + box_h2 - pad - 11 - title_h2
-c.setFont("Lora", item_size); setfill(DARK)
-for wlines in wrapped_items:
-    setfill(GOLD); c.circle(box_x + pad + 4, yy + 3, 1.6, fill=1, stroke=0)
-    setfill(DARK)
-    for ln in wlines:
-        c.drawString(box_x + pad + 12, yy, ln)
-        yy -= item_size * 1.35
-    yy -= item_gap
+    # ---- dynamic "This Guide Covers" box (never overflows) ----
+    covers = [
+        "All 12 primary meridians -- full ID cards + real MOA (Deadman) channel figures, one per page",
+        "The 3 Circuits (Outer/Inner/Middle), 24-hr clock, direction rules -- Dr. Zhang's #1 review emphasis",
+        "GV, CV, and all 8 Extraordinary Vessels -- with lecture-sourced vessel figures + Confluent Point pairs",
+        "The 15 Collaterals (Luo-Connecting points) + a low-priority summary of Divergent/Sinew/Cutaneous material",
+        "Full Five Shu (Transport) Points master table -- all 60 points, all 12 meridians",
+        "A dedicated Exam Traps page consolidating every verified fact from every weekly Cram Sheet",
+    ]
+    box_x, box_w2 = 60, W - 120
+    pad, title_h2, item_gap = 14, 20, 3
+    item_size = 9.1
+    wrapped_items = []
+    for item in covers:
+        wrapped_items.append(wrap_words(item, "Lora", item_size, box_w2 - 40))
+    box_h2 = pad * 2 + title_h2 + sum(len(w) for w in wrapped_items) * (item_size * 1.35) + len(covers) * item_gap
+    box_y = H - 300 - box_h2
+    setfill((0.929, 0.949, 0.965) if not IS_RM else (0.902, 0.878, 0.816))
+    c.rect(box_x, box_y, box_w2, box_h2, fill=1, stroke=0)
+    setfill(GOLD); c.rect(box_x, box_y + box_h2 - 4, box_w2, 4, fill=1, stroke=0)
+    setfill(NAVY); c.setFont("Lora-Bold", 11)
+    c.drawString(box_x + pad, box_y + box_h2 - pad - 11, "This Guide Covers:")
+    yy = box_y + box_h2 - pad - 11 - title_h2
+    c.setFont("Lora", item_size); setfill(DARK)
+    for wlines in wrapped_items:
+        setfill(GOLD); c.circle(box_x + pad + 4, yy + 3, 1.6, fill=1, stroke=0)
+        setfill(DARK)
+        for ln in wlines:
+            c.drawString(box_x + pad + 12, yy, ln)
+            yy -= item_size * 1.35
+        yy -= item_gap
 
-# quiz-date / reading box below, with its own gap
-box2_y = box_y - 14 - 50
-setfill((0.961, 0.941, 0.918) if not IS_RM else (0.918, 0.886, 0.816))
-c.rect(box_x, box2_y, box_w2, 50, fill=1, stroke=0)
-setfill(RED); c.rect(box_x, box2_y + 46, box_w2, 4, fill=1, stroke=0)
-setfill(NAVY); c.setFont("Lora-Bold", 10.5)
-c.drawString(box_x + 14, box2_y + 30, "FINAL EXAM: Week 10  \u00b7  30 questions  \u00b7  cumulative, reuses Quiz 1-6 material")
-c.setFont("Lora", 8.8); setfill(DARK)
-c.drawString(box_x + 14, box2_y + 14, "Per Dr. Zhang, live in Week 9: divergent channels / collaterals detail NOT covered in her review.")
+    # quiz-date / reading box below, with its own gap
+    box2_y = box_y - 14 - 50
+    setfill((0.961, 0.941, 0.918) if not IS_RM else (0.918, 0.886, 0.816))
+    c.rect(box_x, box2_y, box_w2, 50, fill=1, stroke=0)
+    setfill(RED); c.rect(box_x, box2_y + 46, box_w2, 4, fill=1, stroke=0)
+    setfill(NAVY); c.setFont("Lora-Bold", 10.5)
+    c.drawString(box_x + 14, box2_y + 30, "FINAL EXAM: Week 10  \u00b7  30 questions  \u00b7  cumulative, reuses Quiz 1-6 material")
+    c.setFont("Lora", 8.8); setfill(DARK)
+    c.drawString(box_x + 14, box2_y + 14, "Per Dr. Zhang, live in Week 9: divergent channels / collaterals detail NOT covered in her review.")
 
-setstroke(GOLD); c.setLineWidth(1)
-c.line(50, 55, W - 50, 55)
-c.setFont("Lora-Italic", 8.5); setfill(GRAY)
-c.drawCentredString(W / 2, 38, "Jonathan Centeno \u00b7 D.AcHM Candidate \u00b7 VUIM \u00b7 Sourced from Dr. Zhang's lectures, CAM 4th Ed., MOA (Deadman 3rd)")
-c.showPage(); page_num[0] += 1
+    setstroke(GOLD); c.setLineWidth(1)
+    c.line(50, 55, W - 50, 55)
+    c.setFont("Lora-Italic", 8.5); setfill(GRAY)
+    c.drawCentredString(W / 2, 38, "Jonathan Centeno \u00b7 D.AcHM Candidate \u00b7 VUIM \u00b7 Sourced from Dr. Zhang's lectures, CAM 4th Ed., MOA (Deadman 3rd)")
+    c.showPage(); page_num[0] += 1
 
 # =====================================================================
 # PAGE: WHAT DR. ZHANG SAID
@@ -390,10 +527,10 @@ for a, o, cl, yy_, d, ci, cl2 in TWELVE_MERIDIANS:
                  accent=_pathway_accents.get(ci, NAVY))
 
 section_bar("DIRECTION-OF-FLOW RULES", accent=GOLD)
-mini_table(["Rule", "Direction"], DIRECTION_RULES, [280, CW - 280], accent=GOLD, size=8.2)
+mini_table(["Rule", "Direction"], DIRECTION_RULES, [0.34 * CW, 0.66 * CW], accent=GOLD, size=8.2)
 
 section_bar("HAND-OFF POINTS BETWEEN CIRCUITS", accent=GOLD)
-mini_table(["Transition", "Location", "Example"], HANDOFF_POINTS, [140, 90, CW - 230], accent=GOLD, size=7.8)
+mini_table(["Transition", "Location", "Example"], HANDOFF_POINTS, [0.26 * CW, 0.17 * CW, 0.57 * CW], accent=GOLD, size=7.8)
 
 section_bar("THE THREE CIRCUITS, DETAILED", accent=NAVY)
 for name, pos, chain, poles, accent in CIRCUITS:
@@ -424,7 +561,7 @@ def channel_page(abbr):
         ("Crossing Points", d['crossing']),
         ("First / Last Point", d['first_last']),
     ]
-    mini_table(["Category", "Detail"], rows, [122, CW - 122], accent=d['accent'], size=7.2, header_size=7.4, striped=True)
+    mini_table(["Category", "Detail"], rows, [0.24 * CW, 0.76 * CW], accent=d['accent'], size=7.2, header_size=7.4, striped=True)
 
     section_bar("FUNCTIONS", accent=d['accent'])
     for f in cc['functions']:
@@ -436,7 +573,7 @@ def channel_page(abbr):
 
     section_bar("HIGHEST-YIELD POINTS", accent=d['accent'])
     hy_rows = [(p, cat, use) for p, cat, use in cc['highest_yield']]
-    mini_table(["Point", "Category", "Clinical Use"], hy_rows, [50, 140, CW - 190], accent=d['accent'], size=7.3, header_size=7.5)
+    mini_table(["Point", "Category", "Clinical Use"], hy_rows, [0.10 * CW, 0.27 * CW, 0.63 * CW], accent=d['accent'], size=7.3, header_size=7.5)
 
     section_bar("CLINICAL PEARLS & EXAM TRAPS", accent=RED)
     for pearl in cc['pearls']:
@@ -503,6 +640,29 @@ def vessel_block(v):
     label = f"{v['abbr']} -- {v['name']}"
     detail = (f"{npts} | Sea: {v['sea']} | Confluent: {v['confluent']} (partner: {v['partner']}) | "
               f"Course: {v['course']} | Function: {v['function']}")
+    if IS_MOBILE:
+        # stacked layout: image full-width on top, text below -- avoids cramped
+        # side-by-side text on a narrow page
+        img_h = 130 * FS
+        text_lines = wrap_words(label, "Lora-Bold", 10.5 * FS, CW)
+        detail_lines = wrap_words(detail, "Lora", 9 * FS, CW)
+        needed = img_h + (len(text_lines) + len(detail_lines)) * 12.5 * FS + 20
+        ensure_space(needed + 14, f"Eight Extraordinary Vessels -- {v['abbr']}")
+        top = y[0]
+        if img_path:
+            draw_image_fit(img_path, ML + (CW - 160) / 2, top, 160, img_h)
+        yy = top - img_h - 6
+        setfill(v['accent']); c.setFont("Lora-Bold", 10.5 * FS)
+        for ln in text_lines:
+            c.drawString(ML, yy, ln); yy -= 13.5 * FS
+        setfill(DARK); c.setFont("Lora", 9 * FS)
+        yy -= 2
+        for ln in detail_lines:
+            c.drawString(ML, yy, ln); yy -= 12.5 * FS
+        y[0] = yy - 10
+        setstroke((0.85, 0.85, 0.85)); c.setLineWidth(0.5)
+        c.line(ML, y[0] + 4, ML + CW, y[0] + 4)
+        return
     text_lines = wrap_words(label, "Lora-Bold", 9.5, CW - 140)
     detail_lines = wrap_words(detail, "Lora", 8.4, CW - 140)
     img_h = 150
@@ -553,6 +713,29 @@ for a, b, opens, use in CONFLUENT_PAIRS_QUICK:
     # a and b are like "SI3 Houxi"
     img_a = CONF_IMG_MAP.get(a)
     img_b = CONF_IMG_MAP.get(b)
+    if IS_MOBILE:
+        img_h = 110 * FS
+        use_lines = wrap_words(f"Use: {use}", "Lora", 9 * FS, CW)
+        needed = img_h + (3 + len(use_lines)) * 13 * FS + 20
+        ensure_space(needed, "Confluent Point Pairings -- With Locations")
+        top = y[0]
+        half_w = (CW - 10) / 2
+        if img_a:
+            draw_image_fit(f"{FIGS}/{img_a}.jpeg", ML, top, half_w, img_h)
+        if img_b:
+            draw_image_fit(f"{FIGS}/{img_b}.jpeg", ML + half_w + 10, top, half_w, img_h)
+        yy = top - img_h - 8
+        setfill(TEAL); c.setFont("Lora-Bold", 10.5 * FS)
+        c.drawString(ML, yy, f"{a} + {b}"); yy -= 14 * FS
+        setfill(NAVY); c.setFont("Lora-Bold", 9.5 * FS)
+        c.drawString(ML, yy, f"Opens: {opens}"); yy -= 13 * FS
+        setfill(DARK); c.setFont("Lora", 9 * FS)
+        for ln in use_lines:
+            c.drawString(ML, yy, ln); yy -= 12.5 * FS
+        y[0] = yy - 8
+        setstroke((0.85, 0.85, 0.85)); c.setLineWidth(0.5)
+        c.line(ML, y[0] + 4, ML + CW, y[0] + 4)
+        continue
     row_h = 96
     ensure_space(row_h + 24, "Confluent Point Pairings -- With Locations")
     top = y[0]
@@ -578,7 +761,7 @@ end_page()
 new_page("15 Collaterals (Luo-Connecting Points)")
 y[0] = H - HEADER_H - 24
 section_bar("15 COLLATERALS -- LUO-CONNECTING POINTS", accent=AMBER_LUO, sub="Week 8")
-mini_table(["Luo Point", "Connection", "Note"], LUO_15, [90, 90, CW - 180], accent=AMBER_LUO, size=7.8)
+mini_table(["Luo Point", "Connection", "Note"], LUO_15, [0.18 * CW, 0.18 * CW, 0.64 * CW], accent=AMBER_LUO, size=7.8)
 para(LUO_RULE, size=8.4, color=GRAY)
 
 section_bar("DIVERGENT / SINEW / CUTANEOUS -- LOW PRIORITY FOR THE FINAL", accent=WOOD)
@@ -628,7 +811,7 @@ end_page()
 new_page("Course Map -- Weeks 1-10")
 y[0] = H - HEADER_H - 24
 section_bar("COURSE MAP -- WEEKS 1-10", accent=GOLD, sub="Syllabus reference")
-mini_table(["Week", "Topic", "Notes"], WEEKLY_MAP, [56, 190, CW - 246], accent=GOLD, size=8.0)
+mini_table(["Week", "Topic", "Notes"], WEEKLY_MAP, [0.11 * CW, 0.37 * CW, 0.52 * CW], accent=GOLD, size=8.0)
 end_page()
 
 c.save()
