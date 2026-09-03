@@ -555,34 +555,46 @@ for name, pos, chain, poles, accent in CIRCUITS:
     bullet(f"{name} ({pos})", f"{' -> '.join(chain)}   |   {poles}", accent=accent, size=8.3)
 end_page()
 
-# ---- PATHWAY DISTRIBUTION -- real lecture figures showing WHERE each
-# direction/division sits on the body (Week 1 deck) ----
+# ---- PATHWAY DISTRIBUTION -- real lecture figures (now cropped to just the
+# diagram, no slide chrome), packed tightly with real explanatory text ----
 new_page("Pathway Distribution -- Lecture Figures")
 y[0] = H - HEADER_H - 24
 section_bar("PATHWAY DISTRIBUTION ON THE BODY -- LECTURE FIGURES", accent=GOLD,
             sub="Visual support for the Direction-of-Flow Rules above")
-for fig_key, fig_title, accent in [
-    ("DIST_LIMBS", "Distribution on the Limbs -- Anterior/Middle/Posterior x Yin/Yang", GOLD),
-    ("DIST_HEAD_TRUNK", "Distribution on the Head & Trunk -- Anterior/Posterior/Lateral", GOLD),
-    ("DIST_QI_FLOW_DIRECTIONS", "Directions of Qi Flow -- Yin/Yang, Hand/Foot (same rules, shown on a body)", NAVY),
-    ("DIST_CIRCULATION_RULES", "Circulation of the 12 Meridians -- the Chest-Hand-Head-Foot-Abdomen Loop", NAVY),
+for fig_key, fig_title, accent, explain in [
+    ("DIST_LIMBS", "Distribution on the Limbs", GOLD,
+     "Medial aspect of the limbs = Yin meridians. Lateral aspect = Yang meridians. On the arm/leg cross-section: "
+     "Anterior strip = Taiyin/Yangming, Middle strip = Jueyin/Shaoyang, Posterior strip = Shaoyin/Taiyang."),
+    ("DIST_HEAD_TRUNK", "Distribution on the Head & Trunk", GOLD,
+     "On the head and trunk the same 3-way split applies: Anterior = Yangming, Posterior = Taiyang, Lateral = "
+     "Shaoyang. On the chest/abdomen specifically, the order from the midline outward is Shaoyin, Taiyin, Jueyin."),
+    ("DIST_QI_FLOW_DIRECTIONS", "Directions of Qi Flow", NAVY,
+     "Same 4 direction rules as the Master Pathway Table, shown on a body: Yin-of-hand runs chest->hand, "
+     "Yang-of-hand runs hand->head, Yang-of-foot runs head->foot, Yin-of-foot runs foot->abdomen."),
+    ("DIST_CIRCULATION_RULES", "Circulation of the 12 Meridians", NAVY,
+     "The full loop: 3 Yin-of-hand meridians (chest->hand) hand off to 3 Yang-of-hand (hand->head) hand off to "
+     "3 Yang-of-foot (head->foot) hand off to 3 Yin-of-foot (foot->abdomen->chest), closing the circuit."),
 ]:
     img_path = f"{FIGS}/{fig_key}.jpeg"
     iw, ih = img_size(img_path)
     img_h = CW * ih / iw
-    label_h = 15
-    caption_h = 15
-    needed = label_h + img_h + 8 + caption_h
+    title_h = 14
+    explain_lines = wrap_words(explain, "Lora", 8.4, CW)
+    explain_h = len(explain_lines) * 11.5 + 4
+    needed = title_h + img_h + 8 + explain_h + 16
     ensure_space(needed, "Pathway Distribution -- Lecture Figures")
     setfill(accent); c.setFont("Lora-Bold", 9.5)
-    for ln in wrap_words(fig_title, "Lora-Bold", 9.5, CW):
-        c.drawString(ML, y[0], ln); y[0] -= label_h
+    c.drawString(ML, y[0], fig_title)
+    y[0] -= title_h
     img_top = y[0]
     used_h = draw_image_fit(img_path, ML, img_top, CW, img_h)
     y[0] = img_top - used_h - 8
-    setfill(GRAY); c.setFont("Lora-Italic", 7)
-    c.drawCentredString(W / 2, y[0], "Source: Dr. Zhang's Week 1 lecture deck")
-    y[0] -= caption_h
+    setfill(DARK); c.setFont("Lora", 8.4)
+    for ln in explain_lines:
+        c.drawString(ML, y[0], ln); y[0] -= 11.5
+    y[0] -= 12
+    setstroke((0.85, 0.85, 0.85)); c.setLineWidth(0.5)
+    c.line(ML, y[0] + 6, ML + CW, y[0] + 6)
 end_page()
 
 # ---- SIX DIVISIONS OVERVIEW -- Taiyin/Yangming/Shaoyin/Taiyang/Jueyin/Shaoyang
@@ -619,34 +631,41 @@ for label, txt in [
      "hand-off sequence that repeats identically across all 3 circuits, just with different channels."),
 ]:
     bullet(label, txt, accent=GOLD, size=8.6)
-end_page()
 
-# ---- CIRCUIT DIAGRAMS -- real lecture figures (Week 1 deck), one per circuit ----
-new_page("Circuit Diagrams -- Anterior / Posterior / Middle")
-y[0] = H - HEADER_H - 24
-section_bar("CIRCUIT DIAGRAMS -- LECTURE FIGURES", accent=NAVY,
-            sub="Each circuit's 4 channels, in sequence")
-for circuit_key, circuit_name, accent in [
-    ("CIRCUIT_ANTERIOR", "Anterior Circuit -- LU -> LI -> ST -> SP", METAL),
-    ("CIRCUIT_POSTERIOR", "Posterior Circuit -- HT -> SI -> BL -> KI", FIRE),
-    ("CIRCUIT_MIDDLE", "Middle Circuit -- PC -> SJ -> GB -> LR", FIREMIN),
+# ---- CIRCUIT DIAGRAMS -- real lecture figures (cropped), packed tight with
+# real per-circuit teaching notes instead of a bare caption ----
+section_bar("CIRCUIT DIAGRAMS -- EACH CIRCUIT'S 4 CHANNELS, IN SEQUENCE", accent=NAVY)
+for circuit_key, circuit_name, accent, teach in [
+    ("CIRCUIT_ANTERIOR", "Anterior Circuit -- LU -> LI -> ST -> SP", METAL,
+     "First circuit to complete (Weeks 2-3). Metal (LU-LI) and Earth (SP-ST) elements. Notice ST's detour "
+     "through the face before descending -- this is why ST has 11 crossing points, the most of any channel."),
+    ("CIRCUIT_POSTERIOR", "Posterior Circuit -- HT -> SI -> BL -> KI", FIRE,
+     "Second circuit to complete (Weeks 4-5). Fire (HT-SI) and Water (KI-BL) elements. BL's long dual-line "
+     "back course and KI's heel-curving finish are the two longest, most exam-tested pathways in this circuit."),
+    ("CIRCUIT_MIDDLE", "Middle Circuit -- PC -> SJ -> GB -> LR", FIREMIN,
+     "Third circuit to complete (Week 6). Ministerial Fire (PC-SJ) and Wood (LR-GB) elements. GB's zigzag "
+     "\"Z-shape\" head course is unique among all 12 channels -- a common exam identification question."),
 ]:
     img_path = f"{FIGS}/{circuit_key}.jpeg"
     iw, ih = img_size(img_path)
     img_h = CW * ih / iw
-    label_h = 16 * FS
-    caption_h = 18 * FS
-    needed = label_h + img_h + 10 + caption_h
+    label_h = 15
+    teach_lines = wrap_words(teach, "Lora", 8.4, CW)
+    teach_h = len(teach_lines) * 11.5 + 4
+    needed = label_h + img_h + 8 + teach_h + 16
     ensure_space(needed, "Circuit Diagrams -- Anterior / Posterior / Middle")
-    setfill(accent); c.setFont("Lora-Bold", 10 * FS)
+    setfill(accent); c.setFont("Lora-Bold", 10)
     c.drawString(ML, y[0], circuit_name)
     y[0] -= label_h
     img_top = y[0]
-    used_h = draw_image_fit(img_path, ML, img_top, CW, img_h + 10)
-    y[0] = img_top - used_h - 10
-    setfill(GRAY); c.setFont("Lora-Italic", 7.2 * FS)
-    c.drawCentredString(W / 2, y[0], "Source: Dr. Zhang's Week 1 lecture deck")
-    y[0] -= caption_h
+    used_h = draw_image_fit(img_path, ML, img_top, CW, img_h)
+    y[0] = img_top - used_h - 8
+    setfill(DARK); c.setFont("Lora", 8.4)
+    for ln in teach_lines:
+        c.drawString(ML, y[0], ln); y[0] -= 11.5
+    y[0] -= 12
+    setstroke((0.85, 0.85, 0.85)); c.setLineWidth(0.5)
+    c.line(ML, y[0] + 6, ML + CW, y[0] + 6)
 end_page()
 
 # =====================================================================
