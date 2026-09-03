@@ -545,21 +545,21 @@ def sinew_circuit_page(circuit_key, circuit_label):
     circ = next(cc for cc in CIRCUITS if cc["key"] == circuit_key)
     y = page_title(f"Muscle Regions -- {circuit_label}", circ["accent"])
     regions = SINEW_BY_CIRCUIT[circuit_key]
-    img_w = 108
+    img_w = 210
     for s in regions:
-        bh = 88
-        text_w = CW - img_w - 26
+        bh = 148
+        text_w = CW - img_w - 30
         box(c, ML, y, CW, bh, tint(s["accent"], 0.9))
         setfill(c, s["accent"]); c.rect(ML, y - bh, 4, bh, fill=1, stroke=0)
-        setfill(c, NAVY); c.setFont("Lora-Bold", 10)
+        setfill(c, NAVY); c.setFont("Lora-Bold", 12)
         title_txt = s["meridian"] + (" [self-study]" if s.get("self_study") else "")
-        c.drawString(ML + 14, y - 15, title_txt)
-        setfill(c, GOLD_DARK); c.setFont("Lora-Bold", 7.8)
-        by = draw_paragraph(c, "Binds at: " + s["binds"], ML + 14, y - 28, text_w, font="Lora-Bold", size=7.8, leading=9.6)
-        setfill(c, DARK); c.setFont("Lora", 7.9)
-        draw_paragraph(c, "Pathway: " + s["path"], ML + 14, by - 3, text_w, size=7.7, leading=10)
-        draw_image_contain(c, f"SINEW_{s['abbr']}", ML + CW - img_w, y - 4, img_w, bh - 8, s["accent"])
-        y -= bh + 10
+        c.drawString(ML + 16, y - 20, title_txt)
+        setfill(c, GOLD_DARK); c.setFont("Lora-Bold", 9)
+        by = draw_paragraph(c, "Binds at: " + s["binds"], ML + 16, y - 38, text_w, font="Lora-Bold", size=9, leading=11.5)
+        setfill(c, DARK); c.setFont("Lora", 9)
+        draw_paragraph(c, "Pathway: " + s["path"], ML + 16, by - 6, text_w, size=9, leading=12)
+        draw_image_contain(c, f"SINEW_{s['abbr']}", ML + CW - img_w, y - 6, img_w, bh - 12, s["accent"])
+        y -= bh + 12
     if circuit_key == "inner":
         setfill(c, GRAY); c.setFont("Lora-Italic", 6.8)
         draw_paragraph(c,
