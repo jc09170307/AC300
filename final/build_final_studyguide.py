@@ -245,7 +245,8 @@ def bullet(label, text, accent=NAVY, size=8.6):
     n = max(len(lab_lines), len(txt_lines))
     needed = n * (size * 1.3) + 6
     ensure_space(needed, "")
-    setfill(accent); c.rect(ML, y[0] - needed + 6, 3, needed - 6, fill=1, stroke=0)
+    bar_pad = size * 0.8  # shift bar up so its top visually aligns with the text's cap-height, not its baseline
+    setfill(accent); c.rect(ML, y[0] - needed + 6 + bar_pad, 3, needed - 6, fill=1, stroke=0)
     yy = y[0]
     setfill(NAVY); c.setFont("Lora-Bold", size)
     for ln in lab_lines:
@@ -263,7 +264,7 @@ def bullet_line(text, accent=NAVY, size=8.6):
     lines = wrap_words(text, "Lora", size, CW - 16)
     needed = len(lines) * (size * 1.32) + 5
     ensure_space(needed, "")
-    setfill(accent); c.circle(ML + 3, y[0] - 3, 1.8, fill=1, stroke=0)
+    setfill(accent); c.circle(ML + 3, y[0] + size * 0.28, 1.8, fill=1, stroke=0)
     setfill(DARK); c.setFont("Lora", size)
     yy = y[0]
     for i, ln in enumerate(lines):
@@ -283,7 +284,8 @@ def record_block(title, fields, accent=NAVY, title_size=9.3, field_size=8.0):
     field_line_h = field_size * 1.4
     needed = title_line_h + len(field_lines) * field_line_h + 6
     ensure_space(needed, "")
-    setfill(accent); c.rect(ML, y[0] - needed + 6, 3, needed - 10, fill=1, stroke=0)
+    bar_pad = title_size * 0.8
+    setfill(accent); c.rect(ML, y[0] - needed + 6 + bar_pad, 3, needed - 10, fill=1, stroke=0)
     yy = y[0]
     setfill(accent); c.setFont("Lora-Bold", title_size)
     c.drawString(ML + 10, yy, title)
@@ -325,7 +327,8 @@ def mini_table(headers, rows, col_w, accent=NAVY, size=7.8, header_size=8.0, str
             # page isn't headerless
             draw_header()
         if striped and ridx % 2 == 0:
-            setfill(ROW_TINT); c.rect(ML, y[0] - rh + 3, total_w, rh - 3, fill=1, stroke=0)
+            row_pad = size * 0.8
+            setfill(ROW_TINT); c.rect(ML, y[0] - rh + 3 + row_pad, total_w, rh - 3, fill=1, stroke=0)
         xx = ML
         setfill(DARK); c.setFont("Lora", size)
         for cl, w in zip(cell_lines, col_w):

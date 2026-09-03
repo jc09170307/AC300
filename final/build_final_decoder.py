@@ -239,7 +239,8 @@ def mini_table(headers, rows, col_w, accent=NAVY, size=7.8, header_size=8.0, str
         if y[0] > y_before:
             draw_header()
         if striped and ridx % 2 == 0:
-            setfill(ROW_TINT); c.rect(ML, y[0] - rh + 3, total_w, rh - 3, fill=1, stroke=0)
+            row_pad = size * 0.8
+            setfill(ROW_TINT); c.rect(ML, y[0] - rh + 3 + row_pad, total_w, rh - 3, fill=1, stroke=0)
         xx = ML
         setfill(DARK); c.setFont("Lora", size)
         for cl, w in zip(cell_lines, col_w):
@@ -283,7 +284,8 @@ def two_col_table(pairs, accent=NAVY, size=8.2, col_gap=16):
         for idx, (abbr, val) in enumerate(col_data):
             rh = row_hs[idx]
             if idx % 2 == 0:
-                setfill(ROW_TINT); c.rect(xx, yy - rh + 3, col_w, rh - 3, fill=1, stroke=0)
+                row_pad = size * 0.8
+                setfill(ROW_TINT); c.rect(xx, yy - rh + 3 + row_pad, col_w, rh - 3, fill=1, stroke=0)
             setfill(accent); c.setFont("Lora-Bold", size)
             c.drawString(xx + 4, yy - line_h + 2, abbr)
             setfill(DARK); c.setFont("Lora", size)
@@ -305,7 +307,8 @@ def record_block(title, fields, accent=NAVY, title_size=9.3, field_size=8.0):
     field_line_h = field_size * 1.4
     needed = title_line_h + len(field_lines) * field_line_h + 6
     ensure_space(needed, "")
-    setfill(accent); c.rect(ML, y[0] - needed + 6, 3, needed - 10, fill=1, stroke=0)
+    bar_pad = title_size * 0.8
+    setfill(accent); c.rect(ML, y[0] - needed + 6 + bar_pad, 3, needed - 10, fill=1, stroke=0)
     yy = y[0]
     setfill(accent); c.setFont("Lora-Bold", title_size)
     c.drawString(ML + 10, yy, title)
@@ -474,7 +477,8 @@ for name, accent, definition in CATEGORY_DEFINITIONS:
     n = max(len(lab_lines), len(txt_lines))
     needed = n * 12.2 + 8
     ensure_space(needed, "What Each Point Category Means")
-    setfill(accent); c.rect(ML, y[0] - needed + 6, 3, needed - 6, fill=1, stroke=0)
+    bar_pad = 9.3 * 0.8
+    setfill(accent); c.rect(ML, y[0] - needed + 6 + bar_pad, 3, needed - 6, fill=1, stroke=0)
     yy = y[0]
     setfill(NAVY); c.setFont("Lora-Bold", 9.3)
     for ln in lab_lines:

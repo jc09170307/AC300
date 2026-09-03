@@ -167,7 +167,8 @@ def mini_table(headers, rows, col_w, accent=NAVY, size=6.6, header_size=6.9, str
         if y[0] > y_before:
             draw_header()
         if striped and ridx % 2 == 0:
-            setfill(ROW_TINT); c.rect(ML, y[0] - rh + 2, total_w, rh - 2, fill=1, stroke=0)
+            row_pad = size * 0.8
+            setfill(ROW_TINT); c.rect(ML, y[0] - rh + 2 + row_pad, total_w, rh - 2, fill=1, stroke=0)
         xx = ML
         setfill(DARK); c.setFont("Lora", size)
         for cl, w in zip(cell_lines, col_w):
@@ -204,7 +205,8 @@ def tight_bullets(items, accent=NAVY, size=7.0):
         n = max(len(lab_lines), len(txt_lines))
         needed = n * (size * 1.35) + 4
         ensure_space(needed, "")
-        setfill(accent); c.rect(ML, y[0] - 1, 2, needed - 4, fill=1, stroke=0)
+        bar_pad = size * 0.8
+        setfill(accent); c.rect(ML, y[0] - 1 + bar_pad, 2, needed - 4, fill=1, stroke=0)
         yy = y[0]
         setfill(NAVY); c.setFont("Lora-Bold", size)
         for ln in lab_lines:
@@ -225,7 +227,8 @@ def record_block(title, fields, accent=NAVY, title_size=8.0, field_size=6.8):
     field_line_h = field_size * 1.35
     needed = title_line_h + len(field_lines) * field_line_h + 4
     ensure_space(needed, "")
-    setfill(accent); c.rect(ML, y[0] - needed + 4, 2, needed - 7, fill=1, stroke=0)
+    bar_pad = title_size * 0.8
+    setfill(accent); c.rect(ML, y[0] - needed + 4 + bar_pad, 2, needed - 7, fill=1, stroke=0)
     yy = y[0]
     setfill(accent); c.setFont("Lora-Bold", title_size)
     c.drawString(ML + 7, yy, title)
