@@ -238,6 +238,28 @@ def two_col_table(pairs, accent=NAVY, size=8.2, col_gap=16):
     y[0] -= 4
 
 
+def record_block(title, fields, accent=NAVY, title_size=9.3, field_size=8.0):
+    """Narrow, phone-friendly replacement for wide (5+ column) tables -- one record per
+    channel/item, bold title line then wrapped 'Label: value' pairs below in a single
+    narrow column that never requires horizontal scrolling."""
+    field_text = "   \u00b7   ".join(f"{lab}: {val}" for lab, val in fields)
+    field_lines = wrap_words(field_text, "Lora", field_size, CW - 14)
+    title_line_h = title_size * 1.4
+    field_line_h = field_size * 1.4
+    needed = title_line_h + len(field_lines) * field_line_h + 6
+    ensure_space(needed, "")
+    setfill(accent); c.rect(ML, y[0] - needed + 6, 3, needed - 10, fill=1, stroke=0)
+    yy = y[0]
+    setfill(accent); c.setFont("Lora-Bold", title_size)
+    c.drawString(ML + 10, yy, title)
+    yy -= title_line_h
+    setfill(DARK); c.setFont("Lora", field_size)
+    for ln in field_lines:
+        c.drawString(ML + 10, yy, ln)
+        yy -= field_line_h
+    y[0] -= needed
+
+
 # =====================================================================
 # COVER
 # =====================================================================
@@ -342,10 +364,19 @@ new_page("Five Shu (Transport) Points -- Master Table")
 y[0] = H - HEADER_H - 24
 section_bar("FIVE SHU (TRANSPORT) POINTS -- 60-POINT MASTER TABLE", accent=NAVY, tier=DECODER_TIERS[0])
 para(FIVE_SHU_DEFINITION, size=8.6, color=GRAY)
-headers = ["Meridian"] + FIVE_SHU_COLS
-col_w = [110] + [(CW - 110) // 5] * 5
-rows = [[d['m']] + d['pts'] for d in FIVE_SHU_MASTER]
-mini_table(headers, rows, col_w, accent=NAVY, size=7.2, header_size=7.6)
+para("Split into two narrower tables so neither requires horizontal scrolling on a phone or tablet.",
+     size=8.0, color=GRAY, gap=8)
+section_bar("Jing-Well -> Ying-Spring -> Shu-Stream", accent=NAVY)
+headers_a = ["Meridian"] + FIVE_SHU_COLS[:3]
+col_w_a = [96, (CW - 96) // 3, (CW - 96) // 3, (CW - 96) // 3]
+rows_a = [[d['m']] + d['pts'][:3] for d in FIVE_SHU_MASTER]
+mini_table(headers_a, rows_a, col_w_a, accent=NAVY, size=7.4, header_size=7.6)
+
+section_bar("Jing-River -> He-Sea", accent=NAVY)
+headers_b = ["Meridian"] + FIVE_SHU_COLS[3:]
+col_w_b = [96, (CW - 96) // 2, (CW - 96) // 2]
+rows_b = [[d['m']] + d['pts'][3:] for d in FIVE_SHU_MASTER]
+mini_table(headers_b, rows_b, col_w_b, accent=NAVY, size=7.4, header_size=7.6)
 para(FIVE_SHU_YUAN_NOTE, size=8.4, color=GRAY)
 end_page()
 
@@ -482,17 +513,18 @@ end_page()
 # =====================================================================
 new_page("Cross-Reference Index -- All 12 Channels")
 y[0] = H - HEADER_H - 24
-section_bar("CROSS-REFERENCE INDEX -- ONE ROW PER CHANNEL", accent=NAVY,
-            sub="Every category, side by side -- the fastest lookup in this document")
-headers = ["Ch", "Yuan", "Luo", "Xi-Cleft", "He-Sea", "Back-Shu", "Front-Mu", "Confluent/Cmd"]
-col_w = [24, 66, 62, 58, 58, 62, 62, 118]
-rows = []
+section_bar("CROSS-REFERENCE INDEX -- ONE RECORD PER CHANNEL", accent=NAVY,
+            sub="Every category, in narrow record format -- no horizontal scrolling")
+_pivot_accents = {"LU": METAL, "LI": METAL, "ST": EARTH, "SP": EARTH, "HT": FIRE, "SI": FIRE,
+                  "BL": WATER, "KI": WATER, "PC": FIREMIN, "SJ": FIREMIN, "GB": WOOD, "LR": WOOD}
 for abbr in CHANNEL_ORDER:
     d = CHANNEL_META[abbr]
     conf_cmd = d['confluent'] if d['confluent'] != "none" else d['command']
-    conf_cmd = conf_cmd[:44].rstrip(" -") if len(conf_cmd) > 44 else conf_cmd
-    rows.append((abbr, d['yuan'], d['luo'], d['xi_cleft'], d['he_sea'], d['back_shu'], d['front_mu'], conf_cmd))
-mini_table(headers, rows, col_w, accent=NAVY, size=6.6, header_size=7.0)
+    record_block(f"{abbr} -- {d['name']}",
+                 [("Yuan", d['yuan']), ("Luo", d['luo']), ("Xi-Cleft", d['xi_cleft']),
+                  ("He-Sea", d['he_sea']), ("Back-Shu", d['back_shu']), ("Front-Mu", d['front_mu']),
+                  ("Confluent/Cmd", conf_cmd)],
+                 accent=_pivot_accents.get(abbr, NAVY))
 end_page()
 
 c.save()

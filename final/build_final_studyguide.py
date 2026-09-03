@@ -202,6 +202,28 @@ def bullet_line(text, accent=NAVY, size=8.6):
     y[0] -= needed
 
 
+def record_block(title, fields, accent=NAVY, title_size=9.3, field_size=8.0):
+    """Narrow, phone-friendly replacement for wide (5+ column) tables.
+    One record per channel/item: bold title line, then wrapped 'Label: value' pairs
+    below, in a single narrow column -- never requires horizontal scrolling."""
+    field_text = "   \u00b7   ".join(f"{lab}: {val}" for lab, val in fields)
+    field_lines = wrap_words(field_text, "Lora", field_size, CW - 14)
+    title_line_h = title_size * 1.4
+    field_line_h = field_size * 1.4
+    needed = title_line_h + len(field_lines) * field_line_h + 6
+    ensure_space(needed, "")
+    setfill(accent); c.rect(ML, y[0] - needed + 6, 3, needed - 10, fill=1, stroke=0)
+    yy = y[0]
+    setfill(accent); c.setFont("Lora-Bold", title_size)
+    c.drawString(ML + 10, yy, title)
+    yy -= title_line_h
+    setfill(DARK); c.setFont("Lora", field_size)
+    for ln in field_lines:
+        c.drawString(ML + 10, yy, ln)
+        yy -= field_line_h
+    y[0] -= needed
+
+
 def mini_table(headers, rows, col_w, accent=NAVY, size=7.8, header_size=8.0, striped=True):
     total_w = sum(col_w)
     needed_header = header_size * 1.9 + 6
@@ -359,10 +381,13 @@ new_page("Master Pathway Table & The 3 Circuits")
 y[0] = H - HEADER_H - 24
 section_bar("MASTER PATHWAY TABLE -- ALL 12 PRIMARY MERIDIANS", accent=NAVY,
             sub="Dr. Zhang's #1 review emphasis")
-headers = ["Ch", "Organ", "Classification", "Y/Y", "Direction", "Circuit", "Clock"]
-col_w = [28, 108, 78, 26, 96, 90, 62]
-rows = [(a, o, cl, yy_, d, ci, cl2) for a, o, cl, yy_, d, ci, cl2 in TWELVE_MERIDIANS]
-mini_table(headers, rows, col_w, accent=NAVY, size=7.6)
+para("Narrow record format -- built to read cleanly on any screen, no horizontal scrolling needed.",
+     size=7.8, color=GRAY, gap=8)
+_pathway_accents = {"Outer / Anterior": METAL, "Inner / Posterior": FIRE, "Middle": FIREMIN}
+for a, o, cl, yy_, d, ci, cl2 in TWELVE_MERIDIANS:
+    record_block(f"{a} -- {o}",
+                 [("Class", cl), ("Y/Y", yy_), ("Direction", d), ("Circuit", ci), ("Clock", cl2)],
+                 accent=_pathway_accents.get(ci, NAVY))
 
 section_bar("DIRECTION-OF-FLOW RULES", accent=GOLD)
 mini_table(["Rule", "Direction"], DIRECTION_RULES, [280, CW - 280], accent=GOLD, size=8.2)
@@ -570,10 +595,19 @@ new_page("Five Shu (Transport) Points -- Master Table")
 y[0] = H - HEADER_H - 24
 section_bar("FIVE SHU POINTS -- MASTER TABLE (60 POINTS)", accent=NAVY, sub="Week 9 -- all 12 meridians")
 para(FIVE_SHU_DEFINITION, size=8.3, color=GRAY)
-headers = ["Meridian"] + FIVE_SHU_COLS
-col_w = [110] + [(CW - 110) // 5] * 5
-rows = [[d['m']] + d['pts'] for d in FIVE_SHU_MASTER]
-mini_table(headers, rows, col_w, accent=NAVY, size=7.0, header_size=7.4)
+para("Split into two narrower tables (Jing-Well/Ying-Spring/Shu-Stream, then Jing-River/He-Sea) so neither "
+     "requires horizontal scrolling on a phone or tablet.", size=7.8, color=GRAY, gap=8)
+section_bar("Jing-Well -> Ying-Spring -> Shu-Stream", accent=NAVY, sub="")
+headers_a = ["Meridian"] + FIVE_SHU_COLS[:3]
+col_w_a = [96, (CW - 96) // 3, (CW - 96) // 3, (CW - 96) // 3]
+rows_a = [[d['m']] + d['pts'][:3] for d in FIVE_SHU_MASTER]
+mini_table(headers_a, rows_a, col_w_a, accent=NAVY, size=7.4, header_size=7.6)
+
+section_bar("Jing-River -> He-Sea", accent=NAVY, sub="")
+headers_b = ["Meridian"] + FIVE_SHU_COLS[3:]
+col_w_b = [96, (CW - 96) // 2, (CW - 96) // 2]
+rows_b = [[d['m']] + d['pts'][3:] for d in FIVE_SHU_MASTER]
+mini_table(headers_b, rows_b, col_w_b, accent=NAVY, size=7.4, header_size=7.6)
 para(FIVE_SHU_YUAN_NOTE, size=8.2, color=GRAY)
 end_page()
 

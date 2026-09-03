@@ -169,6 +169,26 @@ def tight_bullets(items, accent=NAVY, size=7.0):
         y[0] -= needed
 
 
+def record_block(title, fields, accent=NAVY, title_size=8.0, field_size=6.8):
+    """Narrow, phone-friendly replacement for wide (5+ column) tables -- cram-sheet density."""
+    field_text = "  \u00b7  ".join(f"{lab}: {val}" for lab, val in fields)
+    field_lines = wrap_words(field_text, "Lora", field_size, CW - 12)
+    title_line_h = title_size * 1.35
+    field_line_h = field_size * 1.35
+    needed = title_line_h + len(field_lines) * field_line_h + 4
+    ensure_space(needed, "")
+    setfill(accent); c.rect(ML, y[0] - needed + 4, 2, needed - 7, fill=1, stroke=0)
+    yy = y[0]
+    setfill(accent); c.setFont("Lora-Bold", title_size)
+    c.drawString(ML + 7, yy, title)
+    yy -= title_line_h
+    setfill(DARK); c.setFont("Lora", field_size)
+    for ln in field_lines:
+        c.drawString(ML + 7, yy, ln)
+        yy -= field_line_h
+    y[0] -= needed
+
+
 # =====================================================================
 # COVER
 # =====================================================================
@@ -232,27 +252,28 @@ section_bar("WHAT DR. ZHANG SAID (VERBATIM-SOURCED)", accent=RED)
 tight_bullets(ZHANG_FINAL_FACTS, accent=RED, size=7.1)
 
 section_bar("MASTER PATHWAY TABLE", accent=NAVY)
-headers = ["Ch", "Organ", "Class", "Y/Y", "Dir", "Circuit", "Clock"]
-col_w = [22, 92, 66, 20, 78, 78, 56]
-rows = [(a, o, cl, yy_, d, ci, cl2) for a, o, cl, yy_, d, ci, cl2 in TWELVE_MERIDIANS]
-mini_table(headers, rows, col_w, accent=NAVY, size=6.4, header_size=6.7)
+_pw_accents = {"Outer / Anterior": METAL, "Inner / Posterior": FIRE, "Middle": FIREMIN}
+for a, o, cl, yy_, d, ci, cl2 in TWELVE_MERIDIANS:
+    record_block(f"{a} -- {o}", [("Class", cl), ("Y/Y", yy_), ("Dir", d), ("Circuit", ci), ("Clock", cl2)],
+                 accent=_pw_accents.get(ci, NAVY))
 end_page()
 
 # =====================================================================
-# PAGE: CHANNEL QUICK-SCAN GRID (all 12, ultra dense)
+# PAGE: CHANNEL QUICK-SCAN GRID (all 12, narrow records)
 # =====================================================================
-new_page("All 12 Channels -- Quick-Scan Grid")
+new_page("All 12 Channels -- Quick-Scan Records")
 y[0] = H - HEADER_H - 14
-section_bar("ALL 12 PRIMARY MERIDIANS -- QUICK-SCAN ID GRID", accent=NAVY)
-headers = ["Ch", "Pts", "Back-Shu", "Front-Mu", "Yuan", "Luo", "He-Sea", "Xi-Cleft", "Confluent/Cmd", "Crossing"]
-col_w = [20, 24, 62, 62, 58, 58, 58, 56, 100, 96]
-rows = []
+section_bar("ALL 12 PRIMARY MERIDIANS -- QUICK-SCAN RECORDS", accent=NAVY)
+_qs_accents = {"LU": METAL, "LI": METAL, "ST": EARTH, "SP": EARTH, "HT": FIRE, "SI": FIRE,
+               "BL": WATER, "KI": WATER, "PC": FIREMIN, "SJ": FIREMIN, "GB": WOOD, "LR": WOOD}
 for abbr in CHANNEL_ORDER:
     d = CHANNEL_META[abbr]
     conf_cmd = d['confluent'] if d['confluent'] != "none" else d['command']
-    rows.append((abbr, d['n_points'], d['back_shu'], d['front_mu'], d['yuan'], d['luo'], d['he_sea'],
-                 d['xi_cleft'], conf_cmd, d['crossing'][:40]))
-mini_table(headers, rows, col_w, accent=NAVY, size=6.0, header_size=6.3)
+    record_block(f"{abbr} -- {d['n_points']} pts", [
+        ("Back-Shu", d['back_shu']), ("Front-Mu", d['front_mu']), ("Yuan", d['yuan']),
+        ("Luo", d['luo']), ("He-Sea", d['he_sea']), ("Xi-Cleft", d['xi_cleft']),
+        ("Confluent/Cmd", conf_cmd), ("Crossing", d['crossing'][:50])],
+        accent=_qs_accents.get(abbr, NAVY))
 end_page()
 
 # =====================================================================
@@ -283,10 +304,17 @@ end_page()
 new_page("Five Shu Master Grid")
 y[0] = H - HEADER_H - 14
 section_bar("FIVE SHU POINTS -- FULL 60-POINT GRID", accent=NAVY)
-headers = ["Meridian"] + FIVE_SHU_COLS
-col_w = [70] + [(CW - 70) // 5] * 5
-rows = [[d['m'].split(' (')[0]] + [p.replace(' ', '\u00a0', 0) for p in d['pts']] for d in FIVE_SHU_MASTER]
-mini_table(headers, rows, col_w, accent=NAVY, size=6.0, header_size=6.4)
+section_bar("Jing-Well -> Ying-Spring -> Shu-Stream", accent=NAVY)
+headers_a = ["Meridian"] + FIVE_SHU_COLS[:3]
+col_w_a = [70] + [(CW - 70) // 3] * 3
+rows_a = [[d['m'].split(' (')[0]] + d['pts'][:3] for d in FIVE_SHU_MASTER]
+mini_table(headers_a, rows_a, col_w_a, accent=NAVY, size=6.2, header_size=6.5)
+
+section_bar("Jing-River -> He-Sea", accent=NAVY)
+headers_b = ["Meridian"] + FIVE_SHU_COLS[3:]
+col_w_b = [70] + [(CW - 70) // 2] * 2
+rows_b = [[d['m'].split(' (')[0]] + d['pts'][3:] for d in FIVE_SHU_MASTER]
+mini_table(headers_b, rows_b, col_w_b, accent=NAVY, size=6.2, header_size=6.5)
 end_page()
 
 # =====================================================================
