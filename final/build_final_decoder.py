@@ -590,46 +590,30 @@ def draw_image_fit(path, x, top_y, max_w, max_h):
 new_page("Eight Confluent Points -- With Locations")
 y[0] = H - HEADER_H - 24
 section_bar("EIGHT CONFLUENT POINTS -- OPEN THE 8 EXTRAORDINARY VESSELS", accent=TEAL, tier=DECODER_TIERS[0])
-for a, b, opens, use in CONFLUENT_PAIRS_QUICK:
+for a, b, opens, use, note in CONFLUENT_PAIRS_QUICK:
     img_a = CONF_IMG_MAP.get(a); img_b = CONF_IMG_MAP.get(b)
-    if IS_MOBILE:
-        img_h = 110 * FS
-        use_lines = wrap_words(f"Use: {use}", "Lora", 9 * FS, CW)
-        needed = img_h + (3 + len(use_lines)) * 13 * FS + 20
-        ensure_space(needed, "Eight Confluent Points -- With Locations")
-        top = y[0]
-        half_w = (CW - 10) / 2
-        if img_a:
-            draw_image_fit(f"{FIGS}/{img_a}.jpeg", ML, top, half_w, img_h)
-        if img_b:
-            draw_image_fit(f"{FIGS}/{img_b}.jpeg", ML + half_w + 10, top, half_w, img_h)
-        yy = top - img_h - 8
-        setfill(TEAL); c.setFont("Lora-Bold", 10.5 * FS)
-        c.drawString(ML, yy, f"{a} + {b}"); yy -= 14 * FS
-        setfill(NAVY); c.setFont("Lora-Bold", 9.5 * FS)
-        c.drawString(ML, yy, f"Opens: {opens}"); yy -= 13 * FS
-        setfill(DARK); c.setFont("Lora", 9 * FS)
-        for ln in use_lines:
-            c.drawString(ML, yy, ln); yy -= 12.5 * FS
-        y[0] = yy - 8
-        setstroke((0.85, 0.85, 0.85)); c.setLineWidth(0.5)
-        c.line(ML, y[0] + 4, ML + CW, y[0] + 4)
-        continue
-    row_h = 92
-    ensure_space(row_h + 24, "Eight Confluent Points -- With Locations")
+    note_lines = wrap_words(note, "Lora-Italic", 8.2, CW - 210)
+    row_h = 122
+    needed = row_h + 16 + len(note_lines) * 11.5
+    ensure_space(needed, "Eight Confluent Points -- With Locations")
     top = y[0]
     if img_a:
-        draw_image_fit(f"{FIGS}/{img_a}.jpeg", ML, top, 86, row_h)
+        draw_image_fit(f"{FIGS}/{img_a}.jpeg", ML, top, 110, row_h)
     if img_b:
-        draw_image_fit(f"{FIGS}/{img_b}.jpeg", ML + 96, top, 86, row_h)
-    setfill(TEAL); c.setFont("Lora-Bold", 9.5)
-    c.drawString(ML + 194, top - 12, f"{a}  +  {b}")
-    setfill(NAVY); c.setFont("Lora-Bold", 8.6)
-    c.drawString(ML + 194, top - 28, f"Opens: {opens}")
-    setfill(DARK); c.setFont("Lora", 8.4)
-    for i, ln in enumerate(wrap_words(f"Use: {use}", "Lora", 8.4, CW - 202)):
-        c.drawString(ML + 194, top - 44 - i * 11.5, ln)
-    y[0] = top - row_h - 12
+        draw_image_fit(f"{FIGS}/{img_b}.jpeg", ML + 120, top, 110, row_h)
+    setfill(TEAL); c.setFont("Lora-Bold", 10)
+    c.drawString(ML + 242, top - 13, f"{a}  +  {b}")
+    setfill(NAVY); c.setFont("Lora-Bold", 8.8)
+    c.drawString(ML + 242, top - 29, f"Opens: {opens}")
+    setfill(DARK); c.setFont("Lora", 8.6)
+    for i, ln in enumerate(wrap_words(f"Use: {use}", "Lora", 8.6, CW - 250)):
+        c.drawString(ML + 242, top - 45 - i * 11.8, ln)
+    y[0] = top - row_h - 8
+    setfill(GRAY); c.setFont("Lora-Italic", 8.2)
+    for ln in note_lines:
+        c.drawString(ML, y[0], ln)
+        y[0] -= 11.5
+    y[0] -= 10
     setstroke((0.85, 0.85, 0.85)); c.setLineWidth(0.5)
     c.line(ML, y[0] + 6, ML + CW, y[0] + 6)
 end_page()

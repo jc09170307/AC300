@@ -551,42 +551,88 @@ EXTRAORDINARY_VESSELS = [
     dict(name="Governor Vessel (Du Mai)", abbr="GV", n_points=28, sea="Sea of the Yang Meridians",
          first_last="GV1 Changqiang / GV28 Yinjiao", confluent="SI3 Houxi", partner="BL62 Shenmai (Yang Qiao Mai)",
          course="Perineum -> posterior midline of spine -> nape -> vertex -> forehead -> nose -> upper gum",
-         function="Governs Qi of all Yang meridians; keeps body warm; spine/brain disorders", accent=EXTRA),
+         function="Governs Qi of all Yang meridians; keeps body warm; spine/brain disorders",
+         indications="Stiff/rigid spine, opisthotonos, epilepsy-type disorders, febrile disease with coma, "
+                      "headache and heaviness at the vertex, low back pain along the spine. Classically "
+                      "described as the \"Sea of Yang\" -- a deficient GV shows as cold-natured, weak-yang "
+                      "presentations (frequent colds, cold low back/knees).",
+         accent=EXTRA),
     dict(name="Conception Vessel (Ren Mai)", abbr="CV", n_points=24, sea="Sea of the Yin Meridians",
          first_last="CV1 Huiyin / CV24 Chengjiang", confluent="LU7 Lieque", partner="KI6 Zhaohai (Yin Qiao Mai)",
          course="Perineum -> anterior midline of abdomen/chest -> throat -> chin",
          function="Receives/bears Qi of all Yin meridians; reproduction, urogenital, CV4/CV12 major tonics",
+         indications="Menstrual irregularity, infertility, hernia, abdominal masses/lumps (classically "
+                      "\"Seven Accumulations\"), urogenital disorders, vaginal discharge. Classically the "
+                      "\"Sea of Yin\" -- pairs conceptually with GV as the two great midline vessels, front "
+                      "and back.",
          accent=EXTRA),
     dict(name="Penetrating Vessel (Chong Mai)", abbr="Chong", n_points=None, sea="Sea of the 12 Meridians / Sea of Blood",
          first_last="One source, three branches (shares 11 KI-channel points as coalescent points)",
          confluent="SP4 Gongsun", partner="PC6 Neiguan (Yin Wei Mai)",
          course="Lower abdomen, runs parallel to Kidney meridian",
-         function="Sea of Blood; regulates menstruation and the 12 meridians/zang-fu Qi-Blood", accent=EXTRA),
+         function="Sea of Blood; regulates menstruation and the 12 meridians/zang-fu Qi-Blood",
+         indications="Irregular menstruation, infertility, miscarriage, abdominal pain with a sensation of "
+                      "Qi rushing upward (\"rebellious Qi\" pattern), asthma-like breathlessness from Qi "
+                      "counterflow. Closely tied to the Kidney and to the Uterus (Bao Gong) in classical "
+                      "gynecology.",
+         accent=EXTRA),
     dict(name="Girdle/Belt Vessel (Dai Mai)", abbr="Dai", n_points=None, sea="none (structurally unique)",
          first_last="Only vessel that runs HORIZONTALLY, around the waist",
          confluent="GB41 Zulinqi", partner="SJ5 Waiguan (Yang Wei Mai)",
          course="Encircles the waist like a belt", function="Binds/controls all longitudinally-running meridians",
+         indications="Weakness/soreness of the low back and abdomen \"as if sitting in water,\" excessive "
+                      "vaginal discharge (leukorrhea), abdominal distension/fullness, sensation of looseness "
+                      "or lack of support through the trunk. Classic teaching: Dai Mai \"binds\" the "
+                      "longitudinal vessels the way a belt gathers loose fabric.",
          accent=EXTRA),
     dict(name="Yang Heel Vessel (Yang Qiao Mai)", abbr="Yang Qiao", n_points=None, sea="none",
          first_last="Starts at its confluent point BL62 Shenmai", confluent="BL62 Shenmai", partner="SI3 Houxi (Du Mai)",
          course="Lateral leg -> trunk -> meets Yin Qiao at inner canthus",
-         function="Governs wakefulness/activity; balances limb movement with Yin Qiao", accent=EXTRA),
+         function="Governs wakefulness/activity; balances limb movement with Yin Qiao",
+         indications="Insomnia (excess pattern -- can't fall asleep, Yang Qiao overactive), lower-limb "
+                      "spasm/rigidity on the lateral side, epilepsy with backward-arching convulsions, red "
+                      "and painful eyes. Paired functionally with Yin Qiao: the two together govern the "
+                      "opening/closing of the eyes and the sleep-wake cycle.",
+         accent=EXTRA),
     dict(name="Yin Heel Vessel (Yin Qiao Mai)", abbr="Yin Qiao", n_points=None, sea="none",
          first_last="Starts at its confluent point KI6 Zhaohai", confluent="KI6 Zhaohai", partner="LU7 Lieque (Ren Mai)",
          course="Medial leg -> trunk -> meets Yang Qiao at inner canthus",
-         function="Governs calm/rest, promotes sleep -- opposite of Yang Qiao", accent=EXTRA),
+         function="Governs calm/rest, promotes sleep -- opposite of Yang Qiao",
+         indications="Somnolence/excess sleepiness (Yin Qiao overactive pattern), lower-limb spasm/rigidity "
+                      "on the medial side, throat obstruction sensation, epilepsy with forward-flexing "
+                      "convulsions. KI6 (its confluent point) is a first-line point for insomnia due to Yin "
+                      "deficiency with restlessness.",
+         accent=EXTRA),
     dict(name="Yang Linking Vessel (Yang Wei Mai)", abbr="Yang Wei", n_points=None, sea="none",
          first_last="Connects to all Yang meridians, esp. GV", confluent="SJ5 Waiguan", partner="GB41 Zulinqi (Dai Mai)",
-         course="Lateral leg/trunk -> head", function="Dominates exterior of the whole body", accent=EXTRA),
+         course="Lateral leg/trunk -> head", function="Dominates exterior of the whole body",
+         indications="Alternating chills and fever (exterior Shaoyang-type presentation), lateral headache, "
+                      "exterior Wind-invasion symptoms that don't resolve normally. Classical teaching: "
+                      "when Yang Wei is diseased, the person cannot maintain the exterior -- hence the "
+                      "chills-and-fever pattern.",
+         accent=EXTRA),
     dict(name="Yin Linking Vessel (Yin Wei Mai)", abbr="Yin Wei", n_points=None, sea="none",
          first_last="Connects to all Yin meridians, esp. CV", confluent="PC6 Neiguan", partner="SP4 Gongsun (Chong Mai)",
-         course="Medial leg/trunk -> chest", function="Dominates interior of the whole body", accent=EXTRA),
+         course="Medial leg/trunk -> chest", function="Dominates interior of the whole body",
+         indications="Heart pain / chest pain (cardiac-type), stomach pain, epigastric/abdominal pain -- "
+                      "interior-type pain patterns. Classical teaching: when Yin Wei is diseased, the person "
+                      "cannot maintain the interior -- hence pain in the chest and stomach. PC6 + SP4 is the "
+                      "most-used confluent pairing in clinic largely because of this vessel's action.",
+         accent=EXTRA),
 ]
 CONFLUENT_PAIRS_QUICK = [
-    ("SI3 Houxi", "BL62 Shenmai", "Du Mai + Yang Qiao Mai", "posterior body, spine, neck, febrile disease"),
-    ("LU7 Lieque", "KI6 Zhaohai", "Ren Mai + Yin Qiao Mai", "throat, chest, lung, insomnia"),
-    ("SP4 Gongsun", "PC6 Neiguan", "Chong Mai + Yin Wei Mai", "chest, heart, stomach -- MOST-used pairing in clinic"),
-    ("GB41 Zulinqi", "SJ5 Waiguan", "Dai Mai + Yang Wei Mai", "lateral body, hypochondriac pain, exterior disorders"),
+    ("SI3 Houxi", "BL62 Shenmai", "Du Mai + Yang Qiao Mai", "posterior body, spine, neck, febrile disease",
+     "Classic combination for acute spinal rigidity and neck stiffness -- SI3 is also the Shu-Stream point "
+     "of SI, giving it a dual mechanism for pain along the whole posterior line."),
+    ("LU7 Lieque", "KI6 Zhaohai", "Ren Mai + Yin Qiao Mai", "throat, chest, lung, insomnia",
+     "LU7 is also LU's Luo-Connecting point; KI6 is the vessel's own confluent gateway. Together they treat "
+     "throat-chest disorders with an insomnia/restlessness component -- classic for Yin-deficiency insomnia."),
+    ("SP4 Gongsun", "PC6 Neiguan", "Chong Mai + Yin Wei Mai", "chest, heart, stomach -- MOST-used pairing in clinic",
+     "The single most clinically-used confluent pair. Both points are ALSO their own channel's Luo-Connecting "
+     "point, so this combination doubles up on Luo + Confluent mechanisms simultaneously."),
+    ("GB41 Zulinqi", "SJ5 Waiguan", "Dai Mai + Yang Wei Mai", "lateral body, hypochondriac pain, exterior disorders",
+     "Both are Shaoyang-channel points (same-name channel rule), reinforcing the lateral-body, "
+     "alternating-fever-and-chills clinical picture shared by Dai Mai and Yang Wei Mai."),
 ]
 
 # ---------------------------------------------------------------------------

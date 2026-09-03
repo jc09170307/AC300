@@ -377,7 +377,8 @@ for v in EXTRAORDINARY_VESSELS:
 mini_table(headers, ev_rows, col_w, accent=EXTRA, size=6.6, header_size=6.9)
 
 section_bar("CONFLUENT POINT PAIRS", accent=TEAL)
-mini_table(["Pt A", "Pt B", "Opens", "Use"], CONFLUENT_PAIRS_QUICK, [0.12 * CW, 0.12 * CW, 0.20 * CW, 0.56 * CW],
+conf_rows = [(a, b, opens, use) for a, b, opens, use, note in CONFLUENT_PAIRS_QUICK]
+mini_table(["Pt A", "Pt B", "Opens", "Use"], conf_rows, [0.12 * CW, 0.12 * CW, 0.20 * CW, 0.56 * CW],
            accent=TEAL, size=6.6, header_size=6.9)
 
 section_bar("15 LUO-CONNECTING POINTS", accent=AMBER_LUO)

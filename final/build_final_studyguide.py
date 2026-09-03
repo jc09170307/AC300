@@ -671,7 +671,7 @@ VESSEL_IMG_MAP = {
     "Yang Wei": "VESSEL_YANG_WEI", "Yin Wei": "VESSEL_YIN_WEI",
 }
 
-new_page("Eight Extraordinary Vessels -- GV / CV")
+new_page("Eight Extraordinary Vessels")
 y[0] = H - HEADER_H - 24
 section_bar("EIGHT EXTRAORDINARY VESSELS", accent=EXTRA, sub="Week 7 -- confluent points started live in Week 9 review")
 
@@ -683,58 +683,35 @@ def vessel_block(v):
     label = f"{v['abbr']} -- {v['name']}"
     detail = (f"{npts} | Sea: {v['sea']} | Confluent: {v['confluent']} (partner: {v['partner']}) | "
               f"Course: {v['course']} | Function: {v['function']}")
-    if IS_MOBILE:
-        # stacked layout: image full-width on top, text below -- avoids cramped
-        # side-by-side text on a narrow page
-        img_h = 130 * FS
-        text_lines = wrap_words(label, "Lora-Bold", 10.5 * FS, CW)
-        detail_lines = wrap_words(detail, "Lora", 9 * FS, CW)
-        needed = img_h + (len(text_lines) + len(detail_lines)) * 12.5 * FS + 20
-        ensure_space(needed + 14, f"Eight Extraordinary Vessels -- {v['abbr']}")
-        top = y[0]
-        if img_path:
-            draw_image_fit(img_path, ML + (CW - 160) / 2, top, 160, img_h)
-        yy = top - img_h - 6
-        setfill(v['accent']); c.setFont("Lora-Bold", 10.5 * FS)
-        for ln in text_lines:
-            c.drawString(ML, yy, ln); yy -= 13.5 * FS
-        setfill(DARK); c.setFont("Lora", 9 * FS)
-        yy -= 2
-        for ln in detail_lines:
-            c.drawString(ML, yy, ln); yy -= 12.5 * FS
-        y[0] = yy - 10
-        setstroke((0.85, 0.85, 0.85)); c.setLineWidth(0.5)
-        c.line(ML, y[0] + 4, ML + CW, y[0] + 4)
-        return
-    text_lines = wrap_words(label, "Lora-Bold", 9.5, CW - 140)
-    detail_lines = wrap_words(detail, "Lora", 8.4, CW - 140)
-    img_h = 150
-    needed = max(img_h, (len(text_lines) + len(detail_lines)) * 12 + 10)
-    ensure_space(needed + 14, f"Eight Extraordinary Vessels -- {v['abbr']}")
+    indications = f"Indications: {v['indications']}"
+    text_lines = wrap_words(label, "Lora-Bold", 10, CW - 150)
+    detail_lines = wrap_words(detail, "Lora", 8.6, CW - 150)
+    ind_lines = wrap_words(indications, "Lora", 8.6, CW - 150)
+    img_h = 170
+    text_block_h = (len(text_lines) * 13 + len(detail_lines) * 11.8 + len(ind_lines) * 11.8) + 14
+    needed = max(img_h, text_block_h) + 16
+    ensure_space(needed, f"Eight Extraordinary Vessels -- {v['abbr']}")
     top = y[0]
     if img_path:
-        draw_image_fit(img_path, ML, top, 120, img_h)
-    setfill(v['accent']); c.setFont("Lora-Bold", 9.5)
+        draw_image_fit(img_path, ML, top, 138, img_h)
+    setfill(v['accent']); c.setFont("Lora-Bold", 10)
     yy = top - 4
     for ln in text_lines:
-        c.drawString(ML + 132, yy, ln); yy -= 12.5
-    setfill(DARK); c.setFont("Lora", 8.4)
+        c.drawString(ML + 150, yy, ln); yy -= 13
+    setfill(DARK); c.setFont("Lora", 8.6)
     yy -= 3
     for ln in detail_lines:
-        c.drawString(ML + 132, yy, ln); yy -= 11.5
-    y[0] = top - needed - 10
+        c.drawString(ML + 150, yy, ln); yy -= 11.8
+    yy -= 4
+    setfill(NAVY); c.setFont("Lora-BoldItalic", 8.6)
+    for i, ln in enumerate(ind_lines):
+        c.drawString(ML + 150, yy, ln); yy -= 11.8
+    y[0] = top - needed + 6
     setstroke((0.85, 0.85, 0.85)); c.setLineWidth(0.5)
     c.line(ML, y[0] + 4, ML + CW, y[0] + 4)
 
 
-vessel_block(EXTRAORDINARY_VESSELS[0])
-vessel_block(EXTRAORDINARY_VESSELS[1])
-end_page()
-
-new_page("Eight Extraordinary Vessels -- Chong / Dai / Qiao / Wei")
-y[0] = H - HEADER_H - 24
-section_bar("EIGHT EXTRAORDINARY VESSELS (CONT.)", accent=EXTRA)
-for v in EXTRAORDINARY_VESSELS[2:]:
+for v in EXTRAORDINARY_VESSELS:
     vessel_block(v)
 end_page()
 
@@ -751,49 +728,31 @@ CONF_IMG_MAP = {
 new_page("Confluent Point Pairings -- With Locations")
 y[0] = H - HEADER_H - 24
 section_bar("EIGHT CONFLUENT POINTS -- LOCATIONS", accent=TEAL, sub="Connect the 8 EVs to the 12 regular meridians")
-for a, b, opens, use in CONFLUENT_PAIRS_QUICK:
-    a_key = a.split(" (")[0] if "(" in a else a
-    # a and b are like "SI3 Houxi"
+for a, b, opens, use, note in CONFLUENT_PAIRS_QUICK:
     img_a = CONF_IMG_MAP.get(a)
     img_b = CONF_IMG_MAP.get(b)
-    if IS_MOBILE:
-        img_h = 110 * FS
-        use_lines = wrap_words(f"Use: {use}", "Lora", 9 * FS, CW)
-        needed = img_h + (3 + len(use_lines)) * 13 * FS + 20
-        ensure_space(needed, "Confluent Point Pairings -- With Locations")
-        top = y[0]
-        half_w = (CW - 10) / 2
-        if img_a:
-            draw_image_fit(f"{FIGS}/{img_a}.jpeg", ML, top, half_w, img_h)
-        if img_b:
-            draw_image_fit(f"{FIGS}/{img_b}.jpeg", ML + half_w + 10, top, half_w, img_h)
-        yy = top - img_h - 8
-        setfill(TEAL); c.setFont("Lora-Bold", 10.5 * FS)
-        c.drawString(ML, yy, f"{a} + {b}"); yy -= 14 * FS
-        setfill(NAVY); c.setFont("Lora-Bold", 9.5 * FS)
-        c.drawString(ML, yy, f"Opens: {opens}"); yy -= 13 * FS
-        setfill(DARK); c.setFont("Lora", 9 * FS)
-        for ln in use_lines:
-            c.drawString(ML, yy, ln); yy -= 12.5 * FS
-        y[0] = yy - 8
-        setstroke((0.85, 0.85, 0.85)); c.setLineWidth(0.5)
-        c.line(ML, y[0] + 4, ML + CW, y[0] + 4)
-        continue
-    row_h = 96
-    ensure_space(row_h + 24, "Confluent Point Pairings -- With Locations")
+    note_lines = wrap_words(note, "Lora-Italic", 8.2, CW - 210)
+    row_h = 122
+    needed = row_h + 16 + len(note_lines) * 11.5
+    ensure_space(needed, "Confluent Point Pairings -- With Locations")
     top = y[0]
     if img_a:
-        draw_image_fit(f"{FIGS}/{img_a}.jpeg", ML, top, 90, row_h)
+        draw_image_fit(f"{FIGS}/{img_a}.jpeg", ML, top, 110, row_h)
     if img_b:
-        draw_image_fit(f"{FIGS}/{img_b}.jpeg", ML + 100, top, 90, row_h)
-    setfill(TEAL); c.setFont("Lora-Bold", 9.5)
-    c.drawString(ML + 202, top - 12, f"{a}  +  {b}")
-    setfill(NAVY); c.setFont("Lora-Bold", 8.6)
-    c.drawString(ML + 202, top - 28, f"Opens: {opens}")
-    setfill(DARK); c.setFont("Lora", 8.4)
-    for i, ln in enumerate(wrap_words(f"Use: {use}", "Lora", 8.4, CW - 210)):
-        c.drawString(ML + 202, top - 44 - i * 11.5, ln)
-    y[0] = top - row_h - 14
+        draw_image_fit(f"{FIGS}/{img_b}.jpeg", ML + 120, top, 110, row_h)
+    setfill(TEAL); c.setFont("Lora-Bold", 10)
+    c.drawString(ML + 242, top - 13, f"{a}  +  {b}")
+    setfill(NAVY); c.setFont("Lora-Bold", 8.8)
+    c.drawString(ML + 242, top - 29, f"Opens: {opens}")
+    setfill(DARK); c.setFont("Lora", 8.6)
+    for i, ln in enumerate(wrap_words(f"Use: {use}", "Lora", 8.6, CW - 250)):
+        c.drawString(ML + 242, top - 45 - i * 11.8, ln)
+    y[0] = top - row_h - 8
+    setfill(GRAY); c.setFont("Lora-Italic", 8.2)
+    for ln in note_lines:
+        c.drawString(ML, y[0], ln)
+        y[0] -= 11.5
+    y[0] -= 10
     setstroke((0.85, 0.85, 0.85)); c.setLineWidth(0.5)
     c.line(ML, y[0] + 6, ML + CW, y[0] + 6)
 end_page()
