@@ -49,50 +49,43 @@ setfill(NAVY); c.rect(0, H - 6, W, 6, fill=1, stroke=0)
 
 y = H - 62
 setfill(NAVY); c.setFont("Lora-Bold", 19)
-c.drawString(ML, y, "On Your Way Into This Final")
+c.drawString(ML, y, "Five Days Out")
 y -= 26
 setstroke(GOLD); c.setLineWidth(1.4)
 c.line(ML, y, ML + CW, y)
 y -= 28
 
 setfill(GRAY); c.setFont("Lora-Italic", 9.5)
-c.drawString(ML, y, "September 2026")
+c.drawString(ML, y, "September 2026  \u00b7  To the AC300/AC375 Class")
 y -= 24
 
 setfill(DARK); c.setFont("Lora", 11)
 
 paragraphs = [
-    "Jon,",
+    "To everyone finishing up AC300/AC375,",
 
-    "You know Expectancy-Value Theory better than I ever will, so I won't explain it to you -- I'll just point "
-    "at what you've actually built and let you apply your own framework to it, because the evidence is "
-    "unusually good.",
+    "Jon asked me to write this to the class instead of just to him, and I think that's the right call -- "
+    "none of you are walking into Wednesday's final with less preparation behind you than the material in "
+    "front of you suggests.",
 
-    "Expectancy is not a feeling you talk yourself into. It's calibrated from evidence of your own competence, "
-    "and you've spent nine weeks generating that evidence directly: a 55-page Study Guide you pushed back on "
-    "until it was actually right, a Decoder organized by point category instead of by channel because you "
-    "knew that's a different kind of retrieval you'd need, two Practice Finals and a Master Quiz Bank you had "
-    "checked and rechecked -- not because you doubted the content, but because you know that verified material "
-    "is what makes confidence load-bearing instead of decorative. That's not busywork. That's exactly the kind "
-    "of mastery experience your own field identifies as the strongest source of self-efficacy there is. You "
-    "didn't hope you'd be ready. You built readiness, piece by piece, and checked each piece.",
+    "Here's the actual argument, not just encouragement: confidence going into an exam should be calibrated "
+    "from evidence, not talked into existence. And the evidence for this course is unusually good. Nine "
+    "weeks of channel pathways, point categories, extraordinary vessels, and Five Shu points -- reviewed, "
+    "quizzed, and reviewed again, culminating in a review week Dr. Zhang built specifically to consolidate "
+    "all of it before Wednesday. That's not hope. That's a body of work you can point to.",
 
-    "Value doesn't need manufacturing here either. You're not cramming acupuncture trivia -- you're building "
-    "the working knowledge you'll use on actual patients with actual heel pain and actual low back pain, for "
-    "the rest of a career you chose on purpose. The utility value is not hypothetical. It's the whole reason "
-    "the accuracy mattered enough to you to keep pushing until it was right.",
+    "The material itself is not designed to trick you. Dr. Zhang has said directly that the final draws from "
+    "the same quizzes you've already taken -- not new questions written to catch you off guard. That means "
+    "the gap between now and Wednesday isn't about learning something new. It's about confirming what you "
+    "already know and tightening the handful of things that still feel shaky. That's a much smaller, much "
+    "more manageable task than it feels like five days out.",
 
-    "And cost -- the variable everyone underrates -- is lower now than it was in July. Not because the material "
-    "got smaller, but because it's organized: you know what's real Quiz 1-6 content and what's supplementary, "
-    "you know the six-division logic underneath the twelve channels instead of twelve isolated facts, you have "
-    "a Table of Contents so you're never flipping blind at 11pm. Organized effort costs less than the same "
-    "effort scattered.",
+    "So: sleep before the exam matters more than one more late read-through. Confirming what you know is "
+    "worth more than re-learning what you already know. And whatever you use these last five days for, "
+    "trust what you've already built more than the anxiety telling you it isn't enough. The anxiety is not "
+    "evidence. The nine weeks are.",
 
-    "So here's the only prediction worth making: you are exactly as ready as the evidence says you are, and "
-    "the evidence is thorough. Walk into Week 10 the same way you built these materials -- checking your work, "
-    "trusting what checks out, and not needing anyone's reassurance to know the difference.",
-
-    "You've got this, and you already know why.",
+    "Good luck Wednesday, all of you.",
 ]
 
 for i, para in enumerate(paragraphs):
@@ -107,7 +100,7 @@ for i, para in enumerate(paragraphs):
 
 y -= 6
 setfill(DARK); c.setFont("Lora", 10.6)
-c.drawString(ML, y, "Rooting for you,")
+c.drawString(ML, y, "Rooting for all of you,")
 y -= 28
 setfill(NAVY); c.setFont("Lora-Bold", 13)
 c.drawString(ML, y, "Claude")
@@ -115,7 +108,7 @@ c.drawString(ML, y, "Claude")
 setstroke(GOLD); c.setLineWidth(1)
 c.line(ML, 55, W - ML, 55)
 setfill(GRAY); c.setFont("Lora-Italic", 8.5)
-c.drawCentredString(W / 2, 40, "AC300/AC375 \u00b7 VUIM Summer 2026 \u00b7 Final Exam, Week 10")
+c.drawCentredString(W / 2, 40, "AC300/AC375 \u00b7 VUIM Summer 2026 \u00b7 Final Exam, Wednesday 9/9, 9:00 AM")
 
 c.save()
 print("SAVED:", OUT)

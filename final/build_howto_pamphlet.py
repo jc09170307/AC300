@@ -154,99 +154,72 @@ def doc_row(name, purpose, when):
 # =====================================================================
 new_page("Overview")
 y[0] = H - HEADER_H - 24
-section_bar("HOW TO USE THIS STUDY SYSTEM", accent=NAVY, sub="AC300/AC375 -- Final Exam, Week 10")
-para("You have six documents now. This page is the seventh -- the one that tells you what order to use them "
-     "in and why, so the system works as a system instead of six separate PDFs competing for your attention "
-     "the week before the exam.", size=9.4, gap=14)
+section_bar("HOW TO USE THIS STUDY SYSTEM", accent=NAVY, sub="Final Exam: Wednesday 9/9, 9:00 AM")
+para("You have seven documents now, five days out from the exam. This page tells you what each one is "
+     "actually for and how to sequence them in the time you actually have left -- not a semester-long study "
+     "plan, a five-day one.", size=9.4, gap=14)
 
 section_bar("THE LINEUP -- WHAT EACH DOCUMENT IS ACTUALLY FOR", accent=GOLD)
-doc_row("Final Study Guide (55 pp)", "Your primary text. Full reference per channel: pathway, functions, "
-        "indications, highest-yield points, clinical pearls. Read this to LEARN, not to test yourself.",
-        "First pass, every week")
+doc_row("Final Study Guide (55 pp)", "Full reference per channel: pathway, functions, indications, "
+        "highest-yield points, clinical pearls. Use this to look up and confirm, not to read cover to cover "
+        "-- there isn't time left for a first full pass.", "Targeted lookup only")
 doc_row("Master Special Points Decoder", "Organized by POINT CATEGORY, not by channel -- \u201call 12 Yuan-Source "
-        "points\u201d in one place instead of scattered across 12 channel pages. Use when the Study Guide's "
-        "organization isn't the retrieval structure you need.", "Cross-reference, ongoing")
-doc_row("Final Cram Sheet (5 pp)", "Everything compressed to its densest, fastest-scan form. This is not "
-        "where you learn something for the first time -- it's where you confirm you still know it.",
-        "Final 48 hours")
+        "points\u201d in one place instead of scattered across 12 channel pages. Use when a category "
+        "(Yuan-Source, Luo, Xi-Cleft, etc.) feels shaky across multiple channels at once.", "Cross-reference, as needed")
+doc_row("Final Cram Sheet (5 pp)", "Everything compressed to its densest, fastest-scan form. This is your "
+        "confirmation document, not a learning one -- read it and notice what does or doesn't come back to "
+        "you immediately.", "Daily, especially final 48 hrs")
 doc_row("Master Quiz Bank & Key", "Part 1 = the REAL Quiz 1-6 (36 questions, verified against transcripts). "
         "Part 2 = 264 additional practice questions I wrote, all 9 weeks. Part 1 tells you exactly what's "
-        "been tested; Part 2 is volume for reinforcement.", "Retrieval practice, weekly")
+        "been tested; Part 2 is volume if you have time left over.", "Retrieval practice, daily")
 doc_row("Practice Final, Set 1 & 2", "Two full closed-book simulations, no week labels, timed conditions. "
-        "This is the dress rehearsal, not a study tool -- don't open the answer key until you've finished "
-        "the whole thing.", "1-2 full run-throughs, final week")
+        "This is the dress rehearsal -- don't open the answer key until you've finished the whole thing.",
+        "One each, spaced 1-2 days apart")
+doc_row("Clinical Reasoning Cases (5 cases)", "Relational/extended-abstract prompts -- connecting multiple "
+        "channels and categories, not simple recall. Use once you're solid on the recall-level material, "
+        "to stress-test whether you can actually apply it.", "One sitting, mid-week")
 
 # =====================================================================
-# THE SEQUENCE -- flows continuously from the lineup above
+# THE FIVE-DAY PLAN -- flows continuously from the lineup above
 # =====================================================================
 ensure_space(160)
-section_bar("THE WEEKLY CYCLE -- HOW THE PIECES FIT TOGETHER", accent=RED,
-            sub="Adapted from interteaching: prep before exposure, not after")
-para("The single highest-leverage change you can make to how you use these documents: answer questions on a "
-     "topic BEFORE you read about it, not after. Struggling to retrieve something you haven't learned yet "
-     "feels unproductive, but it's exactly what makes the reading that follows stick -- it tells your brain "
-     "what to pay attention to.", size=9.2, gap=14)
+section_bar("THE FIVE-DAY PLAN -- TODAY THROUGH WEDNESDAY", accent=RED,
+            sub="Confirming, not learning -- the material is already covered")
+para("Dr. Zhang has said directly that the final reuses the same quizzes you've already taken. That changes "
+     "what these five days are for: not new learning, but confirming what's solid and triaging what isn't. "
+     "The plan below assumes you're starting today (Friday) and finishing the night before the 9:00 AM exam.",
+     size=9.2, gap=14)
 
-for step, label, text in [
-    ("1", "Prep cold", "Before opening that week's Study Guide section, pull 5-6 questions on the topic from "
-     "the Master Quiz Bank (Part 2) and attempt them with nothing open. You will get most of them wrong. "
-     "That's the point -- it's not a test, it's priming."),
-    ("2", "Read to fill the gaps", "Now read that week's Study Guide section, paying deliberate attention to "
-     "whatever you got wrong or guessed on in Step 1. This is what interteaching calls the \u201cclarifying "
-     "lecture\u201d -- focused on your actual gaps, not a generic re-read."),
-    ("3", "Re-test the same items", "Go back to the exact questions from Step 1. If you're now getting them "
-     "right, the material moved from short-term to working knowledge. If not, that's real signal -- log it "
-     "(see the Confusion Log idea below) rather than re-reading and hoping."),
-    ("4", "Cross-check in the Decoder", "For any special-point category that gave you trouble (Yuan-Source, "
-     "Luo, Xi-Cleft, etc.), look it up in the Decoder's category view. Seeing all 12 channels' version of the "
-     "same point-type side by side often resolves confusion that channel-by-channel reading doesn't."),
+for day, label, text in [
+    ("FRI 9/4", "Baseline", "Run Practice Final Set 1, full closed-book, timed, no peeking. Score it. Do NOT "
+     "read explanations yet for anything you got right -- only for misses and guesses. This tells you exactly "
+     "where to spend the next four days instead of guessing."),
+    ("SAT 9/5", "Targeted repair", "Using today's misses as a map, look up each one in the Study Guide and "
+     "Decoder. Then run Master Quiz Bank Part 1 (the real 36) once, cold."),
+    ("SUN 9/6", "Second checkpoint", "Run Practice Final Set 2, same closed-book conditions. Compare its "
+     "misses to Set 1's -- anything wrong on BOTH is your highest-priority material for the next two days."),
+    ("MON 9/7", "Depth check", "Work through the 5 Clinical Reasoning Cases. If your reasoning doesn't match "
+     "the model answers, that's a sign you know isolated facts but not how they connect -- go back to the "
+     "specific Study Guide sections involved, not the whole document."),
+    ("TUE 9/8", "Confirm and stop", "Full Cram Sheet read-through, plus Quiz Bank Part 1 one last time. Early "
+     "evening, stop adding new material entirely. Protect sleep over one more read-through -- confirming "
+     "what you know is worth more than cramming what you don't at this point."),
+    ("WED 9/9", "9:00 AM -- Final Exam", "Nothing new the morning of. A light skim of the Cram Sheet over "
+     "breakfast if it helps you settle in, and that's it."),
 ]:
-    ensure_space(70)
-    setfill(RED); c.circle(ML + 10, y[0] - 4, 9, fill=1, stroke=0)
-    setfill((1, 1, 1)); c.setFont("Lora-Bold", 9.5)
-    c.drawCentredString(ML + 10, y[0] - 7.5, step)
+    ensure_space(72)
+    badge_w = 62
+    setfill(RED); c.roundRect(ML, y[0] - 16, badge_w, 16, 3, fill=1, stroke=0)
+    setfill((1, 1, 1)); c.setFont("Lora-Bold", 8.6)
+    c.drawCentredString(ML + badge_w / 2, y[0] - 11.5, day)
     setfill(NAVY); c.setFont("Lora-Bold", 10.5)
-    c.drawString(ML + 26, y[0] - 4, label)
-    y[0] -= 18
-    for ln in wrap_words(text, "Lora", 8.9, CW - 26):
+    c.drawString(ML + badge_w + 10, y[0] - 12, label)
+    y[0] -= 24
+    for ln in wrap_words(text, "Lora", 8.9, CW - 8):
         setfill(DARK); c.setFont("Lora", 8.9)
-        c.drawString(ML + 26, y[0], ln)
+        c.drawString(ML + 8, y[0], ln)
         y[0] -= 12.5
     y[0] -= 10
-
-section_bar("BUILT-IN, NO NEW FILE NEEDED", accent=TEAL)
-bullet("Confusion Log", "Keep a single running note (paper, notes app, whatever) of specific items you get "
-       "wrong across Steps 1 and 3, week over week. By Week 9 this becomes your single most efficient "
-       "review document -- shorter than any of the six PDFs, and it's entirely YOUR gaps, not a generic list.",
-       accent=TEAL)
-bullet("Utility-value check", "Once a week, in one sentence: why does this week's material actually matter "
-       "for the practitioner you're becoming, beyond the exam? You know the research on this better than "
-       "anyone -- the point is that YOU write the connection, not that I tell you one.", accent=TEAL)
-
-# =====================================================================
-# FINAL TWO WEEKS -- flows continuously from the cycle above
-# =====================================================================
-ensure_space(160)
-section_bar("THE FINAL TWO WEEKS -- SHIFTING FROM LEARNING TO CONFIRMING", accent=GOLD,
-            sub="Week 9 review -> Week 10 final")
-para("By Week 9, the goal changes. You're not learning new material (Dr. Zhang confirmed Week 9 is 100% "
-     "review) -- you're confirming what's solid and triaging what isn't. Don't keep reading the Study Guide "
-     "cover to cover; that's Weeks 1-8 behavior applied to a week where it's the wrong tool.", size=9.2, gap=14)
-
-for label, text in [
-    ("Run Practice Final Set 1", "Full closed-book, timed, no peeking. Score it. Do NOT read explanations yet "
-     "for anything you got right -- only for misses and guesses."),
-    ("Work the Confusion Log", "Whatever's accumulated there all course is now your primary study document. "
-     "It's already filtered to exactly what you don't know."),
-    ("Run Practice Final Set 2", "48-72 hours later, same closed-book conditions. Compare to Set 1 -- new "
-     "misses here are your highest-priority items for the final 48 hours."),
-    ("Cram Sheet, cover to cover", "One full pass, out loud if that helps retrieval. This is confirmation, "
-     "not first exposure -- if something here surprises you, that's a flag to go back to the Study Guide "
-     "entry, not just re-read the Cram Sheet line."),
-    ("Quiz Bank Part 1 only", "The 36 real questions, one last time. This is verbatim-sourced content -- if "
-     "you get every one of these right, you've covered the highest-confidence-of-recurrence material there is."),
-]:
-    bullet(label, text, accent=GOLD, size=8.9)
 
 section_bar("ONE LAST THING", accent=NAVY)
 para("None of this works as well if the underlying material is wrong -- which is exactly why every document "
