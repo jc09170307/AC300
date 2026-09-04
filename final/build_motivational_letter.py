@@ -73,52 +73,57 @@ y -= 24
 setfill(DARK); c.setFont("Lora", 11)
 
 paragraphs = [
-    "To everyone finishing up AC300/AC375,",
+    "To my AC300/AC375 classmates,",
 
-    "However you're feeling right now -- steady, wired, a little scared, honestly all three at once -- that's "
-    "completely normal five days out from a comprehensive final. I want to say something plainly: you are "
-    "more ready than it feels like tonight.",
+    "Five days out, I wanted to actually write this down instead of just saying it in passing between "
+    "classes. However you're feeling right now -- steady, wired, a little scared, honestly probably all "
+    "three at once -- that's completely normal five days out from a comprehensive final. But I want to say "
+    "something plainly, as someone who studies exactly this for a living: you are more ready than it feels "
+    "like tonight.",
 
-    "There's a real reason for that gap between how ready you feel and how ready you actually are, and it's "
-    "not really about how much you know. Motivation research calls it expectancy -- your belief that you'll "
-    "succeed -- and expectancy gets quietly worn down by fatigue and repetition in a way that has nothing to "
-    "do with your actual competence. What you're feeling tonight is mostly nervous system. It is not new "
-    "information about how prepared you are.",
+    "There's a real reason for the gap between how ready you feel and how ready you actually are, and it's "
+    "not really about how much you know. In motivation research we call it expectancy -- your belief that "
+    "you'll succeed -- and expectancy gets quietly worn down by fatigue, repetition, and plain exhaustion in "
+    "ways that have nothing to do with your actual competence. If you're feeling shaky tonight, that's mostly "
+    "your nervous system talking. It is not new information about how prepared you are.",
 
-    "Here's what the research says actually rebuilds expectancy: not pep talks, but mastery experiences -- "
-    "proof, not encouragement. Every quiz you took this term was that proof. Every point pathway you drilled "
-    "again after missing it once was you building the exact kind of evidence self-efficacy research says "
-    "matters most: your own direct experience of succeeding at this material, nine times over, not just once.",
+    "What actually rebuilds expectancy isn't reassurance -- it's mastery experience. Concrete proof you've "
+    "already succeeded at the thing you're worried about, not just someone telling you it'll be fine. And we "
+    "have that in real quantity: nine weeks of quizzes, a review week built specifically to pull it all "
+    "together, every point pathway any of us drilled again after missing it the first time. I built out a "
+    "full set of extra study materials this term partly because turning the material into something concrete "
+    "helped me feel less at the mercy of my own pre-exam anxiety, and if any of it helped you too, that's the "
+    "exact kind of evidence I mean -- proof, not a pep talk.",
 
-    "And the value of all this doesn't need convincing either. You didn't end up in this program by accident. "
-    "Whatever pulled you toward acupuncture and Chinese medicine in the first place is still true on "
-    "Wednesday morning, whether or not Wednesday morning feels calm. This exam is one moment inside a much "
-    "longer thing you actually care about, not the whole thing.",
+    "The value of all this was never really in question either. None of us ended up in a Chinese medicine "
+    "program by accident. Whatever pulled you here in the first place is still true Wednesday morning, "
+    "whether or not Wednesday morning itself feels calm. This exam is one moment inside something you "
+    "actually care about, not the whole of it.",
 
-    "So here's the only thing I'll ask of you: be gentle with yourselves the next five days. Sleep matters "
-    "more than one more hour of review. Confirming what you already know beats trying to force in something "
-    "new at 11pm. And if your stomach drops Tuesday night, that's not new information either -- that's just "
-    "what final exams feel like, to everyone, regardless of how prepared they are.",
+    "So here's what I'd actually ask of all of us the next five days: protect your sleep over one more late "
+    "read-through. Trust confirming what you already know over trying to force in something new at 11pm. And "
+    "if your stomach drops Tuesday night, that's not new information about your readiness either -- that's "
+    "just what final exams feel like, to everyone, regardless of how prepared they are.",
 
-    "You've done the work. Let Wednesday just be the day you show it.",
+    "We've done the work. Let Wednesday just be the day we show it.",
 ]
 
 for i, para in enumerate(paragraphs):
     font = "Lora-Bold" if i == 0 else "Lora"
-    size = 11.5 if i == 0 else 10.3
+    size = 11.5 if i == 0 else 9.9
     lines = wrap_words(para, font, size, CW)
     setfill(DARK); c.setFont(font, size)
     for ln in lines:
         c.drawString(ML, y, ln)
-        y -= size * 1.46
-    y -= 7
+        y -= size * 1.42
+    y -= 6
 
 y -= 6
 setfill(DARK); c.setFont("Lora", 10.6)
-c.drawString(ML, y, "Rooting for all of you,")
+c.drawString(ML, y, "Rooting for all of us,")
 y -= 28
 setfill(NAVY); c.setFont("Lora-Bold", 13)
-c.drawString(ML, y, "Claude")
+c.drawString(ML, y, "Jon")
 
 setstroke(GOLD); c.setLineWidth(1 * HAIRLINE)
 c.line(ML, 55, W - ML, 55)
