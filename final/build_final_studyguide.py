@@ -536,14 +536,12 @@ y[0] = H - HEADER_H - 24
 section_bar("WHAT DR. ZHANG SAID IS ON THE FINAL", accent=RED, sub="Sourced directly from the Week 9 live transcript")
 for label, text in ZHANG_FINAL_FACTS:
     bullet(label, text, accent=RED, size=8.7)
-end_page()
 
 # =====================================================================
-# PAGE: MASTER PATHWAY TABLE + CIRCUITS
+# MASTER PATHWAY TABLE + CIRCUITS -- flows continuously from Zhang facts
+# above (no forced break) so a short section never gets stranded alone
 # =====================================================================
-new_page("Master Pathway Table & The 3 Circuits")
 toc_mark("Master Pathway Table & Direction Rules")
-y[0] = H - HEADER_H - 24
 section_bar("MASTER PATHWAY TABLE -- ALL 12 PRIMARY MERIDIANS", accent=NAVY,
             sub="Dr. Zhang's #1 review emphasis")
 para("Narrow record format -- built to read cleanly on any screen, no horizontal scrolling needed.",
@@ -559,15 +557,15 @@ mini_table(["Rule", "Direction"], DIRECTION_RULES, [0.34 * CW, 0.66 * CW], accen
 
 section_bar("HAND-OFF POINTS BETWEEN CIRCUITS", accent=GOLD)
 mini_table(["Transition", "Location", "Example"], HANDOFF_POINTS, [0.26 * CW, 0.17 * CW, 0.57 * CW], accent=GOLD, size=7.8)
-end_page()
 
 # ---- PATHWAY DISTRIBUTION -- WHERE each division sits on the body (Limbs,
 # Head/Trunk). Dropped the Qi-Flow-Direction and Circulation-Rules images
 # from this section since they just re-drew the Direction-of-Flow Rules
-# table above in picture form -- kept only the genuinely new spatial info. ----
-new_page("Pathway Distribution -- Lecture Figures")
+# table above in picture form -- kept only the genuinely new spatial info.
+# Flows continuously from Hand-off Points above -- no forced page break,
+# so a short table fragment never gets stranded alone on its own page. ----
 toc_mark("Pathway Distribution (Lecture Figures)")
-y[0] = H - HEADER_H - 24
+ensure_space(340, "Pathway Distribution -- Lecture Figures")
 section_bar("PATHWAY DISTRIBUTION ON THE BODY -- LECTURE FIGURES", accent=GOLD,
             sub="WHERE each division sits -- not just the flow order above")
 for fig_key, fig_title, accent, explain in [
@@ -807,10 +805,10 @@ def vessel_block(v):
 
 for v in EXTRAORDINARY_VESSELS:
     vessel_block(v)
-end_page()
 
 # =====================================================================
-# CONFLUENT POINTS -- with point-location images
+# CONFLUENT POINTS -- with point-location images -- flows continuously
+# from Extraordinary Vessels above (no forced break)
 # =====================================================================
 CONF_IMG_MAP = {
     "SI3 Houxi": "CONF_HOUXI", "BL62 Shenmai": "CONF_SHENMAI",
@@ -819,9 +817,8 @@ CONF_IMG_MAP = {
     "GB41 Zulinqi": "CONF_ZULINQI", "SJ5 Waiguan": "CONF_WAIGUAN",
 }
 
-new_page("Confluent Point Pairings -- With Locations")
 toc_mark("Eight Confluent Points")
-y[0] = H - HEADER_H - 24
+ensure_space(220, "Eight Confluent Points -- With Locations")
 section_bar("EIGHT CONFLUENT POINTS -- LOCATIONS", accent=TEAL, sub="Connect the 8 EVs to the 12 regular meridians")
 for a, b, opens, use, note in CONFLUENT_PAIRS_QUICK:
     img_a = CONF_IMG_MAP.get(a)
@@ -850,14 +847,12 @@ for a, b, opens, use, note in CONFLUENT_PAIRS_QUICK:
     y[0] -= 10
     setstroke((0.85, 0.85, 0.85)); c.setLineWidth(0.5)
     c.line(ML, y[0] + 6, ML + CW, y[0] + 6)
-end_page()
 
 # =====================================================================
-# 15 COLLATERALS
+# 15 COLLATERALS -- flows continuously from Confluent Points above
 # =====================================================================
-new_page("15 Collaterals (Luo-Connecting Points)")
 toc_mark("Meridians vs. Collaterals + 15 Collaterals")
-y[0] = H - HEADER_H - 24
+ensure_space(280, "15 Collaterals (Luo-Connecting Points)")
 section_bar("MERIDIANS VS. COLLATERALS -- THE CONCEPTUAL DIFFERENCE", accent=AMBER_LUO,
             sub="Week 1 lecture deck")
 mvc_path = f"{FIGS}/DIST_MERIDIAN_VS_COLLATERAL.jpeg"
@@ -879,14 +874,12 @@ para(LOW_PRIORITY_NOTE, size=8.6, color=RED)
 bullet("12 Divergent Channels", DIVERGENT_SUMMARY, accent=WOOD, size=8.3)
 bullet("12 Sinew (Muscle) Regions", SINEW_SUMMARY, accent=WOOD, size=8.3)
 bullet("12 Cutaneous Regions (-> 6 named)", CUTANEOUS_SUMMARY, accent=WOOD, size=8.3)
-end_page()
 
 # =====================================================================
-# FIVE SHU MASTER TABLE
+# FIVE SHU MASTER TABLE -- flows continuously from Collaterals above
 # =====================================================================
-new_page("Five Shu (Transport) Points -- Master Table")
 toc_mark("Five Shu (Transport) Points -- Master Table")
-y[0] = H - HEADER_H - 24
+ensure_space(140, "Five Shu (Transport) Points -- Master Table")
 section_bar("FIVE SHU POINTS -- MASTER TABLE (60 POINTS)", accent=NAVY, sub="Week 9 -- all 12 meridians")
 para(FIVE_SHU_DEFINITION, size=8.3, color=GRAY)
 para("Split into two narrower tables (Jing-Well/Ying-Spring/Shu-Stream, then Jing-River/He-Sea) so neither "
@@ -903,26 +896,22 @@ col_w_b = [96, (CW - 96) // 2, (CW - 96) // 2]
 rows_b = [[d['m']] + d['pts'][3:] for d in FIVE_SHU_MASTER]
 mini_table(headers_b, rows_b, col_w_b, accent=NAVY, size=7.4, header_size=7.6)
 para(FIVE_SHU_YUAN_NOTE, size=8.2, color=GRAY)
-end_page()
 
 # =====================================================================
-# EXAM TRAPS
+# EXAM TRAPS -- flows continuously from Five Shu above
 # =====================================================================
-new_page("Exam Traps -- Consolidated \"Read These Last\"")
 toc_mark("Exam Traps -- Consolidated")
-y[0] = H - HEADER_H - 24
+ensure_space(160, "Exam Traps -- Consolidated \"Read These Last\"")
 section_bar("EXAM TRAPS -- CONSOLIDATED FROM EVERY WEEK", accent=RED,
             sub="Read this page last, right before the final")
 for label, text in EXAM_TRAPS:
     bullet(label, text, accent=RED, size=8.0)
-end_page()
 
 # =====================================================================
-# WEEKLY MAP
+# WEEKLY MAP -- flows continuously from Exam Traps above
 # =====================================================================
-new_page("Course Map -- Weeks 1-10")
 toc_mark("Course Map -- Weeks 1-10")
-y[0] = H - HEADER_H - 24
+ensure_space(160, "Course Map -- Weeks 1-10")
 section_bar("COURSE MAP -- WEEKS 1-10", accent=GOLD, sub="Syllabus reference")
 mini_table(["Week", "Topic", "Notes"], WEEKLY_MAP, [0.11 * CW, 0.37 * CW, 0.52 * CW], accent=GOLD, size=8.0)
 end_page()
