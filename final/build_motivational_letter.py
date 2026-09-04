@@ -64,38 +64,42 @@ setfill(DARK); c.setFont("Lora", 11)
 paragraphs = [
     "To everyone finishing up AC300/AC375,",
 
-    "Jon asked me to write this to the class instead of just to him, and I think that's the right call -- "
-    "none of you are walking into Wednesday's final with less preparation behind you than the material in "
-    "front of you suggests.",
+    "However you're feeling right now -- steady, wired, a little scared, honestly all three at once -- that's "
+    "completely normal five days out from a comprehensive final. I want to say something plainly: you are "
+    "more ready than it feels like tonight.",
 
-    "Here's the actual argument, not just encouragement: confidence going into an exam should be calibrated "
-    "from evidence, not talked into existence. And the evidence for this course is unusually good. Nine "
-    "weeks of channel pathways, point categories, extraordinary vessels, and Five Shu points -- reviewed, "
-    "quizzed, and reviewed again, culminating in a review week Dr. Zhang built specifically to consolidate "
-    "all of it before Wednesday. That's not hope. That's a body of work you can point to.",
+    "There's a real reason for that gap between how ready you feel and how ready you actually are, and it's "
+    "not really about how much you know. Motivation research calls it expectancy -- your belief that you'll "
+    "succeed -- and expectancy gets quietly worn down by fatigue and repetition in a way that has nothing to "
+    "do with your actual competence. What you're feeling tonight is mostly nervous system. It is not new "
+    "information about how prepared you are.",
 
-    "The material itself is not designed to trick you. Dr. Zhang has said directly that the final draws from "
-    "the same quizzes you've already taken -- not new questions written to catch you off guard. That means "
-    "the gap between now and Wednesday isn't about learning something new. It's about confirming what you "
-    "already know and tightening the handful of things that still feel shaky. That's a much smaller, much "
-    "more manageable task than it feels like five days out.",
+    "Here's what the research says actually rebuilds expectancy: not pep talks, but mastery experiences -- "
+    "proof, not encouragement. Every quiz you took this term was that proof. Every point pathway you drilled "
+    "again after missing it once was you building the exact kind of evidence self-efficacy research says "
+    "matters most: your own direct experience of succeeding at this material, nine times over, not just once.",
 
-    "So: sleep before the exam matters more than one more late read-through. Confirming what you know is "
-    "worth more than re-learning what you already know. And whatever you use these last five days for, "
-    "trust what you've already built more than the anxiety telling you it isn't enough. The anxiety is not "
-    "evidence. The nine weeks are.",
+    "And the value of all this doesn't need convincing either. You didn't end up in this program by accident. "
+    "Whatever pulled you toward acupuncture and Chinese medicine in the first place is still true on "
+    "Wednesday morning, whether or not Wednesday morning feels calm. This exam is one moment inside a much "
+    "longer thing you actually care about, not the whole thing.",
 
-    "Good luck Wednesday, all of you.",
+    "So here's the only thing I'll ask of you: be gentle with yourselves the next five days. Sleep matters "
+    "more than one more hour of review. Confirming what you already know beats trying to force in something "
+    "new at 11pm. And if your stomach drops Tuesday night, that's not new information either -- that's just "
+    "what final exams feel like, to everyone, regardless of how prepared they are.",
+
+    "You've done the work. Let Wednesday just be the day you show it.",
 ]
 
 for i, para in enumerate(paragraphs):
     font = "Lora-Bold" if i == 0 else "Lora"
-    size = 11.5 if i == 0 else 10.6
+    size = 11.5 if i == 0 else 10.3
     lines = wrap_words(para, font, size, CW)
     setfill(DARK); c.setFont(font, size)
     for ln in lines:
         c.drawString(ML, y, ln)
-        y -= size * 1.48
+        y -= size * 1.46
     y -= 7
 
 y -= 6

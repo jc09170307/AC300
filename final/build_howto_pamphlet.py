@@ -105,14 +105,16 @@ def section_bar(text, accent=NAVY, sub=""):
     y[0] -= 10
 
 
-def para(text, size=9.2, color=DARK, font="Lora", gap=8):
-    lines = wrap_words(text, font, size, CW)
+def para(text, size=9.2, color=DARK, font="Lora", gap=8, width=None):
+    w = width if width is not None else 360
+    lines = wrap_words(text, font, size, w)
     needed = len(lines) * (size * 1.4) + gap
     ensure_space(needed)
     setfill(color); c.setFont(font, size)
     for ln in lines:
         c.drawString(ML, y[0], ln); y[0] -= size * 1.4
     y[0] -= gap
+
 
 
 def bullet(label, text, accent=NAVY, size=8.9):
@@ -136,13 +138,15 @@ def bullet(label, text, accent=NAVY, size=8.9):
 
 
 def doc_row(name, purpose, when):
-    needed = 46
+    text_w = 330  # narrowed for readability -- was full row width (~520pt), now ~75 chars/line
+    plines = wrap_words(purpose, "Lora", 8.6, text_w)
+    needed = 25 + len(plines) * 10.5 + 8
     ensure_space(needed)
     setfill(ROW_TINT); c.rect(ML, y[0] - needed + 8, CW, needed - 8, fill=1, stroke=0)
     setfill(NAVY); c.setFont("Lora-Bold", 9.5)
     c.drawString(ML + 10, y[0] - 12, name)
     setfill(DARK); c.setFont("Lora", 8.6)
-    for i, ln in enumerate(wrap_words(purpose, "Lora", 8.6, CW - 20)):
+    for i, ln in enumerate(plines):
         c.drawString(ML + 10, y[0] - 25 - i * 10.5, ln)
     setfill(TEAL); c.setFont("Lora-Italic", 8.2)
     c.drawRightString(ML + CW - 10, y[0] - 12, when)
@@ -170,7 +174,7 @@ doc_row("Final Cram Sheet (5 pp)", "Everything compressed to its densest, fastes
         "confirmation document, not a learning one -- read it and notice what does or doesn't come back to "
         "you immediately.", "Daily, especially final 48 hrs")
 doc_row("Master Quiz Bank & Key", "Part 1 = the REAL Quiz 1-6 (36 questions, verified against transcripts). "
-        "Part 2 = 264 additional practice questions I wrote, all 9 weeks. Part 1 tells you exactly what's "
+        "Part 2 = 264 additional practice questions covering the full course. Part 1 tells you exactly what's "
         "been tested; Part 2 is volume if you have time left over.", "Retrieval practice, daily")
 doc_row("Practice Final, Set 1 & 2", "Two full closed-book simulations, no week labels, timed conditions. "
         "This is the dress rehearsal -- don't open the answer key until you've finished the whole thing.",
@@ -215,7 +219,7 @@ for day, label, text in [
     setfill(NAVY); c.setFont("Lora-Bold", 10.5)
     c.drawString(ML + badge_w + 10, y[0] - 12, label)
     y[0] -= 24
-    for ln in wrap_words(text, "Lora", 8.9, CW - 8):
+    for ln in wrap_words(text, "Lora", 8.9, 340):
         setfill(DARK); c.setFont("Lora", 8.9)
         c.drawString(ML + 8, y[0], ln)
         y[0] -= 12.5
