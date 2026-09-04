@@ -571,9 +571,9 @@ else:
 # PAGE: WHAT DR. ZHANG SAID
 # =====================================================================
 new_page("What Dr. Zhang Said Is On The Final")
-toc_mark("What Dr. Zhang Said Is On The Final")
 y[0] = H - HEADER_H - 24
 section_bar("WHAT DR. ZHANG SAID IS ON THE FINAL", accent=RED, sub="Sourced directly from the Week 9 live transcript")
+toc_mark("What Dr. Zhang Said Is On The Final")
 for label, text in ZHANG_FINAL_FACTS:
     bullet(label, text, accent=RED, size=8.7)
 
@@ -581,9 +581,9 @@ for label, text in ZHANG_FINAL_FACTS:
 # MASTER PATHWAY TABLE + CIRCUITS -- flows continuously from Zhang facts
 # above (no forced break) so a short section never gets stranded alone
 # =====================================================================
-toc_mark("Master Pathway Table & Direction Rules")
 section_bar("MASTER PATHWAY TABLE -- ALL 12 PRIMARY MERIDIANS", accent=NAVY,
             sub="Dr. Zhang's #1 review emphasis")
+toc_mark("Master Pathway Table & Direction Rules")
 para("Narrow record format -- built to read cleanly on any screen, no horizontal scrolling needed.",
      size=7.8, color=GRAY, gap=8)
 _pathway_accents = {"Outer / Anterior": METAL, "Inner / Posterior": FIRE, "Middle": FIREMIN}
@@ -604,10 +604,10 @@ mini_table(["Transition", "Location", "Example"], HANDOFF_POINTS, [0.26 * CW, 0.
 # table above in picture form -- kept only the genuinely new spatial info.
 # Flows continuously from Hand-off Points above -- no forced page break,
 # so a short table fragment never gets stranded alone on its own page. ----
-toc_mark("Pathway Distribution (Lecture Figures)")
 ensure_space(340, "Pathway Distribution -- Lecture Figures")
 section_bar("PATHWAY DISTRIBUTION ON THE BODY -- LECTURE FIGURES", accent=GOLD,
             sub="WHERE each division sits -- not just the flow order above")
+toc_mark("Pathway Distribution (Lecture Figures)")
 for fig_key, fig_title, accent, explain in [
     ("DIST_LIMBS", "Distribution on the Limbs", GOLD,
      "Medial aspect of the limbs = Yin meridians. Lateral aspect = Yang meridians. On the arm/leg cross-section: "
@@ -641,10 +641,10 @@ end_page()
 # ---- SIX DIVISIONS OVERVIEW -- Taiyin/Yangming/Shaoyin/Taiyang/Jueyin/Shaoyang
 # tied directly to the 3 circuits (Week 1 lecture deck) ----
 new_page("Six Divisions & The 3 Circuits -- Overview")
-toc_mark("Six Divisions & Circuit Diagrams")
 y[0] = H - HEADER_H - 24
 section_bar("SIX DIVISIONS -- TAIYIN/YANGMING/SHAOYIN/TAIYANG/JUEYIN/SHAOYANG", accent=NAVY,
             sub="How the six divisions map onto the 3 circuits")
+toc_mark("Six Divisions & Circuit Diagrams")
 six_div_path = f"{FIGS}/SIX_DIVISIONS.jpeg"
 iw, ih = img_size(six_div_path)
 img_h = CW * ih / iw
@@ -718,10 +718,10 @@ def channel_page(abbr):
     cc = CHANNEL_CONTENT[abbr]
     # ---- PAGE A: ID card + Functions + Indications + Highest-Yield + Pearls (all on one dense page) ----
     new_page(f"{abbr} {d['name']} -- Full Reference")
-    toc_mark(f"{abbr} -- {d['name']}", indent=1)
     y[0] = H - HEADER_H - 24
     section_bar(f"{abbr} -- {d['name'].upper()}", accent=d['accent'],
                 sub=f"{d['n_points']} pts | {d['element']} | {d['polarity']} | {d['clock']} | {d['direction']}")
+    toc_mark(f"{abbr} -- {d['name']}", indent=1)
     rows = [
         ("Full name", d['full']),
         ("Pertains / Connects", f"{d['pertains']} / {d['connects']}"),
@@ -800,9 +800,9 @@ VESSEL_IMG_MAP = {
 }
 
 new_page("Eight Extraordinary Vessels")
-toc_mark("Eight Extraordinary Vessels")
 y[0] = H - HEADER_H - 24
 section_bar("EIGHT EXTRAORDINARY VESSELS", accent=EXTRA, sub="Week 7 -- confluent points started live in Week 9 review")
+toc_mark("Eight Extraordinary Vessels")
 
 
 def vessel_block(v):
@@ -854,9 +854,9 @@ CONF_IMG_MAP = {
     "GB41 Zulinqi": "CONF_ZULINQI", "SJ5 Waiguan": "CONF_WAIGUAN",
 }
 
-toc_mark("Eight Confluent Points")
 ensure_space(220, "Eight Confluent Points -- With Locations")
 section_bar("EIGHT CONFLUENT POINTS -- LOCATIONS", accent=TEAL, sub="Connect the 8 EVs to the 12 regular meridians")
+toc_mark("Eight Confluent Points")
 for a, b, opens, use, note in CONFLUENT_PAIRS_QUICK:
     img_a = CONF_IMG_MAP.get(a)
     img_b = CONF_IMG_MAP.get(b)
@@ -888,10 +888,10 @@ for a, b, opens, use, note in CONFLUENT_PAIRS_QUICK:
 # =====================================================================
 # 15 COLLATERALS -- flows continuously from Confluent Points above
 # =====================================================================
-toc_mark("Meridians vs. Collaterals + 15 Collaterals")
 ensure_space(280, "15 Collaterals (Luo-Connecting Points)")
 section_bar("MERIDIANS VS. COLLATERALS -- THE CONCEPTUAL DIFFERENCE", accent=AMBER_LUO,
             sub="Week 1 lecture deck")
+toc_mark("Meridians vs. Collaterals + 15 Collaterals")
 mvc_path = f"{FIGS}/DIST_MERIDIAN_VS_COLLATERAL.jpeg"
 iw, ih = img_size(mvc_path)
 img_h = CW * ih / iw
@@ -915,9 +915,9 @@ bullet("12 Cutaneous Regions (-> 6 named)", CUTANEOUS_SUMMARY, accent=WOOD, size
 # =====================================================================
 # FIVE SHU MASTER TABLE -- flows continuously from Collaterals above
 # =====================================================================
-toc_mark("Five Shu (Transport) Points -- Master Table")
 ensure_space(140, "Five Shu (Transport) Points -- Master Table")
 section_bar("FIVE SHU POINTS -- MASTER TABLE (60 POINTS)", accent=NAVY, sub="Week 9 -- all 12 meridians")
+toc_mark("Five Shu (Transport) Points -- Master Table")
 para(FIVE_SHU_DEFINITION, size=8.3, color=GRAY)
 para("Split into two narrower tables (Jing-Well/Ying-Spring/Shu-Stream, then Jing-River/He-Sea) so neither "
      "requires horizontal scrolling on a phone or tablet.", size=7.8, color=GRAY, gap=8)
@@ -937,19 +937,19 @@ para(FIVE_SHU_YUAN_NOTE, size=8.2, color=GRAY)
 # =====================================================================
 # EXAM TRAPS -- flows continuously from Five Shu above
 # =====================================================================
-toc_mark("Exam Traps -- Consolidated")
 ensure_space(160, "Exam Traps -- Consolidated \"Read These Last\"")
 section_bar("EXAM TRAPS -- CONSOLIDATED FROM EVERY WEEK", accent=RED,
             sub="Read this page last, right before the final")
+toc_mark("Exam Traps -- Consolidated")
 for label, text in EXAM_TRAPS:
     bullet(label, text, accent=RED, size=8.0)
 
 # =====================================================================
 # WEEKLY MAP -- flows continuously from Exam Traps above
 # =====================================================================
-toc_mark("Course Map -- Weeks 1-10")
 ensure_space(160, "Course Map -- Weeks 1-10")
 section_bar("COURSE MAP -- WEEKS 1-10", accent=GOLD, sub="Syllabus reference")
+toc_mark("Course Map -- Weeks 1-10")
 mini_table(["Week", "Topic", "Notes"], WEEKLY_MAP, [0.11 * CW, 0.37 * CW, 0.52 * CW], accent=GOLD, size=8.0)
 end_page()
 

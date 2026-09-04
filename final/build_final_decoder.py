@@ -4,6 +4,7 @@ Standalone document -- organized BY POINT CATEGORY, not by channel.
 Usage: python3 build_final_decoder.py <print|remarkable>
 """
 import sys
+import os
 from reportlab.pdfgen import canvas
 from reportlab.lib.pagesizes import letter
 from reportlab.pdfbase import pdfmetrics
@@ -67,6 +68,12 @@ c = canvas.Canvas(OUT, pagesize=(W, H))
 ML, MR = (16, 16) if IS_MOBILE else (36, 36)
 CW = W - ML - MR
 page_num = [1]
+TOC_ENTRIES = []
+
+
+def toc_mark(title, indent=0):
+    TOC_ENTRIES.append((title, page_num[0], indent))
+
 FS = 1.35 if IS_MOBILE else 1.0
 
 
@@ -453,6 +460,7 @@ new_page("What Each Point Category Means")
 y[0] = H - HEADER_H - 24
 section_bar("SPECIAL POINT CATEGORY DEFINITIONS", accent=NAVY,
             sub="Read this page FIRST -- every table after assumes you know these terms")
+toc_mark("What Each Point Category Means")
 for name, accent, definition in CATEGORY_DEFINITIONS:
     if IS_MOBILE:
         name_size = 10.5 * FS; def_size = 9 * FS
@@ -488,14 +496,13 @@ for name, accent, definition in CATEGORY_DEFINITIONS:
     for ln in txt_lines:
         c.drawString(ML + 10 + label_w, yy2, ln); yy2 -= 12.2
     y[0] -= needed
-end_page()
 
 # =====================================================================
-# FIVE SHU MASTER TABLE (Tier A)
+# FIVE SHU MASTER TABLE (Tier A) -- flows continuously from Definitions above
 # =====================================================================
-new_page("Five Shu (Transport) Points -- Master Table")
-y[0] = H - HEADER_H - 24
+ensure_space(200, "Five Shu (Transport) Points -- Master Table")
 section_bar("FIVE SHU (TRANSPORT) POINTS -- 60-POINT MASTER TABLE", accent=NAVY, tier=DECODER_TIERS[0])
+toc_mark("Five Shu (Transport) Points -- Master Table")
 para(FIVE_SHU_DEFINITION, size=8.6, color=GRAY)
 para("Split into two narrower tables so neither requires horizontal scrolling on a phone or tablet.",
      size=8.0, color=GRAY, gap=8)
@@ -511,14 +518,13 @@ col_w_b = [0.20 * CW, 0.40 * CW, 0.40 * CW]
 rows_b = [[d['m']] + d['pts'][3:] for d in FIVE_SHU_MASTER]
 mini_table(headers_b, rows_b, col_w_b, accent=NAVY, size=7.4, header_size=7.6)
 para(FIVE_SHU_YUAN_NOTE, size=8.4, color=GRAY)
-end_page()
 
 # =====================================================================
-# YUAN-SOURCE (Tier A)
+# YUAN-SOURCE (Tier A) -- flows continuously from Five Shu above
 # =====================================================================
-new_page("Yuan-Source Points -- All 12")
-y[0] = H - HEADER_H - 24
+ensure_space(160, "Yuan-Source Points -- All 12")
 section_bar("YUAN-SOURCE POINTS -- ALL 12 MERIDIANS", accent=NAVY, tier=DECODER_TIERS[0])
+toc_mark("Yuan-Source Points -- All 12")
 two_col_table(YUAN_SOURCE_TABLE, accent=NAVY, size=8.6)
 para("On YIN channels, the Yuan-Source point IS the Shu-Stream point (dual role, same point). On YANG "
      "channels, Yuan-Source is a separate 6th point beyond the 5 Shu points.", size=8.6, color=GRAY)
@@ -527,14 +533,13 @@ para("On YIN channels, the Yuan-Source point IS the Shu-Stream point (dual role,
 section_bar("LUO-CONNECTING POINTS -- ALL 15", accent=AMBER_LUO, tier=DECODER_TIERS[0])
 mini_table(["Luo Point", "Connection", "Note"], LUO_15, [0.18 * CW, 0.18 * CW, 0.64 * CW], accent=AMBER_LUO, size=7.8)
 para(LUO_RULE, size=8.4, color=GRAY)
-end_page()
 
 # =====================================================================
-# BACK-SHU / FRONT-MU (Tier A)
+# BACK-SHU / FRONT-MU (Tier A) -- flows continuously from Yuan-Source/Luo above
 # =====================================================================
-new_page("Back-Shu & Front-Mu Points")
-y[0] = H - HEADER_H - 24
+ensure_space(140, "Back-Shu & Front-Mu Points")
 section_bar("BACK-SHU POINTS -- ORGAN TRANSPORT SERIES (BL13-BL28)", accent=WATER, tier=DECODER_TIERS[0])
+toc_mark("Back-Shu & Front-Mu Points")
 mini_table(["Point", "Organ Treated"], BACK_SHU_SERIES, [0.26 * CW, 0.74 * CW], accent=WATER, size=8.2)
 para(BACK_SHU_NOTE, size=8.4, color=GRAY)
 
@@ -543,14 +548,13 @@ two_col_table(FRONT_MU_TABLE, accent=EARTH, size=8.6)
 para("Front-Mu points are scattered across several channels (CV, ST, LR, GB) rather than clustered on one "
      "channel like Back-Shu -- the classic Front-Mu exam trap is assuming a point sits on its own channel "
      "(e.g. ST25 is Front-Mu of LARGE INTESTINE, not Stomach).", size=8.4, color=GRAY)
-end_page()
 
 # =====================================================================
-# XI-CLEFT / HE-SEA / LOWER HE-SEA (Tier B)
+# XI-CLEFT / HE-SEA / LOWER HE-SEA (Tier B) -- flows continuously from Back-Shu/Front-Mu above
 # =====================================================================
-new_page("Xi-Cleft, He-Sea & Lower He-Sea Points")
-y[0] = H - HEADER_H - 24
+ensure_space(160, "Xi-Cleft, He-Sea & Lower He-Sea Points")
 section_bar("XI-CLEFT POINTS -- ALL 12 MERIDIANS", accent=FIREMIN, tier=DECODER_TIERS[1])
+toc_mark("Xi-Cleft, He-Sea & Lower He-Sea Points")
 two_col_table(XI_CLEFT_TABLE, accent=FIREMIN, size=8.6)
 para("Xi-Cleft points are the go-to for ACUTE presentations of that channel's pathology (acute pain, acute "
      "bleeding, acute spasm) -- contrast with He-Sea points, used more for chronic/Fu-organ disorders.",
@@ -562,10 +566,9 @@ two_col_table(HE_SEA_TABLE, accent=FIRE, size=8.6)
 section_bar("LOWER HE-SEA POINTS -- THE 6 FU ORGANS", accent=FIRE, tier=DECODER_TIERS[1])
 mini_table(["Point", "Fu Organ", "Use"], LOWER_HE_SEA, [0.22 * CW, 0.18 * CW, 0.60 * CW], accent=FIRE, size=7.8)
 para(LOWER_HE_SEA_NOTE, size=8.4, color=RED)
-end_page()
 
 # =====================================================================
-# CONFLUENT POINTS (Tier A) -- with images
+# CONFLUENT POINTS (Tier A) -- with images, flows continuously from above
 # =====================================================================
 CONF_IMG_MAP = {
     "SI3 Houxi": "CONF_HOUXI", "BL62 Shenmai": "CONF_SHENMAI",
@@ -591,9 +594,9 @@ def draw_image_fit(path, x, top_y, max_w, max_h):
     return dh
 
 
-new_page("Eight Confluent Points -- With Locations")
-y[0] = H - HEADER_H - 24
+ensure_space(230, "Eight Confluent Points -- With Locations")
 section_bar("EIGHT CONFLUENT POINTS -- OPEN THE 8 EXTRAORDINARY VESSELS", accent=TEAL, tier=DECODER_TIERS[0])
+toc_mark("Eight Confluent Points -- With Locations")
 for a, b, opens, use, note in CONFLUENT_PAIRS_QUICK:
     img_a = CONF_IMG_MAP.get(a); img_b = CONF_IMG_MAP.get(b)
     note_lines = wrap_words(note, "Lora-Italic", 8.2, CW - 210)
@@ -620,41 +623,38 @@ for a, b, opens, use, note in CONFLUENT_PAIRS_QUICK:
     y[0] -= 10
     setstroke((0.85, 0.85, 0.85)); c.setLineWidth(0.5)
     c.line(ML, y[0] + 6, ML + CW, y[0] + 6)
-end_page()
 
 # =====================================================================
-# COMMAND POINTS (Tier B)
+# COMMAND POINTS (Tier B) -- flows continuously from Confluent Points above
 # =====================================================================
-new_page("Command Points & Hui-Meeting Points")
-y[0] = H - HEADER_H - 24
+ensure_space(140, "Command Points & Hui-Meeting Points")
 section_bar("FOUR COMMAND POINTS (SI ZONG XUE)", accent=GOLD, tier=DECODER_TIERS[1])
+toc_mark("Command Points & Hui-Meeting Points")
 mini_table(["Point", "Governs Region", "Note"], COMMAND_POINTS_CLASSICAL, [0.22 * CW, 0.18 * CW, 0.60 * CW], accent=GOLD, size=8.0)
 para(COMMAND_POINTS_NOTE, size=8.4, color=GRAY)
 
 section_bar("EIGHT HUI-MEETING (INFLUENTIAL) POINTS", accent=WOOD, tier=DECODER_TIERS[2])
 mini_table(["Point", "Governs", "Use"], HUI_MEETING_POINTS, [0.22 * CW, 0.18 * CW, 0.60 * CW], accent=WOOD, size=8.0)
 para(HUI_MEETING_NOTE, size=8.4, color=GRAY)
-end_page()
 
 # =====================================================================
-# CROSSING/MEETING POINTS (Tier C)
+# CROSSING/MEETING POINTS (Tier C) -- flows continuously from Command/Hui above
 # =====================================================================
-new_page("Crossing / Meeting Points Summary")
-y[0] = H - HEADER_H - 24
+ensure_space(140, "Crossing / Meeting Points Summary")
 section_bar("CROSSING (MEETING) POINTS -- BY CHANNEL", accent=GRAY, tier=DECODER_TIERS[2])
+toc_mark("Crossing / Meeting Points Summary")
 mini_table(["Channel", "Count", "Note"], MEETING_CROSSING_SUMMARY, [0.16 * CW, 0.10 * CW, 0.74 * CW], accent=GRAY, size=8.2)
 para("Per Dr. Zhang's Week 9 review, deep crossing-point memorization is lower priority than the pathway "
      "and special-point material above -- know the notable counts (ST=11 most, HT/PC=0) rather than every "
      "individual crossing point.", size=8.4, color=RED)
-end_page()
 
 # =====================================================================
-# CROSS-REFERENCE INDEX -- by channel, all categories at a glance
+# CROSS-REFERENCE INDEX -- flows continuously from Crossing Points above
 # =====================================================================
-new_page("Cross-Reference Index -- All 12 Channels")
-y[0] = H - HEADER_H - 24
+ensure_space(160, "Cross-Reference Index -- All 12 Channels")
 section_bar("CROSS-REFERENCE INDEX -- ONE RECORD PER CHANNEL", accent=NAVY,
             sub="Every category, in narrow record format -- no horizontal scrolling")
+toc_mark("Cross-Reference Index -- All 12 Channels")
 _pivot_accents = {"LU": METAL, "LI": METAL, "ST": EARTH, "SP": EARTH, "HT": FIRE, "SI": FIRE,
                   "BL": WATER, "KI": WATER, "PC": FIREMIN, "SJ": FIREMIN, "GB": WOOD, "LR": WOOD}
 for abbr in CHANNEL_ORDER:
@@ -668,4 +668,107 @@ for abbr in CHANNEL_ORDER:
 end_page()
 
 c.save()
-print("SAVED:", OUT)
+print("SAVED (pre-TOC):", OUT)
+
+# =====================================================================
+# TABLE OF CONTENTS -- spliced in after the fact, same approach as the
+# Study Guide (page numbers only known once the whole doc is drawn)
+# =====================================================================
+import fitz as _fitz
+
+toc_path = OUT.replace(".pdf", "_TOC_TEMP.pdf")
+tc = canvas.Canvas(toc_path, pagesize=(W, H))
+
+
+def _tc_setfill(rgb): tc.setFillColorRGB(*rgb)
+def _tc_setstroke(rgb): tc.setStrokeColorRGB(*rgb)
+
+
+_tc_setfill(PAGE_BG); tc.rect(0, 0, W, H, fill=1, stroke=0)
+_tc_setfill(NAVY); tc.rect(0, H - HEADER_H, W, HEADER_H, fill=1, stroke=0)
+_tc_setfill(GOLD); tc.rect(0, H - HEADER_H, W, 3, fill=1, stroke=0)
+_tc_setfill((1, 1, 1)); tc.setFont("Lora-Bold", 12)
+tc.drawString(ML, H - HEADER_H + 15, "AC300 MASTER DECODER")
+tc.setFont("Lora-Italic", 9.5)
+tc.drawRightString(W - ML, H - HEADER_H + 15, "Table of Contents")
+
+ty = H - HEADER_H - 46
+_tc_setfill(NAVY); tc.setFont("Lora-Bold", 20)
+tc.drawString(ML, ty, "TABLE OF CONTENTS")
+ty -= 12
+_tc_setstroke(GOLD); tc.setLineWidth(1.6)
+tc.line(ML, ty, ML + CW, ty)
+ty -= 34
+
+PAGE_OFFSET = 1
+for title, pnum, indent in TOC_ENTRIES:
+    shown_page = pnum + PAGE_OFFSET
+    x = ML + (22 if indent else 0)
+    fsize = 11.5 if indent else 13.5
+    font = "Lora" if indent else "Lora-Bold"
+    color = DARK if indent else NAVY
+    _tc_setfill(color); tc.setFont(font, fsize)
+    tc.drawString(x, ty, title)
+    tc.setFont("Lora", fsize)
+    _tc_setfill(GRAY)
+    num_str = str(shown_page)
+    num_w = pdfmetrics.stringWidth(num_str, "Lora", fsize)
+    dot_right = ML + CW - num_w - 4
+    title_w = pdfmetrics.stringWidth(title, font, fsize)
+    dot_start = x + title_w + 8
+    if dot_right > dot_start:
+        tc.setDash(1, 3)
+        tc.setLineWidth(0.7)
+        _tc_setstroke((0.72, 0.72, 0.72))
+        tc.line(dot_start, ty + 3, dot_right, ty + 3)
+        tc.setDash()
+    _tc_setfill(NAVY if not indent else GRAY)
+    tc.drawRightString(ML + CW, ty, num_str)
+    ty -= (26 if indent else 30)
+
+ty -= 20
+_tc_setstroke((0.85, 0.85, 0.85)); tc.setLineWidth(0.7)
+tc.line(ML, ty, ML + CW, ty)
+ty -= 28
+_tc_setfill(NAVY); tc.setFont("Lora-Bold", 13)
+tc.drawString(ML, ty, "Tier Legend -- Quick Recap")
+ty -= 24
+for label, accent, desc in DECODER_TIERS:
+    box_w2, box_h2 = 62, 22
+    tc.setFillColorRGB(*accent)
+    tc.roundRect(ML, ty - box_h2 + 6, box_w2, box_h2, 3, fill=1, stroke=0)
+    _tc_setfill((1, 1, 1)); tc.setFont("Lora-Bold", 10)
+    tc.drawCentredString(ML + box_w2 / 2, ty - 9, label)
+    _tc_setfill(DARK); tc.setFont("Lora", 10.5)
+    desc_lines = wrap_words(desc, "Lora", 10.5, CW - box_w2 - 16)
+    zz = ty - 3
+    for ln in desc_lines:
+        tc.drawString(ML + box_w2 + 14, zz, ln)
+        zz -= 14
+    ty -= max(box_h2 + 10, (len(desc_lines) * 14) + 14)
+
+ty -= 10
+_tc_setfill(GRAY); tc.setFont("Lora-Italic", 9.5)
+for ln in wrap_words("This is NOT the weekly Study Guide -- it is organized BY POINT CATEGORY, not by "
+                     "channel. Use it to cross-check \"what are ALL the Yuan-Source points?\" instead of "
+                     "\"what is LU's Yuan-Source?\" Every category is cross-referenced back to the per-channel "
+                     "ID cards in the Final Study Guide.", "Lora-Italic", 9.5, CW):
+    tc.drawString(ML, ty, ln)
+    ty -= 14
+
+_tc_setstroke(GOLD); tc.setLineWidth(HAIRLINE * 1.2)
+tc.line(ML, 34, W - ML, 34)
+_tc_setfill(GRAY); tc.setFont("Lora-Italic", 7.5)
+tc.drawCentredString(W / 2, 22, "AC300/AC375 Master Special Points Decoder (Wk 1-9)  \u00b7  VUIM Summer 2026  \u00b7  Table of Contents")
+tc.save()
+
+main_doc = _fitz.open(OUT)
+toc_doc = _fitz.open(toc_path)
+main_doc.insert_pdf(toc_doc, start_at=1)
+tmp_out = OUT.replace(".pdf", "_WITH_TOC_TEMP.pdf")
+main_doc.save(tmp_out)
+main_doc.close()
+toc_doc.close()
+os.remove(toc_path)
+os.replace(tmp_out, OUT)
+print("SAVED (with TOC):", OUT)
