@@ -10,7 +10,18 @@ from reportlab.pdfbase import pdfmetrics
 from reportlab.pdfbase.ttfonts import TTFont
 
 sys.path.insert(0, '.')
-from quizbank_data import REAL_QUIZZES, BONUS_WEEKS
+from quizbank_real import REAL_QUIZZES
+from quizbank_data import REAL_QUIZZES as _OLD_REAL, BONUS_WEEKS as _OLD_BONUS
+
+# Every question I originally wrote (264 total, organized by week 1-9) is now
+# treated as supplementary practice -- NOT the real quiz. The 36-question
+# REAL_QUIZZES above (from quizbank_real.py) is the actual quiz content.
+ALL_PRACTICE_WEEKS = []
+for q in _OLD_REAL:
+    ALL_PRACTICE_WEEKS.append(dict(week=q['week'], topic=q['topic'], questions=q['questions']))
+for w in _OLD_BONUS:
+    ALL_PRACTICE_WEEKS.append(dict(week=w['week'], topic=w['topic'], questions=w['questions']))
+ALL_PRACTICE_WEEKS.sort(key=lambda w: w['week'])
 
 EDITION = sys.argv[1] if len(sys.argv) > 1 else "print"
 IS_RM = EDITION == "remarkable"
@@ -181,24 +192,26 @@ for ln in wrap_words(
 yy -= 20
 box_w = CW - 60
 box_x = ML + 30
-rows = [(f"Quiz {q['quiz_n']}", f"Week {q['week']} -- {q['topic']}", f"{len(q['questions'])} q") for q in REAL_QUIZZES]
+rows = [(f"Quiz {q['quiz_n']}", f"Week {q['week']} -- {q['topic']}", q['source'], f"{len(q['questions'])} q") for q in REAL_QUIZZES]
 setfill((0.965, 0.967, 0.972)); c.rect(box_x, yy - len(rows) * 20 - 10, box_w, len(rows) * 20 + 10, fill=1, stroke=0)
 yy -= 14
-for label, topic, count in rows:
+for label, topic, source, count in rows:
     setfill(NAVY); c.setFont("Lora-Bold", 9.5)
     c.drawString(box_x + 12, yy, label)
     setfill(DARK); c.setFont("Lora", 9.5)
     c.drawString(box_x + 65, yy, topic)
+    setfill(TEAL if source == "VERBATIM" else GRAY); c.setFont("Lora-Italic", 8)
+    c.drawRightString(box_x + box_w - 45, yy, source)
     setfill(GRAY); c.setFont("Lora", 9)
     c.drawRightString(box_x + box_w - 12, yy, count)
     yy -= 20
 
 yy -= 30
 setfill(TEAL); c.setFont("Lora-Bold", 12)
-c.drawCentredString(W / 2, yy, "PLUS: Full Bonus Coverage -- Weeks 4, 8, 9")
+c.drawCentredString(W / 2, yy, "PLUS: Additional Practice Questions -- All 9 Weeks")
 yy -= 16
 setfill(GRAY); c.setFont("Lora-Italic", 9)
-c.drawCentredString(W / 2, yy, "(no real quiz existed for these weeks -- included for complete review)")
+c.drawCentredString(W / 2, yy, "(extra practice I wrote in the same style -- NOT from the real quizzes)")
 
 setstroke(GOLD); c.setLineWidth(1)
 c.line(ML, 70, W - ML, 70)
@@ -216,14 +229,18 @@ section_bar("PART 1 -- THE REAL QUIZ 1-6", accent=RED,
             sub="Confirmed from live-class transcripts -- this is what the final reuses")
 toc_mark("Part 1 -- The Real Quiz 1-6")
 para("Per Dr. Zhang's own statement: \u201cthe final exam mentions all the questions, including in the final "
-     "examination, concerns from each quiz, not new question.\u201d Every question below is from a real, "
-     "administered quiz -- not a practice question written to match the style.", size=8.8, color=GRAY, gap=14)
+     "examination, concerns from each quiz, not new question.\u201d Every real quiz was 6 questions -- confirmed "
+     "directly in the transcripts (\u201cjust six questions\u201d / \u201cfive questions and one more\u201d). Quizzes 4-6 are "
+     "VERBATIM -- Dr. Zhang read the actual questions and answers back to the class during live review, "
+     "reproduced exactly below. Quizzes 1-3 are RECONSTRUCTED -- the topic and 6-question count are "
+     "confirmed, but no review transcript was found, so these are representative on the confirmed material, "
+     "not literal transcriptions.", size=8.8, color=GRAY, gap=14)
 
 for quiz in REAL_QUIZZES:
-    qn, wk, topic, questions = quiz['quiz_n'], quiz['week'], quiz['topic'], quiz['questions']
+    qn, wk, topic, questions, source = quiz['quiz_n'], quiz['week'], quiz['topic'], quiz['questions'], quiz['source']
     accent = QUIZ_ACCENTS.get(qn, NAVY)
     ensure_space(60, f"Quiz {qn} -- Week {wk}")
-    section_bar(f"QUIZ {qn} -- WEEK {wk}: {topic.upper()}", accent=accent, sub=f"{len(questions)} questions")
+    section_bar(f"QUIZ {qn} -- WEEK {wk}: {topic.upper()}", accent=accent, sub=f"{source} \u00b7 {len(questions)} questions")
     for qd in questions:
         qtext = f"Q{qd['n']}.  {qd['q']}"
         qlines = wrap_words(qtext, "Lora-Bold", 8.8, CW)
@@ -303,20 +320,21 @@ for quiz in REAL_QUIZZES:
 end_page()
 
 # =====================================================================
-# PART 2: BONUS -- FULL COVERAGE (Weeks 4, 8, 9)
+# PART 2: ADDITIONAL PRACTICE -- ALL 9 WEEKS (NOT the real quizzes)
 # =====================================================================
-new_page("Part 2 -- Bonus Weeks (No Real Quiz)")
+new_page("Part 2 -- Additional Practice (All 9 Weeks)")
 y[0] = H - HEADER_H - 24
-section_bar("PART 2 -- BONUS: WEEKS WITH NO REAL QUIZ", accent=TEAL,
-            sub="Weeks 4, 8, 9 -- included for complete coverage")
-toc_mark("Part 2 -- Bonus Weeks (No Real Quiz)")
-para("These three weeks never had a real administered quiz (Week 4's HT/SI material was assessed through "
-     "the Midterm instead, Week 8 had no quiz, Week 9 = pure review per Dr. Zhang). The questions below are "
-     "extra practice for completeness, not verbatim final-exam source material like Part 1.", size=8.8, color=GRAY, gap=14)
+section_bar("PART 2 -- ADDITIONAL PRACTICE, ALL 9 WEEKS", accent=TEAL,
+            sub="Extra questions I wrote -- NOT from the real quizzes")
+toc_mark("Part 2 -- Additional Practice (All 9 Weeks)")
+para("Everything below is practice material I wrote in the same style as the real quizzes, covering every "
+     "week of the course for complete review. None of it is verbatim final-exam source material the way "
+     "Part 1 is -- use Part 1 to know exactly what's been tested; use this for broader reinforcement.",
+     size=8.8, color=GRAY, gap=14)
 
-for wkdata in BONUS_WEEKS:
+for wkdata in ALL_PRACTICE_WEEKS:
     wk, topic, questions = wkdata['week'], wkdata['topic'], wkdata['questions']
-    ensure_space(60, f"Week {wk} Bonus")
+    ensure_space(60, f"Week {wk} Practice")
     section_bar(f"WEEK {wk} -- {topic.upper()}", accent=BONUS_ACCENT, sub=f"{len(questions)} questions")
     for qd in questions:
         qtext = f"Q{qd['n']}.  {qd['q']}"
@@ -324,7 +342,7 @@ for wkdata in BONUS_WEEKS:
         n_opt = len(qd['opts'])
         opt_h = 12.5
         needed = len(qlines) * 11.5 + n_opt * opt_h + 10
-        ensure_space(needed, f"Week {wk} Bonus")
+        ensure_space(needed, f"Week {wk} Practice")
         setfill(DARK); c.setFont("Lora-Bold", 8.8)
         for ql in qlines:
             c.drawString(ML, y[0], ql)
@@ -347,12 +365,12 @@ end_page()
 # =====================================================================
 # ANSWER KEY -- PART 2
 # =====================================================================
-new_page("Answer Key -- Bonus Weeks")
+new_page("Answer Key -- Additional Practice")
 y[0] = H - HEADER_H - 24
-section_bar("ANSWER KEY -- BONUS WEEKS", accent=TEAL, sub="Weeks 4, 8, 9")
-toc_mark("Answer Key -- Bonus Weeks")
+section_bar("ANSWER KEY -- ADDITIONAL PRACTICE", accent=TEAL, sub="All 9 weeks")
+toc_mark("Answer Key -- Additional Practice")
 
-for wkdata in BONUS_WEEKS:
+for wkdata in ALL_PRACTICE_WEEKS:
     wk, topic, questions = wkdata['week'], wkdata['topic'], wkdata['questions']
     ensure_space(26, f"Answer Key -- Week {wk}")
     setfill(BONUS_ACCENT); c.rect(ML, y[0] - 2, CW, 2.5, fill=1, stroke=0)
