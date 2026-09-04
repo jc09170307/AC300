@@ -345,13 +345,11 @@ _pw_accents = {"Outer / Anterior": METAL, "Inner / Posterior": FIRE, "Middle": F
 for a, o, cl, yy_, d, ci, cl2 in TWELVE_MERIDIANS:
     record_block(f"{a} -- {o}", [("Class", cl), ("Y/Y", yy_), ("Dir", d), ("Circuit", ci), ("Clock", cl2)],
                  accent=_pw_accents.get(ci, NAVY))
-end_page()
 
 # =====================================================================
-# PAGE: CHANNEL QUICK-SCAN GRID (all 12, narrow records)
+# CHANNEL QUICK-SCAN GRID (all 12, narrow records) -- flows continuously
 # =====================================================================
-new_page("All 12 Channels -- Quick-Scan Records")
-y[0] = H - HEADER_H - 14
+ensure_space(140, "All 12 Channels -- Quick-Scan Records")
 section_bar("ALL 12 PRIMARY MERIDIANS -- QUICK-SCAN RECORDS", accent=NAVY)
 _qs_accents = {"LU": METAL, "LI": METAL, "ST": EARTH, "SP": EARTH, "HT": FIRE, "SI": FIRE,
                "BL": WATER, "KI": WATER, "PC": FIREMIN, "SJ": FIREMIN, "GB": WOOD, "LR": WOOD}
@@ -363,13 +361,11 @@ for abbr in CHANNEL_ORDER:
         ("Luo", d['luo']), ("He-Sea", d['he_sea']), ("Xi-Cleft", d['xi_cleft']),
         ("Confluent/Cmd", conf_cmd), ("Crossing", d['crossing'][:50])],
         accent=_qs_accents.get(abbr, NAVY))
-end_page()
 
 # =====================================================================
-# PAGE: EXTRAORDINARY VESSELS + CONFLUENT + LUO (condensed)
+# EXTRAORDINARY VESSELS + CONFLUENT + LUO (condensed) -- flows continuously
 # =====================================================================
-new_page("Extraordinary Vessels, Confluent & Luo Points")
-y[0] = H - HEADER_H - 14
+ensure_space(120, "Extraordinary Vessels, Confluent & Luo Points")
 section_bar("8 EXTRAORDINARY VESSELS -- QUICK MAP", accent=EXTRA)
 headers = ["Vessel", "Pts", "Confluent (Partner)", "Function"]
 col_w = [0.22 * CW, 0.07 * CW, 0.30 * CW, 0.41 * CW]
@@ -386,13 +382,11 @@ mini_table(["Pt A", "Pt B", "Opens", "Use"], conf_rows, [0.12 * CW, 0.12 * CW, 0
 
 section_bar("15 LUO-CONNECTING POINTS", accent=AMBER_LUO)
 mini_table(["Point", "Connection", "Note"], LUO_15, [0.14 * CW, 0.14 * CW, 0.72 * CW], accent=AMBER_LUO, size=6.4, header_size=6.7)
-end_page()
 
 # =====================================================================
-# PAGE: FIVE SHU MASTER GRID
+# FIVE SHU MASTER GRID -- flows continuously
 # =====================================================================
-new_page("Five Shu Master Grid")
-y[0] = H - HEADER_H - 14
+ensure_space(160, "Five Shu Master Grid")
 section_bar("FIVE SHU POINTS -- FULL 60-POINT GRID", accent=NAVY)
 section_bar("Jing-Well -> Ying-Spring -> Shu-Stream", accent=NAVY)
 headers_a = ["Meridian"] + FIVE_SHU_COLS[:3]
@@ -405,13 +399,11 @@ headers_b = ["Meridian"] + FIVE_SHU_COLS[3:]
 col_w_b = [0.14 * CW] + [0.43 * CW] * 2
 rows_b = [[d['m'].split(' (')[0]] + d['pts'][3:] for d in FIVE_SHU_MASTER]
 mini_table(headers_b, rows_b, col_w_b, accent=NAVY, size=6.2, header_size=6.5)
-end_page()
 
 # =====================================================================
-# PAGE: EXAM TRAPS
+# EXAM TRAPS -- flows continuously
 # =====================================================================
-new_page("Exam Traps")
-y[0] = H - HEADER_H - 14
+ensure_space(120, "Exam Traps")
 section_bar("EXAM TRAPS -- READ THIS PAGE LAST", accent=RED)
 tight_bullets(EXAM_TRAPS, accent=RED, size=6.7)
 end_page()
