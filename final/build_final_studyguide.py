@@ -953,19 +953,20 @@ tc.drawString(ML, H - HEADER_H + 15, "AC300 FINAL STUDY GUIDE")
 tc.setFont("Lora-Italic", 9.5)
 tc.drawRightString(W - ML, H - HEADER_H + 15, "Table of Contents")
 
-ty = H - HEADER_H - 34
-_tc_setfill(NAVY); tc.setFont("Lora-Bold", 15)
+ty = H - HEADER_H - 46
+_tc_setfill(NAVY); tc.setFont("Lora-Bold", 20)
 tc.drawString(ML, ty, "TABLE OF CONTENTS")
-ty -= 8
-_tc_setstroke(NAVY); tc.setLineWidth(1.2)
+ty -= 12
+_tc_setstroke(GOLD); tc.setLineWidth(1.6)
 tc.line(ML, ty, ML + CW, ty)
-ty -= 22
+ty -= 34
 
 PAGE_OFFSET = 1  # inserting this ONE toc page shifts every recorded page number by 1
-for title, pnum, indent in TOC_ENTRIES:
+_channel_group_start = None
+for idx, (title, pnum, indent) in enumerate(TOC_ENTRIES):
     shown_page = pnum + PAGE_OFFSET
-    x = ML + (16 if indent else 0)
-    fsize = 9.3 if indent else 10.5
+    x = ML + (22 if indent else 0)
+    fsize = 11.5 if indent else 13.5
     font = "Lora" if indent else "Lora-Bold"
     color = DARK if indent else NAVY
     _tc_setfill(color); tc.setFont(font, fsize)
@@ -976,18 +977,38 @@ for title, pnum, indent in TOC_ENTRIES:
     num_w = pdfmetrics.stringWidth(num_str, "Lora", fsize)
     dot_right = ML + CW - num_w - 4
     title_w = pdfmetrics.stringWidth(title, font, fsize)
-    dot_start = x + title_w + 6
+    dot_start = x + title_w + 8
     if dot_right > dot_start:
-        tc.setDash(1, 2)
-        tc.setLineWidth(0.6)
-        _tc_setstroke((0.75, 0.75, 0.75))
-        tc.line(dot_start, ty + 2, dot_right, ty + 2)
+        tc.setDash(1, 3)
+        tc.setLineWidth(0.7)
+        _tc_setstroke((0.72, 0.72, 0.72))
+        tc.line(dot_start, ty + 3, dot_right, ty + 3)
         tc.setDash()
     _tc_setfill(NAVY if not indent else GRAY)
     tc.drawRightString(ML + CW, ty, num_str)
-    ty -= (18 if indent else 21)
-    if ty < 55:
-        break  # safety -- should never trigger with ~21 entries on one page
+    ty -= (26 if indent else 30)
+
+# Only draw the "how to use" block if there's genuinely enough room left
+# above the footer (footer line sits at y=34) -- otherwise skip it cleanly
+# rather than overrun the page.
+howto_lines = [
+    "Each channel section (LU through LR) follows the same 3-page pattern: ID card + Functions/Indications/",
+    "Highest-Yield Points/Pearls, then the MOA internal-pathway figure, then the CAM external point map.",
+    "The Exam Traps page (last section before the Course Map) is meant to be read LAST, right before the final.",
+]
+needed_howto = 20 + 24 + 18 + len(howto_lines) * 13.5
+if ty - needed_howto > 50:
+    ty -= 20
+    _tc_setstroke((0.85, 0.85, 0.85)); tc.setLineWidth(0.7)
+    tc.line(ML, ty, ML + CW, ty)
+    ty -= 24
+    _tc_setfill(NAVY); tc.setFont("Lora-Bold", 11)
+    tc.drawString(ML, ty, "How to use this guide")
+    ty -= 18
+    _tc_setfill(DARK); tc.setFont("Lora", 9.3)
+    for line in howto_lines:
+        tc.drawString(ML, ty, line)
+        ty -= 13.5
 
 _tc_setstroke(GOLD); tc.setLineWidth(HAIRLINE * 1.2)
 tc.line(ML, 34, W - ML, 34)
