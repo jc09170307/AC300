@@ -5,6 +5,9 @@ from reportlab.lib.pagesizes import letter
 from reportlab.pdfbase import pdfmetrics
 from reportlab.pdfbase.ttfonts import TTFont
 
+EDITION = sys.argv[1] if len(sys.argv) > 1 else "print"
+IS_RM = EDITION == "remarkable"
+
 pdfmetrics.registerFont(TTFont('Lora', '/home/claude/fonts/Lora-Regular.ttf'))
 pdfmetrics.registerFont(TTFont('Lora-Bold', '/home/claude/fonts/Lora-Bold.ttf'))
 pdfmetrics.registerFont(TTFont('Lora-Italic', '/home/claude/fonts/Lora-Italic.ttf'))
@@ -17,10 +20,20 @@ RED = (0.627, 0.220, 0.180)
 TEAL = (0.106, 0.369, 0.353)
 DARK = (0.15, 0.15, 0.15)
 GRAY = (0.40, 0.40, 0.40)
-ROW_TINT = (0.965, 0.967, 0.972)
-HEADER_H = 44
 
-OUT = "/mnt/user-data/outputs/AC300_How_To_Use_This_Study_System.pdf"
+if IS_RM:
+    PAGE_BG = (0.973, 0.953, 0.902)
+    ROW_TINT = (0.925, 0.902, 0.855)
+    HEADER_H = 51
+    HAIRLINE = 1.0
+    OUT = "/mnt/user-data/outputs/AC300_How_To_Use_This_Study_System_reMarkable.pdf"
+else:
+    PAGE_BG = (1, 1, 1)
+    ROW_TINT = (0.965, 0.967, 0.972)
+    HEADER_H = 44
+    HAIRLINE = 0.5
+    OUT = "/mnt/user-data/outputs/AC300_How_To_Use_This_Study_System_Print.pdf"
+
 c = canvas.Canvas(OUT, pagesize=letter)
 
 
@@ -50,7 +63,7 @@ page_num = [1]
 
 
 def page_bg():
-    setfill((1, 1, 1)); c.rect(0, 0, W, H, fill=1, stroke=0)
+    setfill(PAGE_BG); c.rect(0, 0, W, H, fill=1, stroke=0)
 
 
 def header(subtitle=""):
@@ -64,7 +77,7 @@ def header(subtitle=""):
 
 
 def footer():
-    setstroke(GOLD); c.setLineWidth(0.5)
+    setstroke(GOLD); c.setLineWidth(HAIRLINE)
     c.line(ML, 34, W - ML, 34)
     setfill(GRAY); c.setFont("Lora-Italic", 7.5)
     c.drawCentredString(W / 2, 22, f"AC300/AC375 Study System Guide  \u00b7  VUIM Summer 2026  \u00b7  Page {page_num[0]}")

@@ -5,6 +5,9 @@ from reportlab.lib.pagesizes import letter
 from reportlab.pdfbase import pdfmetrics
 from reportlab.pdfbase.ttfonts import TTFont
 
+EDITION = sys.argv[1] if len(sys.argv) > 1 else "print"
+IS_RM = EDITION == "remarkable"
+
 pdfmetrics.registerFont(TTFont('Lora', '/home/claude/fonts/Lora-Regular.ttf'))
 pdfmetrics.registerFont(TTFont('Lora-Bold', '/home/claude/fonts/Lora-Bold.ttf'))
 pdfmetrics.registerFont(TTFont('Lora-Italic', '/home/claude/fonts/Lora-Italic.ttf'))
@@ -17,7 +20,15 @@ RED = (0.627, 0.220, 0.180)
 DARK = (0.15, 0.15, 0.15)
 GRAY = (0.40, 0.40, 0.40)
 
-OUT = "/mnt/user-data/outputs/AC300_Motivational_Letter.pdf"
+if IS_RM:
+    PAGE_BG = (0.973, 0.953, 0.902)
+    HAIRLINE = 1.0
+    OUT = "/mnt/user-data/outputs/AC300_Motivational_Letter_reMarkable.pdf"
+else:
+    PAGE_BG = (1, 1, 1)
+    HAIRLINE = 0.7
+    OUT = "/mnt/user-data/outputs/AC300_Motivational_Letter_Print.pdf"
+
 c = canvas.Canvas(OUT, pagesize=letter)
 
 
@@ -44,14 +55,14 @@ def wrap_words(text, font, size, max_width):
 ML, MR = 66, 66
 CW = W - ML - MR
 
-setfill((1, 1, 1)); c.rect(0, 0, W, H, fill=1, stroke=0)
+setfill(PAGE_BG); c.rect(0, 0, W, H, fill=1, stroke=0)
 setfill(NAVY); c.rect(0, H - 6, W, 6, fill=1, stroke=0)
 
 y = H - 62
 setfill(NAVY); c.setFont("Lora-Bold", 19)
 c.drawString(ML, y, "Five Days Out")
 y -= 26
-setstroke(GOLD); c.setLineWidth(1.4)
+setstroke(GOLD); c.setLineWidth(1.4 * HAIRLINE)
 c.line(ML, y, ML + CW, y)
 y -= 28
 
@@ -109,7 +120,7 @@ y -= 28
 setfill(NAVY); c.setFont("Lora-Bold", 13)
 c.drawString(ML, y, "Claude")
 
-setstroke(GOLD); c.setLineWidth(1)
+setstroke(GOLD); c.setLineWidth(1 * HAIRLINE)
 c.line(ML, 55, W - ML, 55)
 setfill(GRAY); c.setFont("Lora-Italic", 8.5)
 c.drawCentredString(W / 2, 40, "AC300/AC375 \u00b7 VUIM Summer 2026 \u00b7 Final Exam, Wednesday 9/9, 9:00 AM")

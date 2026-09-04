@@ -5,6 +5,9 @@ from reportlab.lib.pagesizes import letter
 from reportlab.pdfbase import pdfmetrics
 from reportlab.pdfbase.ttfonts import TTFont
 
+EDITION = sys.argv[1] if len(sys.argv) > 1 else "print"
+IS_RM = EDITION == "remarkable"
+
 pdfmetrics.registerFont(TTFont('Lora', '/home/claude/fonts/Lora-Regular.ttf'))
 pdfmetrics.registerFont(TTFont('Lora-Bold', '/home/claude/fonts/Lora-Bold.ttf'))
 pdfmetrics.registerFont(TTFont('Lora-Italic', '/home/claude/fonts/Lora-Italic.ttf'))
@@ -18,9 +21,20 @@ TEAL = (0.106, 0.369, 0.353)
 PURPLE = (0.380, 0.180, 0.522)
 DARK = (0.15, 0.15, 0.15)
 GRAY = (0.40, 0.40, 0.40)
-HEADER_H = 44
 
-OUT = "/mnt/user-data/outputs/AC300_Clinical_Reasoning_Cases.pdf"
+if IS_RM:
+    PAGE_BG = (0.973, 0.953, 0.902)
+    ROW_TINT = (0.925, 0.902, 0.855)
+    HEADER_H = 51
+    HAIRLINE = 1.0
+    OUT = "/mnt/user-data/outputs/AC300_Clinical_Reasoning_Cases_reMarkable.pdf"
+else:
+    PAGE_BG = (1, 1, 1)
+    ROW_TINT = (0.965, 0.967, 0.972)
+    HEADER_H = 44
+    HAIRLINE = 0.5
+    OUT = "/mnt/user-data/outputs/AC300_Clinical_Reasoning_Cases_Print.pdf"
+
 c = canvas.Canvas(OUT, pagesize=letter)
 
 
@@ -50,7 +64,7 @@ page_num = [1]
 
 
 def page_bg():
-    setfill((1, 1, 1)); c.rect(0, 0, W, H, fill=1, stroke=0)
+    setfill(PAGE_BG); c.rect(0, 0, W, H, fill=1, stroke=0)
 
 
 def header(subtitle=""):
@@ -64,7 +78,7 @@ def header(subtitle=""):
 
 
 def footer():
-    setstroke(GOLD); c.setLineWidth(0.5)
+    setstroke(GOLD); c.setLineWidth(HAIRLINE)
     c.line(ML, 30, W - ML, 30)
     setfill(GRAY); c.setFont("Lora-Italic", 7.5)
     c.drawCentredString(W / 2, 19, f"AC300/AC375 Clinical Reasoning Cases  \u00b7  VUIM Summer 2026  \u00b7  Page {page_num[0]}")
@@ -137,7 +151,7 @@ def case_block(num, level, vignette, prompt, model_answer, accent=NAVY):
 
     vlines = wrap_words(vignette, "Lora-Italic", 9.3, CW - 14)
     needed = len(vlines) * 12.6 + 14
-    setfill((0.965, 0.967, 0.972)); c.rect(ML, y[0] - needed + 6, CW, needed - 6, fill=1, stroke=0)
+    setfill(ROW_TINT); c.rect(ML, y[0] - needed + 6, CW, needed - 6, fill=1, stroke=0)
     setfill(accent); c.rect(ML, y[0] - needed + 6, 3, needed - 6, fill=1, stroke=0)
     yy = y[0] - 10
     setfill(DARK); c.setFont("Lora-Italic", 9.3)
