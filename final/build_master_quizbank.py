@@ -168,14 +168,13 @@ c.drawCentredString(W / 2, H - 78, EDLABEL)
 
 yy = H - 150
 setfill(NAVY); c.setFont("Lora-Bold", 15)
-c.drawCentredString(W / 2, yy, "The REAL Quiz 1-6, Confirmed From Live-Class Transcripts")
+c.drawCentredString(W / 2, yy, "The REAL Quiz 1-6")
 yy -= 24
 setfill(DARK); c.setFont("Lora", 10)
 for ln in wrap_words(
-    "Dr. Zhang states the quiz number out loud in class every time -- this mapping is transcribed "
-    "directly from her own words, not inferred: Week 3 \u2018begin our quiz two,\u2019 Week 4 \u2018start our quiz "
-    "three,\u2019 Week 6 \u2018start the quiz four,\u2019 Week 7 \u2018take the quiz five,\u2019 Week 8 \u2018begin our q6\u2019 -- and "
-    "Week 8 also directly confirms Week 9 has no quiz.", "Lora", 10, CW - 80):
+    "Quiz 1 through Quiz 3 track Weeks 1-3 directly. Week 4 (HT/SI) was assessed through the Midterm "
+    "instead of its own quiz, so Quiz 4 picks back up with Week 5 (BL/KI), Quiz 5 with Week 6, and Quiz 6 "
+    "with Week 7 (Eight Extraordinary Vessels). Weeks 8 and 9 had no quiz of their own.", "Lora", 10, CW - 80):
     c.drawCentredString(W / 2, yy, ln)
     yy -= 15
 
@@ -196,7 +195,7 @@ for label, topic, count in rows:
 
 yy -= 30
 setfill(TEAL); c.setFont("Lora-Bold", 12)
-c.drawCentredString(W / 2, yy, "PLUS: Full Bonus Coverage -- Weeks 1, 5, 9")
+c.drawCentredString(W / 2, yy, "PLUS: Full Bonus Coverage -- Weeks 4, 8, 9")
 yy -= 16
 setfill(GRAY); c.setFont("Lora-Italic", 9)
 c.drawCentredString(W / 2, yy, "(no real quiz existed for these weeks -- included for complete review)")
@@ -304,16 +303,16 @@ for quiz in REAL_QUIZZES:
 end_page()
 
 # =====================================================================
-# PART 2: BONUS -- FULL COVERAGE (Weeks 1, 5, 9)
+# PART 2: BONUS -- FULL COVERAGE (Weeks 4, 8, 9)
 # =====================================================================
 new_page("Part 2 -- Bonus Weeks (No Real Quiz)")
 y[0] = H - HEADER_H - 24
 section_bar("PART 2 -- BONUS: WEEKS WITH NO REAL QUIZ", accent=TEAL,
-            sub="Weeks 1, 5, 9 -- included for complete coverage")
+            sub="Weeks 4, 8, 9 -- included for complete coverage")
 toc_mark("Part 2 -- Bonus Weeks (No Real Quiz)")
-para("These three weeks never had a real administered quiz (Week 1 = Day 1 foundations, Week 5 = Midterm "
-     "week, Week 9 = pure review per Dr. Zhang). The questions below are extra practice for completeness, "
-     "not verbatim final-exam source material like Part 1.", size=8.8, color=GRAY, gap=14)
+para("These three weeks never had a real administered quiz (Week 4's HT/SI material was assessed through "
+     "the Midterm instead, Week 8 had no quiz, Week 9 = pure review per Dr. Zhang). The questions below are "
+     "extra practice for completeness, not verbatim final-exam source material like Part 1.", size=8.8, color=GRAY, gap=14)
 
 for wkdata in BONUS_WEEKS:
     wk, topic, questions = wkdata['week'], wkdata['topic'], wkdata['questions']
@@ -350,7 +349,7 @@ end_page()
 # =====================================================================
 new_page("Answer Key -- Bonus Weeks")
 y[0] = H - HEADER_H - 24
-section_bar("ANSWER KEY -- BONUS WEEKS", accent=TEAL, sub="Weeks 1, 5, 9")
+section_bar("ANSWER KEY -- BONUS WEEKS", accent=TEAL, sub="Weeks 4, 8, 9")
 toc_mark("Answer Key -- Bonus Weeks")
 
 for wkdata in BONUS_WEEKS:
@@ -426,7 +425,7 @@ _tc_setstroke((0.85, 0.85, 0.85)); tc.setLineWidth(0.7)
 tc.line(ML, ty, ML + CW, ty)
 ty -= 26
 _tc_setfill(NAVY); tc.setFont("Lora-Bold", 12)
-tc.drawString(ML, ty, "Quiz 1-6 Week Map (confirmed from transcripts)")
+tc.drawString(ML, ty, "Quiz 1-6 Week Map")
 ty -= 20
 _tc_setfill(DARK); tc.setFont("Lora", 9.5)
 for q in REAL_QUIZZES:
