@@ -281,6 +281,46 @@ def bullet_line(text, accent=NAVY, size=8.6):
     y[0] -= needed
 
 
+def bullet_list_2col(items, accent=NAVY, size=8.6):
+    """Two-column bulleted list -- for Functions/Indications/Pearls. Halves the
+    line length (readability) versus a single full-width column, at the same
+    font size, by running items in two side-by-side columns balanced by
+    total line count so neither column runs much longer than the other."""
+    size = size * FS
+    col_gap = 18
+    col_w = (CW - col_gap) / 2
+    text_w = col_w - 16
+    line_h = size * 1.32
+
+    wrapped = [wrap_words(it, "Lora", size, text_w) for it in items]
+    heights = [len(w) * line_h + 5 for w in wrapped]
+
+    # Greedily assign each item to whichever column currently has less height,
+    # preserving original item order within each column.
+    col_items = [[], []]
+    col_h = [0, 0]
+    for it_lines, h in zip(wrapped, heights):
+        idx = 0 if col_h[0] <= col_h[1] else 1
+        col_items[idx].append((it_lines, h))
+        col_h[idx] += h
+
+    needed = max(col_h) if col_h[0] or col_h[1] else 0
+    ensure_space(needed, "")
+    top = y[0]
+    for ci, items_in_col in enumerate(col_items):
+        xx = ML + ci * (col_w + col_gap)
+        yy = top
+        for it_lines, h in items_in_col:
+            setfill(accent); c.circle(xx + 3, yy + size * 0.28, 1.8, fill=1, stroke=0)
+            setfill(DARK); c.setFont("Lora", size)
+            zz = yy
+            for ln in it_lines:
+                c.drawString(xx + 12, zz, ln)
+                zz -= line_h
+            yy -= h
+    y[0] = top - needed
+
+
 def record_block(title, fields, accent=NAVY, title_size=9.3, field_size=8.0):
     title_size = title_size * FS; field_size = field_size * FS
     """Narrow, phone-friendly replacement for wide (5+ column) tables.
@@ -698,20 +738,17 @@ def channel_page(abbr):
     mini_table(["Category", "Detail"], rows, [0.24 * CW, 0.76 * CW], accent=d['accent'], size=7.2, header_size=7.4, striped=True)
 
     section_bar("FUNCTIONS", accent=d['accent'])
-    for f in cc['functions']:
-        bullet_line(f, accent=d['accent'], size=7.9)
+    bullet_list_2col(cc['functions'], accent=d['accent'], size=7.9)
 
     section_bar("CLINICAL INDICATIONS", accent=d['accent'])
-    for ind in cc['indications']:
-        bullet_line(ind, accent=d['accent'], size=7.9)
+    bullet_list_2col(cc['indications'], accent=d['accent'], size=7.9)
 
     section_bar("HIGHEST-YIELD POINTS", accent=d['accent'])
     hy_rows = [(p, cat, use) for p, cat, use in cc['highest_yield']]
     mini_table(["Point", "Category", "Clinical Use"], hy_rows, [0.10 * CW, 0.27 * CW, 0.63 * CW], accent=d['accent'], size=7.3, header_size=7.5)
 
     section_bar("CLINICAL PEARLS & EXAM TRAPS", accent=RED)
-    for pearl in cc['pearls']:
-        bullet_line(pearl, accent=RED, size=7.9)
+    bullet_list_2col(cc['pearls'], accent=RED, size=7.9)
 
     # ---- MOA (internal pathway) figure -- flows onto same page if room remains,
     # otherwise starts fresh. This avoids stranding 1-2 leftover bullets on a
