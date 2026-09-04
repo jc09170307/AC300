@@ -217,15 +217,6 @@ def ensure_space(needed, subtitle_for_next):
 
 
 for sec_title, sec_wk, questions in SECTIONS:
-    accent = SECTION_ACCENTS.get(sec_wk, NAVY)
-    ensure_space(40, f"{sec_title}  \u00b7  {sec_wk}")
-    setfill(accent); c.rect(ML, y - 3, CW, 3, fill=1, stroke=0)
-    setfill(NAVY); c.setFont("Lora-Bold", 11.5)
-    c.drawString(ML, y - 18, sec_title)
-    setfill(GRAY); c.setFont("Lora-Italic", 8.5)
-    c.drawRightString(ML + CW, y - 18, sec_wk)
-    y -= 30
-
     for qd in questions:
         qtext = f"Q{qd['n']}.  " + (
             "[EXCEPT]  " if qd['type'] == 'EXCEPT' else
@@ -235,7 +226,7 @@ for sec_title, sec_wk, questions in SECTIONS:
         n_opt = len(qd['opts'])
         opt_h = 13
         needed = len(qlines) * 12 + n_opt * opt_h + 12
-        ensure_space(needed, f"{sec_title}  \u00b7  {sec_wk}")
+        ensure_space(needed, f"Questions 1-{TOTAL_Q}  \u00b7  closed book")
 
         setfill(DARK); c.setFont("Lora-Bold", 9.3)
         for ql in qlines:
@@ -264,7 +255,7 @@ if y > 260:
     y -= 18
     scoring = [
         (f"{round(TOTAL_Q*0.9)}-{TOTAL_Q} correct", "Exam ready. Do a final pass on the Five Shu master table and Exam Traps page."),
-        (f"{round(TOTAL_Q*0.75)}-{round(TOTAL_Q*0.9)-1} correct", "Solid. Re-drill the specific weeks you missed (see section headers above)."),
+        (f"{round(TOTAL_Q*0.75)}-{round(TOTAL_Q*0.9)-1} correct", "Solid. Re-drill the specific weeks you missed (see the Answer Key's week labels)."),
         (f"{round(TOTAL_Q*0.55)}-{round(TOTAL_Q*0.75)-1} correct", "Re-read the Final Cram Sheet and Study Guide before the exam."),
         (f"Below {round(TOTAL_Q*0.55)}", "Full re-study needed - work back through each week's Study Guide in order."),
     ]
