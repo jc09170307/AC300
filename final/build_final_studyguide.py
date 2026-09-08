@@ -18,6 +18,7 @@ from final_content import (
     EXTRAORDINARY_VESSELS, CONFLUENT_PAIRS_QUICK, LUO_15, LUO_RULE, LOW_PRIORITY_NOTE,
     DIVERGENT_SUMMARY, SINEW_SUMMARY, CUTANEOUS_SUMMARY, EXAM_TRAPS, WEEKLY_MAP,
 )
+from pathway_course_data import PATHWAY_COURSE
 
 FIGS = '/home/claude/final/figs'
 
@@ -750,12 +751,15 @@ def channel_page(abbr):
     section_bar("CLINICAL PEARLS & EXAM TRAPS", accent=RED)
     bullet_list_2col(cc['pearls'], accent=RED, size=7.9)
 
-    # ---- MOA (internal pathway) figure -- flows onto same page if room remains,
-    # otherwise starts fresh. This avoids stranding 1-2 leftover bullets on a
-    # near-blank page. ----
+    # ---- MOA (internal pathway) figure + full pathway course text --
+    # flows onto same page if room remains, otherwise starts fresh.
     moa_path = f"{FIGS}/MOA_{abbr}.jpeg"
+    course_steps = PATHWAY_COURSE.get(abbr, [])
+    course_lines_est = sum(len(wrap_words(s, "Lora", 8.2, CW - 14)) for s in course_steps)
+    text_block_est = 24 + course_lines_est * 11.2 + len(course_steps) * 3
+    needed_total = 260 + text_block_est  # image + text, so we don't strand one without the other
     remaining_h = y[0] - 60
-    if remaining_h < 260:
+    if remaining_h < needed_total:
         end_page()
         new_page(f"Channel ID Card -- {abbr} {d['name']} (MOA Internal)")
         y[0] = H - HEADER_H - 24
@@ -763,11 +767,28 @@ def channel_page(abbr):
     section_bar(f"MOA -- INTERNAL PATHWAY (Deadman)", accent=d['accent'],
                 sub="Organ-level course: chest/abdomen branches, internal connections")
     cap_h = 14
+    img_h_cap = min(240, remaining_h - text_block_est - cap_h - 30)
     img_top = y[0]
-    used_h = draw_image_fit(moa_path, ML, img_top, CW, remaining_h - cap_h - 20)
+    used_h = draw_image_fit(moa_path, ML, img_top, CW, img_h_cap)
     y[0] = img_top - used_h - cap_h
     setfill(GRAY); c.setFont("Lora-Italic", 7.5)
     c.drawCentredString(W / 2, y[0], f"Source: A Manual of Acupuncture (Deadman, 3rd Ed.) -- {d['name']} Meridian")
+    y[0] -= 22
+
+    if course_steps:
+        section_bar("FULL PATHWAY COURSE -- INTERNAL + EXTERNAL", accent=d['accent'],
+                    sub="Step by step, in sequence")
+        for i, step in enumerate(course_steps):
+            slines = wrap_words(step, "Lora", 8.2, CW - 20)
+            needed = len(slines) * 11.2 + 3
+            ensure_space(needed, f"Channel ID Card -- {abbr} {d['name']} (MOA Internal)")
+            setfill(d['accent']); c.setFont("Lora-Bold", 8.2)
+            c.drawString(ML, y[0], f"{i+1}.")
+            setfill(DARK); c.setFont("Lora", 8.2)
+            for j, ln in enumerate(slines):
+                c.drawString(ML + 16, y[0], ln)
+                y[0] -= 11.2
+            y[0] -= 1.5
     end_page()
 
     # ---- PAGE C: CAM (external surface points) figure ----
