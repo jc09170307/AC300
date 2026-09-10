@@ -1,9 +1,9 @@
 import sys, os
 sys.path.insert(0, os.path.dirname(__file__))
 from common_foundations import (DocBuilder, module_cover, section_header, sub_header,
-                                 paragraph, bullet_list, numbered_list, table, dance_sidebar,
-                                 flag_box, circulation_diagram, circuits_diagram, circuit_photo_figures,
-                                 distribution_figure, NAVY, RED, GOLD_DARK, DARK)
+                                 paragraph, bullet_list, numbered_list, table, table_start_height,
+                                 dance_sidebar, flag_box, circulation_diagram, circuits_diagram,
+                                 circuit_photo_figures, distribution_figure, NAVY, RED, GOLD_DARK, DARK)
 
 EDITION = sys.argv[1] if len(sys.argv) > 1 else "print"
 OUT = f"/home/claude/foundations/out/AC300_Module1_Foundations_{EDITION}.pdf"
@@ -94,15 +94,18 @@ paragraph(db, "The lecture quotes the Ling Shu directly on the physicality of th
               "connective-tissue, and bioelectrical processes.")
 
 # ---------------------------------------------------------------------------
-section_header(db, "2. Meridians vs. Collaterals \u2014 The Core Distinction")
-table(db, ["", "Meridians (Jingmai)", "Collaterals (Luomai)"], [
+_merid_v_coll_headers = ["", "Meridians (Jingmai)", "Collaterals (Luomai)"]
+_merid_v_coll_rows = [
     ["Meaning", "Pathway", "Network"],
     ["Standing", "Trunk", "Branch"],
     ["Distribution", "Vertical line", "Running crosswise"],
     ["Depth", "Deep", "Shallow"],
     ["Number", "Few", "Many"],
     ["Function", "Leading \u2014 the pathways through which Qi and Blood circulate", "Supplement and bond \u2014 promotes Qi/Blood circulation"],
-], col_widths=[80, 233, 233])
+]
+section_header(db, "2. Meridians vs. Collaterals \u2014 The Core Distinction",
+               keep_with=table_start_height(_merid_v_coll_headers, _merid_v_coll_rows, [80, 233, 233]))
+table(db, _merid_v_coll_headers, _merid_v_coll_rows, col_widths=[80, 233, 233])
 paragraph(db, "The lecture cites the Ling Shu directly here too: meridians run through the interior as "
               "the main trunk; the crosswise branches are collaterals; and branches off the collaterals "
               "are the finest sub-branches ('grandchild' vessels).")
@@ -121,15 +124,18 @@ bullet_list(db, [
     "Three Yin: Taiyin, Shaoyin, Jueyin",
     "Three Yang: Yangming, Taiyang, Shaoyang",
 ])
-sub_header(db, "The Full Set of 12 Primary Meridians")
-table(db, ["", "Yin Meridian (Zang)", "Yang Meridian (Fu)"], [
+_meridians_12_headers = ["", "Yin Meridian (Zang)", "Yang Meridian (Fu)"]
+_meridians_12_rows = [
     ["Six Meridians of Hand", "Lung Meridian of Hand-Taiyin (LU)", "Large Intestine Meridian of Hand-Yangming (LI)"],
     ["", "Heart Meridian of Hand-Shaoyin (HT)", "Small Intestine Meridian of Hand-Taiyang (SI)"],
     ["", "Pericardium Meridian of Hand-Jueyin (PC)", "San Jiao Meridian of Hand-Shaoyang (SJ)"],
     ["Six Meridians of Foot", "Spleen Meridian of Foot-Taiyin (SP)", "Stomach Meridian of Foot-Yangming (ST)"],
     ["", "Kidney Meridian of Foot-Shaoyin (KI)", "Bladder Meridian of Foot-Taiyang (BL)"],
     ["", "Liver Meridian of Foot-Jueyin (LR)", "Gallbladder Meridian of Foot-Shaoyang (GB)"],
-], col_widths=[110, 218, 218], font_size=8.0)
+]
+sub_header(db, "The Full Set of 12 Primary Meridians",
+           keep_with=table_start_height(_meridians_12_headers, _meridians_12_rows, [110, 218, 218], font_size=8.0))
+table(db, _meridians_12_headers, _meridians_12_rows, col_widths=[110, 218, 218], font_size=8.0)
 
 # ---------------------------------------------------------------------------
 section_header(db, "4. Distribution on the Body")

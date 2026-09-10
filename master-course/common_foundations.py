@@ -210,8 +210,10 @@ def module_cover(db, title, subtitle, points_line, covers_bullets, info_lines, m
 # Content-flow helpers
 # ---------------------------------------------------------------------------
 
-def section_header(db, text, size=15):
-    db.ensure(34 + 18)  # header plus room for at least one line of body, so it can't strand alone
+def section_header(db, text, size=15, keep_with=0):
+    # header + a realistic chunk of the body that follows (~3 lines), so a
+    # paragraph/list moving as one atomic block can't strand the header alone
+    db.ensure(34 + 44 + keep_with)
     c = db.c
     setfill(c, NAVY); c.setFont("Lora-Bold", size)
     c.drawString(ML, db.y, text)
@@ -220,8 +222,8 @@ def section_header(db, text, size=15):
     db.y -= 18
 
 
-def sub_header(db, text, color=RED, size=11.5):
-    db.ensure(22 + 16)  # header plus room for at least one line of body
+def sub_header(db, text, color=RED, size=11.5, keep_with=0):
+    db.ensure(22 + 38 + keep_with)  # header + a realistic chunk of the body that follows
     c = db.c
     setfill(c, color); c.setFont("Lora-Bold", size)
     c.drawString(ML, db.y, text)
@@ -230,8 +232,8 @@ def sub_header(db, text, color=RED, size=11.5):
 
 def paragraph(db, text, font="Lora", size=9.3, leading=13, color=DARK, indent=0):
     lines = wrap_words(text, font, size, CW - indent)
+    db.ensure(leading * len(lines))  # keep the whole paragraph together -- no orphaned trailing lines
     for ln in lines:
-        db.ensure(leading)
         setfill(db.c, color); db.c.setFont(font, size)
         db.c.drawString(ML + indent, db.y, ln)
         db.y -= leading
@@ -241,8 +243,8 @@ def paragraph(db, text, font="Lora", size=9.3, leading=13, color=DARK, indent=0)
 def bullet_list(db, items, font="Lora", size=9.3, leading=12.5, color=DARK, marker="\u2022"):
     for item in items:
         lines = wrap_words(item, font, size, CW - 16)
+        db.ensure(leading * len(lines))  # keep each bullet's wrapped lines together
         for i, ln in enumerate(lines):
-            db.ensure(leading)
             setfill(db.c, color); db.c.setFont(font, size)
             prefix = f"{marker}  " if i == 0 else "   "
             db.c.drawString(ML, db.y, prefix + ln)
@@ -254,14 +256,29 @@ def bullet_list(db, items, font="Lora", size=9.3, leading=12.5, color=DARK, mark
 def numbered_list(db, items, font="Lora", size=9.3, leading=12.5, color=DARK):
     for i, item in enumerate(items, start=1):
         lines = wrap_words(item, font, size, CW - 20)
+        db.ensure(leading * len(lines))  # keep each numbered item's wrapped lines together
         for j, ln in enumerate(lines):
-            db.ensure(leading)
             setfill(db.c, color); db.c.setFont(font, size)
             prefix = f"{i}.  " if j == 0 else "    "
             db.c.drawString(ML, db.y, prefix + ln)
             db.y -= leading
         db.y -= 2
     db.y -= 4
+
+
+def table_start_height(headers, rows, col_widths, font_size=8.3, leading=11.5):
+    """Estimates the height of a table's header row plus its first data row --
+    the minimum that must stay together on one page. Pass this as keep_with=
+    to a preceding section_header/sub_header so the header can't get stranded
+    alone when the table it introduces has to jump to the next page."""
+    def row_height(cells):
+        h = 0
+        for w, cell in zip(col_widths, cells):
+            n = max(1, len(wrap_words(cell, "Lora", font_size, w - 10)))
+            h = max(h, n * leading)
+        return h + 8
+    first_row_h = row_height(rows[0]) if rows else 0
+    return row_height(headers) + first_row_h + 4
 
 
 def table(db, headers, rows, col_widths, header_color=NAVY, font_size=8.3, leading=11.5):
