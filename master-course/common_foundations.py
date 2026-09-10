@@ -211,7 +211,7 @@ def module_cover(db, title, subtitle, points_line, covers_bullets, info_lines, m
 # ---------------------------------------------------------------------------
 
 def section_header(db, text, size=15):
-    db.ensure(34)
+    db.ensure(34 + 18)  # header plus room for at least one line of body, so it can't strand alone
     c = db.c
     setfill(c, NAVY); c.setFont("Lora-Bold", size)
     c.drawString(ML, db.y, text)
@@ -221,7 +221,7 @@ def section_header(db, text, size=15):
 
 
 def sub_header(db, text, color=RED, size=11.5):
-    db.ensure(22)
+    db.ensure(22 + 16)  # header plus room for at least one line of body
     c = db.c
     setfill(c, color); c.setFont("Lora-Bold", size)
     c.drawString(ML, db.y, text)
@@ -274,8 +274,10 @@ def table(db, headers, rows, col_widths, header_color=NAVY, font_size=8.3, leadi
             h = max(h, n * leading)
         return h + 8
 
-    # header row
-    db.ensure(row_height(headers) + 4)
+    # header row -- keep together with at least the first data row so the header
+    # can never be stranded alone at the bottom of a page
+    first_row_h = row_height(rows[0]) if rows else 0
+    db.ensure(row_height(headers) + first_row_h + 4)
     x = ML
     setfill(c, header_color); c.rect(ML, db.y - row_height(headers), CW, row_height(headers), fill=1, stroke=0)
     setfill(c, WHITE); c.setFont("Lora-Bold", font_size)
@@ -512,3 +514,44 @@ def circuits_diagram(db):
     figure_caption(db, "Redrawn from Lecture 1, Slide 37 (\u201cThree Main Circuits in the Flow of "
                         "Qi\u201d). Arrow colors follow the locked element color coding (Metal, Earth, "
                         "Fire, Water, Ministerial Fire, Wood).")
+
+
+def circuit_photo_figures(db, figures_dir):
+    """Embeds the three actual Lecture 1 slide figures (31/33/35) showing the
+    shared base anatomical diagram with each circuit's path overlaid in its
+    own color (blue=Anterior, red=Posterior, green=Middle)."""
+    from reportlab.lib.utils import ImageReader
+    imgs = [
+        (f"{figures_dir}/anterior_circuit.jpg", "Anterior Circuit", "(blue)"),
+        (f"{figures_dir}/posterior_circuit.jpg", "Posterior Circuit", "(red)"),
+        (f"{figures_dir}/middle_circuit.jpg", "Middle Circuit", "(green)"),
+    ]
+    img_h = 195
+    gap = 12
+    img_w = (CW - gap * 2) / 3
+    label_h = 26
+    total_h = img_h + label_h + 10
+    db.ensure(total_h + 16)
+    c = db.c
+    top = db.y
+    x = ML
+    for path, label, color_note in imgs:
+        ir = ImageReader(path)
+        iw, ih = ir.getSize()
+        scale = min(img_w / iw, img_h / ih)
+        dw, dh = iw * scale, ih * scale
+        dx = x + (img_w - dw) / 2
+        dy = top - label_h - dh
+        setstroke(c, GOLD); c.setLineWidth(0.7 * LW_MULT)
+        c.rect(dx - 2, dy - 2, dw + 4, dh + 4, fill=0, stroke=1)
+        c.drawImage(ir, dx, dy, width=dw, height=dh)
+        setfill(c, NAVY); c.setFont("Lora-Bold", 9)
+        c.drawCentredString(x + img_w / 2, top - 13, label)
+        setfill(c, GRAY); c.setFont("Lora-Italic", 8)
+        c.drawCentredString(x + img_w / 2, top - 24, color_note)
+        x += img_w + gap
+    db.y = top - total_h
+    figure_caption(db, "From Lecture 1, Slides 31/33/35 \u2014 the same base figure (meridian names "
+                        "labeled at left) with each circuit's own path traced in a different color. "
+                        "The abstract diagram above shows the logic; this shows where it actually runs "
+                        "on the body.")

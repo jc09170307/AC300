@@ -2,7 +2,7 @@ import sys, os
 sys.path.insert(0, os.path.dirname(__file__))
 from common_foundations import (DocBuilder, module_cover, section_header, sub_header,
                                  paragraph, bullet_list, numbered_list, table, dance_sidebar,
-                                 flag_box, circulation_diagram, circuits_diagram,
+                                 flag_box, circulation_diagram, circuits_diagram, circuit_photo_figures,
                                  NAVY, RED, GOLD_DARK, DARK)
 
 EDITION = sys.argv[1] if len(sys.argv) > 1 else "print"
@@ -195,6 +195,7 @@ table(db, ["Circuit", "Meridians", "Yin/Yang labels"], [
     ["Middle Circuit", "Pericardium (PC) to San Jiao (SJ) to Gallbladder (GB) to Liver (LR)", "Jueyin / Shaoyang"],
 ], col_widths=[140, 296, 110], font_size=8.0)
 circuits_diagram(db)
+circuit_photo_figures(db, os.path.dirname(__file__))
 paragraph(db, "Each circuit traces the same four-stage loop described in Section 5 (chest to hand to "
               "head to foot to chest), just through its own four organs. Lecture 1's own diagram draws "
               "this as a single unified figure \u2014 chest, hand/fingers, face/head, foot/toes, back to "
