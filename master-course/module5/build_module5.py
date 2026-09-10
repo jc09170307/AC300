@@ -46,9 +46,7 @@ paragraph(db, "Meridian Clock: 3:00\u20135:00 p.m. Part of the Posterior Circuit
               "Kidney (Zang). The transcript is direct about why this channel is so large: it connects "
               "internally with more organs than any other \u2014 lung, liver, heart, and the kidney "
               "itself \u2014 via the Back-Shu points that run down its third branch, one point per organ. "
-              "Back-Shu points themselves are deferred to the future Special Points module, but the "
-              "concept \u2014 that this channel's back-line points are organ-specific access points "
-              "\u2014 is worth knowing now.")
+              "The full point-to-organ list is given below, right where the branch itself is described.")
 sub_header(db, "Running Course \u2014 Five Branches")
 numbered_list(db, [
     "Facial/vertex branch: from the inner canthus (Jingming, BL1), ascends the forehead, joins the "
@@ -73,6 +71,44 @@ flag_box(db, "The two back branches run parallel to the spine at two fixed dista
              "transcript adds a hand-measurement trick for the 1.5 cun distance: held together, the "
              "four fingers span roughly 3 cun, so half that width \u2014 two fingers \u2014 approximates "
              "1.5 cun.")
+
+sub_header(db, "The Back-Shu Points (BL11\u2013BL30)",
+           keep_with=170)
+paragraph(db, "Dr. Zhang's lecture introduces the Back-Shu concept \u2014 each point along this stretch "
+              "as a direct access point to a specific organ \u2014 but doesn't itemize the individual "
+              "point-to-organ pairs verbally. The pairs below are read directly off the CAM reference "
+              "figure's own point names: each \u201cX-shu\u201d name is literally the organ's name plus "
+              "\u201cshu\u201d in Chinese, so the correspondence is built into the naming convention "
+              "itself, not a separate claim layered on top of it.")
+_shu_bl_headers = ["Point", "Organ / Association"]
+_shu_bl_rows = [
+    ["Dazhu (BL11)", "Influential Point of Bone \u2014 not organ-specific"],
+    ["Fengmen (BL12)", "\u201cWind Gate\u201d \u2014 not organ-specific"],
+    ["Feishu (BL13)", "Lung"],
+    ["Jueyinshu (BL14)", "Pericardium"],
+    ["Xinshu (BL15)", "Heart"],
+    ["Dushu (BL16)", "Governing Vessel (Du Mai) \u2014 not a Zang-Fu organ"],
+    ["Geshu (BL17)", "Diaphragm \u2014 Influential Point of Blood, not a Zang-Fu organ"],
+    ["Ganshu (BL18)", "Liver"],
+    ["Danshu (BL19)", "Gallbladder"],
+    ["Pishu (BL20)", "Spleen"],
+    ["Weishu (BL21)", "Stomach"],
+    ["Sanjiaoshu (BL22)", "San Jiao (Triple Burner)"],
+    ["Shenshu (BL23)", "Kidney"],
+    ["Qihaishu (BL24)", "\u201cSea of Qi\u201d \u2014 not organ-specific"],
+    ["Dachangshu (BL25)", "Large Intestine"],
+    ["Guanyuanshu (BL26)", "\u201cGate of Origin\u201d \u2014 not organ-specific"],
+    ["Xiaochangshu (BL27)", "Small Intestine"],
+    ["Pangguangshu (BL28)", "Bladder"],
+    ["Zhonglushu (BL29)", "Not organ-specific"],
+    ["Baihuanshu (BL30)", "Not organ-specific"],
+]
+table(db, _shu_bl_headers, _shu_bl_rows, col_widths=[140, 406], font_size=8.0, leading=10.5)
+flag_box(db, "Note the sequence order top-to-bottom matches the classical organ-position logic: Lung "
+             "and Pericardium/Heart sit highest (chest-level), Liver/Gallbladder/Spleen/Stomach in the "
+             "middle (upper abdomen), Kidney/Large Intestine/Small Intestine/Bladder lowest (lower "
+             "abdomen/pelvis) \u2014 the Back-Shu points are laid out in roughly the same vertical order "
+             "as the organs themselves sit in the torso.")
 
 # ---------------------------------------------------------------------------
 sub_header(db, "First and Last Points")
@@ -246,9 +282,9 @@ bullet_list(db, [
 
 section_header(db, "5. Still Open / Not Yet Sourced")
 bullet_list(db, [
-    "Back-Shu points \u2014 named and located conceptually (Section 1) but not detailed point-by-point; "
-    "still deferred to the future Special Points module alongside Yuan-Source, Luo-Connecting, "
-    "Xi-Cleft, and Eight Confluent Points.",
+    "Back-Shu points are now covered (Section 1) \u2014 the remaining meeting-point categories "
+    "(Yuan-Source, Luo-Connecting, Xi-Cleft, Eight Confluent Points) stay deferred to the future "
+    "Special Points module.",
     "Finger measurement's specific cun ratios \u2014 still unconfirmed, carried over from Module 2.",
     "The exact abdominal/chest channel spacing relative to the midline \u2014 still unconfirmed, "
     "carried over from Module 3.",
@@ -256,7 +292,10 @@ bullet_list(db, [
 
 section_header(db, "Source Notes")
 paragraph(db, "Primary source: 2026Lecture_5Vivian.pdf (44 slides, Dr. Zhang, Lecture 5) and "
-              "AC300Week5BLKD.txt (class transcript). MOA and CAM figures are the same reference "
+              "AC300Week5BLKD.txt (class transcript). The Back-Shu point-to-organ table (Section 1) "
+              "is read directly from the CAM/CAMBL reference figures' own point names, not from "
+              "Dr. Zhang's verbal lecture, which introduces the concept without listing individual "
+              "pairs \u2014 flagged inline where it appears. MOA and CAM figures are the same reference "
               "figures used across the weekly study kits. Section 4 is flagged separately as original "
               "synthesis. The transcript also includes clinical/research color from Dr. Zhang's own "
               "practice specialty (reproductive acupuncture) \u2014 omitted here as outside this "
