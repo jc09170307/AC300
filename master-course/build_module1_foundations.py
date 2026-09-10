@@ -203,11 +203,17 @@ table(db, ["Circuit", "Meridians", "Yin/Yang labels"], [
 ], col_widths=[140, 296, 110], font_size=8.0)
 circuits_diagram(db)
 circuit_photo_figures(db, os.path.dirname(__file__))
-paragraph(db, "Each circuit traces the same four-stage loop described in Section 5 (chest to hand to "
-              "head to foot to chest), just through its own four organs. Lecture 1's own diagram draws "
-              "this as a single unified figure \u2014 chest, hand/fingers, face/head, foot/toes, back to "
-              "chest \u2014 with all three circuits running in parallel through those same four "
-              "anatomical waypoints.")
+paragraph(db, "Correction from the earlier draft of this module: the three circuits are not three "
+              "independent parallel loops. Lecture 1's own diagram shows small connecting arrows "
+              "running from the bottom of each block into the top of the next \u2014 Spleen down into "
+              "Heart, Kidney down into Pericardium, and Liver down, presumably closing back to Lung. "
+              "That makes this one single continuous 12-organ cycle, in three consecutive segments, "
+              "not three separate loops that each happen to share the same four-stage shape. Each "
+              "segment still traces its own chest-to-hand-to-head-to-foot-to-chest pass (Section 5's "
+              "logic applies within each segment), but the circuits hand off to each other in a fixed "
+              "order \u2014 Anterior, then Posterior, then Middle, then back to Anterior \u2014 rather than "
+              "running side by side. The diagram above is drawn to match this: the small arrows between "
+              "panels are the handoffs, not a stylistic flourish.")
 sub_header(db, "Study method suggested directly by Dr. Zhang, worth taking literally")
 paragraph(db, "Draw all 12 meridians and their three circulations by hand, repeatedly, until the "
               "pattern is automatic. This isn't a throwaway suggestion \u2014 it's presented as the "
