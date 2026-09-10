@@ -44,7 +44,7 @@ section_header(db, "1. The Stomach Meridian of Foot-Yangming (ST)")
 paragraph(db, "Meridian Clock: 7:00\u20139:00 a.m. Part of the Anterior Circuit, paired as Fu with the "
               "Spleen (Zang). Runs head to foot \u2014 the only Yang meridian of foot whose external "
               "course this module covers so far.")
-sub_header(db, "The Six Branches \u2014 Overview")
+sub_header(db, "Running Course \u2014 The Six Branches")
 paragraph(db, "Dr. Zhang's own slides organize this channel as six named branches rather than one "
               "continuous line. Learning the branch boundaries first makes the point-by-point course "
               "far easier to hold onto.")
@@ -68,8 +68,13 @@ paragraph(db, "Starts at the lateral side of the ala nasi (Yingxiang, LI20 \u201
               "enters the upper gum, re-emerges, curves around the lips, and descends to meet the "
               "Conception Vessel at the mentolabial groove (Chengjiang, CV24). Runs posterolaterally "
               "across the lower cheek (Daying, ST5), winds along the mandible angle (Jiache, ST6), "
-              "ascends in front of the ear through Xiaguan (ST7), then follows the anterior hairline "
-              "(Touwei, ST8) to the forehead.")
+              "ascends in front of the ear, crossing Shangguan (GB3), then reaches the anterior "
+              "hairline (Touwei, ST8) \u2014 shown on the same step as two nearby crossing points, "
+              "Xuanli (GB6) and Hanyan (GB4) \u2014 before ending this branch at the forehead.")
+flag_box(db, "Xiaguan (ST7) is not named anywhere in Dr. Zhang's numbered course for this branch "
+             "(Slides 17\u201318 go straight from the mandible at ST6 to Shangguan GB3) \u2014 flagged "
+             "here because an earlier draft of this module inserted it based on general anatomical "
+             "assumption rather than the source. Corrected.")
 sub_header(db, "Branch 2 \u2014 Facial, Internal (Pertaining/Connecting)")
 paragraph(db, "From in front of Daying (ST5), descends past the anterior neck (Renying, ST9), the "
               "throat (ST10, ST11), enters the supraclavicular fossa (ST12), then internally pertains "
