@@ -338,3 +338,177 @@ def flag_box(db, text):
         c.drawString(ML + 14, ty, ln)
         ty -= 11.8
     db.y -= box_h + 12
+
+
+# ---------------------------------------------------------------------------
+# Diagrams -- redrawn as vectors from Lecture 1 source slides (cited in caption)
+# ---------------------------------------------------------------------------
+
+def draw_arrow(c, x1, y1, x2, y2, color=NAVY, width=1.3, head_len=6.5, head_w=4):
+    import math
+    setstroke(c, color); setfill(c, color)
+    c.setLineWidth(width * LW_MULT)
+    c.line(x1, y1, x2, y2)
+    ang = math.atan2(y2 - y1, x2 - x1)
+    bx = x2 - head_len * math.cos(ang)
+    by = y2 - head_len * math.sin(ang)
+    lx = bx - head_w * math.sin(ang)
+    ly = by + head_w * math.cos(ang)
+    rx = bx + head_w * math.sin(ang)
+    ry = by - head_w * math.cos(ang)
+    p = c.beginPath()
+    p.moveTo(x2, y2); p.lineTo(lx, ly); p.lineTo(rx, ry); p.close()
+    c.drawPath(p, fill=1, stroke=0)
+
+
+def figure_caption(db, text):
+    c = db.c
+    lines = wrap_words(text, "Lora-Italic", 7.8, CW - 10)
+    for ln in lines:
+        db.ensure(11)
+        setfill(c, LGRAY); c.setFont("Lora-Italic", 7.8)
+        c.drawCentredString(ML + CW / 2, db.y, ln)
+        db.y -= 10.5
+    db.y -= 6
+
+
+def circulation_diagram(db):
+    """Redrawn from Lecture 1, Slide 29 ('Circulation of the Twelve Main
+    Meridians') -- the chest/hand/head/foot/abdomen directional loop."""
+    box_h = 270
+    db.ensure(box_h + 40)
+    c = db.c
+    top = db.y
+    setstroke(c, GOLD); c.setLineWidth(0.8 * LW_MULT)
+    c.rect(ML, top - box_h, CW, box_h, fill=0, stroke=1)
+
+    cx = ML + CW * 0.46
+    head = (cx, top - 38)
+    foot = (cx, top - 178)
+    chest = (cx - 148, top - 108)
+    hand = (cx + 148, top - 108)
+    abdomen = (cx - 112, top - 218)
+
+    draw_arrow(c, chest[0] + 30, chest[1], hand[0] - 30, hand[1], NAVY)
+    draw_arrow(c, hand[0] - 6, hand[1] + 9, head[0] + 8, head[1] - 9, NAVY)
+    draw_arrow(c, head[0], head[1] - 13, foot[0], foot[1] + 13, NAVY)
+    draw_arrow(c, foot[0] - 9, foot[1] + 6, abdomen[0] + 12, abdomen[1] - 6, NAVY)
+    draw_arrow(c, abdomen[0] + 5, abdomen[1] + 9, chest[0] - 4, chest[1] - 13, NAVY)
+
+    for (x, y, label) in [(head[0], head[1], "Head"), (foot[0], foot[1], "Foot"),
+                           (chest[0], chest[1], "Chest"), (hand[0], hand[1], "Hand"),
+                           (abdomen[0], abdomen[1], "Abdomen")]:
+        setfill(c, WHITE); c.setLineWidth(0.6 * LW_MULT); setstroke(c, NAVY)
+        c.circle(x, y, 3, fill=1, stroke=1)
+        setfill(c, NAVY); c.setFont("Lora-Bold", 9.5)
+        c.drawCentredString(x, y + 10, label)
+
+    setfill(c, RED); c.setFont("Lora-Italic", 7.5)
+    # chest -> hand: label sits just ABOVE the line, clear of the vertical head-foot line's own labels
+    c.drawCentredString(cx, chest[1] + 9, "Three Yin Meridians of Hand")
+    # hand -> head: upper-right, well clear of the Hand node label above and the diagonal itself
+    c.drawCentredString(cx + 100, top - 58, "Three Yang Meridians")
+    c.drawCentredString(cx + 100, top - 68, "of Hand")
+    # head -> foot: right of the vertical line, lower-middle, clear of the two labels above
+    c.drawCentredString(cx + 60, top - 148, "Three Yang")
+    c.drawCentredString(cx + 60, top - 158, "Meridians of Foot")
+    # foot -> abdomen: below-left of that diagonal, clear of the Abdomen node label
+    c.drawCentredString(cx - 40, top - 205, "Three Yin")
+    c.drawCentredString(cx - 40, top - 215, "Meridians of Foot")
+
+    db.y = top - box_h - 10
+    figure_caption(db, "Redrawn from Lecture 1, Slide 29 (\u201cCirculation of the Twelve Main "
+                        "Meridians\u201d) \u2014 the closed chest-hand-head-foot-abdomen loop described in Section 5.")
+
+
+ELEMENT_METAL = (0.42, 0.47, 0.53)
+ELEMENT_EARTH = (0.72, 0.55, 0.20)
+ELEMENT_FIRE = (0.65, 0.10, 0.10)
+ELEMENT_WATER = (0.16, 0.35, 0.62)
+ELEMENT_MIN_FIRE = (0.82, 0.42, 0.36)
+ELEMENT_WOOD = (0.20, 0.50, 0.28)
+
+
+def circuits_diagram(db):
+    """Redrawn from Lecture 1, Slide 37 ('Three Main Circuits in the Flow of
+    Qi'). Element-arrow colors follow the locked element color coding."""
+    panel_h = 66
+    gap = 14
+    banner_h = 26
+    total_h = panel_h * 3 + gap * 2 + banner_h + 16
+    db.ensure(total_h + 20)
+    c = db.c
+    top = db.y
+
+    left_lab_w = 62
+    right_lab_w = 78
+    panel_x0 = ML + left_lab_w
+    panel_w = CW - left_lab_w - right_lab_w
+
+    panels = [
+        ("Lung", "Large Intestine", "Metal", ELEMENT_METAL,
+         "Spleen", "Stomach", "Earth", ELEMENT_EARTH, "Taiyin", "Yangming"),
+        ("Heart", "Small Intestine", "Fire", ELEMENT_FIRE,
+         "Kidney", "Bladder", "Water", ELEMENT_WATER, "Shaoyin", "Taiyang"),
+        ("Pericardium", "San Jiao (SJ)", "Ministerial Fire", ELEMENT_MIN_FIRE,
+         "Liver", "Gallbladder", "Wood", ELEMENT_WOOD, "Jueyin", "Shaoyang"),
+    ]
+
+    py_top = top
+    prev_bl = None
+    for (tl, tr, el_top, col_top, bl, br, el_bot, col_bot, yin_lab, yang_lab) in panels:
+        panel_top = py_top
+        panel_bottom = panel_top - panel_h
+        setfill(c, (0.933, 0.925, 0.86)); c.rect(panel_x0, panel_bottom, panel_w, panel_h, fill=1, stroke=0)
+        setstroke(c, (0.15, 0.15, 0.15)); c.setLineWidth(1.0 * LW_MULT)
+        c.rect(panel_x0, panel_bottom, panel_w, panel_h, fill=0, stroke=1)
+
+        row1_y = panel_top - 20
+        row2_y = panel_bottom + 14
+
+        setfill(c, DARK); c.setFont("Lora-Bold", 9.5)
+        c.drawString(panel_x0 + 10, row1_y, tl)
+        c.drawRightString(panel_x0 + panel_w - 10, row1_y, tr)
+        tl_w = pdfmetrics.stringWidth(tl, "Lora-Bold", 9.5)
+        tr_w = pdfmetrics.stringWidth(tr, "Lora-Bold", 9.5)
+        ax1 = panel_x0 + 14 + tl_w
+        ax2 = panel_x0 + panel_w - 14 - tr_w
+        draw_arrow(c, ax1, row1_y + 3, ax2, row1_y + 3, col_top, width=1.4)
+        setfill(c, col_top); c.setFont("Lora-BoldItalic", 6.6)
+        c.drawCentredString((ax1 + ax2) / 2, row1_y + 8, el_top)
+
+        # vertical connector top-right -> bottom-right ("hand to face")
+        draw_arrow(c, panel_x0 + panel_w - 10, row1_y - 8, panel_x0 + panel_w - 10, row2_y + 8, NAVY, width=1.1, head_len=5, head_w=3)
+
+        setfill(c, DARK); c.setFont("Lora-Bold", 9.5)
+        c.drawString(panel_x0 + 10, row2_y, bl)
+        c.drawRightString(panel_x0 + panel_w - 10, row2_y, br)
+        bl_w = pdfmetrics.stringWidth(bl, "Lora-Bold", 9.5)
+        br_w = pdfmetrics.stringWidth(br, "Lora-Bold", 9.5)
+        bx1 = panel_x0 + panel_w - 14 - br_w
+        bx2 = panel_x0 + 14 + bl_w
+        draw_arrow(c, bx1, row2_y + 3, bx2, row2_y + 3, col_bot, width=1.4)
+        setfill(c, col_bot); c.setFont("Lora-BoldItalic", 6.6)
+        c.drawCentredString((bx1 + bx2) / 2, row2_y + 8, el_bot)
+
+        setfill(c, NAVY); c.setFont("Lora-Bold", 9)
+        c.drawCentredString(ML + left_lab_w / 2, (panel_top + panel_bottom) / 2 - 3, yin_lab)
+        c.drawCentredString(RX - right_lab_w / 2 + 6, (panel_top + panel_bottom) / 2 - 3, yang_lab)
+
+        if prev_bl is not None:
+            draw_arrow(c, prev_bl[0], prev_bl[1], panel_x0 + 10, panel_top, NAVY, width=1.1, head_len=5, head_w=3)
+        prev_bl = (panel_x0 + 10, panel_bottom)
+
+        py_top = panel_bottom - gap
+
+    banner_top = py_top + gap - 4
+    banner_bottom = banner_top - banner_h
+    setfill(c, LBLUE); c.rect(ML, banner_bottom, CW, banner_h, fill=1, stroke=0)
+    setfill(c, NAVY); c.setFont("Lora-Bold", 9.5)
+    c.drawCentredString(ML + CW / 2, banner_bottom + 9,
+                         "Chest   >   Hands/Fingers   >   Face/Head   >   Foot/Toes   >   Chest")
+
+    db.y = banner_bottom - 8
+    figure_caption(db, "Redrawn from Lecture 1, Slide 37 (\u201cThree Main Circuits in the Flow of "
+                        "Qi\u201d). Arrow colors follow the locked element color coding (Metal, Earth, "
+                        "Fire, Water, Ministerial Fire, Wood).")

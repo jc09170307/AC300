@@ -2,7 +2,8 @@ import sys, os
 sys.path.insert(0, os.path.dirname(__file__))
 from common_foundations import (DocBuilder, module_cover, section_header, sub_header,
                                  paragraph, bullet_list, numbered_list, table, dance_sidebar,
-                                 flag_box, NAVY, RED, GOLD_DARK, DARK)
+                                 flag_box, circulation_diagram, circuits_diagram,
+                                 NAVY, RED, GOLD_DARK, DARK)
 
 EDITION = sys.argv[1] if len(sys.argv) > 1 else "print"
 OUT = f"/home/claude/foundations/out/AC300_Module1_Foundations_{EDITION}.pdf"
@@ -176,6 +177,7 @@ paragraph(db, "This closed loop is the entire logic of the meridian clock (Qi fl
               "meridians across a 24-hour cycle) \u2014 not covered in depth in Lecture 1 beyond the "
               "instruction to notice, at any point in the day, which meridian's 'time' it currently is, "
               "as a memorization device.")
+circulation_diagram(db)
 
 # ---------------------------------------------------------------------------
 section_header(db, "6. The Three Main Circuits")
@@ -192,6 +194,7 @@ table(db, ["Circuit", "Meridians", "Yin/Yang labels"], [
     ["Posterior Circuit (also called Inner Circuit)", "Heart (HT) to Small Intestine (SI) to Bladder (BL) to Kidney (KI)", "Shaoyin / Taiyang"],
     ["Middle Circuit", "Pericardium (PC) to San Jiao (SJ) to Gallbladder (GB) to Liver (LR)", "Jueyin / Shaoyang"],
 ], col_widths=[140, 296, 110], font_size=8.0)
+circuits_diagram(db)
 paragraph(db, "Each circuit traces the same four-stage loop described in Section 5 (chest to hand to "
               "head to foot to chest), just through its own four organs. Lecture 1's own diagram draws "
               "this as a single unified figure \u2014 chest, hand/fingers, face/head, foot/toes, back to "
