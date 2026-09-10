@@ -3,7 +3,7 @@ sys.path.insert(0, os.path.dirname(__file__))
 from common_foundations import (DocBuilder, module_cover, section_header, sub_header,
                                  paragraph, bullet_list, numbered_list, table, dance_sidebar,
                                  flag_box, circulation_diagram, circuits_diagram, circuit_photo_figures,
-                                 NAVY, RED, GOLD_DARK, DARK)
+                                 distribution_figure, NAVY, RED, GOLD_DARK, DARK)
 
 EDITION = sys.argv[1] if len(sys.argv) > 1 else "print"
 OUT = f"/home/claude/foundations/out/AC300_Module1_Foundations_{EDITION}.pdf"
@@ -139,6 +139,7 @@ bullet_list(db, [
     "Lateral (outer) aspect leads to Yang meridians.",
     "Within each, front-to-back ordering: Anterior = Taiyin/Yangming; Posterior = Shaoyin/Taiyang; Middle = Jueyin/Shaoyang.",
 ])
+distribution_figure(db, os.path.join(os.path.dirname(__file__), "distribution_forearms.jpg"))
 flag_box(db, "Named exception (called out directly in the lecture): the Liver Meridian of Foot-Jueyin "
              "ascends to a point 8 cun above the medial malleolus, where it crosses and runs behind the "
              "Spleen Meridian of Foot-Taiyin \u2014 a specific, testable irregularity in an otherwise "

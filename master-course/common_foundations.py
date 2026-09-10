@@ -516,6 +516,30 @@ def circuits_diagram(db):
                         "Fire, Water, Ministerial Fire, Wood).")
 
 
+def distribution_figure(db, image_path):
+    """Embeds Lecture 1, Slide 27's forearm color-banding figure -- the
+    clearest source visual for the medial/lateral, anterior/middle/posterior
+    distribution rules in Section 4."""
+    from reportlab.lib.utils import ImageReader
+    img_h = 195
+    db.ensure(img_h + 40)
+    c = db.c
+    top = db.y
+    ir = ImageReader(image_path)
+    iw, ih = ir.getSize()
+    scale = img_h / ih
+    dw, dh = iw * scale, ih * scale
+    dx = ML + (CW - dw) / 2
+    dy = top - dh
+    setstroke(c, GOLD); c.setLineWidth(0.7 * LW_MULT)
+    c.rect(dx - 2, dy - 2, dw + 4, dh + 4, fill=0, stroke=1)
+    c.drawImage(ir, dx, dy, width=dw, height=dh)
+    db.y = dy - 8
+    figure_caption(db, "From Lecture 1, Slide 27 \u2014 forearm cross-section showing the six-part "
+                        "distribution: Taiyin/Jueyin/Shaoyin on the Yin (medial) side, Yangming/"
+                        "Taiyang/Shaoyang on the Yang (lateral) side.")
+
+
 def circuit_photo_figures(db, figures_dir):
     """Embeds the three actual Lecture 1 slide figures (31/33/35) showing the
     shared base anatomical diagram with each circuit's path overlaid in its
