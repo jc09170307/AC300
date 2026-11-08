@@ -809,21 +809,25 @@ def channel_page(abbr):
             draw_course_text()
     end_page()
 
-    # ---- PAGE C: CAM (external surface points) figure ----
-    cam_path = f"{FIGS}/CAM_{abbr}.jpeg"
+    # ---- PAGE C: CAM (external surface points) figure(s) ----
     import os
-    if os.path.exists(cam_path):
-        new_page(f"Channel Surface Points -- {abbr} {d['name']} (CAM External)")
-        y[0] = H - HEADER_H - 24
-        section_bar(f"{abbr} -- CAM EXTERNAL POINT MAP", accent=d['accent'],
-                    sub="Every point, numbered and located on the body surface")
-        img_top = y[0]
-        remaining_h = y[0] - 60
-        used_h = draw_image_fit(cam_path, ML, img_top, CW, remaining_h - 20)
-        y[0] = img_top - used_h - 14
-        setfill(GRAY); c.setFont("Lora-Italic", 7.5)
-        c.drawCentredString(W / 2, y[0], f"Source: Chinese Acupuncture and Moxibustion (CAM, Cheng Xinnong, 4th Ed.) -- {d['name']} Meridian")
-        end_page()
+    cam_figs = [(f"{FIGS}/CAM_{abbr}.jpeg", "")]
+    if os.path.exists(f"{FIGS}/CAM_{abbr}2.jpeg"):
+        cam_figs[0] = (cam_figs[0][0], " -- part 1")
+        cam_figs.append((f"{FIGS}/CAM_{abbr}2.jpeg", " -- part 2 (leg and foot)"))
+    for cam_path, part in cam_figs:
+        if os.path.exists(cam_path):
+            new_page(f"Channel Surface Points -- {abbr} {d['name']} (CAM External)")
+            y[0] = H - HEADER_H - 24
+            section_bar(f"{abbr} -- CAM EXTERNAL POINT MAP{part}", accent=d['accent'],
+                        sub="Every point, numbered and located on the body surface")
+            img_top = y[0]
+            remaining_h = y[0] - 60
+            used_h = draw_image_fit(cam_path, ML, img_top, CW, remaining_h - 20)
+            y[0] = img_top - used_h - 14
+            setfill(GRAY); c.setFont("Lora-Italic", 7.5)
+            c.drawCentredString(W / 2, y[0], f"Source: Chinese Acupuncture and Moxibustion (CAM, Cheng Xinnong, 4th Ed.) -- {d['name']} Meridian")
+            end_page()
 
 
 for abbr in CHANNEL_ORDER:
