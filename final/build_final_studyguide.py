@@ -790,7 +790,7 @@ def channel_page(abbr):
     fits_together = remaining_h - text_block_est - 14 - 30 - 45 >= MIN_IMG
     fits_text_only = remaining_h >= text_block_est + 20
     if course_steps and fits_together:
-        draw_moa_figure(min(240, remaining_h - text_block_est - 14 - 30 - 45))
+        draw_moa_figure(min(300, remaining_h - text_block_est - 14 - 30 - 45))
         draw_course_text()
     elif course_steps and fits_text_only:
         # text fills the rest of this page; the figure gets the next page to itself
@@ -804,7 +804,7 @@ def channel_page(abbr):
         new_page(PW_TITLE)
         y[0] = H - HEADER_H - 24
         rh = y[0] - 60
-        draw_moa_figure(min(240, rh - text_block_est - 14 - 30 - 45))
+        draw_moa_figure(min(300, rh - text_block_est - 14 - 30 - 45))
         if course_steps:
             draw_course_text()
     end_page()
