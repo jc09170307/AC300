@@ -47,7 +47,7 @@ REAL_QUIZZES = [
         dict(n=4, q="Where does the ST channel's pathway truly begin?", opts=["ST1 Chengqi", "LI20 Yingxiang", "GV24", "BL1"], ans="B",
              exp="ST originates at LI20 on the face -- ST1 is just the first NUMBERED point."),
         dict(n=5, q="How many points does the ST channel have?", opts=["21", "45", "20", "11"], ans="B",
-             exp="ST has 45 points -- the most of any primary channel."),
+             exp="ST has 45 points -- the second biggest channel (Bladder, with 67, is the biggest)."),
         dict(n=6, q="SP is the only channel on which surface of the tongue?", opts=["Root", "Upper", "Lower", "Lateral edge"], ans="C",
              exp="SP spreads over the LOWER surface of the tongue; KI reaches the root."),
     ]),

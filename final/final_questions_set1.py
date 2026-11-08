@@ -59,11 +59,11 @@ SECTIONS = [
              exp="This 8-cun SP/LR crossover is the ONLY distribution exception among ALL 12 primary meridians -- "
                  "it does not recur elsewhere."),
         dict(n=8, type="MC",
-             q="Which channel has the most crossing points of any single primary meridian, and how many?",
-             opts=["BL, 14", "GB, 12", "ST, 11", "SJ, 10"],
+             q="How many crossing points does the Stomach channel have, and where are most of them located?",
+             opts=["6, mostly on the limbs", "14, mostly on the abdomen", "11, mostly on the face and head", "20, mostly on the trunk"],
              ans="C",
-             exp="ST has 11 crossing points -- the most of any single primary channel (BL's 14 are shared "
-                 "specifically with GV and GB, a different framing)."),
+             exp="ST has 11 crossing points, most of them on the face and head -- which is why any facial "
+                 "problem (facial paralysis, runny nose, eye or mouth problems) should make you think of ST."),
     ]),
     ("HT / SI -- FIRE", "Week 4", [
         dict(n=9, type="MC",

@@ -2,10 +2,8 @@
 # Sourced from: (1) Dr. Zhang's own weekly lecture slides/transcripts, already
 # extracted and verified in earlier per-week Study Guide builds this term
 # (LU/LI = Week 2, HT/SI = Week 4, PC/SJ/GB/LR = Week 6); (2) the Week 5
-# live-class transcript, directly, for BL/KI (never built before -- this was
-# the genuine gap); (3) ST/SP written fresh to stay consistent with the
-# already-published Exam Trap ("ST truly begins at LI20, not ST1") rather
-# than reusing an earlier simplified draft that contradicted it.
+# live-class transcript, directly, for BL/KI; (3) ST/SP rebuilt from the Week 3
+# live-class transcript (7/22/2026) and the Week 3 slides (Lecture 3).
 
 PATHWAY_COURSE = {
     "LU": [
@@ -29,22 +27,24 @@ PATHWAY_COURSE = {
         "Ends beside the nostril at LI20 Yingxiang, where LI links with the STOMACH meridian of Foot-Yangming",
     ],
     "ST": [
-        "TRUE ORIGIN is LI20 Yingxiang (a crossing point of the LI channel) beside the nose -- NOT ST1, which is only the first NUMBERED point on ST's own sequence",
-        "Ascends to the bridge of the nose, crosses BL1 at the inner canthus, descends along the lateral side of the nose to enter the upper gum",
-        "Curves around the lips, descends to meet CV24, runs along the lower jaw, ascends in front of the ear to the forehead",
-        "BRANCH: from the lower jaw (ST5 area), descends through the neck to ST9, then to the supraclavicular fossa, through the diaphragm, PERTAINS Stomach, connects with SPLEEN",
-        "EXTERNAL branch: from the supraclavicular fossa, descends past the nipple (ST17, landmark only -- never needled), alongside the umbilicus, to ST30 in the groin",
-        "Continues down the anterior thigh and leg (the longest single run of any channel -- 45 points, the most of any primary meridian)",
-        "Crosses the dorsum of the foot, ends at the lateral side of the 2nd toe, ST45 -- hands off to SPLEEN at the toes",
+        "Starts at the lateral side of the ala nasi at LI20 Yingxiang -- the true origin is INTERNAL at LI20 (LI links to ST here). ST1 Chengqi is only the first NUMBERED point on ST's own external line. ST has SIX branches",
+        "BRANCH 1 -- the face: ascends to the bridge of the nose and meets BL1 Jingming; turns down the lateral nose to ST1, enters the UPPER gum; re-emerges, curves around the lips and descends to CV24 Chengjiang in the mentolabial groove",
+        "BRANCH 1 (cont.): runs back across the lower cheek (ST5 Daying), winds along the angle of the mandible (ST6 Jiache), ascends in front of the ear through GB3 Shangguan, follows the anterior hairline (GB4, GB6, ST8) and reaches the forehead at GV24 Shenting",
+        "BRANCH 2 -- the facial branch (INTERNAL): emerges in front of ST5, runs down the neck to ST9 Renying, along the throat, into the supraclavicular fossa (ST12), down through the diaphragm; PERTAINS to the Stomach and CONNECTS with the Spleen",
+        "BRANCH 3 -- the straight portion (EXTERNAL): from the supraclavicular fossa runs down through the NIPPLE (only the Stomach channel passes through the nipple), descends beside the umbilicus (ST19-ST29), and enters the lateral lower abdomen at ST30 Qichong",
+        "BRANCH 4 -- the long branch: begins at the LOWER orifice of the stomach, descends inside the abdomen (CV12, CV13) and joins the straight portion at ST30; runs down the anterior thigh through ST31 Biguan and ST32 Futu to the knee",
+        "BRANCH 4 (cont.): continues down the anterior border of the lateral aspect of the tibia, across the dorsum of the foot, and ends at the lateral side of the tip of the 2nd toe, ST45 Lidui (Jing-Well) -- the LAST point",
+        "BRANCH 5 -- the tibial branch: leaves at ST36 Zusanli, 3 cun below the knee, and enters the lateral side of the middle toe (the only point on this branch is ST36)",
+        "BRANCH 6 -- the foot branch: leaves the dorsum of the foot at ST42 Chongyang and ends at the medial side of the tip of the great toe, SP1 Yinbai, where ST links with the SPLEEN channel",
     ],
     "SP": [
-        "Begins at the medial side of the big toe tip, SP1 Yinbai",
-        "Runs along the medial border of the foot, past the medial malleolus (SP6, the classic Three-Yin intersection point)",
-        "At 8 CUN above the medial malleolus, crosses IN FRONT of the LIVER channel (the one distribution exception among all 12 primary meridians -- below 8 cun SP runs posterior to LR, above 8 cun SP moves anterior)",
-        "Ascends the medial thigh, enters the abdomen, PERTAINS Spleen, connects with STOMACH",
-        "BRANCH: from the stomach, ascends through the diaphragm, spreads through the chest, alongside the esophagus, connects with the root of the tongue and spreads over its LOWER surface",
-        "EXTERNAL portion continues from the abdomen up the side of the trunk to SP21 Dabao (the Great/Major Luo of Spleen, on the lateral chest)",
-        "BRANCH: from the stomach, through the diaphragm, pours into the HEART -- linking SP to the next channel, HT",
+        "Begins at the tip of the big toe, SP1 Yinbai (Jing-Well) -- where the ST foot branch arrives. SP runs head-ward, FOOT to abdomen/chest. SP has THREE branches",
+        "BRANCH 1 (main course): runs along the medial aspect of the foot at the junction of the red and white skin, then ascends in front of the medial malleolus (SP5 on the slide) up the medial leg, following the POSTERIOR aspect of the tibia",
+        "THE ONE EXCEPTION: at 8 cun above the medial malleolus SP crosses IN FRONT of the Liver channel. Below that point the Liver is anterior and SP is in the middle line; above it SP returns to the normal Taiyin ANTERIOR position",
+        "BRANCH 1 (cont.): passes up the anterior medial aspect of the knee and thigh and enters the abdomen (SP12, SP13, CV3, CV4, SP14, SP15); PERTAINS to the Spleen and CONNECTS with the Stomach (CV10, SP16, GB24, LR14)",
+        "BRANCH 2 (ascending from the stomach): passes up through the diaphragm, runs alongside the esophagus, reaches the ROOT of the tongue and spreads over its LOWER surface -- SP is the only channel that spreads over the lower surface of the tongue",
+        "BRANCH 3 (internal link to the next channel): from the stomach goes up through the diaphragm and pours into the HEART, linking with the Heart Meridian of Hand-Shaoyin (this is how the Anterior Circuit hands off to the Posterior Circuit; LU1 is a crossing point on this link)",
+        "EXTERNAL course ends at SP21 Dabao (Major Luo-Connecting point of the Spleen) on the lateral chest. On the trunk SP lies MORE lateral than the Stomach line (about 6 cun from the midline vs 4 cun for ST). SP has 21 points",
     ],
     "HT": [
         "Originates in the Heart, emerges from the system of blood vessels surrounding the Heart",

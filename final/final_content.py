@@ -123,7 +123,7 @@ CHANNEL_META = {
                back_shu="BL21 Weishu", front_mu="CV12 Zhongwan", yuan="ST42 Chongyang",
                luo="ST40 Fenglong", he_sea="ST36 Zusanli", xi_cleft="ST34 Liangqiu",
                confluent="none", command="ST36 -- abdomen; Lower He-Sea ST37 (LI) / ST39 (SI)",
-               crossing="11 -- the MOST of any primary channel (LI20, BL1, GB3/4/6, SP1, GV24, GV26, CV12/13/24)",
+               crossing="11, mostly on the face/head (LI20, BL1, GB3/4/6, SP1, GV24, GV26, CV12/13/24)",
                first_last="LI20 Yingxiang is the true origin; ST1 Chengqi / ST45 Lidui",
                accent=EARTH),
     "SP": dict(name="Spleen", full="Spleen Meridian of Foot-Taiyin", n_points=21, element="Earth", polarity="Yin",
@@ -250,7 +250,7 @@ CHANNEL_CONTENT = {
         functions=["Governs \"reception and ripening\" of food -- the root of Postnatal Qi and Blood production together with SP",
                    "Descends turbid Qi (opposite of SP, which ascends the clear) -- ST pathology often shows REBELLIOUS/ascending symptoms (vomiting, belching, nausea)",
                    "Only channel to pass through the NIPPLE -- ST17 Ruzhong is a landmark only, never needled",
-                   "Has 11 crossing points -- the MOST of any single primary channel",
+                   "Has 11 crossing points, most of them on the face and head (LI20, BL1, GB3/4/6, SP1, GV24, GV26, CV12/13/24)",
                    "True pathway origin is LI20 (a crossing point of the LI channel) -- ST1 is only the first NUMBERED point"],
         indications=["Facial pain, toothache (UPPER teeth specifically), facial paralysis/deviation, sore throat",
                      "Abdominal distension, pain, vomiting, belching -- Stomach-Qi rebelling upward",
@@ -796,7 +796,7 @@ COMMAND_POINTS_NOTE = (
 )
 
 MEETING_CROSSING_SUMMARY = [
-    ("ST", "11", "the MOST of any single primary channel -- LI20, BL1, GB3/4/6, SP1, GV24, GV26, CV12/13/24"),
+    ("ST", "11", "mostly on the face/head -- LI20, BL1, GB3/4/6, SP1, GV24, GV26, CV12/13/24"),
     ("BL", "14", "shared specifically with GV and Gallbladder, concentrated around the head"),
     ("GB", "12", "across 6 meridians (SJ, LR, PC, SI, ST, GV) -- confirmed against the 2026 slide deck"),
     ("SJ", "10+", "shares crossing points with GB around head/ear/shoulder, plus GV14, SI12"),
@@ -839,7 +839,7 @@ BACK_SHU_NOTE = (
 WEEKLY_MAP = [
     ("Week 1", "Channel Theory & Nomenclature", "Foundational rules, 12 meridians overview, 3 circuits, clock"),
     ("Week 2", "LU / LI", "Metal, Outer Circuit begins, Quiz 1-2 material"),
-    ("Week 3", "ST / SP", "Earth, Outer Circuit completes, most crossing points (ST=11)"),
+    ("Week 3", "ST / SP", "Earth, Outer Circuit completes, ST=11 crossing points (mostly face/head)"),
     ("Week 4", "HT / SI", "Fire, Inner/Posterior Circuit begins"),
     ("Week 5", "BL / KI", "Water, Inner/Posterior Circuit completes -- largest (BL=67) + Water pair"),
     ("Week 6", "PC / SJ / GB / LR", "Ministerial Fire + Wood, Middle Circuit complete"),
